@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans text-trovara-dark bg-trovara-cream antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold tracking-tight;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-trovara-green text-white font-semibold rounded-lg
+           hover:bg-trovara-green-700 active:bg-trovara-green-800
+           transition-all duration-200 ease-in-out
+           focus:outline-none focus:ring-2 focus:ring-trovara-green focus:ring-offset-2
+           shadow-sm hover:shadow-md;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 border-2 border-trovara-green text-trovara-green font-semibold rounded-lg
+           hover:bg-trovara-green hover:text-white
+           transition-all duration-200 ease-in-out
+           focus:outline-none focus:ring-2 focus:ring-trovara-green focus:ring-offset-2;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-trovara-gold text-trovara-dark font-semibold rounded-lg
+           hover:bg-trovara-gold-500 active:bg-trovara-gold-600
+           transition-all duration-200 ease-in-out
+           focus:outline-none focus:ring-2 focus:ring-trovara-gold focus:ring-offset-2
+           shadow-sm hover:shadow-md;
+  }
+
+  .section-heading {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold text-trovara-dark;
+  }
+
+  .section-subheading {
+    @apply text-lg md:text-xl text-trovara-green-600 font-medium uppercase tracking-widest;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden;
+  }
+
+  .container-trovara {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
