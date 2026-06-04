@@ -227,7 +227,7 @@ function itemKey(category: string, i: number) {
             Contact Us
           </RouterLink>
           <a
-            href="https://wa.me/233000000000"
+            href="https://wa.me/2348103693426"
             target="_blank"
             rel="noopener"
             class="inline-flex items-center gap-2 px-8 py-4 rounded-lg border-2 border-white/30 text-white font-semibold hover:bg-white/10 transition-all duration-200 text-base"

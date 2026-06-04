@@ -30,8 +30,8 @@ async function handleSubmit() {
 }
 
 const contactInfo = [
-  { icon: '📍', label: 'Location',  value: 'Trovara Farm, Tropical Highlands' },
-  { icon: '📞', label: 'Phone',     value: '+1 (000) 000-0000' },
+  { icon: '📍', label: 'Location',  value: 'Trovara Farm, Abeokuta.' },
+  { icon: '📞', label: 'Phone',     value: '+234 810 369 3426' },
   { icon: '📧', label: 'Email',     value: 'info@trovara.farm' },
   { icon: '🕐', label: 'Response',  value: 'Within 24 business hours' },
 ]

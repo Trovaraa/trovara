@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
-const phoneNumber = '233000000000'
+const phoneNumber = '2348103693426'
 const presetMessage = encodeURIComponent(
   "Hi Trovara Farm, I'd like to learn more about your products."
 )
