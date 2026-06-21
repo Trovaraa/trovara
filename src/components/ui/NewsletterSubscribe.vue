@@ -24,24 +24,37 @@ async function subscribe() {
 
   newsletter.status = 'loading'
   try {
+    if (import.meta.env.DEV) {
+      throw new Error('Newsletter signup only works on the deployed Netlify site.')
+    }
+
     const response = await fetch('/', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/json',
+      },
       body: new URLSearchParams({
         'form-name': 'newsletter',
         email: newsletter.email,
       }).toString(),
     })
 
+    const result = await response.json().catch(() => null)
+
     if (!response.ok) {
-      throw new Error('Subscription failed')
+      throw new Error(result?.message ?? 'Subscription failed')
     }
 
     newsletter.status = 'success'
     newsletter.email = ''
-  } catch {
+  } catch (error) {
     newsletter.status = 'error'
-    newsletter.error = 'Something went wrong. Please try again.'
+    if (import.meta.env.DEV) {
+      newsletter.error = 'Signup works on the live site only (not localhost). Deploy to test.'
+    } else {
+      newsletter.error = 'Something went wrong. Please try again.'
+    }
   }
 }
 
