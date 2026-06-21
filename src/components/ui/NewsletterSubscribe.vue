@@ -24,19 +24,24 @@ async function subscribe() {
 
   newsletter.status = 'loading'
   try {
-    const response = await fetch('/.netlify/functions/newsletter-subscribe', {
+    const response = await fetch('https://formsubmit.co/ajax/info@trovara.farm', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify({ email: newsletter.email }),
+      body: JSON.stringify({
+        _subject: 'New Trovara newsletter signup',
+        _template: 'table',
+        _captcha: 'false',
+        email: newsletter.email,
+      }),
     })
 
     const result = await response.json().catch(() => null)
 
-    if (!response.ok || !result?.success) {
-      throw new Error(result?.error ?? 'Subscription failed')
+    if (!response.ok || result?.success === 'false' || result?.success === false) {
+      throw new Error(result?.message ?? 'Subscription failed')
     }
 
     newsletter.status = 'success'
@@ -44,13 +49,7 @@ async function subscribe() {
   } catch (error) {
     newsletter.status = 'error'
     const message = error instanceof Error ? error.message : ''
-    if (import.meta.env.DEV) {
-      newsletter.error = 'Newsletter signup works after deploy (Netlify Function).'
-    } else if (message.includes('Activation')) {
-      newsletter.error = 'Almost ready — check info@trovara.farm to activate the form.'
-    } else {
-      newsletter.error = 'Something went wrong. Please try again.'
-    }
+    newsletter.error = message || 'Something went wrong. Please try again.'
   }
 }
 
