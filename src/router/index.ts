@@ -45,6 +45,18 @@ const router = createRouter({
       meta: { title: 'FAQ — Trovara Farm' },
     },
     {
+      path: '/blog',
+      name: 'blog',
+      component: () => import('../views/BlogView.vue'),
+      meta: { title: 'Blog — Trovara Farm' },
+    },
+    {
+      path: '/blog/:slug',
+      name: 'blog-post',
+      component: () => import('../views/BlogPostView.vue'),
+      meta: { title: 'Blog — Trovara Farm' },
+    },
+    {
       path: '/contact',
       name: 'contact',
       component: () => import('../views/ContactView.vue'),

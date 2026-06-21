@@ -12,6 +12,7 @@ const navLinks = [
   { label: 'Products', to: '/products' },
   { label: 'Services', to: '/services' },
   { label: 'The Farm', to: '/farm' },
+  { label: 'Blog',     to: '/blog' },
   { label: 'FAQ',      to: '/faq' },
   { label: 'Contact',  to: '/contact' },
 ]

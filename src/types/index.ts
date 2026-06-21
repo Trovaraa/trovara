@@ -28,3 +28,23 @@ export interface NavLink {
   label: string
   to: string
 }
+
+export type BlogBlock =
+  | { type: 'paragraph'; text: string }
+  | { type: 'heading'; text: string }
+  | { type: 'list'; items: string[] }
+  | { type: 'quote'; text: string; attribution?: string }
+
+export interface BlogPost {
+  slug: string
+  title: string
+  excerpt: string
+  author: string
+  publishedAt: string
+  category: string
+  tags: string[]
+  coverEmoji: string
+  readTimeMinutes: number
+  published: boolean
+  content: BlogBlock[]
+}
