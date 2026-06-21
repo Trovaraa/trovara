@@ -24,34 +24,30 @@ async function subscribe() {
 
   newsletter.status = 'loading'
   try {
-    if (import.meta.env.DEV) {
-      throw new Error('Newsletter signup only works on the deployed Netlify site.')
-    }
-
-    const response = await fetch('/', {
+    const response = await fetch('/.netlify/functions/newsletter-subscribe', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: new URLSearchParams({
-        'form-name': 'newsletter',
-        email: newsletter.email,
-      }).toString(),
+      body: JSON.stringify({ email: newsletter.email }),
     })
 
     const result = await response.json().catch(() => null)
 
-    if (!response.ok) {
-      throw new Error(result?.message ?? 'Subscription failed')
+    if (!response.ok || !result?.success) {
+      throw new Error(result?.error ?? 'Subscription failed')
     }
 
     newsletter.status = 'success'
     newsletter.email = ''
   } catch (error) {
     newsletter.status = 'error'
+    const message = error instanceof Error ? error.message : ''
     if (import.meta.env.DEV) {
-      newsletter.error = 'Signup works on the live site only (not localhost). Deploy to test.'
+      newsletter.error = 'Newsletter signup works after deploy (Netlify Function).'
+    } else if (message.includes('Activation')) {
+      newsletter.error = 'Almost ready — check info@trovara.farm to activate the form.'
     } else {
       newsletter.error = 'Something went wrong. Please try again.'
     }

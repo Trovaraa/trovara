@@ -15,12 +15,6 @@
   </head>
   <body>
     <div id="app"></div>
-    <!-- Netlify detects this form at build time; Vue submits to it programmatically -->
-    <form name="newsletter" method="POST" action="/" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
-      <input type="hidden" name="form-name" value="newsletter" />
-      <input name="bot-field" />
-      <input name="email" type="email" />
-    </form>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
