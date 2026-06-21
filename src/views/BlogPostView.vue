@@ -2,7 +2,6 @@
 import { computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useBlogStore } from '../stores/blog'
-import type { BlogBlock } from '../types'
 import NewsletterSubscribe from '../components/ui/NewsletterSubscribe.vue'
 
 const route = useRoute()
@@ -31,10 +30,6 @@ function formatDate(iso: string) {
     month: 'long',
     day: 'numeric',
   })
-}
-
-function blockKey(block: BlogBlock, index: number) {
-  return `${block.type}-${index}`
 }
 </script>
 
@@ -72,53 +67,21 @@ function blockKey(block: BlogBlock, index: number) {
       </div>
     </section>
 
-    <article class="py-16 md:py-20 bg-white">
-      <div class="container-trovara max-w-3xl">
-        <div class="text-7xl text-center mb-12">{{ post.coverEmoji }}</div>
-
-        <div class="prose-trovara space-y-6">
-          <template v-for="(block, index) in post.content" :key="blockKey(block, index)">
-            <p
-              v-if="block.type === 'paragraph'"
-              class="text-gray-600 leading-relaxed text-lg"
-            >
-              {{ block.text }}
-            </p>
-
-            <h2
-              v-else-if="block.type === 'heading'"
-              class="text-2xl md:text-3xl font-bold text-trovara-dark pt-4"
-            >
-              {{ block.text }}
-            </h2>
-
-            <ul
-              v-else-if="block.type === 'list'"
-              class="space-y-3 pl-1"
-            >
-              <li
-                v-for="item in block.items"
-                :key="item"
-                class="flex items-start gap-3 text-gray-600 leading-relaxed"
-              >
-                <span class="mt-2 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-trovara-green" />
-                {{ item }}
-              </li>
-            </ul>
-
-            <blockquote
-              v-else-if="block.type === 'quote'"
-              class="border-l-4 border-trovara-gold pl-6 py-2 my-8"
-            >
-              <p class="text-xl font-medium text-trovara-dark italic leading-relaxed">
-                "{{ block.text }}"
-              </p>
-              <footer v-if="block.attribution" class="text-sm text-gray-400 mt-3">
-                — {{ block.attribution }}
-              </footer>
-            </blockquote>
-          </template>
+    <div v-if="post.coverImage" class="bg-white pb-2 md:pb-0">
+      <div class="container-trovara max-w-4xl">
+        <div class="relative -mt-8 md:-mt-12 rounded-2xl overflow-hidden shadow-lg aspect-[16/9]">
+          <img
+            :src="post.coverImage"
+            :alt="post.title"
+            class="w-full h-full object-cover"
+          />
         </div>
+      </div>
+    </div>
+
+    <article class="py-12 md:py-16 bg-white">
+      <div class="container-trovara max-w-3xl">
+        <div class="blog-content" v-html="post.html" />
 
         <div v-if="post.tags.length" class="flex flex-wrap gap-2 mt-12 pt-8 border-t border-gray-100">
           <span

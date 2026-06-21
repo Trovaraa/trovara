@@ -29,11 +29,18 @@ export interface NavLink {
   to: string
 }
 
-export type BlogBlock =
-  | { type: 'paragraph'; text: string }
-  | { type: 'heading'; text: string }
-  | { type: 'list'; items: string[] }
-  | { type: 'quote'; text: string; attribution?: string }
+export interface BlogPostFrontmatter {
+  title?: string
+  excerpt?: string
+  author?: string
+  publishedAt?: string
+  category?: string
+  tags?: string[]
+  coverEmoji?: string
+  coverImage?: string
+  readTimeMinutes?: number
+  published?: boolean | string
+}
 
 export interface BlogPost {
   slug: string
@@ -44,7 +51,8 @@ export interface BlogPost {
   category: string
   tags: string[]
   coverEmoji: string
+  coverImage?: string
   readTimeMinutes: number
   published: boolean
-  content: BlogBlock[]
+  html: string
 }

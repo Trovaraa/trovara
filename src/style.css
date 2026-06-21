@@ -55,6 +55,47 @@
   .container-trovara {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
+
+  .blog-content {
+    @apply space-y-6 text-gray-600 leading-relaxed text-lg;
+  }
+
+  .blog-content h2 {
+    @apply text-2xl md:text-3xl font-bold text-trovara-dark pt-4;
+  }
+
+  .blog-content h3 {
+    @apply text-xl md:text-2xl font-bold text-trovara-dark pt-2;
+  }
+
+  .blog-content p {
+    @apply leading-relaxed;
+  }
+
+  .blog-content ul {
+    @apply space-y-3 pl-1 list-none;
+  }
+
+  .blog-content ul li {
+    @apply flex items-start gap-3;
+  }
+
+  .blog-content ul li::before {
+    content: '';
+    @apply mt-2.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-trovara-green;
+  }
+
+  .blog-content blockquote {
+    @apply border-l-4 border-trovara-gold pl-6 py-2 my-8;
+  }
+
+  .blog-content blockquote p {
+    @apply text-xl font-medium text-trovara-dark italic leading-relaxed;
+  }
+
+  .blog-content a {
+    @apply text-trovara-green font-medium hover:underline;
+  }
 }
 
 @layer utilities {

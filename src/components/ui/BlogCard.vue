@@ -13,26 +13,38 @@ function formatDate(iso: string) {
 </script>
 
 <template>
-  <article class="card group h-full flex flex-col">
+  <article class="card group h-full flex flex-col overflow-hidden">
     <RouterLink :to="`/blog/${post.slug}`" class="flex flex-col h-full">
-      <div class="relative px-8 pt-10 pb-6 flex flex-col items-center text-center bg-trovara-light">
-        <div class="text-6xl mb-4 group-hover:scale-110 transition-transform duration-300">
+      <div class="relative aspect-[16/10] overflow-hidden bg-trovara-light">
+        <img
+          v-if="post.coverImage"
+          :src="post.coverImage"
+          :alt="post.title"
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+        <div
+          v-else
+          class="w-full h-full flex items-center justify-center text-4xl bg-gradient-to-br from-trovara-light to-trovara-green/10"
+          aria-hidden="true"
+        >
           {{ post.coverEmoji }}
         </div>
-        <span class="absolute top-4 left-4 px-2.5 py-1 bg-trovara-green/10 text-trovara-green text-xs font-semibold rounded-full">
+        <span class="absolute top-4 left-4 px-2.5 py-1 bg-white/95 backdrop-blur-sm text-trovara-green text-xs font-semibold rounded-full shadow-sm">
           {{ post.category }}
         </span>
-        <h3 class="text-xl font-bold text-trovara-dark mb-2 group-hover:text-trovara-green transition-colors">
-          {{ post.title }}
-        </h3>
-        <p class="text-sm text-gray-500 leading-relaxed line-clamp-3">
-          {{ post.excerpt }}
-        </p>
       </div>
 
-      <div class="px-8 py-5 mt-auto border-t border-gray-100 flex items-center justify-between text-xs text-gray-400">
-        <span>{{ formatDate(post.publishedAt) }}</span>
-        <span>{{ post.readTimeMinutes }} min read</span>
+      <div class="px-6 py-5 flex flex-col flex-1">
+        <h3 class="text-lg font-bold text-trovara-dark mb-2 group-hover:text-trovara-green transition-colors line-clamp-2">
+          {{ post.title }}
+        </h3>
+        <p class="text-sm text-gray-500 leading-relaxed line-clamp-3 flex-1">
+          {{ post.excerpt }}
+        </p>
+        <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-400">
+          <span>{{ formatDate(post.publishedAt) }}</span>
+          <span>{{ post.readTimeMinutes }} min read</span>
+        </div>
       </div>
     </RouterLink>
   </article>
