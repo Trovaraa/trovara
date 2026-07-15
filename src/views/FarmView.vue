@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import SectionHeader from '../components/ui/SectionHeader.vue'
+import InfographicFigure from '../components/ui/InfographicFigure.vue'
 
 const operations = [
   {
@@ -118,6 +119,26 @@ const practices = [
       </div>
     </section>
 
+    <!-- Master plan -->
+    <section class="py-20 md:py-28 bg-white">
+      <div class="container-trovara">
+        <SectionHeader
+          eyebrow="The Master Plan"
+          title="A 24-acre regenerative ecosystem."
+          subtitle="Our land is designed as one integrated system - agriculture, processing, hospitality, and clean infrastructure working together, with the industrial spine placed downwind of the guest and residential zones."
+          center
+        />
+        <div class="max-w-5xl mx-auto">
+          <InfographicFigure
+            src="/images/regen/masterplan.webp"
+            alt="Site plan of Trovara's 24-acre regenerative farm-to-hospitality ecosystem, showing colour-coded agricultural, processing, hospitality, residential, and infrastructure zones with guest and service movement routes."
+            caption="24-Acre Farm-to-Hospitality Ecosystem"
+            summary="42% built-up, 50% green and productive land, targeting 100% energy self-sufficiency with 4-5 MWp of solar. Tap to explore each zone."
+          />
+        </div>
+      </div>
+    </section>
+
     <!-- Expansion plans -->
     <section class="py-20 bg-trovara-cream">
       <div class="container-trovara">
@@ -148,6 +169,15 @@ const practices = [
           <RouterLink to="/contact" class="btn-primary px-8 py-4 text-base">
             Partner With Us
           </RouterLink>
+        </div>
+
+        <div class="max-w-5xl mx-auto mt-16">
+          <InfographicFigure
+            src="/images/regen/evolution.webp"
+            alt="Trovara evolution map from 2026 to 2035 and beyond: four phases growing from Trovara Fresh and Harvest into Kitchen and Living, with revenue mix, closed-loop system flow, and foundational pillars."
+            caption="Evolution Map: Building a Regenerative Food Platform"
+            summary="One system, four brands - Fresh, Harvest, Kitchen, and Living - scaling across four phases from production today to a farm destination by 2035. Tap to read the full roadmap."
+          />
         </div>
       </div>
     </section>

@@ -3,6 +3,8 @@ import { computed } from 'vue'
 import { useProductsStore } from '../stores/products'
 import StructuredData from '../components/StructuredData.vue'
 import SpecSheet from '../components/ui/SpecSheet.vue'
+import SectionHeader from '../components/ui/SectionHeader.vue'
+import InfographicFigure from '../components/ui/InfographicFigure.vue'
 import { buildWhatsAppLink, PRODUCT_MESSAGES } from '../lib/whatsapp'
 
 const store = useProductsStore()
@@ -35,6 +37,26 @@ const productSchemas = computed(() =>
           Every product at Trovara Farm carries a story - of rich soil, honest care,
           and a commitment to delivering the earth's finest to you.
         </p>
+      </div>
+    </section>
+
+    <!-- How our system works -->
+    <section class="py-20 md:py-28 bg-white">
+      <div class="container-trovara">
+        <SectionHeader
+          eyebrow="How It Works"
+          title="One regenerative system behind every product."
+          subtitle="Plantain, coconut, and chicken feed a circular system where waste becomes value - flowing into two brands, Trovara Fresh and Trovara Harvest, and the products you see below."
+          center
+        />
+        <div class="max-w-5xl mx-auto">
+          <InfographicFigure
+            src="/images/regen/system.webp"
+            alt="Trovara integrated regenerative system: plantain, coconut, and chicken inputs flow through a circular farm into Trovara Fresh and Trovara Harvest brands, producing fresh produce and processed goods, with by-products like compost, fertilizer, biogas, and animal feed."
+            caption="From nature's inputs to trusted food solutions"
+            summary="Fresh produce (plantain, eggs, chicken, mushrooms, coconut) and shelf-stable Harvest products (flours, chips, oils, powders) - all from one closed-loop farm. Tap to explore the full system."
+          />
+        </div>
       </div>
     </section>
 
