@@ -11,7 +11,7 @@ const milestones = [
   {
     year: 'Year 1',
     title: 'First Harvest',
-    desc: 'Our first coconut and plantain harvests proved what we believed — that honest farming produces exceptional food.',
+    desc: 'Our first coconut and plantain harvests proved what we believed - that honest farming produces exceptional food.',
   },
   {
     year: 'Year 2',
@@ -33,7 +33,7 @@ const stats = [
 ]
 
 const team = [
-  { initials: 'TF', name: 'The Founder', role: 'Founder & Visionary', bio: 'Built Trovara with the belief that great farming changes lives — locally and globally.' },
+  { initials: 'TF', name: 'The Founder', role: 'Founder & Visionary', bio: 'Built Trovara with the belief that great farming changes lives - locally and globally.' },
   { initials: 'FD', name: 'Farm Director', role: 'Head of Agricultural Operations', bio: 'Oversees all crop cultivation across our plantations with decades of tropical farming knowledge.' },
   { initials: 'PM', name: 'Poultry Manager', role: 'Head of Poultry Operations', bio: 'Ensures every bird is raised ethically, healthily, and to the highest quality standards.' },
 ]
@@ -52,7 +52,7 @@ const team = [
             We believe the earth<br/> deserves better farming.
           </h1>
           <p class="text-white/70 text-lg leading-relaxed max-w-xl">
-            Trovara Farm exists to prove that premium quality and ethical farming are not opposites —
+            Trovara Farm exists to prove that premium quality and ethical farming are not opposites -
             they are inseparable. Every crop, every bird, every harvest is a testimony to that belief.
           </p>
         </div>
@@ -70,14 +70,14 @@ const team = [
               subtitle="Trovara Farm started with a patch of tropical land, a handful of coconut seedlings, and an unshakeable belief that great food begins with great farming."
             />
             <p class="text-gray-500 leading-relaxed mb-6">
-              The name TROVARA means "to find" — and that's exactly what we set out to do. Find the
+              The name TROVARA means "to find" - and that's exactly what we set out to do. Find the
               finest varieties. Find the best farming practices. Find the most honest path from soil
               to table.
             </p>
             <p class="text-gray-500 leading-relaxed">
               Today, Trovara Farm cultivates premium coconuts and plantains across fertile tropical
               plantations, and raises free-range poultry with the same care and ethics. We are
-              growing — adding new crops, expanding our reach, and building a brand that the world
+              growing - adding new crops, expanding our reach, and building a brand that the world
               can trust.
             </p>
           </div>
@@ -88,7 +88,7 @@ const team = [
             <blockquote class="text-2xl md:text-3xl font-bold text-trovara-dark leading-tight mb-6">
               "We don't just farm land. We cultivate a promise."
             </blockquote>
-            <p class="text-trovara-green font-semibold">— Trovara Farm</p>
+            <p class="text-trovara-green font-semibold">- Trovara Farm</p>
             <div class="mt-8 pt-8 border-t border-gray-200">
               <p class="text-sm text-gray-500 italic font-medium">
                 Born natural. Raised global.
@@ -159,7 +159,7 @@ const team = [
             <div class="text-4xl mb-5">🎯</div>
             <h3 class="text-2xl font-black mb-4">Our Mission</h3>
             <p class="text-white/80 leading-relaxed">
-              To grow premium, natural produce with uncompromising quality — delivering the earth's finest
+              To grow premium, natural produce with uncompromising quality - delivering the earth's finest
               to tables locally and globally, while supporting sustainable and ethical farming practices.
             </p>
           </div>
@@ -167,7 +167,7 @@ const team = [
             <div class="text-4xl mb-5">🌍</div>
             <h3 class="text-2xl font-black text-trovara-dark mb-4">Our Vision</h3>
             <p class="text-gray-500 leading-relaxed">
-              To become the world's most trusted tropical farm brand — a global name synonymous with
+              To become the world's most trusted tropical farm brand - a global name synonymous with
               purity, quality, and the honest promise of nature, recognized from local markets to
               international retail shelves.
             </p>

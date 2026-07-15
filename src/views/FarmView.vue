@@ -11,7 +11,7 @@ const operations = [
   {
     icon: '🍌',
     title: 'Plantain Plantation',
-    desc: 'Our plantain cultivation follows strict agronomic practices across fertile tropical soil. Unlike regular bananas, plantains are a cooking staple — starchier, heartier, and harvested at different stages for different uses. We grow and supply green plantains for savory cooking, ripe plantains for sweeter dishes, and also process them into dried chips and flour for wider market reach.',
+    desc: 'Our plantain cultivation follows strict agronomic practices across fertile tropical soil. Unlike regular bananas, plantains are a cooking staple - starchier, heartier, and harvested at different stages for different uses. We grow and supply green plantains for savory cooking, ripe plantains for sweeter dishes, and also process them into dried chips and flour for wider market reach.',
     highlights: ['Harvested at green and ripe stages', 'Zero synthetic chemicals or artificial ripening', 'Processed into chips and plantain flour', 'Export-grade quality for regional and global markets'],
   },
   {
@@ -43,7 +43,7 @@ const practices = [
             The farm that<br/>feeds the world.
           </h1>
           <p class="text-white/70 text-lg leading-relaxed max-w-xl">
-            Trovara Farm is more than a production facility — it is a living ecosystem where
+            Trovara Farm is more than a production facility - it is a living ecosystem where
             every practice is chosen for the long-term health of the land, the animals, and the people.
           </p>
         </div>
@@ -125,7 +125,7 @@ const practices = [
           <SectionHeader
             eyebrow="What's Next"
             title="The farm keeps growing."
-            subtitle="Trovara Farm has an ambitious expansion roadmap. From new crop varieties to processing facilities and export logistics — we are building something that will endure."
+            subtitle="Trovara Farm has an ambitious expansion roadmap. From new crop varieties to processing facilities and export logistics - we are building something that will endure."
             center
           />
           <div class="grid grid-cols-3 gap-4 mb-10">

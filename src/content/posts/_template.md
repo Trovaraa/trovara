@@ -27,4 +27,4 @@ More paragraphs, lists, and quotes are supported:
 
 > A pull quote or highlight goes here like this.
 
-Closing paragraph. No coding needed — just write in Markdown.
+Closing paragraph. No coding needed - just write in Markdown.

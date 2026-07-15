@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
+import { subscribeToNewsletter } from '../../lib/newsletter'
 
 defineProps<{
   variant?: 'footer' | 'inline'
@@ -9,6 +10,7 @@ defineProps<{
 
 const newsletter = reactive({
   email: '',
+  honey: '',
   status: 'idle' as 'idle' | 'loading' | 'success' | 'error',
   error: '',
 })
@@ -22,35 +24,25 @@ async function subscribe() {
     return
   }
 
-  newsletter.status = 'loading'
-  try {
-    const response = await fetch('https://formsubmit.co/ajax/info@trovara.farm', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        _subject: 'New Trovara newsletter signup',
-        _template: 'table',
-        _captcha: 'false',
-        email: newsletter.email,
-      }),
-    })
-
-    const result = await response.json().catch(() => null)
-
-    if (!response.ok || result?.success === 'false' || result?.success === false) {
-      throw new Error(result?.message ?? 'Subscription failed')
-    }
-
+  if (newsletter.honey.trim() !== '') {
     newsletter.status = 'success'
     newsletter.email = ''
-  } catch (error) {
-    newsletter.status = 'error'
-    const message = error instanceof Error ? error.message : ''
-    newsletter.error = message || 'Something went wrong. Please try again.'
+    newsletter.honey = ''
+    return
   }
+
+  newsletter.status = 'loading'
+  const result = await subscribeToNewsletter(newsletter.email)
+
+  if (!result.ok) {
+    newsletter.status = 'error'
+    newsletter.error = result.error || 'Something went wrong. Please try again.'
+    return
+  }
+
+  newsletter.status = 'success'
+  newsletter.email = ''
+  newsletter.honey = ''
 }
 
 function reset() {
@@ -102,6 +94,15 @@ function reset() {
       class="flex flex-col sm:flex-row gap-3"
     >
       <div class="flex-1">
+        <input
+          v-model="newsletter.honey"
+          type="text"
+          name="_honey"
+          tabindex="-1"
+          autocomplete="off"
+          class="hidden"
+          aria-hidden="true"
+        />
         <input
           v-model="newsletter.email"
           type="email"

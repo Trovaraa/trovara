@@ -1,7 +1,15 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { buildWhatsAppLink, PRODUCT_MESSAGES } from '../../lib/whatsapp'
 import type { Product } from '../../types'
 
-defineProps<{ product: Product }>()
+const props = defineProps<{ product: Product }>()
+
+const whatsappLink = computed(() => {
+  const productMessage = PRODUCT_MESSAGES[props.product.id as keyof typeof PRODUCT_MESSAGES]
+  if (!productMessage) return ''
+  return buildWhatsAppLink(productMessage)
+})
 </script>
 
 <template>
@@ -50,9 +58,9 @@ defineProps<{ product: Product }>()
     </div>
 
     <!-- Card Footer -->
-    <div class="px-8 pb-8">
+    <div class="px-8 pb-8 space-y-3">
       <RouterLink
-        :to="`/products#${product.id}`"
+        :to="`/products/${product.id}`"
         class="block w-full text-center py-2.5 px-4 rounded-lg border-2 font-semibold text-sm transition-all duration-200 hover:text-white"
         :style="{
           borderColor: product.color,
@@ -64,6 +72,15 @@ defineProps<{ product: Product }>()
       >
         {{ product.available ? 'Learn More' : 'Stay Tuned' }}
       </RouterLink>
+      <a
+        v-if="product.available && whatsappLink"
+        :href="whatsappLink"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="block w-full text-center py-2.5 px-4 rounded-lg bg-[#25D366] hover:bg-[#1ebe57] text-white font-semibold text-sm transition-colors duration-200"
+      >
+        WhatsApp Enquiry
+      </a>
     </div>
   </article>
 </template>

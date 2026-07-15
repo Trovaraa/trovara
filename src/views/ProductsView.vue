@@ -1,12 +1,26 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useProductsStore } from '../stores/products'
-import SectionHeader from '../components/ui/SectionHeader.vue'
+import StructuredData from '../components/StructuredData.vue'
+import SpecSheet from '../components/ui/SpecSheet.vue'
+import { buildWhatsAppLink, PRODUCT_MESSAGES } from '../lib/whatsapp'
 
 const store = useProductsStore()
 const products = store.allProducts
+
+const productSchemas = computed(() =>
+  store.availableProducts.map((product) => ({
+    '@type': 'Product',
+    name: `Trovara ${product.name}`,
+    description: product.description,
+    brand: { '@type': 'Brand', name: 'Trovara Farm' },
+    category: product.category,
+  })),
+)
 </script>
 
 <template>
+  <StructuredData :additional-schema="productSchemas">
   <div>
 
     <!-- Hero -->
@@ -18,7 +32,7 @@ const products = store.allProducts
           Products grown with purpose
         </h1>
         <p class="text-white/70 text-lg leading-relaxed">
-          Every product at Trovara Farm carries a story — of rich soil, honest care,
+          Every product at Trovara Farm carries a story - of rich soil, honest care,
           and a commitment to delivering the earth's finest to you.
         </p>
       </div>
@@ -98,20 +112,49 @@ const products = store.allProducts
                 </div>
               </div>
 
+              <SpecSheet
+                v-if="product.specs?.length"
+                :specs="product.specs"
+                title="Procurement specs"
+                class="mb-8"
+              />
+
+              <div v-if="product.available" class="flex flex-wrap gap-3">
               <RouterLink
-                v-if="product.available"
+                :to="`/products/${product.id}`"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 font-semibold text-sm transition-all duration-200 hover:text-white"
+                :style="{
+                  borderColor: product.color,
+                  color: product.color,
+                }"
+                @mouseenter="(e: MouseEvent) => { (e.currentTarget as HTMLElement).style.backgroundColor = product.color }"
+                @mouseleave="(e: MouseEvent) => { (e.currentTarget as HTMLElement).style.backgroundColor = 'transparent' }"
+              >
+                View Product Page
+              </RouterLink>
+              <RouterLink
                 to="/contact"
                 class="btn-primary"
                 :style="{ '--tw-ring-color': product.color }"
               >
                 Enquire About {{ product.name }}
               </RouterLink>
+              <a
+                v-if="PRODUCT_MESSAGES[product.id as keyof typeof PRODUCT_MESSAGES]"
+                :href="buildWhatsAppLink(PRODUCT_MESSAGES[product.id as keyof typeof PRODUCT_MESSAGES])"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#25D366] hover:bg-[#1ebe57] text-white font-semibold text-sm transition-colors"
+              >
+                WhatsApp Enquiry
+              </a>
+              </div>
               <div
                 v-else
                 class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 font-semibold text-sm"
                 :style="{ borderColor: product.color, color: product.color }"
               >
-                🌱 Stay Tuned — Coming Soon
+                🌱 Stay Tuned - Coming Soon
               </div>
             </div>
           </div>
@@ -132,7 +175,7 @@ const products = store.allProducts
               <!-- Content -->
               <div>
                 <p class="text-xs font-bold uppercase tracking-widest text-amber-700 mb-3">
-                  Trovara Plantain — Processed
+                  Trovara Plantain - Processed
                 </p>
                 <h3 class="text-3xl md:text-4xl font-black text-trovara-dark mb-3">
                   Plantain Flour
@@ -141,12 +184,12 @@ const products = store.allProducts
                   "The ancient staple, reimagined."
                 </p>
                 <p class="text-gray-500 leading-relaxed mb-6">
-                  Our plantain flour is milled from sun-dried, matured plantains grown on our own plantation — with zero additives, no bleaching agents, and no preservatives. It is naturally gluten-free, high in resistant starch, and rich in potassium and fiber. Trovara Plantain Flour is ideal for baking, thickening soups and stews, making porridges, and as a nutritious wheat flour substitute for health-conscious consumers and food manufacturers alike.
+                  Our plantain flour is milled from sun-dried, matured plantains grown on our own plantation - with zero additives, no bleaching agents, and no preservatives. It is naturally gluten-free, high in resistant starch, and rich in potassium and fiber. Trovara Plantain Flour is ideal for baking, thickening soups and stews, making porridges, and as a nutritious wheat flour substitute for health-conscious consumers and food manufacturers alike.
                 </p>
                 <div class="grid grid-cols-2 gap-3 mb-8">
                   <div
                     v-for="point in [
-                      '100% natural — no additives or preservatives',
+                      '100% natural - no additives or preservatives',
                       'Naturally gluten-free',
                       'High in resistant starch and potassium',
                       'Milled from our own plantation plantains',
@@ -182,7 +225,10 @@ const products = store.allProducts
             premium tropical produce and poultry at scale. Let's talk.
           </p>
           <div class="flex flex-wrap gap-4 justify-center">
-            <RouterLink to="/contact" class="btn-gold text-base px-8 py-4">
+            <RouterLink to="/wholesale" class="btn-gold text-base px-8 py-4">
+              Wholesale & Bulk Orders
+            </RouterLink>
+            <RouterLink to="/contact" class="inline-flex items-center gap-2 px-8 py-4 rounded-lg border-2 border-white/30 text-white font-semibold hover:bg-white/10 transition-all duration-200 text-base">
               Discuss a Partnership
             </RouterLink>
             <RouterLink
@@ -197,4 +243,5 @@ const products = store.allProducts
     </section>
 
   </div>
+  </StructuredData>
 </template>

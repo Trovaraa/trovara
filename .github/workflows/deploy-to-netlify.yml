@@ -21,10 +21,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 20
           cache: npm
@@ -32,11 +32,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Audit production dependencies
+        run: npm audit --omit=dev
+        continue-on-error: true
+
+      - name: Typecheck
+        run: npm run typecheck
+
       - name: Build
         run: npm run build
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v3.0
+        uses: nwtgck/actions-netlify@79e338a95494cff63e8989766a283d91b0564198 # v3.0
         with:
           publish-dir: ./dist
           production-branch: main

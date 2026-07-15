@@ -174,3 +174,15 @@ export function getPostBySlug(slug: string): BlogPost | undefined {
 export function getPublishedPosts(): BlogPost[] {
   return allPosts.filter((p) => p.published)
 }
+
+export function getCategories(): string[] {
+  return Array.from(new Set(getPublishedPosts().map((post) => post.category))).sort((a, b) =>
+    a.localeCompare(b),
+  )
+}
+
+export function getAllTags(): string[] {
+  return Array.from(new Set(getPublishedPosts().flatMap((post) => post.tags))).sort((a, b) =>
+    a.localeCompare(b),
+  )
+}

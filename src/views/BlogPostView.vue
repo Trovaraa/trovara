@@ -2,13 +2,46 @@
 import { computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useBlogStore } from '../stores/blog'
+import BlogCard from '../components/ui/BlogCard.vue'
 import NewsletterSubscribe from '../components/ui/NewsletterSubscribe.vue'
+import StructuredData from '../components/StructuredData.vue'
+import { applyPageMeta } from '../composables/usePageMeta'
+
+const BASE_URL = 'https://trovara.farm'
 
 const route = useRoute()
 const router = useRouter()
 const blogStore = useBlogStore()
 
 const post = computed(() => blogStore.getPostBySlug(route.params.slug as string))
+const relatedPosts = computed(() => {
+  if (!post.value) return []
+  return blogStore.publishedPosts
+    .filter(
+      (candidate) =>
+        candidate.slug !== post.value?.slug && candidate.category === post.value?.category,
+    )
+    .slice(0, 2)
+})
+
+const articleSchema = computed(() => {
+  if (!post.value) return undefined
+  const p = post.value
+  return {
+    '@type': 'Article',
+    headline: p.title,
+    description: p.excerpt,
+    author: { '@type': 'Organization', name: p.author },
+    datePublished: p.publishedAt,
+    image: p.coverImage ? `${BASE_URL}${p.coverImage}` : `${BASE_URL}/images/trovara-brand.png`,
+    publisher: {
+      '@type': 'Organization',
+      name: 'Trovara Farm',
+      logo: { '@type': 'ImageObject', url: `${BASE_URL}/images/trovara-brand.png` },
+    },
+    mainEntityOfPage: `${BASE_URL}/blog/${p.slug}`,
+  }
+})
 
 watch(
   post,
@@ -18,7 +51,12 @@ watch(
       return
     }
     if (p) {
-      document.title = `${p.title} — Trovara Farm`
+      applyPageMeta(route, {
+        title: `${p.title} - Trovara Farm`,
+        description: p.excerpt,
+        canonicalPath: `/blog/${p.slug}`,
+        ogImage: p.coverImage ? `${BASE_URL}${p.coverImage}` : `${BASE_URL}/images/trovara-brand.png`,
+      })
     }
   },
   { immediate: true },
@@ -34,6 +72,7 @@ function formatDate(iso: string) {
 </script>
 
 <template>
+  <StructuredData v-if="post" :additional-schema="articleSchema">
   <div v-if="post">
     <section class="pt-32 pb-16 bg-trovara-green relative overflow-hidden">
       <div class="absolute inset-0 bg-hero-pattern opacity-10 pointer-events-none" />
@@ -95,6 +134,15 @@ function formatDate(iso: string) {
       </div>
     </article>
 
+    <section v-if="relatedPosts.length" class="py-16 md:py-20 bg-white border-t border-gray-100">
+      <div class="container-trovara">
+        <h2 class="text-2xl md:text-3xl font-black text-trovara-dark mb-8">Related posts</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          <BlogCard v-for="relatedPost in relatedPosts" :key="relatedPost.slug" :post="relatedPost" />
+        </div>
+      </div>
+    </section>
+
     <section class="py-20 md:py-24 bg-trovara-cream border-t border-trovara-green/10">
       <div class="container-trovara">
         <div class="max-w-2xl mx-auto">
@@ -107,4 +155,5 @@ function formatDate(iso: string) {
       </div>
     </section>
   </div>
+  </StructuredData>
 </template>

@@ -44,4 +44,4 @@ We are building Trovara for you.
 
 > Welcome to the future of food.
 >
-> — Trovara Farm
+> - Trovara Farm

@@ -2,7 +2,10 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import router from './router'
 import App from './App.vue'
+import { initAnalytics } from './lib/analytics'
 import './style.css'
+
+initAnalytics()
 
 const app = createApp(App)
 

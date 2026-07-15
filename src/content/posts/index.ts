@@ -1,1 +1,1 @@
-export { getPostBySlug, getPublishedPosts } from './loadPosts'
+export { getPostBySlug, getPublishedPosts, getCategories, getAllTags } from './loadPosts'

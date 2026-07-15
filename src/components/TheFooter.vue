@@ -10,6 +10,7 @@ const links = {
     { label: 'Blog',        to: '/blog' },
     { label: 'Our Story',   to: '/about#story' },
     { label: 'Services',    to: '/services' },
+    { label: 'Wholesale',   to: '/wholesale' },
     { label: 'FAQ',         to: '/faq' },
     { label: 'Contact',     to: '/contact' },
   ],
@@ -18,6 +19,7 @@ const links = {
     { label: 'Plantain',       to: '/products#plantain' },
     { label: 'Plantain Flour', to: '/products#plantain' },
     { label: 'Poultry',        to: '/products#poultry' },
+    { label: 'Eggs',           to: '/products#eggs' },
     { label: 'Coming Soon',    to: '/products#coming-soon' },
   ],
 }
@@ -89,9 +91,23 @@ const links = {
         <p class="text-white/40 text-sm">
           &copy; {{ currentYear }} Trovara Farm. All rights reserved.
         </p>
-        <p class="text-white/40 text-sm">
-          Crafted with 🌿 for the earth and its people.
-        </p>
+        <div class="flex items-center gap-6">
+          <RouterLink
+            to="/privacy"
+            class="text-white/40 hover:text-trovara-gold text-sm transition-colors"
+          >
+            Privacy Policy
+          </RouterLink>
+          <RouterLink
+            to="/terms"
+            class="text-white/40 hover:text-trovara-gold text-sm transition-colors"
+          >
+            Terms of Service
+          </RouterLink>
+          <p class="text-white/40 text-sm">
+            Crafted with 🌿 for the earth and its people.
+          </p>
+        </div>
       </div>
     </div>
   </footer>

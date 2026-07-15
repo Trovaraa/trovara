@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { buildWhatsAppLink } from '../lib/whatsapp'
 
-const phoneNumber = '2348103693426'
-const presetMessage = encodeURIComponent(
-  "Hi Trovara Farm, I'd like to learn more about your products."
-)
-const waLink = `https://wa.me/${phoneNumber}?text=${presetMessage}`
+const waLink = buildWhatsAppLink("Hi Trovara Farm, I'd like to learn more about your products.")
 
 const expanded = ref(false)
 const showTooltip = ref(false)
@@ -39,7 +36,7 @@ onMounted(() => {
           </div>
           <div>
             <p class="font-bold text-trovara-dark text-sm">Trovara Farm</p>
-            <p class="text-trovara-green text-xs font-medium">Online — replies within minutes</p>
+            <p class="text-trovara-green text-xs font-medium">Online - replies within minutes</p>
           </div>
         </div>
         <p class="text-gray-600 text-sm leading-relaxed mb-4">
@@ -48,7 +45,7 @@ onMounted(() => {
         <a
           :href="waLink"
           target="_blank"
-          rel="noopener"
+          rel="noopener noreferrer"
           class="w-full inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebe57] text-white font-semibold py-2.5 px-4 rounded-lg transition-colors text-sm"
         >
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">

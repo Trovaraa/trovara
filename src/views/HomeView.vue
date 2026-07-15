@@ -3,6 +3,7 @@ import { useProductsStore } from '../stores/products'
 import ProductCard from '../components/ui/ProductCard.vue'
 import StatCard from '../components/ui/StatCard.vue'
 import SectionHeader from '../components/ui/SectionHeader.vue'
+import TestimonialsSection from '../components/ui/TestimonialsSection.vue'
 
 const store = useProductsStore()
 const featuredProducts = store.availableProducts
@@ -70,7 +71,7 @@ const values = [
 
           <p class="text-white/70 text-lg md:text-xl leading-relaxed max-w-xl mb-10">
             Trovara Farm grows premium coconuts, plantains, and poultry with deep respect for the land.
-            From our soil to your table — pure, natural, and world-class.
+            From our soil to your table - pure, natural, and world-class.
           </p>
 
           <div class="flex flex-wrap gap-4">
@@ -135,7 +136,7 @@ const values = [
         <SectionHeader
           eyebrow="What We Grow"
           title="Nature's finest, carefully cultivated"
-          subtitle="From tropical fruits to free-range poultry — every product at Trovara Farm is grown with purpose, patience, and pride."
+          subtitle="From tropical fruits to free-range poultry - every product at Trovara Farm is grown with purpose, patience, and pride."
           center
         />
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
@@ -229,7 +230,7 @@ const values = [
             <SectionHeader
               eyebrow="Ancillary Services"
               title="We help other farms grow too."
-              subtitle="The expertise we've built at Trovara Farm is available to you. From farm setup and soil advisory to crop planning and market linkage — we walk the land with you."
+              subtitle="The expertise we've built at Trovara Farm is available to you. From farm setup and soil advisory to crop planning and market linkage - we walk the land with you."
             />
             <div class="grid grid-cols-2 gap-3 mb-8">
               <div v-for="s in ['Farm Setup & Development', 'Soil Health Advisory', 'Crop Planning', 'Irrigation Design', 'Pest Management', 'Market Linkage']" :key="s"
@@ -259,6 +260,8 @@ const values = [
       </div>
     </section>
 
+    <TestimonialsSection context="home" />
+
     <!-- ===== CTA ===== -->
     <section class="py-20 bg-trovara-dark text-white">
       <div class="container-trovara text-center">
@@ -267,7 +270,7 @@ const values = [
           Let's grow something great together
         </h2>
         <p class="text-white/60 text-lg mb-10 max-w-lg mx-auto">
-          Whether you're a distributor, retailer, or consumer — we'd love to connect.
+          Whether you're a distributor, retailer, or consumer - we'd love to connect.
         </p>
         <div class="flex flex-wrap gap-4 justify-center">
           <RouterLink to="/contact" class="btn-gold text-base px-8 py-4">

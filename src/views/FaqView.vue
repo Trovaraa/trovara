@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import SectionHeader from '../components/ui/SectionHeader.vue'
+import { buildWhatsAppLink } from '../lib/whatsapp'
 
 interface FaqItem {
   q: string
@@ -28,7 +28,7 @@ const faqs: FaqGroup[] = [
       },
       {
         q: 'What plantain varieties do you grow?',
-        a: 'We cultivate multiple plantain varieties suited for different uses — including cooking plantains harvested green for savory dishes, and sweeter ripe plantains for fried and dessert applications. Plantain flour is milled from fully mature plantains.',
+        a: 'We cultivate multiple plantain varieties suited for different uses - including cooking plantains harvested green for savory dishes, and sweeter ripe plantains for fried and dessert applications. Plantain flour is milled from fully mature plantains.',
       },
       {
         q: 'Do you offer plantain flour in retail packaging?',
@@ -42,7 +42,7 @@ const faqs: FaqGroup[] = [
     items: [
       {
         q: 'What is your minimum order quantity (MOQ)?',
-        a: 'Retail orders have no minimum. For wholesale and bulk, MOQs vary by product — typically starting at one pallet for coconut, one tonne for plantain, and case quantities for poultry. Reach out for specifics on your needs.',
+        a: 'Retail orders have no minimum. For wholesale and bulk, MOQs vary by product - typically starting at one pallet for coconut, one tonne for plantain, and case quantities for poultry. Reach out for specifics on your needs.',
       },
       {
         q: 'How do I get a price quote?',
@@ -68,7 +68,7 @@ const faqs: FaqGroup[] = [
       },
       {
         q: 'How long does shipping take?',
-        a: 'Local deliveries typically arrive within 1–3 business days. National shipping is 3–7 days. International export timing depends on the destination and shipping mode (sea or air freight) — typically 1–6 weeks.',
+        a: 'Local deliveries typically arrive within 1–3 business days. National shipping is 3–7 days. International export timing depends on the destination and shipping mode (sea or air freight) - typically 1–6 weeks.',
       },
       {
         q: 'Do you handle export documentation?',
@@ -86,7 +86,7 @@ const faqs: FaqGroup[] = [
     items: [
       {
         q: 'Can you help me start my own farm?',
-        a: 'Yes — that is one of our ancillary services. Visit our Services page for the full list, including farm setup, soil advisory, crop planning, irrigation design, and market linkage.',
+        a: 'Yes - that is one of our ancillary services. Visit our Services page for the full list, including farm setup, soil advisory, crop planning, irrigation design, and market linkage.',
       },
       {
         q: 'How much do your farm services cost?',
@@ -98,7 +98,7 @@ const faqs: FaqGroup[] = [
       },
       {
         q: 'Will you visit my farm?',
-        a: 'Yes. On-site assessment is part of how we work. For sites outside our standard service region, additional travel costs may apply — discussed transparently before any commitment.',
+        a: 'Yes. On-site assessment is part of how we work. For sites outside our standard service region, additional travel costs may apply - discussed transparently before any commitment.',
       },
     ],
   },
@@ -112,7 +112,7 @@ const faqs: FaqGroup[] = [
       },
       {
         q: 'Are you open to becoming a private-label supplier?',
-        a: 'Yes. We support white-label and private-label arrangements for compatible buyers — particularly for plantain flour, dried coconut products, and packaged poultry.',
+        a: 'Yes. We support white-label and private-label arrangements for compatible buyers - particularly for plantain flour, dried coconut products, and packaged poultry.',
       },
       {
         q: 'How can I become a Trovara distributor?',
@@ -120,13 +120,14 @@ const faqs: FaqGroup[] = [
       },
       {
         q: 'Do you partner with smaller farmers as outgrowers?',
-        a: 'Yes — building a network of partner farmers is part of our long-term strategy. If you are a smaller farmer interested in growing for Trovara under our standards, please get in touch.',
+        a: 'Yes - building a network of partner farmers is part of our long-term strategy. If you are a smaller farmer interested in growing for Trovara under our standards, please get in touch.',
       },
     ],
   },
 ]
 
 const openItems = ref<Set<string>>(new Set())
+const faqWhatsAppLink = buildWhatsAppLink("Hi Trovara Farm, I have a question and would like support from your team.")
 
 function toggle(key: string) {
   if (openItems.value.has(key)) {
@@ -153,7 +154,7 @@ function itemKey(category: string, i: number) {
         </h1>
         <p class="text-white/70 text-lg leading-relaxed">
           Answers to the questions we hear most often. If you don't see yours, reach out
-          — we'll get back to you within a business day.
+          - we'll get back to you within a business day.
         </p>
       </div>
     </section>
@@ -227,9 +228,9 @@ function itemKey(category: string, i: number) {
             Contact Us
           </RouterLink>
           <a
-            href="https://wa.me/2348103693426"
+            :href="faqWhatsAppLink"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             class="inline-flex items-center gap-2 px-8 py-4 rounded-lg border-2 border-white/30 text-white font-semibold hover:bg-white/10 transition-all duration-200 text-base"
           >
             Chat on WhatsApp

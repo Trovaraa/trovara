@@ -41,7 +41,7 @@ const services = [
   {
     icon: '💧',
     title: 'Irrigation System Design',
-    desc: 'Water is life on a farm. We design efficient, low-cost irrigation systems tailored to your crop, land size, and water source — from simple gravity-fed systems to drip irrigation setups.',
+    desc: 'Water is life on a farm. We design efficient, low-cost irrigation systems tailored to your crop, land size, and water source - from simple gravity-fed systems to drip irrigation setups.',
     deliverables: [
       'Water source assessment',
       'Irrigation system design and layout',
@@ -89,7 +89,7 @@ const services = [
   {
     icon: '🌍',
     title: 'Market Linkage & Export Support',
-    desc: 'Growing great produce is only half the job — getting it to the right buyer at the right price is the other half. We connect farmers and agribusinesses to local buyers, regional markets, and export channels.',
+    desc: 'Growing great produce is only half the job - getting it to the right buyer at the right price is the other half. We connect farmers and agribusinesses to local buyers, regional markets, and export channels.',
     deliverables: [
       'Buyer identification and introduction',
       'Export documentation and compliance support',
@@ -104,7 +104,7 @@ const process = [
   { step: '01', title: 'Initial Consultation', desc: 'We begin with a free consultation to understand your farm, your goals, and your challenges.' },
   { step: '02', title: 'Site Assessment', desc: 'Our team visits your farm to assess land, soil, water, infrastructure, and current operations.' },
   { step: '03', title: 'Custom Plan', desc: 'We deliver a tailored service plan with clear timelines, deliverables, and expected outcomes.' },
-  { step: '04', title: 'Implementation', desc: 'We work alongside you to implement the plan — hands-on, practical, and results-focused.' },
+  { step: '04', title: 'Implementation', desc: 'We work alongside you to implement the plan - hands-on, practical, and results-focused.' },
   { step: '05', title: 'Follow-Up Support', desc: 'Our relationship doesn\'t end at delivery. We provide ongoing check-ins and adjustments as your farm evolves.' },
 ]
 </script>
@@ -236,7 +236,7 @@ const process = [
               your farm size, service scope, and location. There are no hidden fees.
             </p>
             <p class="text-gray-500 leading-relaxed mb-8">
-              We also offer package deals for farms that need multiple services — for example,
+              We also offer package deals for farms that need multiple services - for example,
               combining soil advisory, crop planning, and irrigation design at a bundled rate.
             </p>
             <RouterLink to="/contact" class="btn-primary px-8 py-4 text-base">

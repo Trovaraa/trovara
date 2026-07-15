@@ -14,6 +14,7 @@ const navLinks = [
   { label: 'The Farm', to: '/farm' },
   { label: 'Blog',     to: '/blog' },
   { label: 'FAQ',      to: '/faq' },
+  { label: 'Wholesale', to: '/wholesale' },
   { label: 'Contact',  to: '/contact' },
 ]
 

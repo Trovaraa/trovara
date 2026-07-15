@@ -1,11 +1,18 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import TheNavbar from './components/TheNavbar.vue'
 import TheFooter from './components/TheFooter.vue'
+import StructuredData from './components/StructuredData.vue'
 import WhatsAppButton from './components/WhatsAppButton.vue'
+import { usePageMeta } from './composables/usePageMeta'
+
+const router = useRouter()
+usePageMeta(router)
 </script>
 
 <template>
   <div class="min-h-screen flex flex-col">
+    <StructuredData />
     <TheNavbar />
     <main class="flex-1">
       <RouterView v-slot="{ Component }">

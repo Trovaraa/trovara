@@ -1,10 +1,32 @@
+export interface ProductSpecRow {
+  label: string
+  value: string
+}
+
+export interface OrderTier {
+  id: string
+  name: string
+  /** Display price, e.g. "₦6,500". Omit for quote-based (bulk/wholesale) products. */
+  price?: string
+  /** Unit/period shown under the price, e.g. "per crate (30 eggs)" or "per month". */
+  period?: string
+  description: string
+  features: string[]
+  ctaLabel: string
+  popular?: boolean
+  /** Prefilled WhatsApp message used when the customer taps the tier CTA. */
+  whatsappMessage: string
+}
+
 export interface Product {
   id: string
   name: string
-  category: 'coconut' | 'plantain' | 'poultry' | 'coming-soon'
+  category: 'coconut' | 'plantain' | 'poultry' | 'eggs' | 'coming-soon'
   tagline: string
   description: string
   benefits: string[]
+  specs?: ProductSpecRow[]
+  orderTiers?: OrderTier[]
   icon: string
   color: string
   bgColor: string

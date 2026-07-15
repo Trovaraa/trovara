@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { reactive, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import SectionHeader from '../components/ui/SectionHeader.vue'
+import { submitToFormSubmit } from '../lib/formsubmit'
 
+const route = useRoute()
 const submitted = ref(false)
 const submitting = ref(false)
+const submitError = ref('')
 
 const form = reactive({
   name: '',
@@ -12,6 +16,18 @@ const form = reactive({
   subject: 'general',
   message: '',
 })
+
+const validSubjects = new Set(['general', 'bulk-order', 'partnership', 'export', 'media', 'other'])
+
+watch(
+  () => route.query.subject,
+  (value) => {
+    if (typeof value === 'string' && validSubjects.has(value)) {
+      form.subject = value
+    }
+  },
+  { immediate: true },
+)
 
 const subjects = [
   { value: 'general',      label: 'General Enquiry' },
@@ -22,10 +38,46 @@ const subjects = [
   { value: 'other',        label: 'Other' },
 ]
 
+const subjectLabels = Object.fromEntries(subjects.map((item) => [item.value, item.label]))
+
+function resetForm() {
+  submitted.value = false
+  submitError.value = ''
+  Object.assign(form, {
+    name: '',
+    email: '',
+    phone: '',
+    subject: 'general',
+    message: '',
+  })
+}
+
 async function handleSubmit() {
+  submitError.value = ''
   submitting.value = true
-  await new Promise((resolve) => setTimeout(resolve, 1200))
+
+  const subjectLabel = subjectLabels[form.subject] ?? 'General Enquiry'
+  const result = await submitToFormSubmit(
+    {
+      name: form.name,
+      email: form.email,
+      phone: form.phone,
+      subject: subjectLabel,
+      message: form.message,
+    },
+    {
+      subject: `[Trovara Contact] ${subjectLabel}`,
+      template: 'table',
+    },
+  )
+
   submitting.value = false
+
+  if (!result.ok) {
+    submitError.value = result.error ?? 'Something went wrong. Please try again.'
+    return
+  }
+
   submitted.value = true
 }
 
@@ -49,7 +101,7 @@ const contactInfo = [
           We'd love to hear from you.
         </h1>
         <p class="text-white/70 text-lg leading-relaxed">
-          Whether you're a buyer, distributor, investor, or simply curious —
+          Whether you're a buyer, distributor, investor, or simply curious -
           Trovara Farm is always open.
         </p>
       </div>
@@ -107,7 +159,7 @@ const contactInfo = [
                 </p>
                 <button
                   class="btn-primary"
-                  @click="submitted = false; Object.assign(form, { name: '', email: '', phone: '', subject: 'general', message: '' })"
+                  @click="resetForm"
                 >
                   Send Another Message
                 </button>
@@ -198,6 +250,9 @@ const contactInfo = [
                   </span>
                   <span v-else>Send Message →</span>
                 </button>
+                <p v-if="submitError" class="text-sm text-red-600">
+                  {{ submitError }}
+                </p>
               </form>
             </div>
           </div>
