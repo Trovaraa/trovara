@@ -12,34 +12,28 @@ const wholesaleWhatsAppLink = buildWhatsAppLink(
 
 const harvestWindows = [
   {
+    product: 'Plantain',
+    period: 'From April 2026, year-round',
+    status: 'available' as const,
+    note: 'First commercial harvest from April 2026; continuous supply thereafter',
+  },
+  {
     product: 'Coconut',
-    period: 'Year-round (rolling harvest)',
+    period: 'From December 2026, year-round',
+    status: 'forecast' as const,
+    note: 'First commercial harvest from December 2026; continuous supply thereafter',
+  },
+  {
+    product: 'Chicken',
+    period: 'Year-round',
     status: 'available' as const,
-    note: 'Peak maturity batches scheduled weekly',
+    note: 'Recurring broiler supply on contract',
   },
   {
-    product: 'Plantain - green (graded boxes)',
-    period: 'Dec 2026 – Mar 2027',
-    status: 'forecast' as const,
-    note: '~5-month cycle from current planting',
-  },
-  {
-    product: 'Plantain - ripe (prepackaged)',
-    period: 'Jan 2027 – Apr 2027',
-    status: 'forecast' as const,
-    note: 'Staggered ripening after green harvest',
-  },
-  {
-    product: 'Plantain flour & chips',
-    period: 'Feb 2027 – ongoing',
-    status: 'forecast' as const,
-    note: 'Processed lines follow fresh plantain intake',
-  },
-  {
-    product: 'Poultry (eggs & broilers)',
-    period: 'Year-round (contract basis)',
+    product: 'Eggs',
+    period: 'Year-round',
     status: 'available' as const,
-    note: 'Recurring supply windows for hotel kitchens',
+    note: 'Pasture-raised eggs available continuously',
   },
 ]
 
@@ -139,10 +133,10 @@ const productLines = [
           </div>
           <div class="rounded-2xl bg-white p-7 shadow-sm border border-gray-100">
             <p class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-2">Harvest Timeline</p>
-            <p class="text-trovara-dark font-semibold mb-2">~5 months for plantain maturity</p>
+            <p class="text-trovara-dark font-semibold mb-2">Plantain live; coconut from Dec 2026</p>
             <p class="text-sm text-gray-600 leading-relaxed">
-              Plantain growth cycles are forecasted in advance so contracted buyers can plan demand around
-              expected harvest windows and continuity requirements.
+              Plantain is available year-round from April 2026. Coconut opens December 2026 and continues
+              year-round. Chicken and eggs ship every month on contract.
             </p>
           </div>
           <div class="rounded-2xl bg-white p-7 shadow-sm border border-gray-100">
@@ -170,7 +164,7 @@ const productLines = [
         <SectionHeader
           eyebrow="Supply Planning"
           title="Harvest forecast calendar"
-          subtitle="Public supply windows help procurement teams plan around plantain's ~5-month growth cycle and our year-round coconut and poultry lines."
+          subtitle="Public supply windows for procurement planning: plantain from April 2027, coconut from December 2027, and year-round chicken and eggs."
         />
         <HarvestCalendar :windows="harvestWindows" />
         <p class="text-xs text-gray-400 mt-4 text-center">
