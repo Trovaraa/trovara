@@ -7,6 +7,32 @@ const md = new MarkdownIt({
   typographer: true,
 })
 
+const SITE_HOSTS = new Set(['trovara.farm', 'www.trovara.farm'])
+
+function isExternalHttpLink(href: string): boolean {
+  if (!/^https?:\/\//i.test(href)) return false
+
+  try {
+    const { hostname } = new URL(href)
+    return !SITE_HOSTS.has(hostname.toLowerCase())
+  } catch {
+    return false
+  }
+}
+
+const defaultLinkOpen =
+  md.renderer.rules.link_open ??
+  ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options))
+
+md.renderer.rules.link_open = (tokens, idx, options, _env, self) => {
+  const href = tokens[idx].attrGet('href')
+  if (href && isExternalHttpLink(href)) {
+    tokens[idx].attrSet('target', '_blank')
+    tokens[idx].attrSet('rel', 'noopener noreferrer')
+  }
+  return defaultLinkOpen(tokens, idx, options, _env, self)
+}
+
 const postFiles = import.meta.glob<string>('./*.md', {
   as: 'raw',
   eager: true,

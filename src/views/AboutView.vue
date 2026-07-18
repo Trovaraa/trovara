@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SectionHeader from '../components/ui/SectionHeader.vue'
 import StatCard from '../components/ui/StatCard.vue'
+import InfographicFigure from '../components/ui/InfographicFigure.vue'
 
 const milestones = [
   {
@@ -83,16 +84,27 @@ const team = [
           </div>
 
           <!-- Visual Story Box -->
-          <div class="bg-trovara-light rounded-3xl p-8 lg:p-10">
-            <div class="text-6xl mb-6">🌴</div>
-            <blockquote class="text-2xl md:text-3xl font-bold text-trovara-dark leading-tight mb-6">
-              "We don't just farm land. We cultivate a promise."
-            </blockquote>
-            <p class="text-trovara-green font-semibold">- Trovara Farm</p>
-            <div class="mt-8 pt-8 border-t border-gray-200">
-              <p class="text-sm text-gray-500 italic font-medium">
-                Born natural. Raised global.
-              </p>
+          <div class="space-y-6">
+            <div class="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
+              <img
+                src="/images/trovara-brand.png"
+                alt="Trovara Farm brand mark — Born Natural, Raised Global"
+                class="w-full h-auto object-cover"
+                width="800"
+                height="600"
+                loading="lazy"
+              />
+            </div>
+            <div class="bg-trovara-light rounded-3xl p-8 lg:p-10">
+              <blockquote class="text-2xl md:text-3xl font-bold text-trovara-dark leading-tight mb-6">
+                "We don't just farm land. We cultivate a promise."
+              </blockquote>
+              <p class="text-trovara-green font-semibold">- Trovara Farm</p>
+              <div class="mt-8 pt-8 border-t border-gray-200">
+                <p class="text-sm text-gray-500 italic font-medium">
+                  Born natural. Raised global.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -193,6 +205,26 @@ const team = [
             <p class="text-trovara-green text-sm font-medium mb-3">{{ member.role }}</p>
             <p class="text-gray-500 text-sm leading-relaxed">{{ member.bio }}</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Master plan -->
+    <section class="py-20 md:py-28 bg-trovara-cream">
+      <div class="container-trovara">
+        <SectionHeader
+          eyebrow="The Land"
+          title="A 24-acre regenerative ecosystem."
+          subtitle="Our farm is designed as one integrated system — agriculture, processing, and hospitality working together on a single master plan."
+          center
+        />
+        <div class="max-w-5xl mx-auto">
+          <InfographicFigure
+            src="/images/regen/masterplan.webp"
+            alt="Site plan of Trovara's 24-acre regenerative farm-to-hospitality ecosystem, showing colour-coded agricultural, processing, hospitality, residential, and infrastructure zones."
+            caption="24-Acre Farm-to-Hospitality Ecosystem"
+            summary="42% built-up, 50% green and productive land, targeting 100% energy self-sufficiency. Tap to explore each zone."
+          />
         </div>
       </div>
     </section>

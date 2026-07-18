@@ -34,7 +34,7 @@ const dataWeCollect = [
   {
     label: 'Information you provide',
     detail:
-      'Your name, email address, phone number, company/organisation, delivery location, and the contents of any message when you use our contact form, request a quote, subscribe to our newsletter, or message us on WhatsApp.',
+      'Your name, email address, phone number, company/organisation, delivery location, and the contents of any message when you use our contact form, request a quote, subscribe to our newsletter, message us on WhatsApp, or place an order through our Telegram customer bot.',
   },
   {
     label: 'Transaction & enquiry details',
@@ -94,8 +94,8 @@ const rights = [
 
 const thirdParties = [
   {
-    name: 'FormSubmit',
-    purpose: 'Delivers contact-form submissions securely to our team inbox.',
+    name: 'Formspree',
+    purpose: 'Delivers contact-form and newsletter submissions to our team inbox (via our Netlify function).',
   },
   {
     name: 'Buttondown',
@@ -103,11 +103,17 @@ const thirdParties = [
   },
   {
     name: 'Plausible Analytics',
-    purpose: 'Privacy-first, cookieless website analytics - no personal data or cross-site tracking.',
+    purpose:
+      'Privacy-first, cookieless website analytics loaded from plausible.io when configured - no personal data or cross-site tracking.',
   },
   {
     name: 'WhatsApp (Meta)',
     purpose: 'Handles messages you choose to send us through the WhatsApp channel.',
+  },
+  {
+    name: 'Telegram',
+    purpose:
+      'Hosts the @TrovaraFarmBot customer order bot when you choose to order or track produce through Telegram.',
   },
   {
     name: 'Netlify',
@@ -266,14 +272,34 @@ const thirdParties = [
               <h2 class="text-2xl md:text-3xl font-black text-trovara-dark mb-4">6. Cookies & Analytics</h2>
               <div class="space-y-4 text-gray-700 leading-relaxed">
                 <p>
-                  We use privacy-first, cookieless analytics to understand how our website is used.
-                  This tool collects only aggregated, anonymised statistics - it does
+                  We use
+                  <a
+                    href="https://plausible.io"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-trovara-green font-semibold hover:underline"
+                  >Plausible Analytics</a>,
+                  a privacy-first, cookieless service, to understand how our website is used.
+                  Plausible collects only aggregated, anonymised statistics - it does
                   <strong>not</strong> set tracking cookies, does not collect personal data, and does
                   not track you across other websites.
                 </p>
                 <p>
+                  Analytics runs only when we have configured it for our production site. The
+                  Plausible script is loaded from
+                  <code class="text-sm bg-white px-1.5 py-0.5 rounded">https://plausible.io</code>
+                  under our Content Security Policy allowlist. We do not use Subresource Integrity
+                  (SRI) for this script because Plausible serves it from a single, unversioned URL
+                  that may change when they update the service.
+                </p>
+                <p>
                   Because we do not use non-essential or advertising cookies, you are not required to
                   make cookie-consent choices to browse this site normally.
+                </p>
+                <p>
+                  You may optionally install this site to your device Home Screen. That stores a
+                  lightweight app shell and static assets in your browser for faster repeat visits.
+                  It is not used to track you, and it does not keep personal form data offline.
                 </p>
               </div>
             </div>

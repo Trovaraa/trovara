@@ -1,11 +1,13 @@
-export const FORMSUBMIT_EMAIL = 'info@trovara.farm'
+const CONTACT_ENDPOINT = '/.netlify/functions/contact'
 
-const FORMSUBMIT_ENDPOINT = `https://formsubmit.co/ajax/${FORMSUBMIT_EMAIL}`
-
-interface SubmitOptions {
-  subject?: string
-  template?: string
-  captcha?: boolean
+export interface ContactPayload {
+  name: string
+  email: string
+  phone: string
+  message: string
+  /** Subject key, e.g. `general`, `bulk-order` */
+  subject: string
+  honey?: string
 }
 
 interface SubmitResult {
@@ -13,40 +15,23 @@ interface SubmitResult {
   error?: string
 }
 
-export async function submitToFormSubmit(
-  payload: Record<string, string>,
-  options?: SubmitOptions,
-): Promise<SubmitResult> {
+export async function submitContactForm(payload: ContactPayload): Promise<SubmitResult> {
   try {
-    const body: Record<string, string> = {
-      ...payload,
-      _captcha: String(options?.captcha ?? true),
-    }
-
-    if (options?.subject) {
-      body._subject = options.subject
-    }
-    if (options?.template) {
-      body._template = options.template
-    }
-
-    const response = await fetch(FORMSUBMIT_ENDPOINT, {
+    const response = await fetch(CONTACT_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(payload),
     })
 
-    const result = await response.json().catch(() => null)
-    const requestFailed =
-      !response.ok || result?.success === false || result?.success === 'false'
+    const result = (await response.json().catch(() => null)) as SubmitResult | null
 
-    if (requestFailed) {
+    if (!response.ok || !result?.ok) {
       return {
         ok: false,
-        error: result?.message ?? 'Failed to submit the form.',
+        error: result?.error ?? 'Failed to submit the form.',
       }
     }
 
@@ -58,3 +43,8 @@ export async function submitToFormSubmit(
     }
   }
 }
+
+/** @deprecated Use submitContactForm */
+export const submitToFormSubmit = submitContactForm
+
+// Client posts only to our Netlify function; Formspree credentials stay server-side.

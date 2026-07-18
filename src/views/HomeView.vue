@@ -4,6 +4,8 @@ import ProductCard from '../components/ui/ProductCard.vue'
 import StatCard from '../components/ui/StatCard.vue'
 import SectionHeader from '../components/ui/SectionHeader.vue'
 import TestimonialsSection from '../components/ui/TestimonialsSection.vue'
+import InfographicFigure from '../components/ui/InfographicFigure.vue'
+import { testimonials } from '../data/testimonials'
 
 const store = useProductsStore()
 const featuredProducts = store.availableProducts
@@ -167,33 +169,14 @@ const values = [
             </RouterLink>
           </div>
 
-          <!-- Visual Element -->
-          <div class="grid grid-cols-2 gap-4">
-            <div class="space-y-4">
-              <div class="bg-white/10 rounded-2xl p-6 backdrop-blur-sm border border-white/10">
-                <div class="text-4xl mb-3">🌴</div>
-                <div class="text-white font-bold">Tropical Origin</div>
-                <div class="text-white/60 text-sm mt-1">Grown in rich, tropical soil</div>
-              </div>
-              <div class="bg-trovara-gold/20 rounded-2xl p-6 backdrop-blur-sm border border-trovara-gold/20">
-                <div class="text-4xl mb-3">☀️</div>
-                <div class="text-white font-bold">Sun Cultivated</div>
-                <div class="text-white/60 text-sm mt-1">Natural ripening, always</div>
-              </div>
-            </div>
-            <div class="space-y-4 mt-8">
-              <div class="bg-white/10 rounded-2xl p-6 backdrop-blur-sm border border-white/10">
-                <div class="text-4xl mb-3">🌍</div>
-                <div class="text-white font-bold">Global Standards</div>
-                <div class="text-white/60 text-sm mt-1">Export-ready quality</div>
-              </div>
-              <div class="bg-white/10 rounded-2xl p-6 backdrop-blur-sm border border-white/10">
-                <div class="text-4xl mb-3">❤️</div>
-                <div class="text-white font-bold">Grown with Love</div>
-                <div class="text-white/60 text-sm mt-1">Every harvest, a blessing</div>
-              </div>
-            </div>
-          </div>
+          <!-- Regenerative system visual -->
+          <InfographicFigure
+            src="/images/regen/system.webp"
+            alt="Trovara integrated regenerative system: plantain, coconut, and chicken inputs flow through a circular farm into Trovara Fresh and Trovara Harvest brands."
+            caption="One regenerative system behind every product"
+            summary="Fresh produce and shelf-stable Harvest products — all from one closed-loop farm on 24 acres. Tap to explore the full system."
+            dark
+          />
         </div>
       </div>
     </section>
@@ -260,7 +243,7 @@ const values = [
       </div>
     </section>
 
-    <TestimonialsSection context="home" />
+    <TestimonialsSection v-if="testimonials.length > 0" context="home" />
 
     <!-- ===== CTA ===== -->
     <section class="py-20 bg-trovara-dark text-white">

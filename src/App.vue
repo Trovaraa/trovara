@@ -4,6 +4,7 @@ import TheNavbar from './components/TheNavbar.vue'
 import TheFooter from './components/TheFooter.vue'
 import StructuredData from './components/StructuredData.vue'
 import WhatsAppButton from './components/WhatsAppButton.vue'
+import InstallPrompt from './components/InstallPrompt.vue'
 import { usePageMeta } from './composables/usePageMeta'
 
 const router = useRouter()
@@ -23,6 +24,7 @@ usePageMeta(router)
     </main>
     <TheFooter />
     <WhatsAppButton />
+    <InstallPrompt />
   </div>
 </template>
 

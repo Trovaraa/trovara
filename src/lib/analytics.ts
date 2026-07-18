@@ -1,3 +1,6 @@
+// Plausible is loaded from https://plausible.io (CSP allowlist in netlify.toml).
+// No SRI: Plausible updates script.js without versioned URLs. Analytics runs only
+// when VITE_PLAUSIBLE_DOMAIN is set; otherwise this module is a no-op.
 const PLAUSIBLE_DOMAIN = import.meta.env.VITE_PLAUSIBLE_DOMAIN
 
 export function initAnalytics() {

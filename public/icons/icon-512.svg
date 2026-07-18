@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <circle cx="32" cy="32" r="32" fill="#1A6B3C"/>
+  <path d="M32 12 C20 18 16 28 18 38 C22 34 28 30 32 28 C36 30 42 34 46 38 C48 28 44 18 32 12Z" fill="#E8A427"/>
+  <path d="M24 38 C22 44 24 52 32 54 C40 52 42 44 40 38 C36 42 28 42 24 38Z" fill="#2D9960"/>
+  <text x="32" y="62" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#E8A427" font-weight="700" letter-spacing="1">T</text>
+</svg>

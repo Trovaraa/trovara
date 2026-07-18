@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { buildWhatsAppLink, PRODUCT_MESSAGES } from '../../lib/whatsapp'
+import { productColorClasses } from '../../lib/productColors'
 import type { Product } from '../../types'
 
 const props = defineProps<{ product: Product }>()
+
+const colors = computed(() => productColorClasses(props.product.id))
 
 const whatsappLink = computed(() => {
   const productMessage = PRODUCT_MESSAGES[props.product.id as keyof typeof PRODUCT_MESSAGES]
@@ -13,14 +16,11 @@ const whatsappLink = computed(() => {
 </script>
 
 <template>
-  <article
-    class="card group cursor-pointer"
-    :style="{ '--card-color': product.color }"
-  >
+  <article class="card group cursor-pointer">
     <!-- Card Header -->
     <div
       class="relative px-8 pt-10 pb-6 flex flex-col items-center text-center"
-      :style="{ backgroundColor: product.bgColor }"
+      :class="colors.headerBg"
     >
       <div class="text-6xl mb-4 group-hover:scale-110 transition-transform duration-300">
         {{ product.icon }}
@@ -32,7 +32,7 @@ const whatsappLink = computed(() => {
         Coming Soon
       </span>
       <h3 class="text-xl font-bold text-trovara-dark mb-1">{{ product.name }}</h3>
-      <p class="text-sm font-medium italic" :style="{ color: product.color }">
+      <p class="text-sm font-medium italic" :class="colors.text">
         {{ product.tagline }}
       </p>
     </div>
@@ -48,8 +48,10 @@ const whatsappLink = computed(() => {
           :key="benefit"
           class="flex items-start gap-2.5 text-sm text-trovara-dark"
         >
-          <span class="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center text-white text-[10px] font-bold"
-                :style="{ backgroundColor: product.color }">
+          <span
+            class="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center text-white text-[10px] font-bold"
+            :class="colors.bgAccent"
+          >
             ✓
           </span>
           {{ benefit }}
@@ -61,14 +63,11 @@ const whatsappLink = computed(() => {
     <div class="px-8 pb-8 space-y-3">
       <RouterLink
         :to="`/products/${product.id}`"
-        class="block w-full text-center py-2.5 px-4 rounded-lg border-2 font-semibold text-sm transition-all duration-200 hover:text-white"
-        :style="{
-          borderColor: product.color,
-          color: product.color,
-        }"
-        :class="!product.available ? 'opacity-50 pointer-events-none' : ''"
-        @mouseenter="(e: MouseEvent) => { (e.currentTarget as HTMLElement).style.backgroundColor = product.color }"
-        @mouseleave="(e: MouseEvent) => { (e.currentTarget as HTMLElement).style.backgroundColor = 'transparent' }"
+        class="block w-full text-center py-2.5 px-4 rounded-lg border-2 font-semibold text-sm transition-all duration-200"
+        :class="[
+          colors.btnOutline,
+          !product.available ? 'opacity-50 pointer-events-none' : '',
+        ]"
       >
         {{ product.available ? 'Learn More' : 'Stay Tuned' }}
       </RouterLink>

@@ -5,7 +5,9 @@ import StructuredData from '../components/StructuredData.vue'
 import SpecSheet from '../components/ui/SpecSheet.vue'
 import SectionHeader from '../components/ui/SectionHeader.vue'
 import InfographicFigure from '../components/ui/InfographicFigure.vue'
+import { productColorClasses } from '../lib/productColors'
 import { buildWhatsAppLink, PRODUCT_MESSAGES } from '../lib/whatsapp'
+import { TELEGRAM_CTA_CLASS, TELEGRAM_ORDER_URL } from '../lib/telegram'
 
 const store = useProductsStore()
 const products = store.allProducts
@@ -81,11 +83,11 @@ const productSchemas = computed(() =>
             <!-- Visual -->
             <div
               class="rounded-3xl p-12 flex items-center justify-center min-h-72 relative overflow-hidden"
-              :style="{ backgroundColor: product.bgColor }"
+              :class="productColorClasses(product.id).headerBg"
             >
               <div
                 class="absolute inset-0 opacity-5"
-                :style="{ backgroundColor: product.color }"
+                :class="productColorClasses(product.id).overlayBg"
               />
               <div class="text-[120px] relative z-10 drop-shadow-lg">
                 {{ product.icon }}
@@ -93,7 +95,7 @@ const productSchemas = computed(() =>
               <div
                 v-if="!product.available"
                 class="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full text-white text-sm font-semibold"
-                :style="{ backgroundColor: product.color }"
+                :class="productColorClasses(product.id).bgAccent"
               >
                 Coming Soon
               </div>
@@ -103,7 +105,7 @@ const productSchemas = computed(() =>
             <div>
               <p
                 class="text-xs font-bold uppercase tracking-widest mb-3"
-                :style="{ color: product.color }"
+                :class="productColorClasses(product.id).text"
               >
                 Trovara {{ product.category !== 'coming-soon' ? product.category.charAt(0).toUpperCase() + product.category.slice(1) : 'Expansion' }}
               </p>
@@ -126,7 +128,7 @@ const productSchemas = computed(() =>
                 >
                   <div
                     class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-black shadow-sm"
-                    :style="{ backgroundColor: product.color }"
+                    :class="productColorClasses(product.id).bgAccent"
                   >
                     ✓
                   </div>
@@ -144,23 +146,25 @@ const productSchemas = computed(() =>
               <div v-if="product.available" class="flex flex-wrap gap-3">
               <RouterLink
                 :to="`/products/${product.id}`"
-                class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 font-semibold text-sm transition-all duration-200 hover:text-white"
-                :style="{
-                  borderColor: product.color,
-                  color: product.color,
-                }"
-                @mouseenter="(e: MouseEvent) => { (e.currentTarget as HTMLElement).style.backgroundColor = product.color }"
-                @mouseleave="(e: MouseEvent) => { (e.currentTarget as HTMLElement).style.backgroundColor = 'transparent' }"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 font-semibold text-sm transition-all duration-200"
+                :class="productColorClasses(product.id).btnOutline"
               >
                 View Product Page
               </RouterLink>
               <RouterLink
                 to="/contact"
                 class="btn-primary"
-                :style="{ '--tw-ring-color': product.color }"
               >
                 Enquire About {{ product.name }}
               </RouterLink>
+              <a
+                :href="TELEGRAM_ORDER_URL"
+                target="_blank"
+                rel="noopener noreferrer"
+                :class="TELEGRAM_CTA_CLASS"
+              >
+                Order on Telegram
+              </a>
               <a
                 v-if="PRODUCT_MESSAGES[product.id as keyof typeof PRODUCT_MESSAGES]"
                 :href="buildWhatsAppLink(PRODUCT_MESSAGES[product.id as keyof typeof PRODUCT_MESSAGES])"
@@ -174,7 +178,7 @@ const productSchemas = computed(() =>
               <div
                 v-else
                 class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 font-semibold text-sm"
-                :style="{ borderColor: product.color, color: product.color }"
+                :class="productColorClasses(product.id).btnOutline"
               >
                 🌱 Stay Tuned - Coming Soon
               </div>

@@ -5,7 +5,9 @@ import StructuredData from '../components/StructuredData.vue'
 import SpecSheet from '../components/ui/SpecSheet.vue'
 import OrderTiers from '../components/ui/OrderTiers.vue'
 import { applyPageMeta } from '../composables/usePageMeta'
+import { productColorClasses } from '../lib/productColors'
 import { buildWhatsAppLink, PRODUCT_MESSAGES } from '../lib/whatsapp'
+import { TELEGRAM_CTA_CLASS, TELEGRAM_CUSTOMER_BOT, TELEGRAM_ORDER_URL } from '../lib/telegram'
 import { useProductsStore } from '../stores/products'
 
 const BASE_URL = 'https://trovara.farm'
@@ -92,9 +94,9 @@ watch(
           <div>
             <div
               class="rounded-3xl p-10 md:p-12 flex items-center justify-center min-h-72 relative overflow-hidden mb-8"
-              :style="{ backgroundColor: product.bgColor }"
+              :class="productColorClasses(product.id).headerBg"
             >
-              <div class="absolute inset-0 opacity-5" :style="{ backgroundColor: product.color }" />
+              <div class="absolute inset-0 opacity-5" :class="productColorClasses(product.id).overlayBg" />
               <div class="text-[120px] relative z-10 drop-shadow-lg">{{ product.icon }}</div>
             </div>
 
@@ -107,7 +109,7 @@ watch(
               <div v-for="benefit in product.benefits" :key="benefit" class="flex items-center gap-3">
                 <div
                   class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-black shadow-sm"
-                  :style="{ backgroundColor: product.color }"
+                  :class="productColorClasses(product.id).bgAccent"
                 >
                   ✓
                 </div>
@@ -119,6 +121,14 @@ watch(
               <RouterLink to="/contact" class="btn-primary">
                 Enquire About {{ product.name }}
               </RouterLink>
+              <a
+                :href="TELEGRAM_ORDER_URL"
+                target="_blank"
+                rel="noopener noreferrer"
+                :class="TELEGRAM_CTA_CLASS"
+              >
+                Order on Telegram
+              </a>
               <a
                 v-if="whatsappLink"
                 :href="whatsappLink"
@@ -185,7 +195,7 @@ watch(
               :key="stat.label"
               class="bg-white rounded-2xl p-5 text-center shadow-sm"
             >
-              <div class="text-2xl md:text-3xl font-black" :style="{ color: product.color }">{{ stat.value }}</div>
+              <div class="text-2xl md:text-3xl font-black" :class="productColorClasses(product.id).text">{{ stat.value }}</div>
               <div class="text-xs text-gray-400 font-medium mt-1 uppercase tracking-wide">{{ stat.label }}</div>
             </div>
           </div>
@@ -195,18 +205,18 @@ watch(
       <!-- Order & Subscribe (all products with tiers) -->
       <section v-if="product.orderTiers?.length" class="py-20 md:py-24 bg-white border-t border-gray-100">
         <div class="container-trovara">
-          <p class="section-subheading mb-3" :style="{ color: product.color }">Order &amp; Subscribe</p>
+          <p class="section-subheading mb-3" :class="productColorClasses(product.id).text">Order &amp; Subscribe</p>
           <h2 class="text-3xl md:text-4xl font-black text-trovara-dark mb-3">
             Get your {{ product.name.toLowerCase() }}, your way.
           </h2>
           <p class="text-gray-500 leading-relaxed max-w-2xl mb-10">
-            Order a one-time delivery, or set up a recurring supply and never run out. Every order is
-            arranged over WhatsApp - quick, personal, and flexible.
+            Order a one-time delivery, or set up a recurring supply and never run out. Place orders
+            on Telegram (@{{ TELEGRAM_CUSTOMER_BOT }}), or message us on WhatsApp for a personal quote.
           </p>
           <OrderTiers
             :tiers="product.orderTiers"
             :product-name="product.name"
-            :accent-color="product.color"
+            :product-id="product.id"
           />
         </div>
       </section>

@@ -1,82 +1,42 @@
 /**
- * Newsletter provider strategy:
- * - Default provider is FormSubmit for reliability.
- * - If VITE_BUTTONDOWN_USERNAME is set, the app first tries Buttondown's embed endpoint.
- * - On Buttondown network/CORS/API failure, it gracefully falls back to FormSubmit.
+ * Newsletter signups post to a Netlify Function (server-side Buttondown / Formspree).
+ * Local dev: use `netlify dev` — plain `vite` cannot reach `/.netlify/functions/*`.
  */
-import { submitToFormSubmit } from './formsubmit'
-
-export type NewsletterProvider = 'formsubmit' | 'buttondown'
+const NEWSLETTER_ENDPOINT = '/.netlify/functions/newsletter'
 
 interface SubscribeResult {
   ok: boolean
-  provider: NewsletterProvider
   error?: string
 }
 
-async function subscribeViaButtondown(email: string, username: string): Promise<SubscribeResult> {
+export async function subscribeToNewsletter(
+  email: string,
+  honey = '',
+): Promise<SubscribeResult> {
   try {
-    const response = await fetch(`https://buttondown.email/api/emails/embed-subscribe/${username}`, {
+    const response = await fetch(NEWSLETTER_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify({
-        email,
-        tag: 'website',
-      }),
+      body: JSON.stringify({ email, honey }),
     })
 
-    const result = await response.json().catch(() => null)
-    if (!response.ok) {
+    const result = (await response.json().catch(() => null)) as SubscribeResult | null
+
+    if (!response.ok || !result?.ok) {
       return {
         ok: false,
-        provider: 'buttondown',
-        error: result?.error ?? result?.message ?? 'Buttondown signup failed.',
+        error: result?.error ?? 'Failed to subscribe.',
       }
     }
 
-    return {
-      ok: true,
-      provider: 'buttondown',
-    }
+    return { ok: true }
   } catch (error) {
     return {
       ok: false,
-      provider: 'buttondown',
-      error: error instanceof Error ? error.message : 'Buttondown signup failed.',
+      error: error instanceof Error ? error.message : 'Failed to subscribe.',
     }
   }
-}
-
-async function subscribeViaFormSubmit(email: string): Promise<SubscribeResult> {
-  const result = await submitToFormSubmit(
-    {
-      email,
-    },
-    {
-      subject: 'New Trovara newsletter signup',
-      template: 'table',
-      captcha: true,
-    },
-  )
-
-  return {
-    ok: result.ok,
-    provider: 'formsubmit',
-    error: result.error,
-  }
-}
-
-export async function subscribeToNewsletter(email: string): Promise<SubscribeResult> {
-  const username = import.meta.env.VITE_BUTTONDOWN_USERNAME?.trim()
-  if (username) {
-    const buttondownResult = await subscribeViaButtondown(email, username)
-    if (buttondownResult.ok) {
-      return buttondownResult
-    }
-  }
-
-  return subscribeViaFormSubmit(email)
 }

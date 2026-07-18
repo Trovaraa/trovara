@@ -2,7 +2,9 @@
 import SectionHeader from '../components/ui/SectionHeader.vue'
 import HarvestCalendar from '../components/ui/HarvestCalendar.vue'
 import TestimonialsSection from '../components/ui/TestimonialsSection.vue'
+import { testimonials } from '../data/testimonials'
 import { buildWhatsAppLink } from '../lib/whatsapp'
+import { TELEGRAM_CUSTOMER_BOT, TELEGRAM_ORDER_URL } from '../lib/telegram'
 
 const wholesaleWhatsAppLink = buildWhatsAppLink(
   "Hi Trovara Farm, I'd like to discuss a bulk order for hotels/supermarkets."
@@ -177,7 +179,7 @@ const productLines = [
       </div>
     </section>
 
-    <TestimonialsSection context="wholesale" />
+    <TestimonialsSection v-if="testimonials.length > 0" context="wholesale" />
 
     <section class="py-20 bg-trovara-dark text-white">
       <div class="container-trovara max-w-3xl mx-auto text-center">
@@ -191,6 +193,15 @@ const productLines = [
           <RouterLink to="/contact?subject=bulk-order" class="btn-gold text-base px-8 py-4">
             Contact Sales Team
           </RouterLink>
+          <a
+            :href="TELEGRAM_ORDER_URL"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-[#229ED9] hover:bg-[#1b8bc0] text-white font-semibold transition-colors text-base"
+          >
+            Order on Telegram
+            <span class="text-white/80 font-normal text-sm">@{{ TELEGRAM_CUSTOMER_BOT }}</span>
+          </a>
           <a
             :href="wholesaleWhatsAppLink"
             target="_blank"

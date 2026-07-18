@@ -32,7 +32,7 @@ async function subscribe() {
   }
 
   newsletter.status = 'loading'
-  const result = await subscribeToNewsletter(newsletter.email)
+  const result = await subscribeToNewsletter(newsletter.email, newsletter.honey)
 
   if (!result.ok) {
     newsletter.status = 'error'
@@ -107,6 +107,7 @@ function reset() {
           v-model="newsletter.email"
           type="email"
           required
+          maxlength="254"
           placeholder="you@example.com"
           :class="[
             'w-full px-4 py-3.5 rounded-xl border text-sm transition focus:outline-none focus:ring-2 focus:ring-trovara-gold focus:border-transparent',
