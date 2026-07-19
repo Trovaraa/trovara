@@ -4,7 +4,7 @@
 # Set published: false to keep a draft hidden until you are ready.
 
 title: Your post title here
-excerpt: A short summary for the blog listing and search results (1–2 sentences).
+excerpt: A short summary for the blog listing and search results (1-2 sentences).
 author: Trovara Farm
 publishedAt: 2026-06-21
 category: Farm Stories

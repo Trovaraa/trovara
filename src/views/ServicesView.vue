@@ -1,7 +1,31 @@
 <script setup lang="ts">
 import SectionHeader from '../components/ui/SectionHeader.vue'
 
-const services = [
+type Service = {
+  icon: string
+  title: string
+  meaning?: string
+  desc: string
+  deliverables: string[]
+  featured?: boolean
+}
+
+const services: Service[] = [
+  {
+    icon: '🖥️',
+    title: 'Trovara Farm OS',
+    meaning: 'Operations System',
+    featured: true,
+    desc: 'The digital command center we run our own farm on - now available to yours. Trovara Farm OS (Operations System) brings daily tasks, field teams, inventory, harvest records, and sales into one place so managers see the farm clearly and workers know exactly what to do. Built for operational excellence in the field, not desk software that never leaves the office.',
+    deliverables: [
+      'Installable farm operations app (web + Home Screen PWA)',
+      'Task assignment, field completion, and supervisor approval',
+      'Crop, livestock, inventory, and zone/block records',
+      'Offline-friendly field capture with sync when connected',
+      'Telegram butler for staff updates and customer ordering',
+      'Setup, training, and ongoing operating support',
+    ],
+  },
   {
     icon: '🗺️',
     title: 'Farm Setup & Development',
@@ -80,7 +104,7 @@ const services = [
     desc: 'We train farmers, farm managers, and agribusiness staff in modern, sustainable farming practices. Training is hands-on, practical, and delivered on-site at your farm.',
     deliverables: [
       'Crop production and management training',
-      'Poultry management and animal welfare',
+      'Free-range noilers & hens management and animal welfare',
       'Record-keeping and farm data management',
       'Financial literacy for farm businesses',
       'Group and individual training sessions',
@@ -122,9 +146,10 @@ const process = [
             We help other farms<br/>grow as well as ours.
           </h1>
           <p class="text-white/70 text-lg leading-relaxed max-w-xl">
-            The expertise we've built growing coconuts, plantains, and poultry at Trovara Farm
-            is available to you. Whether you're building a new farm or improving an existing one,
-            our team will walk the land with you.
+            From hands-on farm advisory to Trovara Farm OS - our Operations System for day-to-day
+            farm command - the expertise we've built growing coconuts, plantains, and free-range
+            dressed noilers & mature hens is available to you. Whether you're building a new farm
+            or running a better one, we walk the land with you.
           </p>
           <div class="flex flex-wrap gap-4 mt-10">
             <RouterLink to="/contact" class="btn-gold text-base px-8 py-4">
@@ -163,8 +188,8 @@ const process = [
       <div class="container-trovara">
         <SectionHeader
           eyebrow="What We Offer"
-          title="Farm development services built from real farming."
-          subtitle="Every service we offer comes from hard-won experience on our own land. We don't advise what we haven't done ourselves."
+          title="Farm development and Farm OS - built from real farming."
+          subtitle="Every service we offer comes from hard-won experience on our own land. We don't advise what we haven't done ourselves - including the Operations System that runs Trovara Farm."
           center
         />
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
@@ -172,11 +197,26 @@ const process = [
             v-for="service in services"
             :key="service.title"
             class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 group"
+            :class="service.featured ? 'md:col-span-2 border border-trovara-green/20 bg-gradient-to-br from-white to-trovara-green/[0.04]' : ''"
           >
-            <div class="text-4xl mb-5 group-hover:scale-110 transition-transform duration-300">
-              {{ service.icon }}
+            <div class="flex flex-wrap items-start justify-between gap-3 mb-5">
+              <div class="text-4xl group-hover:scale-110 transition-transform duration-300">
+                {{ service.icon }}
+              </div>
+              <span
+                v-if="service.featured"
+                class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest bg-trovara-green text-white"
+              >
+                Featured
+              </span>
             </div>
-            <h3 class="text-xl font-black text-trovara-dark mb-3">{{ service.title }}</h3>
+            <h3 class="text-xl font-black text-trovara-dark mb-1">{{ service.title }}</h3>
+            <p
+              v-if="service.meaning"
+              class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-3"
+            >
+              {{ service.meaning }}
+            </p>
             <p class="text-gray-500 text-sm leading-relaxed mb-6">{{ service.desc }}</p>
 
             <div class="border-t border-gray-100 pt-5">
@@ -237,7 +277,8 @@ const process = [
             </p>
             <p class="text-gray-500 leading-relaxed mb-8">
               We also offer package deals for farms that need multiple services - for example,
-              combining soil advisory, crop planning, and irrigation design at a bundled rate.
+              combining Farm OS setup with soil advisory, crop planning, and irrigation design
+              at a bundled rate.
             </p>
             <RouterLink to="/contact" class="btn-primary px-8 py-4 text-base">
               Get a Free Quote

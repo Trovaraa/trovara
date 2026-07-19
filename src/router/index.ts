@@ -4,8 +4,12 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   scrollBehavior(to, _from, savedPosition) {
     if (savedPosition) return savedPosition
-    if (to.hash) return { el: to.hash, behavior: 'smooth' }
-    return { top: 0, behavior: 'smooth' }
+    if (to.hash) {
+      return new Promise((resolve) => {
+        window.setTimeout(() => resolve({ el: to.hash, top: 80 }), 50)
+      })
+    }
+    return { top: 0, left: 0 }
   },
   routes: [
     {
@@ -13,9 +17,9 @@ const router = createRouter({
       name: 'home',
       component: () => import('../views/HomeView.vue'),
       meta: {
-        title: 'Trovara Farm - Born Natural. Raised Global.',
+        title: 'Trovara Farm - Food you can trust, from a farm built for tomorrow',
         description:
-          'Trovara Farm grows premium, regenerative food in Ogun State, Nigeria for homes, chefs, and hospitality partners.',
+          'Food you can trust, from a farm built for tomorrow. Premium regenerative food from Ogun State, Nigeria for homes, chefs, and hospitality partners.',
       },
     },
     {
@@ -63,9 +67,9 @@ const router = createRouter({
       name: 'services',
       component: () => import('../views/ServicesView.vue'),
       meta: {
-        title: 'Farm Development Services - Trovara Farm',
+        title: 'Farm Services & Farm OS - Trovara Farm',
         description:
-          'Work with Trovara Farm on advisory and development services for modern, sustainable farming projects.',
+          'Trovara Farm OS (Operations System) plus hands-on advisory - farm setup, soil, crops, irrigation, and market linkage for modern sustainable farms.',
       },
     },
     {

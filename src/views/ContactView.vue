@@ -31,7 +31,15 @@ const form = reactive({
   honey: '',
 })
 
-const validSubjects = new Set(['general', 'bulk-order', 'partnership', 'export', 'media', 'other'])
+const validSubjects = new Set([
+  'general',
+  'bulk-order',
+  'farm-os',
+  'partnership',
+  'export',
+  'media',
+  'other',
+])
 
 watch(
   () => route.query.subject,
@@ -46,6 +54,7 @@ watch(
 const subjects = [
   { value: 'general',      label: 'General Enquiry' },
   { value: 'bulk-order',   label: 'Bulk Order / Wholesale' },
+  { value: 'farm-os',      label: 'Trovara Farm OS (Operations System)' },
   { value: 'partnership',  label: 'Distribution Partnership' },
   { value: 'export',       label: 'Export Enquiry' },
   { value: 'media',        label: 'Media & Press' },
@@ -184,7 +193,7 @@ const contactInfo = [
               <div class="text-2xl mb-3">🌿</div>
               <h4 class="font-bold text-lg mb-2">Looking to order in bulk?</h4>
               <p class="text-white/70 text-sm leading-relaxed mb-5">
-                We supply coconuts, plantains, and poultry products at wholesale scale.
+                We supply coconuts, plantains, and free-range dressed noilers & mature hens at wholesale scale.
                 Select "Bulk Order / Wholesale" in the form for priority handling - or
                 message the team / place an order on your preferred channel.
               </p>

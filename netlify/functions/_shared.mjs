@@ -4,9 +4,9 @@
  * Local dev: these functions only run with `netlify dev` (netlify-cli), not plain `vite dev`.
  *
  * Netlify env (Site settings → Environment variables):
- *   FORMSPREE_FORM_ID            — Formspree form id from https://formspree.io (required for contact)
- *   FORMSPREE_NEWSLETTER_FORM_ID — optional separate Formspree form for newsletter; falls back to FORMSPREE_FORM_ID
- *   BUTTONDOWN_USERNAME          — optional; tried before Formspree for newsletter
+ *   FORMSPREE_FORM_ID            - Formspree form id from https://formspree.io (required for contact)
+ *   FORMSPREE_NEWSLETTER_FORM_ID - optional separate Formspree form for newsletter; falls back to FORMSPREE_FORM_ID
+ *   BUTTONDOWN_USERNAME          - optional; tried before Formspree for newsletter
  */
 
 const RATE_BUCKETS = new Map()

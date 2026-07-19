@@ -11,6 +11,6 @@ export const testimonials: Testimonial[] = [
   {
     quote: 'We don\'t advise what we haven\'t done ourselves.',
     author: 'Trovara Farm',
-    role: 'Brand voice — internal',
+    role: 'Brand voice - internal',
   },
 ]

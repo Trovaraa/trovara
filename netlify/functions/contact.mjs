@@ -1,10 +1,10 @@
 /**
- * Contact form handler — validates, rate-limits, and forwards to Formspree server-side.
+ * Contact form handler - validates, rate-limits, and forwards to Formspree server-side.
  *
  * Local dev: run `netlify dev` (not plain `vite`) to exercise this endpoint at
  * `/.netlify/functions/contact`.
  *
- * Netlify env: FORMSPREE_FORM_ID (required) — create a form at https://formspree.io
+ * Netlify env: FORMSPREE_FORM_ID (required) - create a form at https://formspree.io
  */
 import {
   forwardToFormspree,
@@ -22,6 +22,7 @@ const MAX_REQUESTS = 5
 const SUBJECT_LABELS = {
   general: 'General Enquiry',
   'bulk-order': 'Bulk Order / Wholesale',
+  'farm-os': 'Trovara Farm OS (Operations System)',
   partnership: 'Distribution Partnership',
   export: 'Export Enquiry',
   media: 'Media & Press',

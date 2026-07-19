@@ -24,7 +24,7 @@ const faqs: FaqGroup[] = [
       },
       {
         q: 'How fresh are your products at delivery?',
-        a: 'Plantains and coconuts are harvested on the day or day before shipment whenever possible. Poultry products follow the same farm-to-customer freshness principle. For exports, we use cold-chain logistics to preserve quality.',
+        a: 'Plantains and coconuts are harvested on the day or day before shipment whenever possible. Free-range dressed noilers and mature hens follow the same farm-to-customer freshness principle. For exports, we use cold-chain logistics to preserve quality.',
       },
       {
         q: 'What plantain varieties do you grow?',
@@ -42,7 +42,7 @@ const faqs: FaqGroup[] = [
     items: [
       {
         q: 'What is your minimum order quantity (MOQ)?',
-        a: 'Retail orders have no minimum. For wholesale and bulk, MOQs vary by product - typically starting at one pallet for coconut, one tonne for plantain, and case quantities for poultry. Reach out for specifics on your needs.',
+        a: 'Retail orders have no minimum. For wholesale and bulk, MOQs vary by product - typically starting at one pallet for coconut, one tonne for plantain, and case quantities for free-range dressed noilers and mature hens. Reach out for specifics on your needs.',
       },
       {
         q: 'How do I get a price quote?',
@@ -68,7 +68,7 @@ const faqs: FaqGroup[] = [
       },
       {
         q: 'How long does shipping take?',
-        a: 'Local deliveries typically arrive within 1–3 business days. National shipping is 3–7 days. International export timing depends on the destination and shipping mode (sea or air freight) - typically 1–6 weeks.',
+        a: 'Local deliveries typically arrive within 1-3 business days. National shipping is 3-7 days. International export timing depends on the destination and shipping mode (sea or air freight) - typically 1-6 weeks.',
       },
       {
         q: 'Do you handle export documentation?',
@@ -86,7 +86,11 @@ const faqs: FaqGroup[] = [
     items: [
       {
         q: 'Can you help me start my own farm?',
-        a: 'Yes - that is one of our ancillary services. Visit our Services page for the full list, including farm setup, soil advisory, crop planning, irrigation design, and market linkage.',
+        a: 'Yes - that is one of our ancillary services. Visit our Services page for the full list, including Trovara Farm OS (Operations System), farm setup, soil advisory, crop planning, irrigation design, and market linkage.',
+      },
+      {
+        q: 'What is Trovara Farm OS?',
+        a: 'Farm OS stands for Operations System - the digital command center we use to run Trovara Farm. It covers daily tasks, field teams, inventory, records, and channel bots. We offer it as a service so other farms can run with the same operational clarity.',
       },
       {
         q: 'How much do your farm services cost?',
@@ -94,7 +98,7 @@ const faqs: FaqGroup[] = [
       },
       {
         q: 'Do you offer training for farm workers?',
-        a: 'Yes. We provide hands-on, on-site training covering crop production, poultry management, record-keeping, and farm business management. Group and individual sessions are available.',
+        a: 'Yes. We provide hands-on, on-site training covering crop production, free-range noilers and hens management, record-keeping, and farm business management. Group and individual sessions are available.',
       },
       {
         q: 'Will you visit my farm?',
@@ -112,7 +116,7 @@ const faqs: FaqGroup[] = [
       },
       {
         q: 'Are you open to becoming a private-label supplier?',
-        a: 'Yes. We support white-label and private-label arrangements for compatible buyers - particularly for plantain flour, dried coconut products, and packaged poultry.',
+        a: 'Yes. We support white-label and private-label arrangements for compatible buyers - particularly for plantain flour, dried coconut products, and packaged free-range dressed noilers and mature hens.',
       },
       {
         q: 'How can I become a Trovara distributor?',

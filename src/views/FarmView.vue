@@ -17,8 +17,8 @@ const operations = [
   },
   {
     icon: '🐔',
-    title: 'Poultry Operations',
-    desc: 'Our poultry farm is designed around animal welfare. Birds roam freely in clean, open spaces and are fed natural grain-based diets. Our commitment to ethical farming shows in the quality of every egg and every bird.',
+    title: 'Noilers & Hens Operations',
+    desc: 'Our free-range dressed noilers and mature hens are raised with animal welfare first. Birds roam freely in clean, open spaces and are fed natural grain-based diets. That commitment shows in the quality of every dressed bird - and every egg from our pasture flocks.',
     highlights: ['Free-range open environment', 'Natural grain feed only', 'No growth hormones', 'Clean, ethical operations'],
   },
 ]

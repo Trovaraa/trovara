@@ -106,7 +106,7 @@ const toc: Section[] = [
               <div class="space-y-4 text-gray-700 leading-relaxed">
                 <p>
                   Trovara Farm ("Trovara", "we", "us", or "our") is a regenerative food company based
-                  in Abeokuta, Ogun State, Nigeria, supplying premium produce and poultry to homes,
+                  in Abeokuta, Ogun State, Nigeria, supplying premium produce and free-range dressed noilers & mature hens to homes,
                   chefs, retailers, and wholesale partners.
                 </p>
                 <div class="bg-white rounded-2xl shadow-sm p-6 grid sm:grid-cols-2 gap-4 text-sm">

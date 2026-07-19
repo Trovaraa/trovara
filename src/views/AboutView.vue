@@ -16,8 +16,8 @@ const milestones = [
   },
   {
     year: 'Year 2',
-    title: 'Poultry Expansion',
-    desc: 'We launched our free-range poultry operation, bringing the same ethics and standards that define our crop farming.',
+    title: 'Noilers & Hens Expansion',
+    desc: 'We launched free-range dressed noilers and mature hens, bringing the same ethics and standards that define our crop farming.',
   },
   {
     year: 'Today',
@@ -36,7 +36,7 @@ const stats = [
 const team = [
   { initials: 'TF', name: 'The Founder', role: 'Founder & Visionary', bio: 'Built Trovara with the belief that great farming changes lives - locally and globally.' },
   { initials: 'FD', name: 'Farm Director', role: 'Head of Agricultural Operations', bio: 'Oversees all crop cultivation across our plantations with decades of tropical farming knowledge.' },
-  { initials: 'PM', name: 'Poultry Manager', role: 'Head of Poultry Operations', bio: 'Ensures every bird is raised ethically, healthily, and to the highest quality standards.' },
+  { initials: 'PM', name: 'Poultry Manager', role: 'Head of Noilers & Hens', bio: 'Ensures every free-range noiler and mature hen is raised ethically, healthily, and dressed to the highest quality standards.' },
 ]
 </script>
 
@@ -77,7 +77,7 @@ const team = [
             </p>
             <p class="text-gray-500 leading-relaxed">
               Today, Trovara Farm cultivates premium coconuts and plantains across fertile tropical
-              plantations, and raises free-range poultry with the same care and ethics. We are
+              plantations, and raises free-range dressed noilers and mature hens with the same care and ethics. We are
               growing - adding new crops, expanding our reach, and building a brand that the world
               can trust.
             </p>
@@ -88,7 +88,7 @@ const team = [
             <div class="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
               <img
                 src="/images/trovara-brand.png"
-                alt="Trovara Farm brand mark — Born Natural, Raised Global"
+                alt="Trovara Farm brand mark - Food you can trust, from a farm built for tomorrow"
                 class="w-full h-auto object-cover"
                 width="800"
                 height="600"
@@ -102,7 +102,7 @@ const team = [
               <p class="text-trovara-green font-semibold">- Trovara Farm</p>
               <div class="mt-8 pt-8 border-t border-gray-200">
                 <p class="text-sm text-gray-500 italic font-medium">
-                  Born natural. Raised global.
+                  Food you can trust, from a farm built for tomorrow.
                 </p>
               </div>
             </div>
@@ -171,18 +171,33 @@ const team = [
             <div class="text-4xl mb-5">🎯</div>
             <h3 class="text-2xl font-black mb-4">Our Mission</h3>
             <p class="text-white/80 leading-relaxed">
-              To grow premium, natural produce with uncompromising quality - delivering the earth's finest
-              to tables locally and globally, while supporting sustainable and ethical farming practices.
+              Trovara creates trusted food products with traceability, lower waste and deeper customer connection.
             </p>
           </div>
           <div class="bg-trovara-light rounded-3xl p-8 lg:p-10">
             <div class="text-4xl mb-5">🌍</div>
             <h3 class="text-2xl font-black text-trovara-dark mb-4">Our Vision</h3>
             <p class="text-gray-500 leading-relaxed">
-              To become the world's most trusted tropical farm brand - a global name synonymous with
-              purity, quality, and the honest promise of nature, recognized from local markets to
-              international retail shelves.
+              Trovara is building a regenerative food company that turns African farms into trusted sources of
+              premium, traceable and climate-resilient food.
             </p>
+          </div>
+        </div>
+
+        <div class="max-w-4xl mx-auto mt-12">
+          <SectionHeader
+            eyebrow="How We Work"
+            title="Core principles"
+            center
+          />
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            <div
+              v-for="principle in ['Trust', 'Quality', 'Consistency', 'Regeneration', 'Innovation', 'Community']"
+              :key="principle"
+              class="bg-trovara-cream rounded-2xl px-4 py-5 text-center"
+            >
+              <p class="font-bold text-trovara-dark text-sm">{{ principle }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -215,7 +230,7 @@ const team = [
         <SectionHeader
           eyebrow="The Land"
           title="A 24-acre regenerative ecosystem."
-          subtitle="Our farm is designed as one integrated system — agriculture, processing, and hospitality working together on a single master plan."
+          subtitle="Our farm is designed as one integrated system - agriculture, processing, and hospitality working together on a single master plan."
           center
         />
         <div class="max-w-5xl mx-auto">

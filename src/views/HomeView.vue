@@ -10,6 +10,12 @@ import { testimonials } from '../data/testimonials'
 const store = useProductsStore()
 const featuredProducts = store.availableProducts
 
+/** Compact labels for hero chips so long product names do not crowd the layout. */
+const heroProducts = featuredProducts.map((product) => ({
+  ...product,
+  shortName: product.id === 'poultry' ? 'Noilers & Hens' : product.name,
+}))
+
 const stats = [
   { value: '100+',  label: 'Acres Cultivated',      icon: '🌾' },
   { value: '3',     label: 'Core Product Lines',     icon: '🥥' },
@@ -17,29 +23,14 @@ const stats = [
   { value: '100%',  label: 'Natural, Always',        icon: '☀️' },
 ]
 
-const values = [
-  {
-    icon: '🌱',
-    title: 'Rooted in Nature',
-    desc: 'Everything we grow begins with respect for the soil. We farm with nature, not against it.',
-  },
-  {
-    icon: '🤝',
-    title: 'Built on Trust',
-    desc: 'From our farm to your table, every product carries our promise of quality and honesty.',
-  },
-  {
-    icon: '🌍',
-    title: 'Grown for the World',
-    desc: 'We are a local farm with a global heart. Our produce is grown to the highest international standards.',
-  },
-  {
-    icon: '🐔',
-    title: 'Raised with Ethics',
-    desc: 'Our poultry lives in healthy, free-range environments. Happy animals produce exceptional food.',
-  },
-]
-</script>
+const principles = [
+  { icon: '🤝', title: 'Trust' },
+  { icon: '✨', title: 'Quality' },
+  { icon: '🔁', title: 'Consistency' },
+  { icon: '🌱', title: 'Regeneration' },
+  { icon: '💡', title: 'Innovation' },
+  { icon: '🌍', title: 'Community' },
+]</script>
 
 <template>
   <div>
@@ -54,56 +45,58 @@ const values = [
       <div class="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-trovara-gold/20 blur-3xl pointer-events-none" />
 
       <div class="container-trovara relative z-10 pt-32 pb-20">
-        <div class="max-w-4xl">
-
-          <!-- Eyebrow -->
-          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm mb-8">
-            <span class="w-2 h-2 rounded-full bg-trovara-gold animate-pulse" />
-            <span class="text-trovara-gold-300 text-sm font-semibold tracking-wider uppercase">
-              Born Natural. Raised Global.
-            </span>
-          </div>
-
-          <!-- Main Headline -->
-          <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[1.05] mb-6 text-balance">
-            The earth's<br/>
-            <span class="text-trovara-gold">finest,</span><br/>
-            for the world.
-          </h1>
-
-          <p class="text-white/70 text-lg md:text-xl leading-relaxed max-w-xl mb-10">
-            Trovara Farm grows premium coconuts, plantains, and poultry with deep respect for the land.
-            From our soil to your table - pure, natural, and world-class.
-          </p>
-
-          <div class="flex flex-wrap gap-4">
-            <RouterLink to="/products" class="btn-gold text-base px-8 py-4 rounded-xl">
-              Explore Our Products
-            </RouterLink>
-            <RouterLink
-              to="/about"
-              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border-2 border-white/30 text-white font-semibold hover:bg-white/10 transition-all duration-200 text-base"
-            >
-              Our Story
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-              </svg>
-            </RouterLink>
-          </div>
-        </div>
-
-        <!-- Floating Product Badges -->
-        <div class="hidden lg:flex absolute right-8 top-1/2 -translate-y-1/2 flex-col gap-4">
-          <div
-            v-for="product in featuredProducts"
-            :key="product.id"
-            class="flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-5 py-3 hover:bg-white/20 transition-all duration-200 cursor-pointer group"
-          >
-            <span class="text-3xl group-hover:scale-110 transition-transform">{{ product.icon }}</span>
-            <div>
-              <div class="text-white font-bold text-sm">{{ product.name }}</div>
-              <div class="text-white/50 text-xs">{{ product.tagline }}</div>
+        <div class="grid lg:grid-cols-[minmax(0,1.15fr)_minmax(260px,0.85fr)] gap-10 xl:gap-16 items-center">
+          <div class="min-w-0">
+            <!-- Eyebrow -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm mb-8 max-w-full">
+              <span class="w-2 h-2 rounded-full bg-trovara-gold animate-pulse flex-shrink-0" />
+              <span class="text-trovara-gold-300 text-sm font-semibold tracking-wider uppercase leading-snug">
+                Food you can trust, from a farm built for tomorrow
+              </span>
             </div>
+
+            <!-- Main Headline -->
+            <h1 class="text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-black text-white leading-[1.05] mb-6 text-balance">
+              The earth's<br/>
+              <span class="text-trovara-gold">finest,</span><br/>
+              for the world.
+            </h1>
+
+            <p class="text-white/70 text-lg md:text-xl leading-relaxed max-w-xl mb-10">
+              Trovara Farm grows premium coconuts, plantains, and free-range dressed noilers & mature hens with deep respect for the land.
+              From our soil to your table - pure, natural, and world-class.
+            </p>
+
+            <div class="flex flex-wrap gap-4">
+              <RouterLink to="/products" class="btn-gold text-base px-8 py-4 rounded-xl">
+                Explore Our Products
+              </RouterLink>
+              <RouterLink
+                to="/about"
+                class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border-2 border-white/30 text-white font-semibold hover:bg-white/10 transition-all duration-200 text-base"
+              >
+                Our Story
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+              </RouterLink>
+            </div>
+          </div>
+
+          <!-- Product callouts (own column - never overlays the headline) -->
+          <div class="hidden lg:flex flex-col gap-3 w-full max-w-md justify-self-end">
+            <RouterLink
+              v-for="product in heroProducts"
+              :key="product.id"
+              :to="`/products/${product.id}`"
+              class="flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-5 py-3 hover:bg-white/20 transition-all duration-200 group"
+            >
+              <span class="text-3xl group-hover:scale-110 transition-transform flex-shrink-0">{{ product.icon }}</span>
+              <div class="min-w-0">
+                <div class="text-white font-bold text-sm truncate">{{ product.shortName }}</div>
+                <div class="text-white/50 text-xs truncate">{{ product.tagline }}</div>
+              </div>
+            </RouterLink>
           </div>
         </div>
       </div>
@@ -138,7 +131,7 @@ const values = [
         <SectionHeader
           eyebrow="What We Grow"
           title="Nature's finest, carefully cultivated"
-          subtitle="From tropical fruits to free-range poultry - every product at Trovara Farm is grown with purpose, patience, and pride."
+          subtitle="From tropical fruits to free-range dressed noilers & mature hens - every product at Trovara Farm is grown with purpose, patience, and pride."
           center
         />
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
@@ -172,34 +165,33 @@ const values = [
           <!-- Regenerative system visual -->
           <InfographicFigure
             src="/images/regen/system.webp"
-            alt="Trovara integrated regenerative system: plantain, coconut, and chicken inputs flow through a circular farm into Trovara Fresh and Trovara Harvest brands."
+            alt="Trovara integrated regenerative system: plantain, coconut, and free-range noilers & hens inputs flow through a circular farm into Trovara Fresh and Trovara Harvest brands."
             caption="One regenerative system behind every product"
-            summary="Fresh produce and shelf-stable Harvest products — all from one closed-loop farm on 24 acres. Tap to explore the full system."
+            summary="Fresh produce and shelf-stable Harvest products - all from one closed-loop farm on 24 acres. Tap to explore the full system."
             dark
           />
         </div>
       </div>
     </section>
 
-    <!-- ===== VALUES ===== -->
+    <!-- ===== CORE PRINCIPLES ===== -->
     <section class="py-20 md:py-28 bg-trovara-cream">
       <div class="container-trovara">
         <SectionHeader
           eyebrow="What We Stand For"
-          title="Values that grow with every harvest"
+          title="Core principles"
           center
         />
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto">
           <div
-            v-for="value in values"
-            :key="value.title"
-            class="bg-white rounded-2xl p-8 hover:shadow-md transition-shadow duration-300 text-center group"
+            v-for="principle in principles"
+            :key="principle.title"
+            class="bg-white rounded-2xl p-6 hover:shadow-md transition-shadow duration-300 text-center group"
           >
-            <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-              {{ value.icon }}
+            <div class="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">
+              {{ principle.icon }}
             </div>
-            <h3 class="font-bold text-trovara-dark text-lg mb-2">{{ value.title }}</h3>
-            <p class="text-gray-500 text-sm leading-relaxed">{{ value.desc }}</p>
+            <h3 class="font-bold text-trovara-dark text-sm sm:text-base">{{ principle.title }}</h3>
           </div>
         </div>
       </div>
@@ -213,10 +205,10 @@ const values = [
             <SectionHeader
               eyebrow="Ancillary Services"
               title="We help other farms grow too."
-              subtitle="The expertise we've built at Trovara Farm is available to you. From farm setup and soil advisory to crop planning and market linkage - we walk the land with you."
+              subtitle="The expertise we've built at Trovara Farm is available to you - including Trovara Farm OS (Operations System), plus farm setup, soil advisory, crop planning, and market linkage."
             />
             <div class="grid grid-cols-2 gap-3 mb-8">
-              <div v-for="s in ['Farm Setup & Development', 'Soil Health Advisory', 'Crop Planning', 'Irrigation Design', 'Pest Management', 'Market Linkage']" :key="s"
+              <div v-for="s in ['Trovara Farm OS', 'Farm Setup & Development', 'Soil Health Advisory', 'Crop Planning', 'Irrigation Design', 'Market Linkage']" :key="s"
                 class="flex items-center gap-2 text-sm text-trovara-dark font-medium"
               >
                 <span class="w-4 h-4 rounded-full bg-trovara-green/10 text-trovara-green flex items-center justify-center text-[10px] font-black flex-shrink-0">✓</span>

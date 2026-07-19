@@ -24,10 +24,10 @@ const harvestWindows = [
     note: 'First commercial harvest from December 2026; continuous supply thereafter',
   },
   {
-    product: 'Chicken',
+    product: 'Free-range dressed noilers & mature hens',
     period: 'Year-round',
     status: 'available' as const,
-    note: 'Recurring broiler supply on contract',
+    note: 'Recurring dressed-bird supply on contract',
   },
   {
     product: 'Eggs',
@@ -136,7 +136,7 @@ const productLines = [
             <p class="text-trovara-dark font-semibold mb-2">Plantain live; coconut from Dec 2026</p>
             <p class="text-sm text-gray-600 leading-relaxed">
               Plantain is available year-round from April 2026. Coconut opens December 2026 and continues
-              year-round. Chicken and eggs ship every month on contract.
+              year-round. Free-range dressed noilers, mature hens, and eggs ship every month on contract.
             </p>
           </div>
           <div class="rounded-2xl bg-white p-7 shadow-sm border border-gray-100">
@@ -164,7 +164,7 @@ const productLines = [
         <SectionHeader
           eyebrow="Supply Planning"
           title="Harvest forecast calendar"
-          subtitle="Public supply windows for procurement planning: plantain from April 2027, coconut from December 2027, and year-round chicken and eggs."
+          subtitle="Public supply windows for procurement planning: plantain from April 2026, coconut from December 2026, and year-round free-range dressed noilers, mature hens, and eggs."
         />
         <HarvestCalendar :windows="harvestWindows" />
         <p class="text-xs text-gray-400 mt-4 text-center">

@@ -23,8 +23,8 @@ export const useProductsStore = defineStore('products', {
         available: true,
         specs: [
           { label: 'Grades', value: 'Export-grade, mature coconuts' },
-          { label: 'Packaging', value: 'Mesh bags (25–50 kg) or custom bulk' },
-          { label: 'Shelf life', value: '3–4 weeks at ambient; longer with cold chain' },
+          { label: 'Packaging', value: 'Mesh bags (25-50 kg) or custom bulk' },
+          { label: 'Shelf life', value: '3-4 weeks at ambient; longer with cold chain' },
           { label: 'MOQ', value: 'Contact for volume-based minimums' },
           { label: 'Delivery', value: 'Ogun, Lagos, Ibadan' },
         ],
@@ -82,8 +82,8 @@ export const useProductsStore = defineStore('products', {
         available: true,
         specs: [
           { label: 'Grades', value: 'Grade A green; Grade A ripe (prepackaged boxes)' },
-          { label: 'Packaging', value: 'Graded cartons, 18–20 kg; chips & flour in sealed packs' },
-          { label: 'Shelf life', value: 'Green: 7–10 days; ripe: 3–5 days; flour: 12 months' },
+          { label: 'Packaging', value: 'Graded cartons, 18-20 kg; chips & flour in sealed packs' },
+          { label: 'Shelf life', value: 'Green: 7-10 days; ripe: 3-5 days; flour: 12 months' },
           { label: 'MOQ', value: 'Contact for product-specific minimums' },
           { label: 'Delivery', value: 'Ogun, Lagos, Ibadan - scheduled routes' },
         ],
@@ -122,25 +122,25 @@ export const useProductsStore = defineStore('products', {
       },
       {
         id: 'poultry',
-        name: 'Poultry',
+        name: 'Free-range Dressed Noilers & Mature Hens',
         category: 'poultry' as const,
         tagline: 'Raised with Care. Served with Pride.',
         description:
-          'At Trovara Farm, our birds are raised in open, free-range environments with natural feed and clean water. We believe animals raised with dignity produce the finest quality meat. Our birds are healthy, our practices are ethical, and our poultry is exceptional. (Looking for eggs? See our pasture-raised eggs.)',
+          'At Trovara Farm, our free-range dressed noilers and mature hens are raised in open environments with natural feed and clean water. We believe animals raised with dignity produce the finest quality meat - healthy birds, ethical practices, and carefully dressed birds ready for kitchens and retailers. (Looking for eggs? See our pasture-raised eggs.)',
         benefits: [
           'Free-range, open environment',
           'Natural grain-based feed',
           'No growth hormones',
-          'Premium free-range poultry meat',
+          'Free-range dressed noilers & mature hens',
         ],
         icon: '🐔',
         color: '#1A6B3C',
         bgColor: '#EDF7F1',
         available: true,
         specs: [
-          { label: 'Grades', value: 'Free-range broilers & mature hens' },
+          { label: 'Grades', value: 'Free-range dressed noilers & mature hens' },
           { label: 'Packaging', value: 'Vacuum-sealed or ice-packed' },
-          { label: 'Shelf life', value: 'Fresh poultry: 3–5 days refrigerated; longer frozen' },
+          { label: 'Shelf life', value: 'Fresh dressed birds: 3-5 days refrigerated; longer frozen' },
           { label: 'MOQ', value: 'Contact for recurring supply contracts' },
           { label: 'Delivery', value: 'Ogun, Lagos, Ibadan' },
         ],
@@ -149,15 +149,16 @@ export const useProductsStore = defineStore('products', {
             id: 'one-time',
             name: 'One-Time Order',
             period: 'per order · quote-based',
-            description: 'A single delivery of free-range poultry, sized to your needs.',
+            description:
+              'A single delivery of free-range dressed noilers and mature hens, sized to your needs.',
             features: [
-              'Whole birds or cuts',
+              'Whole dressed birds or cuts',
               'Vacuum-sealed or ice-packed',
               'Delivery in Ogun, Lagos & Ibadan',
             ],
             ctaLabel: 'Order on WhatsApp',
             whatsappMessage:
-              "Hi Trovara Farm, I'd like to place a one-time poultry order. Please share pricing and availability.",
+              "Hi Trovara Farm, I'd like to place a one-time order for free-range dressed noilers and mature hens. Please share pricing and availability.",
           },
           {
             id: 'recurring',
@@ -173,7 +174,7 @@ export const useProductsStore = defineStore('products', {
             ctaLabel: 'Set Up Recurring Supply',
             popular: true,
             whatsappMessage:
-              "Hi Trovara Farm, I'd like to set up a recurring poultry supply. Please share subscription pricing and scheduling.",
+              "Hi Trovara Farm, I'd like to set up a recurring supply of free-range dressed noilers and mature hens. Please share subscription pricing and scheduling.",
           },
         ],
       },

@@ -1,6 +1,6 @@
 # Trovara Marketing Site (Vue 3 + TypeScript + Vite)
 
-Marketing site for [Trovara Farm](https://trovara.farm). Brand assets (logo, icons, photography, infographics) live under `public/` — e.g. `public/images/trovara-brand.png` and `public/trovara-github-icon.png`.
+Marketing site for [Trovara Farm](https://trovara.farm). Brand assets (logo, icons, photography, infographics) live under `public/` - e.g. `public/images/trovara-brand.png` and `public/trovara-github-icon.png`.
 
 ## Recommended IDE Setup
 

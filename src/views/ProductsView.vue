@@ -48,15 +48,15 @@ const productSchemas = computed(() =>
         <SectionHeader
           eyebrow="How It Works"
           title="One regenerative system behind every product."
-          subtitle="Plantain, coconut, and chicken feed a circular system where waste becomes value - flowing into two brands, Trovara Fresh and Trovara Harvest, and the products you see below."
+          subtitle="Plantain, coconut, and free-range dressed noilers & mature hens feed a circular system where waste becomes value - flowing into two brands, Trovara Fresh and Trovara Harvest, and the products you see below."
           center
         />
         <div class="max-w-5xl mx-auto">
           <InfographicFigure
             src="/images/regen/system.webp"
-            alt="Trovara integrated regenerative system: plantain, coconut, and chicken inputs flow through a circular farm into Trovara Fresh and Trovara Harvest brands, producing fresh produce and processed goods, with by-products like compost, fertilizer, biogas, and animal feed."
+            alt="Trovara integrated regenerative system: plantain, coconut, and free-range noilers & hens inputs flow through a circular farm into Trovara Fresh and Trovara Harvest brands, producing fresh produce and processed goods, with by-products like compost, fertilizer, biogas, and animal feed."
             caption="From nature's inputs to trusted food solutions"
-            summary="Fresh produce (plantain, eggs, chicken, mushrooms, coconut) and shelf-stable Harvest products (flours, chips, oils, powders) - all from one closed-loop farm. Tap to explore the full system."
+            summary="Fresh produce (plantain, eggs, free-range dressed noilers & mature hens, mushrooms, coconut) and shelf-stable Harvest products (flours, chips, oils, powders) - all from one closed-loop farm. Tap to explore the full system."
           />
         </div>
       </div>
@@ -248,7 +248,7 @@ const productSchemas = computed(() =>
           <h2 class="text-3xl md:text-4xl font-black mb-4">Bulk Orders & Export</h2>
           <p class="text-white/60 text-lg mb-10 leading-relaxed">
             Are you a distributor, retailer, or wholesaler? Trovara Farm is ready to supply
-            premium tropical produce and poultry at scale. Let's talk.
+            premium tropical produce and free-range dressed noilers & mature hens at scale. Let's talk.
           </p>
           <div class="flex flex-wrap gap-4 justify-center">
             <RouterLink to="/wholesale" class="btn-gold text-base px-8 py-4">

@@ -1,13 +1,13 @@
 /**
- * Newsletter signup handler — validates, rate-limits, forwards to Buttondown or Formspree.
+ * Newsletter signup handler - validates, rate-limits, forwards to Buttondown or Formspree.
  *
  * Local dev: run `netlify dev` (not plain `vite`) to exercise this endpoint at
  * `/.netlify/functions/newsletter`.
  *
  * Netlify env:
- *   BUTTONDOWN_USERNAME            — optional; tried first when set
- *   FORMSPREE_NEWSLETTER_FORM_ID   — optional dedicated Formspree form
- *   FORMSPREE_FORM_ID              — fallback Formspree form
+ *   BUTTONDOWN_USERNAME            - optional; tried first when set
+ *   FORMSPREE_NEWSLETTER_FORM_ID   - optional dedicated Formspree form
+ *   FORMSPREE_FORM_ID              - fallback Formspree form
  */
 import {
   forwardToFormspree,

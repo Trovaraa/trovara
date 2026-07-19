@@ -24,6 +24,18 @@ function handleScroll() {
   scrolled.value = window.scrollY > 20
 }
 
+/** Same-route clicks (e.g. Home while already on /) skip the router - still jump up. */
+function onNavClick(to: string) {
+  mobileMenuOpen.value = false
+  const current = route.path
+  const target = to.split('#')[0] || '/'
+  if (current === target) {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+  }
+}
+
 onMounted(() => window.addEventListener('scroll', handleScroll))
 onUnmounted(() => window.removeEventListener('scroll', handleScroll))
 </script>
@@ -41,7 +53,7 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
       <div class="flex items-center justify-between h-16 md:h-20">
 
         <!-- Logo -->
-        <RouterLink to="/" class="flex items-center gap-2.5 group" @click="mobileMenuOpen = false">
+        <RouterLink to="/" class="flex items-center gap-2.5 group" @click="onNavClick('/')">
           <div class="w-9 h-9 rounded-full bg-trovara-green flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
             <span class="text-trovara-gold font-black text-lg leading-none">T</span>
           </div>
@@ -78,10 +90,11 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
                   : '!text-white !bg-white/20'
                 : '',
             ]"
+            @click="onNavClick(link.to)"
           >
             {{ link.label }}
           </RouterLink>
-          <RouterLink to="/contact" class="ml-4 btn-gold text-sm py-2 px-5">
+          <RouterLink to="/contact" class="ml-4 btn-gold text-sm py-2 px-5" @click="onNavClick('/contact')">
             Get in Touch
           </RouterLink>
         </div>
@@ -122,12 +135,12 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
               :to="link.to"
               class="block px-4 py-3 rounded-xl text-trovara-dark font-medium hover:text-trovara-green hover:bg-trovara-light transition-colors"
               :class="route.path === link.to ? '!text-trovara-green !bg-trovara-green/10' : ''"
-              @click="mobileMenuOpen = false"
+              @click="onNavClick(link.to)"
             >
               {{ link.label }}
             </RouterLink>
             <div class="pt-2 pb-1">
-              <RouterLink to="/contact" class="btn-primary w-full text-sm" @click="mobileMenuOpen = false">
+              <RouterLink to="/contact" class="btn-primary w-full text-sm" @click="onNavClick('/contact')">
                 Get in Touch
               </RouterLink>
             </div>

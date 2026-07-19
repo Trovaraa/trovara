@@ -3,7 +3,7 @@ import type { RouteLocationNormalizedLoaded, Router } from 'vue-router'
 const BASE_URL = 'https://trovara.farm'
 const DEFAULT_TITLE = 'Trovara Farm'
 const DEFAULT_DESCRIPTION =
-  'Trovara Farm grows premium food with regenerative practices for homes and businesses in Nigeria.'
+  'Food you can trust, from a farm built for tomorrow. Trovara Farm grows premium regenerative food for homes and businesses in Nigeria.'
 
 type RouteMetaLike = {
   title?: unknown

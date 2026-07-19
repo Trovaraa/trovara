@@ -1,7 +1,15 @@
 <script setup lang="ts">
+import { useRoute } from 'vue-router'
 import NewsletterSubscribe from './ui/NewsletterSubscribe.vue'
 
+const route = useRoute()
 const currentYear = new Date().getFullYear()
+
+function onHomeClick() {
+  if (route.path === '/') {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }
+}
 
 const links = {
   company: [
@@ -18,7 +26,7 @@ const links = {
     { label: 'Coconut',        to: '/products#coconut' },
     { label: 'Plantain',       to: '/products#plantain' },
     { label: 'Plantain Flour', to: '/products#plantain' },
-    { label: 'Poultry',        to: '/products#poultry' },
+    { label: 'Noilers & Hens', to: '/products#poultry' },
     { label: 'Eggs',           to: '/products#eggs' },
     { label: 'Coming Soon',    to: '/products#coming-soon' },
   ],
@@ -38,7 +46,7 @@ const links = {
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
 
         <div class="lg:col-span-2">
-          <RouterLink to="/" class="flex items-center gap-2.5 mb-6 group w-fit">
+          <RouterLink to="/" class="flex items-center gap-2.5 mb-6 group w-fit" @click="onHomeClick">
             <div class="w-10 h-10 rounded-full bg-trovara-green flex items-center justify-center group-hover:scale-105 transition-transform">
               <span class="text-trovara-gold font-black text-xl leading-none">T</span>
             </div>
@@ -47,12 +55,11 @@ const links = {
               <span class="text-[11px] font-medium tracking-widest uppercase text-trovara-gold-300">Farm</span>
             </div>
           </RouterLink>
-          <p class="text-white/60 text-sm leading-relaxed max-w-xs mb-6">
-            Born natural. Raised global.<br/>
-            Premium tropical produce and poultry, grown with integrity and delivered with pride.
+          <p class="text-trovara-gold font-semibold text-sm italic mb-3">
+            Food you can trust, from a farm built for tomorrow.
           </p>
-          <p class="text-trovara-gold font-semibold text-sm italic">
-            "Born natural. Raised global."
+          <p class="text-white/60 text-sm leading-relaxed max-w-xs">
+            Premium tropical produce and free-range dressed noilers & mature hens, grown with integrity and delivered with pride.
           </p>
         </div>
 
