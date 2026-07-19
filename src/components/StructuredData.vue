@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, watch } from 'vue'
+import { SOCIAL_SAME_AS } from '../lib/social'
 
 type SchemaValue = Record<string, unknown> | Array<Record<string, unknown>>
 
@@ -13,7 +14,7 @@ const ORGANIZATION_SCHEMA = {
   name: 'Trovara Farm',
   url: 'https://trovara.farm',
   logo: 'https://trovara.farm/images/trovara-brand.png',
-  sameAs: ['https://github.com/trovara'],
+  sameAs: SOCIAL_SAME_AS,
 }
 
 const schemas = computed(() => {

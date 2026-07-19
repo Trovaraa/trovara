@@ -111,6 +111,15 @@ const thirdParties = [
     purpose: 'Handles messages you choose to send us through the WhatsApp channel.',
   },
   {
+    name: 'Facebook & Instagram (Meta)',
+    purpose:
+      'Hosts our public Facebook and Instagram pages when you choose to follow or message Trovara there.',
+  },
+  {
+    name: 'LinkedIn',
+    purpose: 'Hosts our company page when you choose to follow or message Trovara there.',
+  },
+  {
     name: 'Telegram',
     purpose:
       'Hosts the @TrovaraFarmBot customer order bot when you choose to order or track produce through Telegram.',
