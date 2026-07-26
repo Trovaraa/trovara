@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { buildWhatsAppLink } from '../lib/whatsapp'
 
-const lastUpdated = '15 July 2026'
+const lastUpdated = '25 July 2026'
 
 const privacyWhatsAppLink = buildWhatsAppLink(
   'Hi Trovara Farm, I have a question about your Privacy Policy and how you handle my personal data.',
@@ -44,7 +44,7 @@ const dataWeCollect = [
   {
     label: 'Technical information',
     detail:
-      'Aggregated, anonymised usage data such as pages visited, approximate region, device type, and referring site - collected via privacy-friendly analytics that do not use cookies or track you across websites.',
+      'Usage data such as pages visited, page titles, referring site, approximate region, device type, and the links, buttons, and forms you interact with - collected by our own analytics tenant using first-party cookies, and never used to profile you across other websites. See section 6 for the cookies involved and how to opt out.',
   },
 ]
 
@@ -100,6 +100,11 @@ const thirdParties = [
   {
     name: 'Buttondown',
     purpose: 'Manages newsletter subscriptions and email delivery for subscribers.',
+  },
+  {
+    name: 'WebMetrix Analytics',
+    purpose:
+      'Provides the website analytics loaded from analytics.webmetrix.ai - records page views and on-page interactions against first-party cookies, and reports them only to our private Trovara analytics dashboard.',
   },
   {
     name: 'Plausible Analytics',
@@ -283,27 +288,65 @@ const thirdParties = [
                 <p>
                   We use
                   <a
+                    href="https://webmetrix.ai"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-trovara-green font-semibold hover:underline"
+                  >WebMetrix Analytics</a>
+                  to understand how our website is used. WebMetrix runs on a private analytics
+                  tenant belonging to Trovara Farm: the statistics are visible only to us, are
+                  <strong>not</strong> shared with advertising networks, and are not used to profile
+                  you across other websites.
+                </p>
+                <p>
+                  So that repeat visits and related page views can be grouped together, WebMetrix
+                  stores two first-party cookies in your browser:
+                </p>
+                <ul class="space-y-3 text-gray-700">
+                  <li class="leading-relaxed">
+                    <code class="text-sm bg-white px-1.5 py-0.5 rounded">webmetrix_analytics__visitor_id</code>
+                    - a randomly generated identifier that expires after 12 months.
+                  </li>
+                  <li class="leading-relaxed">
+                    <code class="text-sm bg-white px-1.5 py-0.5 rounded">webmetrix_analytics__session_id</code>
+                    - a randomly generated identifier for your current visit that expires after 30
+                    minutes of inactivity.
+                  </li>
+                </ul>
+                <p>
+                  Neither identifier contains your name, email address, or anything else you have
+                  told us, and we do not connect them to your enquiries or orders. Alongside them,
+                  WebMetrix records the pages you open, page titles, the site that referred you, and
+                  how you interact with a page - the links and buttons you see, hover over, or click,
+                  and the fact that a form was submitted. It does <strong>not</strong> capture what
+                  you type into a form.
+                </p>
+                <p>
+                  The WebMetrix script is loaded from
+                  <code class="text-sm bg-white px-1.5 py-0.5 rounded">https://analytics.webmetrix.ai</code>
+                  under our Content Security Policy allowlist. We do not use Subresource Integrity
+                  (SRI) for this script because it is served from a single, unversioned URL that
+                  changes when the provider updates the service.
+                </p>
+                <p>
+                  Analytics is the only non-essential technology on this site, so you can opt out of
+                  it entirely from your browser: block or clear cookies for trovara.farm, or browse
+                  in a private window so the identifiers are discarded when you close it. Doing so
+                  does not affect your ability to read the site, contact us, or place an order. You
+                  may also email
+                  <a href="mailto:info@trovara.farm" class="text-trovara-green font-semibold hover:underline">info@trovara.farm</a>
+                  to ask us to delete the analytics records associated with your visit.
+                </p>
+                <p>
+                  We may additionally enable
+                  <a
                     href="https://plausible.io"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="text-trovara-green font-semibold hover:underline"
-                  >Plausible Analytics</a>,
-                  a privacy-first, cookieless service, to understand how our website is used.
-                  Plausible collects only aggregated, anonymised statistics - it does
-                  <strong>not</strong> set tracking cookies, does not collect personal data, and does
-                  not track you across other websites.
-                </p>
-                <p>
-                  Analytics runs only when we have configured it for our production site. The
-                  Plausible script is loaded from
-                  <code class="text-sm bg-white px-1.5 py-0.5 rounded">https://plausible.io</code>
-                  under our Content Security Policy allowlist. We do not use Subresource Integrity
-                  (SRI) for this script because Plausible serves it from a single, unversioned URL
-                  that may change when they update the service.
-                </p>
-                <p>
-                  Because we do not use non-essential or advertising cookies, you are not required to
-                  make cookie-consent choices to browse this site normally.
+                  >Plausible Analytics</a>
+                  on our production site. Plausible is cookieless and collects only aggregated,
+                  anonymised statistics, again loaded under our Content Security Policy allowlist.
                 </p>
                 <p>
                   You may optionally install this site to your device Home Screen. That stores a
@@ -351,6 +394,8 @@ const thirdParties = [
               <p class="text-gray-700 leading-relaxed">
                 We keep personal data only for as long as necessary to fulfil the purposes described
                 in this policy, including to satisfy any legal, accounting, or reporting requirements.
+                Analytics identifiers are shorter-lived: they expire on their own after 30 minutes
+                for a single visit and 12 months for a returning visitor, as described in section 6.
                 When data is no longer needed, we securely delete or anonymise it. You may ask us to
                 delete your data at any time (see your rights below).
               </p>

@@ -3,7 +3,7 @@ import { createPinia } from 'pinia'
 import { registerSW } from 'virtual:pwa-register'
 import router from './router'
 import App from './App.vue'
-import { initAnalytics } from './lib/analytics'
+import { initAnalytics, trackPageViews } from './lib/analytics'
 import '@fontsource/inter/300.css'
 import '@fontsource/inter/400.css'
 import '@fontsource/inter/500.css'
@@ -23,3 +23,7 @@ app.use(createPinia())
 app.use(router)
 
 app.mount('#app')
+
+// After mount, so this router hook runs after the one usePageMeta registers and
+// reports the new page title rather than the previous one.
+trackPageViews(router)
