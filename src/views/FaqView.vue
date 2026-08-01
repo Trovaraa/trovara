@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { buildWhatsAppLink } from '../lib/whatsapp'
+import BrandIcon from '../components/brand/BrandIcon.vue'
 
 interface FaqItem {
   q: string
@@ -16,7 +17,7 @@ interface FaqGroup {
 const faqs: FaqGroup[] = [
   {
     category: 'Products & Quality',
-    icon: '🌿',
+    icon: 'natural',
     items: [
       {
         q: 'Are your products organic?',
@@ -38,7 +39,7 @@ const faqs: FaqGroup[] = [
   },
   {
     category: 'Orders & Pricing',
-    icon: '📦',
+    icon: 'package',
     items: [
       {
         q: 'What is your minimum order quantity (MOQ)?',
@@ -60,7 +61,7 @@ const faqs: FaqGroup[] = [
   },
   {
     category: 'Shipping & Logistics',
-    icon: '✈️',
+    icon: 'plane',
     items: [
       {
         q: 'Where do you deliver?',
@@ -82,7 +83,7 @@ const faqs: FaqGroup[] = [
   },
   {
     category: 'Farm Services',
-    icon: '🌾',
+    icon: 'land',
     items: [
       {
         q: 'Can you help me start my own farm?',
@@ -108,7 +109,7 @@ const faqs: FaqGroup[] = [
   },
   {
     category: 'Visiting & Partnerships',
-    icon: '🤝',
+    icon: 'trust',
     items: [
       {
         q: 'Can I visit Trovara Farm?',
@@ -167,8 +168,8 @@ function itemKey(category: string, i: number) {
       <div class="container-trovara max-w-4xl">
         <div v-for="group in faqs" :key="group.category" class="mb-12 last:mb-0">
           <div class="flex items-center gap-3 mb-6">
-            <div class="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-2xl">
-              {{ group.icon }}
+            <div class="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center p-2">
+              <BrandIcon :name="group.icon" class="w-full h-full" />
             </div>
             <h2 class="text-2xl md:text-3xl font-black text-trovara-dark">{{ group.category }}</h2>
           </div>
@@ -219,7 +220,7 @@ function itemKey(category: string, i: number) {
 
     <section class="py-20 bg-trovara-dark text-white text-center">
       <div class="container-trovara max-w-2xl mx-auto">
-        <div class="text-5xl mb-6">💬</div>
+        <BrandIcon name="chat" class="w-16 h-16 mx-auto mb-6 icon-on-dark" />
         <h2 class="text-3xl md:text-4xl font-black mb-4">
           Still have questions?
         </h2>

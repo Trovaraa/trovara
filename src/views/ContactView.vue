@@ -5,6 +5,7 @@ import SectionHeader from '../components/ui/SectionHeader.vue'
 import { submitContactForm } from '../lib/formsubmit'
 import { buildWhatsAppLink } from '../lib/whatsapp'
 import { TELEGRAM_CUSTOMER_BOT, TELEGRAM_ORDER_URL } from '../lib/telegram'
+import BrandIcon from '../components/brand/BrandIcon.vue'
 
 const contactWhatsAppLink = buildWhatsAppLink(
   "Hi Trovara Farm, I'd like to get in touch about your products.",
@@ -135,10 +136,10 @@ async function handleSubmit() {
 }
 
 const contactInfo = [
-  { icon: '📍', label: 'Location',  value: 'Trovara Farm, Abeokuta.' },
-  { icon: '📞', label: 'Phone',     value: '+234 810 369 3426' },
-  { icon: '📧', label: 'Email',     value: 'info@trovara.farm' },
-  { icon: '🕐', label: 'Response',  value: 'Within 24 business hours' },
+  { icon: 'pin', label: 'Location',  value: 'Trovara Farm, Abeokuta.' },
+  { icon: 'phone', label: 'Phone',     value: '+234 810 369 3426' },
+  { icon: 'mail', label: 'Email',     value: 'info@trovara.farm' },
+  { icon: 'clock', label: 'Response',  value: 'Within 24 business hours' },
 ]
 </script>
 
@@ -177,8 +178,8 @@ const contactInfo = [
                 :key="info.label"
                 class="flex items-start gap-4"
               >
-                <div class="w-10 h-10 rounded-xl bg-trovara-green/10 flex items-center justify-center flex-shrink-0 text-lg">
-                  {{ info.icon }}
+                <div class="w-10 h-10 rounded-xl bg-trovara-green/10 flex items-center justify-center flex-shrink-0 p-2">
+                  <BrandIcon :name="info.icon" class="w-full h-full" />
                 </div>
                 <div>
                   <div class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-0.5">
@@ -190,7 +191,7 @@ const contactInfo = [
             </div>
 
             <div class="mt-10 p-6 bg-trovara-green rounded-2xl text-white">
-              <div class="text-2xl mb-3">🌿</div>
+              <BrandIcon name="harvest" class="w-10 h-10 mb-3 icon-on-dark" />
               <h4 class="font-bold text-lg mb-2">Looking to order in bulk?</h4>
               <p class="text-white/70 text-sm leading-relaxed mb-5">
                 We supply coconuts, plantains, and free-range dressed noilers & mature hens at wholesale scale.
@@ -225,7 +226,7 @@ const contactInfo = [
 
               <!-- Success State -->
               <div v-if="submitted" class="text-center py-12">
-                <div class="text-6xl mb-4">🌱</div>
+                <BrandIcon name="sprout" class="w-16 h-16 mx-auto mb-4" />
                 <h3 class="text-2xl font-black text-trovara-dark mb-3">Message Received!</h3>
                 <p class="text-gray-500 mb-6">
                   Thank you for reaching out to Trovara Farm. We'll get back to you within 24 business hours.

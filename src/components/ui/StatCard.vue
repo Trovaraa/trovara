@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import BrandIcon from '../brand/BrandIcon.vue'
 defineProps<{
   value: string
   label: string
@@ -16,7 +17,7 @@ defineProps<{
         : 'bg-white shadow-sm border border-gray-100',
     ]"
   >
-    <div class="text-3xl mb-3">{{ icon }}</div>
+    <BrandIcon :name="icon" class="w-9 h-9 mx-auto mb-3" />
     <div
       :class="[
         'text-3xl md:text-4xl font-black mb-1',

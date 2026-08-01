@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import NewsletterSubscribe from './ui/NewsletterSubscribe.vue'
+import TrovaraLogo from './brand/TrovaraLogo.vue'
 import { SOCIAL_LINKS } from '../lib/social'
+import { openConsentBanner } from '../lib/consent'
 
 const route = useRoute()
 const currentYear = new Date().getFullYear()
@@ -48,13 +50,7 @@ const links = {
 
         <div class="lg:col-span-2">
           <RouterLink to="/" class="flex items-center gap-2.5 mb-6 group w-fit" @click="onHomeClick">
-            <div class="w-10 h-10 rounded-full bg-trovara-green flex items-center justify-center group-hover:scale-105 transition-transform">
-              <span class="text-trovara-gold font-black text-xl leading-none">T</span>
-            </div>
-            <div class="flex flex-col leading-none">
-              <span class="font-black text-2xl tracking-tight text-white">TROVARA</span>
-              <span class="text-[11px] font-medium tracking-widest uppercase text-trovara-gold-300">Farm</span>
-            </div>
+            <TrovaraLogo tone="light" />
           </RouterLink>
           <p class="text-trovara-gold font-semibold text-sm italic mb-3">
             Food you can trust, from a farm built for tomorrow.
@@ -144,7 +140,7 @@ const links = {
         <p class="text-white/40 text-sm">
           &copy; {{ currentYear }} Trovara Farm. All rights reserved.
         </p>
-        <div class="flex items-center gap-6">
+        <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
           <RouterLink
             to="/privacy"
             class="text-white/40 hover:text-trovara-gold text-sm transition-colors"
@@ -157,9 +153,14 @@ const links = {
           >
             Terms of Service
           </RouterLink>
-          <p class="text-white/40 text-sm">
-            Crafted with 🌿 for the earth and its people.
-          </p>
+          <button
+            type="button"
+            class="text-white/40 hover:text-trovara-gold text-sm transition-colors"
+            @click="openConsentBanner"
+          >
+            Cookie Preferences
+          </button>
+          <p class="text-white/40 text-sm">Find better. Grow better.</p>
         </div>
       </div>
     </div>

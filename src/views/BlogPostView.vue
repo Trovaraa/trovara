@@ -33,11 +33,11 @@ const articleSchema = computed(() => {
     description: p.excerpt,
     author: { '@type': 'Organization', name: p.author },
     datePublished: p.publishedAt,
-    image: p.coverImage ? `${BASE_URL}${p.coverImage}` : `${BASE_URL}/images/trovara-brand.png`,
+    image: p.coverImage ? `${BASE_URL}${p.coverImage}` : `${BASE_URL}/brand/trovara-social-card-v2.png`,
     publisher: {
       '@type': 'Organization',
       name: 'Trovara Farm',
-      logo: { '@type': 'ImageObject', url: `${BASE_URL}/images/trovara-brand.png` },
+      logo: { '@type': 'ImageObject', url: `${BASE_URL}/brand/trovara-monogram-tile-v1.png` },
     },
     mainEntityOfPage: `${BASE_URL}/blog/${p.slug}`,
   }
@@ -55,7 +55,7 @@ watch(
         title: `${p.title} - Trovara Farm`,
         description: p.excerpt,
         canonicalPath: `/blog/${p.slug}`,
-        ogImage: p.coverImage ? `${BASE_URL}${p.coverImage}` : `${BASE_URL}/images/trovara-brand.png`,
+        ogImage: p.coverImage ? `${BASE_URL}${p.coverImage}` : `${BASE_URL}/brand/trovara-social-card-v2.png`,
       })
     }
   },
@@ -72,8 +72,8 @@ function formatDate(iso: string) {
 </script>
 
 <template>
-  <StructuredData v-if="post" :additional-schema="articleSchema">
   <div v-if="post">
+    <StructuredData :additional-schema="articleSchema" />
     <section class="pt-32 pb-16 bg-trovara-green relative overflow-hidden">
       <div class="absolute inset-0 bg-hero-pattern opacity-10 pointer-events-none" />
       <div class="container-trovara relative z-10 max-w-3xl">
@@ -155,5 +155,4 @@ function formatDate(iso: string) {
       </div>
     </section>
   </div>
-  </StructuredData>
 </template>

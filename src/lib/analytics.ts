@@ -1,4 +1,6 @@
+import { watch } from 'vue'
 import type { Router } from 'vue-router'
+import { consent } from './consent'
 
 // Plausible is loaded from https://plausible.io (CSP allowlist in netlify.toml).
 // No SRI: Plausible updates script.js without versioned URLs. Plausible runs only
@@ -12,6 +14,7 @@ const PLAUSIBLE_DOMAIN = import.meta.env.VITE_PLAUSIBLE_DOMAIN
 const WEBMETRIX_SRC = 'https://analytics.webmetrix.ai/sdk/webmetrix.analytics.min.js'
 const WEBMETRIX_TENANT = 'trovara'
 const WEBMETRIX_TENANT_UID = '4f39626f-8bc9-49b8-b3af-998da08d005d'
+const WEBMETRIX_COOKIES = ['webmetrix_analytics__visitor_id', 'webmetrix_analytics__session_id']
 
 type WebMetrixEvent = {
   event_type: string
@@ -59,7 +62,14 @@ function initWebMetrix() {
   document.head.appendChild(script)
 }
 
+function clearWebMetrixCookies() {
+  WEBMETRIX_COOKIES.forEach((name) => {
+    document.cookie = `${name}=; Max-Age=0; path=/`
+  })
+}
+
 function send(event: WebMetrixEvent) {
+  if (consent.value !== 'granted') return
   if (!sdkReady) {
     pending.push(event)
     return
@@ -67,14 +77,36 @@ function send(event: WebMetrixEvent) {
   window.WebMetrix?.push?.(event)
 }
 
-export function initAnalytics() {
-  if (typeof document === 'undefined') return
-
+function start() {
   // The SDK reports a page_view for the landing URL as soon as it loads, so the
-  // router hook must not report that same path a second time.
+  // router hook must not report that same path a second time. Taken at consent
+  // time, not at startup, so pre-consent page views are never back-filled.
   lastTrackedPath = window.location.pathname
   initPlausible()
   initWebMetrix()
+}
+
+// Nothing is requested until the visitor accepts - Plausible included, because
+// even cookieless it sends the visitor's IP address to a third party.
+export function initAnalytics() {
+  if (typeof document === 'undefined') return
+
+  watch(
+    consent,
+    (choice, previous) => {
+      if (choice === 'granted') {
+        start()
+        return
+      }
+      // A loaded SDK cannot be unloaded and keeps reporting interactions by
+      // itself, so withdrawal only takes hold on a fresh document.
+      if (previous === 'granted') {
+        clearWebMetrixCookies()
+        window.location.reload()
+      }
+    },
+    { immediate: true },
+  )
 }
 
 // The SDK only reports its one page_view at load time, so every in-app route

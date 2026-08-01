@@ -9,6 +9,7 @@
 
   body {
     @apply font-sans text-trovara-dark bg-trovara-cream antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -95,6 +96,38 @@
 
   .blog-content a {
     @apply text-trovara-green font-medium hover:underline;
+  }
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, black, transparent 88%);
+}
+
+.icon-on-dark {
+  border-radius: 0.9rem;
+  background: rgba(247, 243, 232, 0.94);
+  padding: 0.45rem;
+}
+
+.mobile-product-rail {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-product-rail::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
 

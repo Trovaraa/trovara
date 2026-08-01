@@ -31,9 +31,7 @@ onMounted(() => {
         class="bg-white rounded-2xl shadow-2xl p-5 w-72 border border-gray-100"
       >
         <div class="flex items-start gap-3 mb-3">
-          <div class="w-10 h-10 rounded-full bg-trovara-green flex items-center justify-center flex-shrink-0">
-            <span class="text-trovara-gold font-black text-base leading-none">T</span>
-          </div>
+          <img src="/brand/trovara-monogram-tile-v1.svg" alt="" class="w-10 h-10 flex-shrink-0" width="40" height="40" />
           <div>
             <p class="font-bold text-trovara-dark text-sm">Trovara Farm</p>
             <p class="text-trovara-green text-xs font-medium">Online - replies within minutes</p>

@@ -6,6 +6,7 @@ import TheFooter from './components/TheFooter.vue'
 import StructuredData from './components/StructuredData.vue'
 import WhatsAppButton from './components/WhatsAppButton.vue'
 import InstallPrompt from './components/InstallPrompt.vue'
+import ConsentBanner from './components/ConsentBanner.vue'
 import { usePageMeta } from './composables/usePageMeta'
 
 const route = useRoute()
@@ -36,6 +37,8 @@ router.afterEach((to) => {
 <template>
   <div class="min-h-screen flex flex-col">
     <StructuredData />
+    <!-- Ahead of the page so the banner is the first thing keyboard focus reaches. -->
+    <ConsentBanner />
     <TheNavbar />
     <main class="flex-1">
       <RouterView v-slot="{ Component }">

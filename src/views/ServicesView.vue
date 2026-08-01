@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import SectionHeader from '../components/ui/SectionHeader.vue'
+import BrandIcon from '../components/brand/BrandIcon.vue'
 
 type Service = {
   icon: string
@@ -12,7 +13,7 @@ type Service = {
 
 const services: Service[] = [
   {
-    icon: '🖥️',
+    icon: 'os',
     title: 'Trovara Farm OS',
     meaning: 'Operations System',
     featured: true,
@@ -27,7 +28,7 @@ const services: Service[] = [
     ],
   },
   {
-    icon: '🗺️',
+    icon: 'map',
     title: 'Farm Setup & Development',
     desc: 'Starting a farm from scratch? We guide you from land assessment and layout design to infrastructure setup, equipment sourcing, and first planting. We help you build a farm that is productive from day one.',
     deliverables: [
@@ -39,7 +40,7 @@ const services: Service[] = [
     ],
   },
   {
-    icon: '🌱',
+    icon: 'sprout',
     title: 'Crop Planning & Variety Selection',
     desc: 'Choosing the right crop and the right variety for your soil, climate, and market is the most important decision a farmer makes. We help you make it with data, not guesswork.',
     deliverables: [
@@ -51,7 +52,7 @@ const services: Service[] = [
     ],
   },
   {
-    icon: '🧪',
+    icon: 'flask',
     title: 'Soil Health & Management Advisory',
     desc: 'Healthy soil is the foundation of every great farm. We provide soil testing, interpretation, and organic soil management plans that build long-term fertility without synthetic inputs.',
     deliverables: [
@@ -63,7 +64,7 @@ const services: Service[] = [
     ],
   },
   {
-    icon: '💧',
+    icon: 'water',
     title: 'Irrigation System Design',
     desc: 'Water is life on a farm. We design efficient, low-cost irrigation systems tailored to your crop, land size, and water source - from simple gravity-fed systems to drip irrigation setups.',
     deliverables: [
@@ -75,7 +76,7 @@ const services: Service[] = [
     ],
   },
   {
-    icon: '🐛',
+    icon: 'pest',
     title: 'Pest & Disease Management',
     desc: 'Crop losses from pests and disease can devastate a season. We provide integrated pest management (IPM) plans that protect your crops using biological, cultural, and minimal-chemical approaches.',
     deliverables: [
@@ -87,7 +88,7 @@ const services: Service[] = [
     ],
   },
   {
-    icon: '📦',
+    icon: 'package',
     title: 'Post-Harvest Handling & Storage',
     desc: 'Quality starts at the harvest and ends at the market. Poor post-harvest handling destroys value. We help you set up the right storage, grading, and packaging systems to preserve quality and extend shelf life.',
     deliverables: [
@@ -99,7 +100,7 @@ const services: Service[] = [
     ],
   },
   {
-    icon: '🎓',
+    icon: 'education',
     title: 'Farm Management Training',
     desc: 'We train farmers, farm managers, and agribusiness staff in modern, sustainable farming practices. Training is hands-on, practical, and delivered on-site at your farm.',
     deliverables: [
@@ -111,7 +112,7 @@ const services: Service[] = [
     ],
   },
   {
-    icon: '🌍',
+    icon: 'world',
     title: 'Market Linkage & Export Support',
     desc: 'Growing great produce is only half the job - getting it to the right buyer at the right price is the other half. We connect farmers and agribusinesses to local buyers, regional markets, and export channels.',
     deliverables: [
@@ -171,12 +172,12 @@ const process = [
       <div class="container-trovara">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div v-for="item in [
-            { icon: '🌾', label: 'Hands-on experience, not just theory' },
-            { icon: '📍', label: 'On-site, in-field advisory' },
-            { icon: '🤝', label: 'Tailored to your specific farm' },
-            { icon: '🌱', label: 'Sustainable, chemical-minimal approach' },
+            { icon: 'land', label: 'Hands-on experience, not just theory' },
+            { icon: 'pin', label: 'On-site, in-field advisory' },
+            { icon: 'trust', label: 'Tailored to your specific farm' },
+            { icon: 'sprout', label: 'Sustainable, chemical-minimal approach' },
           ]" :key="item.label">
-            <div class="text-3xl mb-2">{{ item.icon }}</div>
+            <BrandIcon :name="item.icon" class="w-10 h-10 mx-auto mb-2" />
             <p class="text-trovara-dark font-semibold text-sm leading-snug">{{ item.label }}</p>
           </div>
         </div>
@@ -200,9 +201,7 @@ const process = [
             :class="service.featured ? 'md:col-span-2 border border-trovara-green/20 bg-gradient-to-br from-white to-trovara-green/[0.04]' : ''"
           >
             <div class="flex flex-wrap items-start justify-between gap-3 mb-5">
-              <div class="text-4xl group-hover:scale-110 transition-transform duration-300">
-                {{ service.icon }}
-              </div>
+              <BrandIcon :name="service.icon" class="w-12 h-12 group-hover:scale-105 transition-transform duration-300" />
               <span
                 v-if="service.featured"
                 class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest bg-trovara-green text-white"
@@ -286,12 +285,12 @@ const process = [
           </div>
           <div class="space-y-4">
             <div class="bg-trovara-light rounded-2xl p-6">
-              <div class="text-3xl mb-3">🆓</div>
+              <BrandIcon name="trust" class="w-10 h-10 mb-3" />
               <h4 class="font-bold text-trovara-dark mb-1">Free Initial Consultation</h4>
               <p class="text-gray-500 text-sm">Every engagement starts with a no-cost, no-obligation conversation.</p>
             </div>
             <div class="bg-trovara-green rounded-2xl p-6 text-white">
-              <div class="text-3xl mb-3">📋</div>
+              <BrandIcon name="clipboard" class="w-10 h-10 mb-3 icon-on-dark" />
               <h4 class="font-bold mb-1">Clear, Written Scope</h4>
               <p class="text-white/70 text-sm">You'll always know exactly what you're getting before any work begins.</p>
             </div>
@@ -303,7 +302,7 @@ const process = [
     <!-- CTA -->
     <section class="py-20 bg-trovara-dark text-white text-center">
       <div class="container-trovara max-w-2xl mx-auto">
-        <div class="text-5xl mb-6">🌾</div>
+        <BrandIcon name="land" class="w-16 h-16 mx-auto mb-6 icon-on-dark" />
         <h2 class="text-3xl md:text-4xl font-black mb-4">
           Ready to build a better farm?
         </h2>

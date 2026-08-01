@@ -1,21 +1,19 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import TrovaraLogo from './brand/TrovaraLogo.vue'
 
 const route = useRoute()
 const mobileMenuOpen = ref(false)
 const scrolled = ref(false)
 
 const navLinks = [
-  { label: 'Home',     to: '/' },
-  { label: 'About',    to: '/about' },
   { label: 'Products', to: '/products' },
-  { label: 'Services', to: '/services' },
   { label: 'The Farm', to: '/farm' },
-  { label: 'Blog',     to: '/blog' },
-  { label: 'FAQ',      to: '/faq' },
+  { label: 'Our Story', to: '/about' },
+  { label: 'Farm OS', to: '/services' },
   { label: 'Wholesale', to: '/wholesale' },
-  { label: 'Contact',  to: '/contact' },
+  { label: 'Journal', to: '/blog' },
 ]
 
 const isHome = computed(() => route.name === 'home')
@@ -50,37 +48,21 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
     ]"
   >
     <nav class="container-trovara">
-      <div class="flex items-center justify-between h-16 md:h-20">
+      <div class="flex items-center justify-between h-16 md:h-[4.5rem]">
 
         <!-- Logo -->
         <RouterLink to="/" class="flex items-center gap-2.5 group" @click="onNavClick('/')">
-          <div class="w-9 h-9 rounded-full bg-trovara-green flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-            <span class="text-trovara-gold font-black text-lg leading-none">T</span>
-          </div>
-          <div class="flex flex-col leading-none">
-            <span
-              :class="[
-                'font-black text-xl tracking-tight transition-colors',
-                scrolled || !isHome ? 'text-trovara-dark' : 'text-white',
-              ]"
-            >TROVARA</span>
-            <span
-              :class="[
-                'text-[10px] font-medium tracking-widest uppercase transition-colors',
-                scrolled || !isHome ? 'text-trovara-green' : 'text-trovara-gold-300',
-              ]"
-            >Farm</span>
-          </div>
+          <TrovaraLogo :tone="scrolled || !isHome ? 'dark' : 'light'" compact />
         </RouterLink>
 
         <!-- Desktop Nav -->
-        <div class="hidden md:flex items-center gap-1">
+        <div class="hidden md:flex items-center gap-0.5">
           <RouterLink
             v-for="link in navLinks"
             :key="link.to"
             :to="link.to"
             :class="[
-              'px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
+              'px-3.5 py-2 rounded-full text-sm font-semibold transition-all duration-200',
               scrolled || !isHome
                 ? 'text-trovara-dark hover:text-trovara-green hover:bg-trovara-light'
                 : 'text-white/90 hover:text-white hover:bg-white/10',
@@ -94,8 +76,8 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
           >
             {{ link.label }}
           </RouterLink>
-          <RouterLink to="/contact" class="ml-4 btn-gold text-sm py-2 px-5" @click="onNavClick('/contact')">
-            Get in Touch
+          <RouterLink to="/contact" class="ml-3 btn-gold text-sm py-2.5 px-5 rounded-full" @click="onNavClick('/contact')">
+            Talk to us
           </RouterLink>
         </div>
 

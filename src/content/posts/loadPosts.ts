@@ -177,7 +177,7 @@ function parsePost(path: string, raw: string): BlogPost | null {
     publishedAt: asString(data.publishedAt),
     category: asString(data.category, 'Farm Stories'),
     tags: asStringArray(data.tags),
-    coverEmoji: asString(data.coverEmoji, '🌿'),
+    coverEmoji: asString(data.coverEmoji, 'sprout'),
     coverImage: asString(data.coverImage) || undefined,
     readTimeMinutes:
       typeof data.readTimeMinutes === 'number' && !Number.isNaN(data.readTimeMinutes)

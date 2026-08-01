@@ -13,7 +13,7 @@ const ORGANIZATION_SCHEMA = {
   '@type': 'Organization',
   name: 'Trovara Farm',
   url: 'https://trovara.farm',
-  logo: 'https://trovara.farm/images/trovara-brand.png',
+  logo: 'https://trovara.farm/brand/trovara-monogram-tile-v1.png',
   sameAs: SOCIAL_SAME_AS,
 }
 

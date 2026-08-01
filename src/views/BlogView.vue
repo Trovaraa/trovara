@@ -4,6 +4,7 @@ import { useBlogStore } from '../stores/blog'
 import SectionHeader from '../components/ui/SectionHeader.vue'
 import BlogCard from '../components/ui/BlogCard.vue'
 import NewsletterSubscribe from '../components/ui/NewsletterSubscribe.vue'
+import BrandIcon from '../components/brand/BrandIcon.vue'
 
 const blogStore = useBlogStore()
 const posts = computed(() => blogStore.publishedPosts)
@@ -96,7 +97,7 @@ const filteredPosts = computed(() =>
           v-else
           class="text-center py-16 px-8 bg-trovara-light rounded-2xl border border-trovara-green/10"
         >
-          <p class="text-4xl mb-4">🌱</p>
+          <BrandIcon name="sprout" class="w-12 h-12 mx-auto mb-4" />
           <p class="text-trovara-dark font-bold text-lg mb-2">First posts coming soon</p>
           <p class="text-gray-500 text-sm max-w-md mx-auto">
             We are preparing stories from the field. Subscribe to be notified when they go live.

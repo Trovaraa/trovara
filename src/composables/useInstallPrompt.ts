@@ -1,4 +1,5 @@
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
+import { bannerOpen } from '../lib/consent'
 
 const DISMISS_KEY = 'trovara-a2hs-dismissed-until'
 const DISMISS_DAYS = 30
@@ -36,7 +37,8 @@ export function useInstallPrompt() {
   let deferred: BeforeInstallPromptEvent | null = null
 
   function showIfEligible() {
-    if (isStandalone() || isDismissed()) {
+    // The consent banner sits in the same corner and has to be answered first.
+    if (isStandalone() || isDismissed() || bannerOpen.value) {
       visible.value = false
       return
     }
@@ -76,6 +78,11 @@ export function useInstallPrompt() {
       /* ignore */
     }
   }
+
+  watch(bannerOpen, (open) => {
+    if (open) visible.value = false
+    else showIfEligible()
+  })
 
   onMounted(() => {
     window.addEventListener('beforeinstallprompt', onBeforeInstall)

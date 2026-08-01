@@ -9,6 +9,7 @@ import { productColorClasses } from '../lib/productColors'
 import { buildWhatsAppLink, PRODUCT_MESSAGES } from '../lib/whatsapp'
 import { TELEGRAM_CTA_CLASS, TELEGRAM_CUSTOMER_BOT, TELEGRAM_ORDER_URL } from '../lib/telegram'
 import { useProductsStore } from '../stores/products'
+import BrandIcon from '../components/brand/BrandIcon.vue'
 
 const BASE_URL = 'https://trovara.farm'
 
@@ -63,8 +64,8 @@ watch(
 </script>
 
 <template>
-  <StructuredData v-if="product && product.available && product.id !== 'coming-soon'" :additional-schema="productSchema">
-    <div v-if="product && product.available && product.id !== 'coming-soon'">
+  <div v-if="product && product.available && product.id !== 'coming-soon'">
+    <StructuredData :additional-schema="productSchema" />
       <section class="pt-32 pb-20 bg-trovara-green relative overflow-hidden">
         <div class="absolute inset-0 bg-hero-pattern opacity-10 pointer-events-none" />
         <div class="container-trovara relative z-10 max-w-3xl">
@@ -97,7 +98,7 @@ watch(
               :class="productColorClasses(product.id).headerBg"
             >
               <div class="absolute inset-0 opacity-5" :class="productColorClasses(product.id).overlayBg" />
-              <div class="text-[120px] relative z-10 drop-shadow-lg">{{ product.icon }}</div>
+              <BrandIcon :name="product.icon" :title="product.name" class="relative z-10 w-40 h-40" />
             </div>
 
             <h2 class="text-3xl md:text-4xl font-black text-trovara-dark mb-5">About this product</h2>
@@ -171,14 +172,14 @@ watch(
           <div class="grid md:grid-cols-3 gap-6">
             <div
               v-for="step in [
-                { icon: '🌾', title: 'Open pasture, every day', body: 'Our hens live outdoors on rotating paddocks of fresh grass. Moving them daily keeps the pasture healthy and the hens curious.' },
-                { icon: '🌱', title: 'Nothing they wouldn\'t choose', body: 'Natural feed, foraged greens and clean water. No antibiotics, no hormones, no shortcuts - nothing we wouldn\'t put on our own table.' },
-                { icon: '🌅', title: 'Collected at dawn', body: 'Eggs are hand-collected every morning and graded before they leave the farm. Freshness isn\'t a promise - it\'s the schedule.' },
+                { icon: 'land', title: 'Open pasture, every day', body: 'Our hens live outdoors on rotating paddocks of fresh grass. Moving them daily keeps the pasture healthy and the hens curious.' },
+                { icon: 'natural', title: 'Nothing they wouldn\'t choose', body: 'Natural feed, foraged greens and clean water. No antibiotics, no hormones, no shortcuts - nothing we wouldn\'t put on our own table.' },
+                { icon: 'sun', title: 'Collected at dawn', body: 'Eggs are hand-collected every morning and graded before they leave the farm. Freshness isn\'t a promise - it\'s the schedule.' },
               ]"
               :key="step.title"
               class="bg-white rounded-3xl p-7 shadow-sm"
             >
-              <div class="text-4xl mb-4">{{ step.icon }}</div>
+              <BrandIcon :name="step.icon" class="w-12 h-12 mb-4" />
               <h3 class="font-black text-trovara-dark text-lg mb-2">{{ step.title }}</h3>
               <p class="text-gray-500 text-sm leading-relaxed">{{ step.body }}</p>
             </div>
@@ -250,7 +251,7 @@ watch(
         <div class="container-trovara">
           <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div class="rounded-3xl p-12 flex flex-col items-center justify-center min-h-64 bg-amber-50 relative overflow-hidden">
-              <div class="text-[100px] drop-shadow-lg">🌾</div>
+              <BrandIcon name="plantain" class="w-32 h-32" />
               <span class="mt-4 px-4 py-1.5 rounded-full bg-amber-200/60 text-amber-800 text-xs font-bold uppercase tracking-widest">
                 Processed Product
               </span>
@@ -297,6 +298,5 @@ watch(
           </div>
         </div>
       </section>
-    </div>
-  </StructuredData>
+  </div>
 </template>

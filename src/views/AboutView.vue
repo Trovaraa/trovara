@@ -2,6 +2,7 @@
 import SectionHeader from '../components/ui/SectionHeader.vue'
 import StatCard from '../components/ui/StatCard.vue'
 import InfographicFigure from '../components/ui/InfographicFigure.vue'
+import BrandIcon from '../components/brand/BrandIcon.vue'
 
 const milestones = [
   {
@@ -27,10 +28,10 @@ const milestones = [
 ]
 
 const stats = [
-  { value: '100+', label: 'Acres Farmed',       icon: '🌾' },
-  { value: '3',    label: 'Product Lines',       icon: '📦' },
-  { value: '0',    label: 'Artificial Chemicals', icon: '🌿' },
-  { value: '∞',    label: 'Passion for Quality', icon: '💚' },
+  { value: '24', label: 'Acres in our farm plan', icon: 'land' },
+  { value: '4',  label: 'Fresh Product Lines', icon: 'harvest' },
+  { value: '0',  label: 'Artificial Chemicals', icon: 'natural' },
+  { value: '∞',  label: 'Passion for Quality', icon: 'quality' },
 ]
 
 const team = [
@@ -87,11 +88,11 @@ const team = [
           <div class="space-y-6">
             <div class="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
               <img
-                src="/images/trovara-brand.png"
-                alt="Trovara Farm brand mark - Food you can trust, from a farm built for tomorrow"
+                src="/brand/trovara-social-card-v2.svg"
+                alt="Trovara - Food you can trust from a farm built for tomorrow"
                 class="w-full h-auto object-cover"
-                width="800"
-                height="600"
+                width="1200"
+                height="630"
                 loading="lazy"
               />
             </div>
@@ -168,14 +169,14 @@ const team = [
         <SectionHeader eyebrow="What Drives Us" title="Mission & Vision" center />
         <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           <div class="bg-trovara-green rounded-3xl p-8 lg:p-10 text-white">
-            <div class="text-4xl mb-5">🎯</div>
+            <BrandIcon name="target" class="w-12 h-12 mb-5 icon-on-dark" />
             <h3 class="text-2xl font-black mb-4">Our Mission</h3>
             <p class="text-white/80 leading-relaxed">
               Trovara creates trusted food products with traceability, lower waste and deeper customer connection.
             </p>
           </div>
           <div class="bg-trovara-light rounded-3xl p-8 lg:p-10">
-            <div class="text-4xl mb-5">🌍</div>
+            <BrandIcon name="world" class="w-12 h-12 mb-5" />
             <h3 class="text-2xl font-black text-trovara-dark mb-4">Our Vision</h3>
             <p class="text-gray-500 leading-relaxed">
               Trovara is building a regenerative food company that turns African farms into trusted sources of

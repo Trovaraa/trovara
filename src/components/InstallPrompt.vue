@@ -13,9 +13,7 @@ const { visible, canPrompt, iosHint, install, dismiss } = useInstallPrompt()
       aria-label="Add Trovara to your home screen"
     >
       <div class="flex gap-3 items-start">
-        <div class="w-11 h-11 rounded-xl bg-trovara-green flex items-center justify-center flex-shrink-0">
-          <span class="text-trovara-gold font-black text-lg">T</span>
-        </div>
+        <img src="/brand/trovara-monogram-tile-v1.svg" alt="" class="w-11 h-11 flex-shrink-0" width="44" height="44" />
         <div class="flex-1 min-w-0">
           <p class="font-bold text-sm mb-1">Add Trovara to your Home Screen</p>
           <p v-if="canPrompt" class="text-white/65 text-xs leading-relaxed mb-3">

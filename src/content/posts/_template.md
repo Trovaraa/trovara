@@ -11,7 +11,6 @@ category: Farm Stories
 tags:
   - trovara
   - farming
-coverEmoji: "🌿"
 coverImage: /images/blog/your-post-cover.jpg
 published: false
 ---

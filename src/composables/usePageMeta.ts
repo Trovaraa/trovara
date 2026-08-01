@@ -4,6 +4,7 @@ const BASE_URL = 'https://trovara.farm'
 const DEFAULT_TITLE = 'Trovara Farm'
 const DEFAULT_DESCRIPTION =
   'Food you can trust, from a farm built for tomorrow. Trovara Farm grows premium regenerative food for homes and businesses in Nigeria.'
+const DEFAULT_OG_IMAGE = `${BASE_URL}/brand/trovara-social-card-v2.png`
 
 type RouteMetaLike = {
   title?: unknown
@@ -55,10 +56,15 @@ export function applyPageMeta(route: RouteLocationNormalizedLoaded, overrides: P
   upsertMeta('property', 'og:title', title)
   upsertMeta('property', 'og:description', description)
   upsertMeta('property', 'og:url', canonical)
+  const socialImage = overrides.ogImage ?? DEFAULT_OG_IMAGE
   upsertMeta('property', 'og:type', overrides.ogImage ? 'article' : 'website')
-  if (overrides.ogImage) {
-    upsertMeta('property', 'og:image', overrides.ogImage)
-  }
+  upsertMeta('property', 'og:image', socialImage)
+  upsertMeta('property', 'og:image:width', '1200')
+  upsertMeta('property', 'og:image:height', '630')
+  upsertMeta('name', 'twitter:card', 'summary_large_image')
+  upsertMeta('name', 'twitter:title', title)
+  upsertMeta('name', 'twitter:description', description)
+  upsertMeta('name', 'twitter:image', socialImage)
   upsertCanonical(canonical)
 }
 

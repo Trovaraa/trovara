@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { buildWhatsAppLink, PRODUCT_MESSAGES } from '../../lib/whatsapp'
 import { productColorClasses } from '../../lib/productColors'
 import type { Product } from '../../types'
+import BrandIcon from '../brand/BrandIcon.vue'
 
 const props = defineProps<{ product: Product }>()
 
@@ -22,8 +23,8 @@ const whatsappLink = computed(() => {
       class="relative px-8 pt-10 pb-6 flex flex-col items-center text-center"
       :class="colors.headerBg"
     >
-      <div class="text-6xl mb-4 group-hover:scale-110 transition-transform duration-300">
-        {{ product.icon }}
+      <div class="w-20 h-20 mb-4 group-hover:scale-105 transition-transform duration-300">
+        <BrandIcon :name="product.icon" :title="product.name" class="w-full h-full" />
       </div>
       <span
         v-if="!product.available"

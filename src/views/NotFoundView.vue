@@ -1,7 +1,11 @@
+<script setup lang="ts">
+import BrandIcon from '../components/brand/BrandIcon.vue'
+</script>
+
 <template>
   <div class="min-h-screen flex items-center justify-center bg-trovara-cream pt-20">
     <div class="text-center max-w-md px-4">
-      <div class="text-8xl mb-6">🌱</div>
+      <BrandIcon name="sprout" class="w-24 h-24 mx-auto mb-6" />
       <h1 class="text-6xl font-black text-trovara-dark mb-4">404</h1>
       <p class="text-2xl font-bold text-trovara-dark mb-2">Page Not Found</p>
       <p class="text-gray-500 mb-8">

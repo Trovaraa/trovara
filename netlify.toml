@@ -10,6 +10,9 @@
   to     = "/index.html"
   status = 200
 
+# Also kept in public/_headers, which ships inside the publish directory. A
+# check on 26 July 2026 found the live site serving none of these headers, the
+# same reason public/_redirects duplicates the redirect below.
 [[headers]]
   for = "/*"
   [headers.values]

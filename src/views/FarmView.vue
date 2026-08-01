@@ -1,22 +1,23 @@
 <script setup lang="ts">
 import SectionHeader from '../components/ui/SectionHeader.vue'
 import InfographicFigure from '../components/ui/InfographicFigure.vue'
+import BrandIcon from '../components/brand/BrandIcon.vue'
 
 const operations = [
   {
-    icon: '🌴',
+    icon: 'coconut',
     title: 'Coconut Plantation',
     desc: 'Our coconut trees are cultivated across fertile, well-draining tropical soil. We practice intercropping and organic soil enrichment to ensure maximum yield and quality with zero synthetic chemicals.',
     highlights: ['Organic soil management', 'No synthetic pesticides', 'Harvested at peak maturity', 'Multi-use processing'],
   },
   {
-    icon: '🍌',
+    icon: 'plantain',
     title: 'Plantain Plantation',
     desc: 'Our plantain cultivation follows strict agronomic practices across fertile tropical soil. Unlike regular bananas, plantains are a cooking staple - starchier, heartier, and harvested at different stages for different uses. We grow and supply green plantains for savory cooking, ripe plantains for sweeter dishes, and also process them into dried chips and flour for wider market reach.',
     highlights: ['Harvested at green and ripe stages', 'Zero synthetic chemicals or artificial ripening', 'Processed into chips and plantain flour', 'Export-grade quality for regional and global markets'],
   },
   {
-    icon: '🐔',
+    icon: 'poultry',
     title: 'Noilers & Hens Operations',
     desc: 'Our free-range dressed noilers and mature hens are raised with animal welfare first. Birds roam freely in clean, open spaces and are fed natural grain-based diets. That commitment shows in the quality of every dressed bird - and every egg from our pasture flocks.',
     highlights: ['Free-range open environment', 'Natural grain feed only', 'No growth hormones', 'Clean, ethical operations'],
@@ -24,10 +25,10 @@ const operations = [
 ]
 
 const practices = [
-  { icon: '♻️', title: 'Zero Waste Policy', desc: 'Every byproduct is repurposed. Husks become mulch. Droppings become fertilizer. Nothing is wasted on a Trovara farm.' },
-  { icon: '💧', title: 'Smart Water Use', desc: 'We irrigate efficiently using rain-fed and natural water systems, minimizing our water footprint on the land.' },
-  { icon: '🌱', title: 'Soil Health First', desc: 'Healthy soil grows healthy food. We invest heavily in organic soil management and never strip the land.' },
-  { icon: '🤝', title: 'Community Farming', desc: 'We employ and empower local farmers, creating livelihoods and building shared prosperity from the ground up.' },
+  { icon: 'cycle', title: 'Zero Waste Policy', desc: 'Every byproduct is repurposed. Husks become mulch. Droppings become fertilizer. Nothing is wasted on a Trovara farm.' },
+  { icon: 'water', title: 'Smart Water Use', desc: 'We irrigate efficiently using rain-fed and natural water systems, minimizing our water footprint on the land.' },
+  { icon: 'sprout', title: 'Soil Health First', desc: 'Healthy soil grows healthy food. We invest heavily in organic soil management and never strip the land.' },
+  { icon: 'community', title: 'Community Farming', desc: 'We employ and empower local farmers, creating livelihoods and building shared prosperity from the ground up.' },
 ]
 </script>
 
@@ -71,7 +72,7 @@ const practices = [
           >
             <!-- Visual -->
             <div class="bg-trovara-light rounded-3xl p-16 flex items-center justify-center">
-              <span class="text-8xl">{{ op.icon }}</span>
+              <BrandIcon :name="op.icon" :title="op.title" class="w-32 h-32" />
             </div>
 
             <!-- Content -->
@@ -111,7 +112,7 @@ const practices = [
             :key="practice.title"
             class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-white hover:bg-white/20 transition-all duration-300"
           >
-            <div class="text-4xl mb-4">{{ practice.icon }}</div>
+            <BrandIcon :name="practice.icon" class="w-12 h-12 mb-4 icon-on-dark" />
             <h4 class="font-bold text-lg mb-2">{{ practice.title }}</h4>
             <p class="text-white/70 text-sm leading-relaxed">{{ practice.desc }}</p>
           </div>
@@ -151,17 +152,17 @@ const practices = [
           />
           <div class="grid grid-cols-3 gap-4 mb-10">
             <div class="bg-white rounded-2xl p-6 shadow-sm text-center">
-              <div class="text-3xl mb-3">🌾</div>
+              <BrandIcon name="land" class="w-10 h-10 mx-auto mb-3" />
               <div class="font-bold text-trovara-dark text-sm">New Crops</div>
               <div class="text-gray-400 text-xs mt-1">Expanding varieties</div>
             </div>
             <div class="bg-white rounded-2xl p-6 shadow-sm text-center">
-              <div class="text-3xl mb-3">🏭</div>
+              <BrandIcon name="factory" class="w-10 h-10 mx-auto mb-3" />
               <div class="font-bold text-trovara-dark text-sm">Processing</div>
               <div class="text-gray-400 text-xs mt-1">Value-added products</div>
             </div>
             <div class="bg-white rounded-2xl p-6 shadow-sm text-center">
-              <div class="text-3xl mb-3">✈️</div>
+              <BrandIcon name="plane" class="w-10 h-10 mx-auto mb-3" />
               <div class="font-bold text-trovara-dark text-sm">Export</div>
               <div class="text-gray-400 text-xs mt-1">Global distribution</div>
             </div>

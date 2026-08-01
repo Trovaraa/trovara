@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { BlogPost } from '../../types'
+import BrandIcon from '../brand/BrandIcon.vue'
 
 defineProps<{ post: BlogPost }>()
 
@@ -24,10 +25,10 @@ function formatDate(iso: string) {
         />
         <div
           v-else
-          class="w-full h-full flex items-center justify-center text-4xl bg-gradient-to-br from-trovara-light to-trovara-green/10"
+          class="w-full h-full flex items-center justify-center bg-gradient-to-br from-trovara-light to-trovara-green/10"
           aria-hidden="true"
         >
-          {{ post.coverEmoji }}
+          <BrandIcon name="sprout" class="w-20 h-20" />
         </div>
         <span class="absolute top-4 left-4 px-2.5 py-1 bg-white/95 backdrop-blur-sm text-trovara-green text-xs font-semibold rounded-full shadow-sm">
           {{ post.category }}

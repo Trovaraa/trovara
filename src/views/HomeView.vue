@@ -5,6 +5,7 @@ import StatCard from '../components/ui/StatCard.vue'
 import SectionHeader from '../components/ui/SectionHeader.vue'
 import TestimonialsSection from '../components/ui/TestimonialsSection.vue'
 import InfographicFigure from '../components/ui/InfographicFigure.vue'
+import BrandIcon from '../components/brand/BrandIcon.vue'
 import { testimonials } from '../data/testimonials'
 
 const store = useProductsStore()
@@ -17,97 +18,119 @@ const heroProducts = featuredProducts.map((product) => ({
 }))
 
 const stats = [
-  { value: '100+',  label: 'Acres Cultivated',      icon: '🌾' },
-  { value: '3',     label: 'Core Product Lines',     icon: '🥥' },
-  { value: '0',     label: 'Artificial Chemicals',   icon: '🌿' },
-  { value: '100%',  label: 'Natural, Always',        icon: '☀️' },
+  { value: '24',    label: 'Acres in our farm plan', icon: 'land' },
+  { value: '4',     label: 'Fresh product lines',    icon: 'harvest' },
+  { value: '0',     label: 'Artificial chemicals',   icon: 'natural' },
+  { value: '1',     label: 'Regenerative system',    icon: 'system' },
 ]
 
 const principles = [
-  { icon: '🤝', title: 'Trust' },
-  { icon: '✨', title: 'Quality' },
-  { icon: '🔁', title: 'Consistency' },
-  { icon: '🌱', title: 'Regeneration' },
-  { icon: '💡', title: 'Innovation' },
-  { icon: '🌍', title: 'Community' },
+  { icon: 'trust', title: 'Trust' },
+  { icon: 'quality', title: 'Quality' },
+  { icon: 'cycle', title: 'Consistency' },
+  { icon: 'regeneration', title: 'Regeneration' },
+  { icon: 'innovation', title: 'Innovation' },
+  { icon: 'community', title: 'Community' },
 ]</script>
 
 <template>
   <div>
 
     <!-- ===== HERO ===== -->
-    <section class="relative min-h-screen flex items-center bg-trovara-green overflow-hidden">
+    <section class="relative min-h-[46rem] lg:min-h-screen flex items-center bg-[#0b3a25] overflow-hidden">
       <!-- Background Pattern -->
       <div class="absolute inset-0 bg-hero-pattern opacity-20 pointer-events-none" />
+      <div class="absolute inset-0 hero-grid opacity-40 pointer-events-none" />
 
       <!-- Decorative Circles -->
-      <div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-trovara-green-500/30 blur-3xl pointer-events-none" />
-      <div class="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-trovara-gold/20 blur-3xl pointer-events-none" />
+      <div class="absolute -top-32 -right-32 w-[32rem] h-[32rem] rounded-full bg-trovara-green-400/20 blur-3xl pointer-events-none" />
+      <div class="absolute -bottom-32 -left-32 w-[30rem] h-[30rem] rounded-full bg-trovara-gold/15 blur-3xl pointer-events-none" />
 
-      <div class="container-trovara relative z-10 pt-32 pb-20">
-        <div class="grid lg:grid-cols-[minmax(0,1.15fr)_minmax(260px,0.85fr)] gap-10 xl:gap-16 items-center">
+      <div class="container-trovara relative z-10 pt-28 pb-20 lg:pt-32">
+        <div class="grid lg:grid-cols-[minmax(0,1.1fr)_minmax(22rem,0.9fr)] gap-12 xl:gap-20 items-center">
           <div class="min-w-0">
             <!-- Eyebrow -->
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm mb-8 max-w-full">
-              <span class="w-2 h-2 rounded-full bg-trovara-gold animate-pulse flex-shrink-0" />
-              <span class="text-trovara-gold-300 text-sm font-semibold tracking-wider uppercase leading-snug">
-                Food you can trust, from a farm built for tomorrow
+            <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.08] border border-white/10 backdrop-blur-sm mb-7 max-w-full">
+              <span class="w-2 h-2 rounded-full bg-trovara-gold flex-shrink-0" />
+              <span class="text-trovara-gold-200 text-xs font-bold tracking-[0.16em] uppercase leading-snug">
+                Food you can trust · from a farm built for tomorrow
               </span>
             </div>
 
             <!-- Main Headline -->
-            <h1 class="text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-black text-white leading-[1.05] mb-6 text-balance">
-              The earth's<br/>
-              <span class="text-trovara-gold">finest,</span><br/>
-              for the world.
+            <h1 class="text-5xl sm:text-6xl md:text-7xl xl:text-[4.9rem] font-black text-white leading-[0.98] mb-7 text-balance tracking-[-0.045em]">
+              Better food starts with better
+              <span class="text-trovara-gold">Soil.</span>
             </h1>
 
-            <p class="text-white/70 text-lg md:text-xl leading-relaxed max-w-xl mb-10">
-              Trovara Farm grows premium coconuts, plantains, and free-range dressed noilers & mature hens with deep respect for the land.
-              From our soil to your table - pure, natural, and world-class.
+            <p class="text-white/70 text-base md:text-lg leading-relaxed max-w-xl mb-9">
+              Traceable coconuts, plantains, pasture-raised eggs, and free-range poultry from one regenerative farm - harvested for homes, chefs, and food businesses with deep respect for the land.
             </p>
 
             <div class="flex flex-wrap gap-4">
-              <RouterLink to="/products" class="btn-gold text-base px-8 py-4 rounded-xl">
-                Explore Our Products
+              <RouterLink to="/products" class="btn-gold text-base px-7 py-4 rounded-full">
+                Shop the harvest
               </RouterLink>
               <RouterLink
                 to="/about"
-                class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border-2 border-white/30 text-white font-semibold hover:bg-white/10 transition-all duration-200 text-base"
+                class="inline-flex items-center gap-2 px-7 py-4 rounded-full border border-white/25 text-white font-semibold hover:bg-white/10 transition-all duration-200 text-base"
               >
-                Our Story
+                See how we grow
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                 </svg>
               </RouterLink>
             </div>
+
+            <div class="mt-10 flex gap-2 overflow-x-auto pb-2 lg:hidden mobile-product-rail" aria-label="Featured products">
+              <RouterLink
+                v-for="product in heroProducts"
+                :key="`mobile-${product.id}`"
+                :to="`/products/${product.id}`"
+                class="flex min-w-[8.5rem] items-center gap-2.5 rounded-2xl border border-white/10 bg-white/[0.07] px-3 py-3 backdrop-blur-sm"
+              >
+                <BrandIcon :name="product.icon" class="h-9 w-9 shrink-0 rounded-lg bg-[#f2ead8] p-1" />
+                <span class="text-xs font-bold leading-tight text-white">{{ product.shortName }}</span>
+              </RouterLink>
+            </div>
           </div>
 
-          <!-- Product callouts (own column - never overlays the headline) -->
-          <div class="hidden lg:flex flex-col gap-3 w-full max-w-md justify-self-end">
-            <RouterLink
-              v-for="product in heroProducts"
-              :key="product.id"
-              :to="`/products/${product.id}`"
-              class="flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-5 py-3 hover:bg-white/20 transition-all duration-200 group"
-            >
-              <span class="text-3xl group-hover:scale-110 transition-transform flex-shrink-0">{{ product.icon }}</span>
-              <div class="min-w-0">
-                <div class="text-white font-bold text-sm truncate">{{ product.shortName }}</div>
-                <div class="text-white/50 text-xs truncate">{{ product.tagline }}</div>
+          <!-- A product-led farm card gives the hero a tactile, shoppable second half. -->
+          <div class="hidden lg:block w-full max-w-md justify-self-end">
+            <div class="relative rounded-[2rem] border border-white/15 bg-white/[0.07] backdrop-blur-md p-5 shadow-2xl shadow-black/20">
+              <div class="rounded-[1.4rem] bg-[#f2ead8] p-6 text-trovara-dark overflow-hidden relative min-h-[25rem] flex flex-col">
+                <div class="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-trovara-gold/25" />
+                <div class="relative z-10 flex items-start justify-between gap-6">
+                  <div>
+                    <p class="text-[11px] font-black uppercase tracking-[0.18em] text-trovara-green">This week's harvest</p>
+                    <h2 class="mt-2 text-3xl font-black tracking-tight">Fresh from Trovara</h2>
+                  </div>
+                  <span class="rounded-full bg-trovara-green px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-white">In season</span>
+                </div>
+
+                <div class="relative z-10 grid grid-cols-2 gap-3 mt-8 flex-1">
+                  <RouterLink
+                    v-for="product in heroProducts"
+                    :key="product.id"
+                    :to="`/products/${product.id}`"
+                    class="group rounded-2xl bg-white/75 border border-white p-4 flex flex-col justify-between hover:-translate-y-1 hover:shadow-lg transition-all"
+                  >
+                    <BrandIcon :name="product.icon" class="w-12 h-12 group-hover:scale-105 transition-transform origin-left" />
+                    <span class="mt-5 text-sm font-black leading-tight">{{ product.shortName }}</span>
+                    <span class="mt-1 text-[11px] font-semibold text-trovara-green">View product ↗</span>
+                  </RouterLink>
+                </div>
+
+                <div class="relative z-10 mt-5 flex items-center justify-between border-t border-trovara-dark/10 pt-4 text-xs font-semibold text-trovara-dark/60">
+                  <span>Farm-direct</span><span>Traceable</span><span>Naturally grown</span>
+                </div>
               </div>
-            </RouterLink>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Scroll Indicator -->
-      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
-        <span class="text-xs tracking-widest uppercase">Scroll</span>
-        <div class="w-px h-8 bg-white/20 relative overflow-hidden">
-          <div class="absolute inset-x-0 top-0 h-4 bg-trovara-gold animate-bounce" />
-        </div>
-      </div>
+      <div class="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
     </section>
 
     <!-- ===== STATS ===== -->
@@ -188,9 +211,7 @@ const principles = [
             :key="principle.title"
             class="bg-white rounded-2xl p-6 hover:shadow-md transition-shadow duration-300 text-center group"
           >
-            <div class="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">
-              {{ principle.icon }}
-            </div>
+            <BrandIcon :name="principle.icon" class="w-10 h-10 mx-auto mb-3 group-hover:scale-105 transition-transform duration-300" />
             <h3 class="font-bold text-trovara-dark text-sm sm:text-base">{{ principle.title }}</h3>
           </div>
         </div>
@@ -220,7 +241,7 @@ const principles = [
             </RouterLink>
           </div>
           <div class="bg-trovara-light rounded-3xl p-10">
-            <div class="text-6xl mb-6">🌾</div>
+            <BrandIcon name="land" class="w-16 h-16 mb-6" />
             <blockquote class="text-2xl font-bold text-trovara-dark leading-tight mb-4">
               "We don't advise what we haven't done ourselves."
             </blockquote>

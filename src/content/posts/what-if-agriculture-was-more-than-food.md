@@ -13,7 +13,6 @@ tags:
   - made-in-nigeria
   - agritourism
   - sustainable-food
-coverEmoji: "🌍"
 coverImage: /images/blog/what-if-agriculture-cover.jpg
 published: true
 ---

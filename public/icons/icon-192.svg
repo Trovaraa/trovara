@@ -1,6 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <circle cx="32" cy="32" r="32" fill="#1A6B3C"/>
-  <path d="M32 12 C20 18 16 28 18 38 C22 34 28 30 32 28 C36 30 42 34 46 38 C48 28 44 18 32 12Z" fill="#E8A427"/>
-  <path d="M24 38 C22 44 24 52 32 54 C40 52 42 44 40 38 C36 42 28 42 24 38Z" fill="#2D9960"/>
-  <text x="32" y="62" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#E8A427" font-weight="700" letter-spacing="1">T</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Trovara</title>
+  <desc id="desc">The Trovara T and leaf monogram on a warm-white tile.</desc>
+  <rect x="4" y="4" width="120" height="120" rx="26" fill="#FAF9F5"/>
+  <g transform="translate(27 14) scale(.34)">
+    <path fill="#28382F" d="M18 14h184v48h-5c-1-24-17-39-45-39h-30v184c0 22 8 32 27 37v3H71v-3c19-5 27-15 27-37V23H68C40 23 24 38 23 62h-5Z"/>
+    <path fill="#28382F" d="M19 61c5 42 24 70 59 83 25 10 37 33 42 73-4-49-16-83-43-111C59 87 40 72 19 61Z"/>
+    <path fill="#889058" d="M201 70c-5 46-25 76-60 91-20 9-31 29-39 61 6-42 18-72 44-99 18-19 36-36 55-53Z"/>
+    <path d="M42 91c32 20 58 55 68 103" fill="none" stroke="#FAF9F5" stroke-width="5" stroke-linecap="round"/>
+    <path d="M179 100c-31 23-56 57-69 94" fill="none" stroke="#FAF9F5" stroke-width="5" stroke-linecap="round"/>
+  </g>
 </svg>

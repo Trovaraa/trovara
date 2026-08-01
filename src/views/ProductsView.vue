@@ -5,6 +5,7 @@ import StructuredData from '../components/StructuredData.vue'
 import SpecSheet from '../components/ui/SpecSheet.vue'
 import SectionHeader from '../components/ui/SectionHeader.vue'
 import InfographicFigure from '../components/ui/InfographicFigure.vue'
+import BrandIcon from '../components/brand/BrandIcon.vue'
 import { productColorClasses } from '../lib/productColors'
 import { buildWhatsAppLink, PRODUCT_MESSAGES } from '../lib/whatsapp'
 import { TELEGRAM_CTA_CLASS, TELEGRAM_ORDER_URL } from '../lib/telegram'
@@ -24,8 +25,8 @@ const productSchemas = computed(() =>
 </script>
 
 <template>
-  <StructuredData :additional-schema="productSchemas">
   <div>
+    <StructuredData :additional-schema="productSchemas" />
 
     <!-- Hero -->
     <section class="pt-32 pb-20 bg-trovara-green relative overflow-hidden">
@@ -89,9 +90,7 @@ const productSchemas = computed(() =>
                 class="absolute inset-0 opacity-5"
                 :class="productColorClasses(product.id).overlayBg"
               />
-              <div class="text-[120px] relative z-10 drop-shadow-lg">
-                {{ product.icon }}
-              </div>
+              <BrandIcon :name="product.icon" :title="product.name" class="relative z-10 w-40 h-40" />
               <div
                 v-if="!product.available"
                 class="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full text-white text-sm font-semibold"
@@ -180,7 +179,7 @@ const productSchemas = computed(() =>
                 class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 font-semibold text-sm"
                 :class="productColorClasses(product.id).btnOutline"
               >
-                🌱 Stay Tuned - Coming Soon
+                Stay Tuned - Coming Soon
               </div>
             </div>
           </div>
@@ -193,7 +192,7 @@ const productSchemas = computed(() =>
             <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
               <!-- Visual -->
               <div class="rounded-3xl p-12 flex flex-col items-center justify-center min-h-64 bg-amber-50 relative overflow-hidden">
-                <div class="text-[100px] drop-shadow-lg">🌾</div>
+                <BrandIcon name="plantain" class="w-32 h-32" />
                 <span class="mt-4 px-4 py-1.5 rounded-full bg-amber-200/60 text-amber-800 text-xs font-bold uppercase tracking-widest">
                   Processed Product
                 </span>
@@ -244,7 +243,7 @@ const productSchemas = computed(() =>
     <section class="py-20 bg-trovara-dark text-white">
       <div class="container-trovara">
         <div class="max-w-3xl mx-auto text-center">
-          <div class="text-5xl mb-6">📦</div>
+          <BrandIcon name="package" class="w-16 h-16 mx-auto mb-6 icon-on-dark" />
           <h2 class="text-3xl md:text-4xl font-black mb-4">Bulk Orders & Export</h2>
           <p class="text-white/60 text-lg mb-10 leading-relaxed">
             Are you a distributor, retailer, or wholesaler? Trovara Farm is ready to supply
@@ -269,5 +268,4 @@ const productSchemas = computed(() =>
     </section>
 
   </div>
-  </StructuredData>
 </template>

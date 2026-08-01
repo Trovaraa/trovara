@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { buildWhatsAppLink } from '../lib/whatsapp'
+import { openConsentBanner } from '../lib/consent'
 
-const lastUpdated = '25 July 2026'
+const lastUpdated = '26 July 2026'
 
 const privacyWhatsAppLink = buildWhatsAppLink(
   'Hi Trovara Farm, I have a question about your Privacy Policy and how you handle my personal data.',
@@ -44,7 +45,7 @@ const dataWeCollect = [
   {
     label: 'Technical information',
     detail:
-      'Usage data such as pages visited, page titles, referring site, approximate region, device type, and the links, buttons, and forms you interact with - collected by our own analytics tenant using first-party cookies, and never used to profile you across other websites. See section 6 for the cookies involved and how to opt out.',
+      'Usage data such as pages visited, page titles, referring site, device type, and the links, buttons, and forms you interact with - collected through our analytics providers using first-party cookies, and never used by us to profile you across other websites. Reaching those providers also sends them your IP address, which is personal data in its own right and is what an approximate region is worked out from. None of this is collected unless you accept analytics - see section 6 for the cookies involved and how to change your choice.',
   },
 ]
 
@@ -104,7 +105,7 @@ const thirdParties = [
   {
     name: 'WebMetrix Analytics',
     purpose:
-      'Provides the website analytics loaded from analytics.webmetrix.ai - records page views and on-page interactions against first-party cookies, and reports them only to our private Trovara analytics dashboard.',
+      'An independent analytics company, not part of Trovara. The script loaded from analytics.webmetrix.ai records page views and on-page interactions against first-party cookies and sends them from your browser to WebMetrix, which stores and processes them on its own systems. The Trovara dashboard is our view onto that data, not a separate service we run.',
   },
   {
     name: 'Plausible Analytics',
@@ -275,7 +276,7 @@ const thirdParties = [
                 Under the NDPA, we process personal data only where we have a lawful basis to do so:
               </p>
               <ul class="space-y-3 text-gray-700">
-                <li class="leading-relaxed"><strong>Consent</strong> - for example, when you subscribe to our newsletter.</li>
+                <li class="leading-relaxed"><strong>Consent</strong> - for example, when you subscribe to our newsletter, or when you allow analytics on this site.</li>
                 <li class="leading-relaxed"><strong>Contract</strong> - to respond to quotes and fulfil orders or partnership arrangements you request.</li>
                 <li class="leading-relaxed"><strong>Legal obligation</strong> - to meet tax, accounting, and regulatory requirements.</li>
                 <li class="leading-relaxed"><strong>Legitimate interests</strong> - to operate, secure, and improve our website and business, provided these interests do not override your rights.</li>
@@ -293,10 +294,11 @@ const thirdParties = [
                     rel="noopener noreferrer"
                     class="text-trovara-green font-semibold hover:underline"
                   >WebMetrix Analytics</a>
-                  to understand how our website is used. WebMetrix runs on a private analytics
-                  tenant belonging to Trovara Farm: the statistics are visible only to us, are
-                  <strong>not</strong> shared with advertising networks, and are not used to profile
-                  you across other websites.
+                  to understand how our website is used. WebMetrix is an independent company rather
+                  than infrastructure we run: your browser sends the measurements to WebMetrix's
+                  servers, and the Trovara dashboard we read them in is a private view onto their
+                  system. We do <strong>not</strong> share those statistics with advertising networks
+                  and do not use them to profile you across other websites.
                 </p>
                 <p>
                   So that repeat visits and related page views can be grouped together, WebMetrix
@@ -329,15 +331,6 @@ const thirdParties = [
                   changes when the provider updates the service.
                 </p>
                 <p>
-                  Analytics is the only non-essential technology on this site, so you can opt out of
-                  it entirely from your browser: block or clear cookies for trovara.farm, or browse
-                  in a private window so the identifiers are discarded when you close it. Doing so
-                  does not affect your ability to read the site, contact us, or place an order. You
-                  may also email
-                  <a href="mailto:info@trovara.farm" class="text-trovara-green font-semibold hover:underline">info@trovara.farm</a>
-                  to ask us to delete the analytics records associated with your visit.
-                </p>
-                <p>
                   We may additionally enable
                   <a
                     href="https://plausible.io"
@@ -347,12 +340,41 @@ const thirdParties = [
                   >Plausible Analytics</a>
                   on our production site. Plausible is cookieless and collects only aggregated,
                   anonymised statistics, again loaded under our Content Security Policy allowlist.
+                  Loading it still sends your IP address and browser details to Plausible, so we ask
+                  for the same permission before it runs as we do for WebMetrix.
                 </p>
                 <p>
                   You may optionally install this site to your device Home Screen. That stores a
                   lightweight app shell and static assets in your browser for faster repeat visits.
                   It is not used to track you, and it does not keep personal form data offline.
                 </p>
+                <h3 class="text-lg font-bold text-trovara-dark pt-2">Your analytics choice</h3>
+                <p>
+                  Analytics is the only non-essential technology on this site, and
+                  <strong>none of it loads until you allow it</strong>. On your first visit we ask you
+                  to accept or decline. Until you accept, neither analytics script is downloaded,
+                  neither provider is contacted, and no analytics cookie is created. Declining is one
+                  click, exactly like accepting, and does not affect your ability to read the site,
+                  contact us, or place an order. Your answer is remembered in your browser's local
+                  storage under
+                  <code class="text-sm bg-white px-1.5 py-0.5 rounded">trovara-analytics-consent</code>
+                  so we do not keep asking.
+                </p>
+                <p>
+                  You can change your mind whenever you like, through
+                  <strong>Cookie Preferences</strong> at the bottom of any page or the button below.
+                  When you withdraw consent we clear the two WebMetrix cookies listed above and reload
+                  the page so the script stops running - but we cannot recall measurements that were
+                  already sent while analytics was on. To have those earlier records deleted, email
+                  <a href="mailto:info@trovara.farm" class="text-trovara-green font-semibold hover:underline">info@trovara.farm</a>
+                  and we will pass the request on. You can also clear or block cookies for
+                  trovara.farm in your browser at any time.
+                </p>
+                <div>
+                  <button type="button" class="btn-secondary text-sm px-5 py-2.5" @click="openConsentBanner">
+                    Change your analytics choice
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -360,8 +382,10 @@ const thirdParties = [
               <h2 class="text-2xl md:text-3xl font-black text-trovara-dark mb-4">7. How We Share Information</h2>
               <p class="text-gray-700 leading-relaxed mb-6">
                 We never sell your data. We share it only with trusted service providers who help us
-                operate our website and business, and only to the extent necessary. Each provider is
-                required to protect your data and use it solely for the purposes we specify.
+                operate our website and business, and only to the extent necessary. We expect each
+                provider to protect your data and use it solely for the purposes we specify; where we
+                have not confirmed a provider's arrangements with them directly, we say so in
+                section 8 rather than imply an assurance we do not have.
               </p>
               <div class="space-y-3">
                 <div
@@ -381,24 +405,41 @@ const thirdParties = [
 
             <div id="transfers" class="scroll-mt-28">
               <h2 class="text-2xl md:text-3xl font-black text-trovara-dark mb-4">8. International Data Transfers</h2>
-              <p class="text-gray-700 leading-relaxed">
-                Some of our service providers may store or process data outside Nigeria. Where
-                personal data is transferred internationally, we take steps to ensure it receives an
-                adequate level of protection consistent with the NDPA - for example, by relying on
-                providers that offer appropriate contractual and technical safeguards.
-              </p>
+              <div class="space-y-4 text-gray-700 leading-relaxed">
+                <p>
+                  Some of our service providers may store or process data outside Nigeria. Where
+                  personal data is transferred internationally, we take steps to ensure it receives an
+                  adequate level of protection consistent with the NDPA - for example, by relying on
+                  providers that offer appropriate contractual and technical safeguards.
+                </p>
+                <p>
+                  One provider deserves specific mention. When you accept analytics,
+                  <strong>WebMetrix Analytics</strong> receives data directly from your browser,
+                  including your IP address, rather than through us. We have not confirmed with
+                  WebMetrix where its servers are located, so we cannot tell you which country that
+                  data is stored in, and we would rather say so than guess. If this matters to you,
+                  decline analytics - the choice is entirely yours and costs you nothing on this site.
+                </p>
+              </div>
             </div>
 
             <div id="retention" class="scroll-mt-28">
               <h2 class="text-2xl md:text-3xl font-black text-trovara-dark mb-4">9. Data Retention</h2>
-              <p class="text-gray-700 leading-relaxed">
-                We keep personal data only for as long as necessary to fulfil the purposes described
-                in this policy, including to satisfy any legal, accounting, or reporting requirements.
-                Analytics identifiers are shorter-lived: they expire on their own after 30 minutes
-                for a single visit and 12 months for a returning visitor, as described in section 6.
-                When data is no longer needed, we securely delete or anonymise it. You may ask us to
-                delete your data at any time (see your rights below).
-              </p>
+              <div class="space-y-4 text-gray-700 leading-relaxed">
+                <p>
+                  We keep personal data only for as long as necessary to fulfil the purposes described
+                  in this policy, including to satisfy any legal, accounting, or reporting requirements.
+                  Analytics identifiers are shorter-lived: they expire on their own after 30 minutes
+                  for a single visit and 12 months for a returning visitor, as described in section 6.
+                  When data is no longer needed, we securely delete or anonymise it. You may ask us to
+                  delete your data at any time (see your rights below).
+                </p>
+                <p>
+                  Those two periods describe the cookies in your browser. How long WebMetrix keeps the
+                  analytics records on its own servers is set by WebMetrix, not by us, and we have not
+                  confirmed that period with them - so we cannot state it here.
+                </p>
+              </div>
             </div>
 
             <div id="security" class="scroll-mt-28">
