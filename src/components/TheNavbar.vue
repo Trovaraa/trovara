@@ -10,12 +10,27 @@ const mobileMenuOpen = ref(false)
 const scrolled = ref(false)
 const { isDark } = useTheme()
 
-const navLinks = [
+const serviceLinks = [
+  { label: 'Farm OS', to: '/services#farm-os' },
+  { label: 'Farm Advisory', to: '/services#farm-advisory' },
+]
+
+const desktopNavItems = [
   { label: 'Shop', to: '/shop' },
   { label: 'Products', to: '/products' },
   { label: 'The Farm', to: '/farm' },
   { label: 'Our Story', to: '/about' },
-  { label: 'Farm OS', to: '/services' },
+  { label: 'Services', children: serviceLinks },
+  { label: 'Wholesale', to: '/wholesale' },
+  { label: 'Journal', to: '/blog' },
+]
+
+const mobileNavLinks = [
+  { label: 'Shop', to: '/shop' },
+  { label: 'Products', to: '/products' },
+  { label: 'The Farm', to: '/farm' },
+  { label: 'Our Story', to: '/about' },
+  ...serviceLinks,
   { label: 'Wholesale', to: '/wholesale' },
   { label: 'Journal', to: '/blog' },
 ]
@@ -38,7 +53,7 @@ function onNavClick(to: string) {
   mobileMenuOpen.value = false
   const current = route.path
   const target = to.split('#')[0] || '/'
-  if (current === target) {
+  if (current === target && !to.includes('#')) {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
     document.documentElement.scrollTop = 0
     document.body.scrollTop = 0
@@ -67,26 +82,63 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
         </RouterLink>
 
         <!-- Desktop Nav -->
-        <div class="hidden md:flex items-center gap-0.5">
-          <RouterLink
-            v-for="link in navLinks"
-            :key="link.to"
-            :to="link.to"
-            :class="[
-              'px-3.5 py-2 rounded-full text-sm font-semibold transition-all duration-200',
-              overHero
-                ? 'text-white/90 hover:text-white hover:bg-white/10'
-                : 'text-trovara-dark hover:text-trovara-green hover:bg-trovara-light',
-              route.path === link.to
-                ? overHero
-                  ? '!text-white !bg-white/20'
-                  : '!text-trovara-green !bg-trovara-green/10'
-                : '',
-            ]"
-            @click="onNavClick(link.to)"
-          >
-            {{ link.label }}
-          </RouterLink>
+        <div class="hidden xl:flex items-center gap-0.5">
+          <template v-for="item in desktopNavItems" :key="item.label">
+            <div v-if="'children' in item" class="group relative">
+              <button
+                type="button"
+                aria-haspopup="true"
+                :class="[
+                  'inline-flex items-center gap-1 px-3.5 py-2 rounded-full text-sm font-semibold transition-all duration-200',
+                  overHero
+                    ? 'text-white/90 hover:text-white hover:bg-white/10'
+                    : 'text-trovara-dark hover:!text-white hover:!bg-trovara-green',
+                  route.path === '/services'
+                    ? overHero
+                      ? '!text-white !bg-white/20'
+                      : '!text-white !bg-trovara-green'
+                    : '',
+                ]"
+              >
+                {{ item.label }}
+                <svg class="h-3.5 w-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6" />
+                </svg>
+              </button>
+              <div class="invisible absolute left-1/2 top-full z-20 w-60 -translate-x-1/2 pt-2 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                <div class="rounded-2xl border border-gray-100 bg-white p-2 shadow-xl dark:border-white/10">
+                  <RouterLink
+                    v-for="link in item.children"
+                    :key="link.to"
+                    :to="link.to"
+                    class="block rounded-xl px-4 py-3 text-sm font-semibold text-trovara-dark transition-colors hover:!bg-trovara-green hover:!text-white"
+                    :class="route.path === '/services' && route.hash === link.to.slice(link.to.indexOf('#')) ? '!bg-trovara-green/10 !text-trovara-green' : ''"
+                    @click="onNavClick(link.to)"
+                  >
+                    {{ link.label }}
+                  </RouterLink>
+                </div>
+              </div>
+            </div>
+            <RouterLink
+              v-else
+              :to="item.to"
+              :class="[
+                'px-3.5 py-2 rounded-full text-sm font-semibold transition-all duration-200',
+                overHero
+                  ? 'text-white/90 hover:text-white hover:bg-white/10'
+                  : 'text-trovara-dark hover:!text-white hover:!bg-trovara-green',
+                route.path === item.to
+                  ? overHero
+                    ? '!text-white !bg-white/20'
+                    : '!text-white !bg-trovara-green'
+                  : '',
+              ]"
+              @click="onNavClick(item.to)"
+            >
+              {{ item.label }}
+            </RouterLink>
+          </template>
           <ThemeSwitcher class="ml-2" :on-dark-chrome="overHero" />
           <RouterLink to="/contact" class="ml-2 btn-gold text-sm py-2.5 px-5 rounded-full" @click="onNavClick('/contact')">
             Talk to us
@@ -94,7 +146,7 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
         </div>
 
         <!-- Mobile controls -->
-        <div class="md:hidden flex items-center gap-1.5">
+        <div class="xl:hidden flex items-center gap-1.5">
           <ThemeSwitcher :on-dark-chrome="overHero" />
           <button
             class="p-2 rounded-lg transition-colors"
@@ -123,15 +175,15 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
       >
         <div
           v-if="mobileMenuOpen"
-          class="md:hidden bg-white border-t border-gray-100 shadow-lg rounded-b-2xl overflow-hidden"
+          class="xl:hidden max-h-[calc(100vh-4rem)] overflow-y-auto bg-white border-t border-gray-100 shadow-lg rounded-b-2xl"
         >
           <div class="px-4 py-3 space-y-1">
             <RouterLink
-              v-for="link in navLinks"
+              v-for="link in mobileNavLinks"
               :key="link.to"
               :to="link.to"
-              class="block px-4 py-3 rounded-xl text-trovara-dark font-medium hover:text-trovara-green hover:bg-trovara-light transition-colors"
-              :class="route.path === link.to ? '!text-trovara-green !bg-trovara-green/10' : ''"
+              class="block px-4 py-3 rounded-xl text-trovara-dark font-medium hover:!text-white hover:!bg-trovara-green transition-colors"
+              :class="route.path === link.to.split('#')[0] && (!link.to.includes('#') || route.hash === link.to.slice(link.to.indexOf('#'))) ? '!text-white !bg-trovara-green' : ''"
               @click="onNavClick(link.to)"
             >
               {{ link.label }}

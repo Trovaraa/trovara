@@ -41,8 +41,14 @@ export interface Product {
 export interface TeamMember {
   name: string
   role: string
+  /** Short blurb shown on the team card. */
   bio: string
+  /** Full biography shown in the read-more dialog. */
+  fullBio: string[]
   initials: string
+  image?: string
+  /** CSS object-position for circular crop (e.g. 'center 22%'). */
+  imagePosition?: string
 }
 
 export interface Stat {

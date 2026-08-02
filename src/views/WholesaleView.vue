@@ -2,7 +2,6 @@
 import SectionHeader from '../components/ui/SectionHeader.vue'
 import HarvestCalendar from '../components/ui/HarvestCalendar.vue'
 import TestimonialsSection from '../components/ui/TestimonialsSection.vue'
-import { testimonials } from '../data/testimonials'
 import { buildWhatsAppLink } from '../lib/whatsapp'
 import { TELEGRAM_CUSTOMER_BOT, TELEGRAM_ORDER_URL } from '../lib/telegram'
 
@@ -45,24 +44,34 @@ const harvestWindows = [
 
 const productLines = [
   {
-    title: 'Fresh Plantain',
-    detail: 'Green or ripe plantain graded for kitchens, retail, and processing.',
-    points: ['15 kg and 25 kg graded cartons', 'Pre-cut options available on request'],
-  },
-  {
-    title: 'Plantain Chips',
-    detail: 'Plantain chips supplied in pack sizes for shops, hotels, and restaurants.',
-    points: ['Retail and food-service packs', 'Bulk orders made to schedule'],
-  },
-  {
-    title: 'Plantain Flour',
-    detail: 'Plantain flour for bakeries, professional kitchens, and food manufacturers.',
-    points: ['Made without additives', 'Bulk or private-label packs'],
-  },
-  {
     title: 'Palm Oil',
     detail: 'Traceable palm oil planned for retail and food-service buyers.',
     points: ['First harvest forecast for December 2026', 'Pack sizes confirmed before supply opens'],
+  },
+  {
+    title: 'Pasture-raised Chicken',
+    detail: 'Dressed birds planned for kitchens, hotels, and retail cold chain.',
+    points: ['Target first supply December 2026', 'Whole birds; cuts on request'],
+  },
+  {
+    title: 'Fresh Plantain',
+    detail: 'Green or ripe plantain graded for kitchens, retail, and processing.',
+    points: ['First harvest forecast for March 2027', '15 kg and 25 kg graded cartons'],
+  },
+  {
+    title: 'Plantain Chips & Flour',
+    detail: 'Value-added plantain formats for shops, bakeries, and food manufacturers.',
+    points: ['Planned after plantain harvest', 'Retail, food-service, and private-label packs'],
+  },
+  {
+    title: 'Coconut',
+    detail: 'Mature coconuts for juice bars, retail, and bulk trade.',
+    points: ['First harvest forecast for June 2027', 'Mesh bags or custom bulk'],
+  },
+  {
+    title: 'Pasture-raised Eggs',
+    detail: 'Farm-fresh crates for homes, hospitality, and retail once supply opens.',
+    points: ['Waitlist for first availability date', 'Crates of 30; half-crates on request'],
   },
 ]
 </script>
@@ -96,9 +105,9 @@ const productLines = [
         <SectionHeader
           eyebrow="Product Portfolio"
           title="Built for modern wholesale operations"
-          subtitle="From fresh graded packs to processed plantain products, our B2B lineup is structured for kitchen, shelf, and distribution efficiency."
+          subtitle="The wholesale portfolio matches our harvest calendar - palm oil and chicken first, then plantain, coconut, and eggs as each window opens."
         />
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           <article
             v-for="line in productLines"
             :key="line.title"
@@ -181,7 +190,7 @@ const productLines = [
       </div>
     </section>
 
-    <TestimonialsSection v-if="testimonials.length > 0" context="wholesale" />
+    <TestimonialsSection context="wholesale" />
 
     <section class="py-20 bg-trovara-dark text-white">
       <div class="container-trovara max-w-3xl mx-auto text-center">

@@ -34,7 +34,7 @@ onMounted(() => {
           <img src="/brand/trovara-monogram-tile-v1.svg" alt="" class="w-10 h-10 flex-shrink-0" width="40" height="40" />
           <div>
             <p class="font-bold text-trovara-dark text-sm">Trovara Farm</p>
-            <p class="text-trovara-green text-xs font-medium">Online - replies within minutes</p>
+            <p class="text-trovara-green text-xs font-medium">Typically replies within one business day</p>
           </div>
         </div>
         <p class="text-gray-600 text-sm leading-relaxed mb-4">

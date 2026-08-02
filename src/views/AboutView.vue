@@ -1,42 +1,114 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted, ref } from 'vue'
 import SectionHeader from '../components/ui/SectionHeader.vue'
 import StatCard from '../components/ui/StatCard.vue'
 import BrandIcon from '../components/brand/BrandIcon.vue'
+import type { TeamMember } from '../types'
+
+const selectedMember = ref<TeamMember | null>(null)
+
+function openBio(member: TeamMember) {
+  selectedMember.value = member
+  document.body.style.overflow = 'hidden'
+}
+
+function closeBio() {
+  selectedMember.value = null
+  document.body.style.overflow = ''
+}
+
+function onKeydown(event: KeyboardEvent) {
+  if (event.key === 'Escape' && selectedMember.value) closeBio()
+}
+
+onMounted(() => window.addEventListener('keydown', onKeydown))
+onUnmounted(() => {
+  window.removeEventListener('keydown', onKeydown)
+  document.body.style.overflow = ''
+})
+
 
 const milestones = [
   {
-    year: 'Day 1',
-    title: 'The Vision',
-    desc: 'Trovara Farm was founded on a simple idea: grow the world\'s finest tropical produce with complete honesty and care.',
+    year: 'Our Beginning',
+    title: 'One Regenerative Farm Plan',
+    desc: 'Trovara began with 24 acres and a clear purpose: build a trusted food company around healthy soil, transparent production, and products people use every day.',
   },
   {
-    year: 'Year 1',
-    title: 'First Harvest',
-    desc: 'Our first coconut and plantain harvests proved what we believed - that honest farming produces exceptional food.',
+    year: 'Crop Establishment',
+    title: 'Coconut & Plantain',
+    desc: 'We established tropical crop lines for mature coconut (TRV-COC-PIECE) and green or ripe plantain (TRV-PLT-BUNCH), with first harvests forecast for plantain in March 2027 and coconut in June 2027.',
   },
   {
-    year: 'Year 2',
-    title: 'Pasture-raised Poultry Plan',
-    desc: 'We designed our pasture-raised chicken and egg operation around open grass, animal welfare, and transparent production.',
+    year: 'Farm Diversification',
+    title: 'Palm Oil, Chicken & Eggs',
+    desc: 'We added traceable palm oil and designed pasture-raised chicken and egg production around open grass, animal welfare, and transparent handling.',
+  },
+  {
+    year: 'December 2026',
+    title: 'First Supply Window',
+    desc: 'Our roadmap targets first supplies of pasture-raised chicken and palm oil in December 2026, followed by plantain (March 2027) and coconut (June 2027).',
   },
   {
     year: 'Today',
-    title: 'Going Global',
-    desc: 'With strong local roots, we are now positioning Trovara as a globally recognized mark of quality tropical produce.',
+    title: 'Five Product Lines, One Standard',
+    desc: 'Coconut, plantain, palm oil, pasture-raised chicken, and eggs are being built for traceable supply across Nigeria - with more formats planned after first harvest.',
   },
 ]
 
 const stats = [
   { value: '24', label: 'Acres in our farm plan', icon: 'land' },
-  { value: '6',  label: 'Planned Product Lines', icon: 'harvest' },
+  { value: '5',  label: 'Planned Product Lines', icon: 'harvest' },
   { value: '0',  label: 'Artificial Chemicals', icon: 'natural' },
   { value: '∞',  label: 'Passion for Quality', icon: 'quality' },
 ]
 
-const team = [
-  { initials: 'TF', name: 'The Founder', role: 'Founder & Visionary', bio: 'Built Trovara with the belief that great farming changes lives - locally and globally.' },
-  { initials: 'FD', name: 'Farm Director', role: 'Head of Agricultural Operations', bio: 'Oversees all crop cultivation across our plantations with decades of tropical farming knowledge.' },
-  { initials: 'PM', name: 'Poultry Manager', role: 'Head of Pasture-raised Poultry', bio: 'Leads animal welfare, pasture rotation, flock health, and production readiness for chicken and eggs.' },
+const team: TeamMember[] = [
+  {
+    initials: 'BA',
+    name: 'Bamidele',
+    role: 'Managing Director',
+    bio: 'Provides strategic leadership across Trovara as it builds a trusted regenerative food company.',
+    fullBio: [
+      'Bamidele is the Managing Director of Trovara, providing strategic leadership across the business as it works to build a trusted, regenerative food company for Africa. He leads the development of the company\'s long-term vision, commercial strategy and operational growth while ensuring that every investment supports sustainable value creation.',
+      'With a background in accounting, audit and corporate finance across Nigeria and the United Kingdom, Bamidele combines financial discipline with entrepreneurial thinking to build a resilient business rooted in transparency, innovation and responsible farming. He believes that trust is earned through consistently delivering food of exceptional quality while caring for the land, the people who produce it and the communities Trovara serves.',
+    ],
+    image: '/images/team/bamidele-afolabi.png',
+    imagePosition: 'center 18%',
+  },
+  {
+    initials: 'AA',
+    name: 'Adefemi',
+    role: 'Chief Technology Officer',
+    bio: 'Leads the technology behind Trovara, connecting farm operations, traceability, and customer experience.',
+    fullBio: [
+      'Adefemi is the Chief Technology Officer of Trovara, leading the technology strategy and systems that connect farm operations, traceability, customer ordering and day-to-day field work. A platform and cloud engineer with experience across software engineering, infrastructure automation and DevOps, he has built and operated systems using technologies including Kubernetes, Terraform, AWS, Azure and modern CI/CD platforms. His technology career spans Nigeria, Europe (including the Netherlands) and the United States.',
+      'At Trovara, Adefemi works across the technology stack - from resilient cloud foundations, offline-friendly field tools and secure customer accounts to machine learning and AI capabilities that turn farm data into practical forecasts, advisory and automation. Drawing on formal training in data science, machine learning and artificial intelligence, as well as hands-on work building AI-powered software, he focuses on technology that solves real farming problems and strengthens trust from soil records to the plate.',
+    ],
+    image: '/images/team/adefemi-afuwape.png',
+  },
+  {
+    initials: 'AY',
+    name: 'Ayodeji',
+    role: 'Head of Operations',
+    bio: 'Leads operational execution across the farm, supply chain, and wider business.',
+    fullBio: [
+      'Ayodeji is Head of Operations at Trovara, responsible for turning farm plans into reliable daily execution. He coordinates fieldwork, supply-chain readiness and the operating rhythms that keep crops, livestock and processing moving together.',
+      'His work sits between strategy and the land: clear standards, accountable teams and practical systems that protect quality as Trovara grows. He is focused on building operations that can scale without losing the care, consistency and regenerative intent at the heart of the farm.',
+    ],
+  },
+  {
+    initials: 'SA',
+    name: 'Samuel',
+    role: 'Chief Growth Officer',
+    bio: 'Leads partnerships, market development, and the growth of Trovara’s customer reach.',
+    fullBio: [
+      'Samuel is the Chief Growth Officer of Trovara, leading partnerships, market development and the relationships that connect farm production to homes, kitchens and trade buyers. He helps shape how Trovara reaches customers across Nigeria as each harvest window opens.',
+      'His focus is disciplined growth: clear offtake conversations, trusted wholesale relationships and customer experiences that match the promise of regenerative farming. He believes Trovara grows best when quality, transparency and long-term partnerships move together.',
+    ],
+    image: '/images/team/samuel-afolabi.png',
+    imagePosition: 'center 18%',
+  },
 ]
 </script>
 
@@ -206,22 +278,96 @@ const team = [
     <section class="py-20 bg-trovara-cream">
       <div class="container-trovara">
         <SectionHeader eyebrow="The People Behind the Farm" title="Our Team" center />
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-          <div
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          <article
             v-for="member in team"
             :key="member.name"
-            class="bg-white rounded-2xl p-8 text-center shadow-sm hover:shadow-md transition-shadow"
+            class="group bg-white rounded-2xl p-8 text-center shadow-sm hover:shadow-md transition-shadow"
           >
-            <div class="w-16 h-16 rounded-full bg-trovara-green flex items-center justify-center mx-auto mb-4">
-              <span class="text-trovara-gold font-black text-xl">{{ member.initials }}</span>
-            </div>
-            <h3 class="font-bold text-trovara-dark">{{ member.name }}</h3>
-            <p class="text-trovara-green text-sm font-medium mb-3">{{ member.role }}</p>
-            <p class="text-gray-500 text-sm leading-relaxed">{{ member.bio }}</p>
-          </div>
+            <button
+              type="button"
+              class="w-full text-center outline-none focus-visible:ring-2 focus-visible:ring-trovara-green focus-visible:ring-offset-2 rounded-xl"
+              :aria-label="`Read more about ${member.name}`"
+              @click="openBio(member)"
+            >
+              <img
+                v-if="member.image"
+                :src="member.image"
+                :alt="`${member.name}, ${member.role} at Trovara Farm`"
+                class="w-28 h-28 rounded-full object-cover mx-auto mb-4 ring-4 ring-trovara-green/10 grayscale brightness-75 contrast-125 transition-all duration-500 group-hover:grayscale-0 group-hover:brightness-100 group-hover:contrast-100"
+                :style="{ objectPosition: member.imagePosition || 'center top' }"
+                width="112"
+                height="112"
+                loading="lazy"
+              />
+              <div v-else class="w-28 h-28 rounded-full bg-trovara-green flex items-center justify-center mx-auto mb-4">
+                <span class="text-trovara-gold font-black text-xl">{{ member.initials }}</span>
+              </div>
+              <h3 class="font-bold text-trovara-dark underline-offset-4 group-hover:underline">{{ member.name }}</h3>
+              <p class="text-trovara-green text-sm font-medium mb-3">{{ member.role }}</p>
+              <p class="text-gray-500 text-sm leading-relaxed">{{ member.bio }}</p>
+              <span class="mt-4 inline-flex text-sm font-bold text-trovara-green">
+                Read more →
+              </span>
+            </button>
+          </article>
         </div>
       </div>
     </section>
+
+    <Teleport to="body">
+      <div
+        v-if="selectedMember"
+        class="fixed inset-0 z-[90] grid place-items-center bg-black/70 p-4"
+        role="dialog"
+        aria-modal="true"
+        :aria-labelledby="`team-bio-${selectedMember.name}`"
+        @click.self="closeBio"
+      >
+        <div class="w-full max-w-xl max-h-[85vh] overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl md:p-8">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex items-start gap-4">
+              <img
+                v-if="selectedMember.image"
+                :src="selectedMember.image"
+                :alt="selectedMember.name"
+                class="h-16 w-16 rounded-full object-cover ring-4 ring-trovara-green/10"
+                :style="{ objectPosition: selectedMember.imagePosition || 'center top' }"
+                width="64"
+                height="64"
+              />
+              <div v-else class="h-16 w-16 rounded-full bg-trovara-green flex items-center justify-center">
+                <span class="text-trovara-gold font-black text-lg">{{ selectedMember.initials }}</span>
+              </div>
+              <div>
+                <p class="text-xs font-black uppercase tracking-[0.2em] text-trovara-green">Bio</p>
+                <h3 :id="`team-bio-${selectedMember.name}`" class="mt-1 text-2xl font-black text-trovara-dark">
+                  {{ selectedMember.name }}
+                </h3>
+                <p class="mt-1 text-sm font-semibold text-trovara-green">{{ selectedMember.role }}</p>
+              </div>
+            </div>
+            <button
+              type="button"
+              class="grid h-10 w-10 place-items-center rounded-xl border border-gray-200 text-xl text-trovara-dark"
+              aria-label="Close biography"
+              @click="closeBio"
+            >
+              ×
+            </button>
+          </div>
+          <div class="mt-6 space-y-4 border-t border-gray-100 pt-6">
+            <p
+              v-for="(paragraph, index) in selectedMember.fullBio"
+              :key="index"
+              class="text-sm leading-7 text-gray-600"
+            >
+              {{ paragraph }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </Teleport>
 
     <!-- CTA -->
     <section class="py-16 bg-trovara-dark text-white text-center">

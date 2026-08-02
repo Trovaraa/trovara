@@ -35,7 +35,11 @@ const form = reactive({
 const validSubjects = new Set([
   'general',
   'bulk-order',
+  'waitlist',
+  'shop',
+  'farm-visit',
   'farm-os',
+  'farm-advisory',
   'partnership',
   'export',
   'media',
@@ -53,13 +57,17 @@ watch(
 )
 
 const subjects = [
-  { value: 'general',      label: 'General Enquiry' },
-  { value: 'bulk-order',   label: 'Bulk Order / Wholesale' },
-  { value: 'farm-os',      label: 'Trovara Farm OS (Operations System)' },
-  { value: 'partnership',  label: 'Distribution Partnership' },
-  { value: 'export',       label: 'Export Enquiry' },
-  { value: 'media',        label: 'Media & Press' },
-  { value: 'other',        label: 'Other' },
+  { value: 'general',       label: 'General Enquiry' },
+  { value: 'bulk-order',    label: 'Bulk Order / Wholesale' },
+  { value: 'waitlist',      label: 'Product Waitlist / Availability' },
+  { value: 'shop',          label: 'Shop Account / Orders' },
+  { value: 'farm-visit',    label: 'Farm Visit' },
+  { value: 'farm-os',       label: 'Trovara Farm OS (Operations System)' },
+  { value: 'farm-advisory', label: 'Farm Advisory Services' },
+  { value: 'partnership',   label: 'Distribution Partnership' },
+  { value: 'export',        label: 'Export Enquiry' },
+  { value: 'media',         label: 'Media & Press' },
+  { value: 'other',         label: 'Other' },
 ]
 
 function resetForm() {
@@ -261,7 +269,7 @@ const contactInfo = [
                       type="text"
                       required
                       :maxlength="FIELD_LIMITS.name"
-                      placeholder="John Mensah"
+                      placeholder="Ada Okonkwo"
                       class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-trovara-cream focus:outline-none focus:ring-2 focus:ring-trovara-green/30 focus:border-trovara-green transition text-trovara-dark placeholder-gray-400 text-sm"
                     />
                   </div>
@@ -289,7 +297,7 @@ const contactInfo = [
                       v-model="form.phone"
                       type="tel"
                       :maxlength="FIELD_LIMITS.phone"
-                      placeholder="+233 000 000 000"
+                      placeholder="+234 810 000 0000"
                       class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-trovara-cream focus:outline-none focus:ring-2 focus:ring-trovara-green/30 focus:border-trovara-green transition text-trovara-dark placeholder-gray-400 text-sm"
                     />
                   </div>

@@ -24,16 +24,16 @@ const faqs: FaqGroup[] = [
         a: 'All Trovara Farm produce is grown without synthetic pesticides, artificial ripening agents, or chemical fertilizers. We follow organic-aligned practices and are actively working toward formal organic certification.',
       },
       {
-        q: 'How fresh are your products at delivery?',
-        a: 'Freshness standards are set by product and route. First supply is forecast for palm oil and chicken in December 2026, plantain in March 2027, and coconut in June 2027. Eggs remain on a waitlist until their first date is confirmed.',
+        q: 'When will products be available?',
+        a: 'First supply is forecast for palm oil and chicken in December 2026, plantain in March 2027, and coconut in June 2027. Eggs remain on a waitlist until their first date is confirmed. Join each product waitlist for updates.',
       },
       {
         q: 'What plantain varieties do you grow?',
-        a: 'We cultivate multiple plantain varieties suited for different uses - including cooking plantains harvested green for savory dishes, and sweeter ripe plantains for fried and dessert applications. Plantain flour is milled from fully mature plantains.',
+        a: 'We cultivate multiple plantain varieties suited for different uses - including cooking plantains harvested green for savory dishes, and sweeter ripe plantains for fried and dessert applications. Plantain flour is planned from fully mature plantains after harvest.',
       },
       {
         q: 'Do you offer plantain flour in retail packaging?',
-        a: 'Yes. Plantain flour is available in retail-sized bags as well as bulk packaging for food manufacturers, bakeries, and distributors. Contact us for sizes and pricing.',
+        a: 'Plantain flour is planned after our first plantain harvest. Join the plantain waitlist and tell us you want flour packs - we will share sizes and pricing when milling begins.',
       },
     ],
   },
@@ -43,15 +43,15 @@ const faqs: FaqGroup[] = [
     items: [
       {
         q: 'What is your minimum order quantity (MOQ)?',
-        a: 'Wholesale minimums vary by product, pack format, destination, and delivery frequency. Share your target volume and we will confirm the practical MOQ with your supply plan.',
+        a: 'Wholesale minimums will vary by product, pack format, destination, and delivery frequency once supply opens. Share your target volume and we will confirm the practical MOQ with your supply plan.',
       },
       {
         q: 'How do I get a price quote?',
-        a: 'Use the contact form, WhatsApp, or email us at info@trovara.farm with the product, quantity, and delivery location. We typically respond with a quote within 24 business hours.',
+        a: 'Use the contact form, WhatsApp, or email us at info@trovara.farm with the product, quantity, and delivery location. We typically respond within one business day. Quotes for harvest-window products are indicative until first supply opens.',
       },
       {
         q: 'Do you accept large bulk and export orders?',
-        a: 'Yes. We supply distributors, retailers, food manufacturers, and international buyers. We are export-ready and can support documentation, packaging, and logistics requirements.',
+        a: 'Yes. We are building for distributors, retailers, food manufacturers, and export buyers. Documentation, packaging, and logistics support will be confirmed as each product enters supply.',
       },
       {
         q: 'What payment methods do you accept?',
@@ -65,15 +65,15 @@ const faqs: FaqGroup[] = [
     items: [
       {
         q: 'Where do you deliver?',
-        a: 'We deliver locally across our region and ship nationally. For international export, we coordinate with global logistics partners to deliver to most destinations worldwide.',
+        a: 'We plan nationwide delivery across Nigeria once product supply opens. International export routes will be coordinated with logistics partners as volumes grow.',
       },
       {
         q: 'How long does shipping take?',
-        a: 'Local deliveries typically arrive within 1-3 business days. National shipping is 3-7 days. International export timing depends on the destination and shipping mode (sea or air freight) - typically 1-6 weeks.',
+        a: 'Once a product enters supply, local deliveries are typically 1-3 business days and national shipping 3-7 days. Export timing depends on destination and mode - usually 1-6 weeks.',
       },
       {
         q: 'Do you handle export documentation?',
-        a: 'Yes. We provide all necessary export documentation including phytosanitary certificates, certificates of origin, packing lists, and commercial invoices. We can also coordinate with your freight forwarder.',
+        a: 'Yes. When export orders open, we provide phytosanitary certificates, certificates of origin, packing lists, and commercial invoices, and can coordinate with your freight forwarder.',
       },
       {
         q: 'What if my shipment arrives damaged?',
@@ -87,7 +87,7 @@ const faqs: FaqGroup[] = [
     items: [
       {
         q: 'Can you help me start my own farm?',
-        a: 'Yes - that is one of our ancillary services. Visit our Services page for the full list, including Trovara Farm OS (Operations System), farm setup, soil advisory, crop planning, irrigation design, and market linkage.',
+        a: 'Yes. Our Farm Advisory Services cover farm setup, soil health, crop planning, irrigation design, training, post-harvest systems, and market linkage. They are presented separately from Trovara Farm OS on our Services page.',
       },
       {
         q: 'What is Trovara Farm OS?',

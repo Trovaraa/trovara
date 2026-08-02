@@ -77,9 +77,9 @@ const router = createRouter({
       name: 'services',
       component: () => import('../views/ServicesView.vue'),
       meta: {
-        title: 'Farm Services & Farm OS - Trovara Farm',
+        title: 'Farm OS & Farm Advisory Services - Trovara Farm',
         description:
-          'Trovara Farm OS (Operations System) plus hands-on advisory - farm setup, soil, crops, irrigation, and market linkage for modern sustainable farms.',
+          'Explore Trovara Farm OS for daily operations and separate hands-on Farm Advisory Services covering setup, soil, crops, irrigation, training, and market linkage.',
       },
     },
     {
@@ -97,7 +97,7 @@ const router = createRouter({
       name: 'blog',
       component: () => import('../views/BlogView.vue'),
       meta: {
-        title: 'Blog - Trovara Farm',
+        title: 'Journal - Trovara Farm',
         description:
           'Read stories, field notes, and insights from Trovara Farm on food, farming, and the future of agriculture.',
       },
@@ -107,8 +107,8 @@ const router = createRouter({
       name: 'blog-post',
       component: () => import('../views/BlogPostView.vue'),
       meta: {
-        title: 'Blog - Trovara Farm',
-        description: 'Read a Trovara Farm blog post with field updates, lessons, and practical farming insights.',
+        title: 'Journal - Trovara Farm',
+        description: 'Read a Trovara Farm journal post with field updates, lessons, and practical farming insights.',
       },
     },
     {

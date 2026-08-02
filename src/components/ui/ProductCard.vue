@@ -27,9 +27,9 @@ const whatsappLink = computed(() => {
         v-if="product.image"
         :src="product.image"
         :alt="product.imageAlt ?? product.name"
-        class="absolute inset-0 h-full w-full object-cover opacity-20"
+        class="absolute inset-0 h-full w-full object-cover opacity-25"
       />
-      <div v-if="!product.image" class="w-20 h-20 mb-4 group-hover:scale-105 transition-transform duration-300">
+      <div class="relative z-10 w-20 h-20 mb-4 rounded-2xl bg-white/80 p-2 shadow-sm group-hover:scale-105 transition-transform duration-300 dark:bg-trovara-dark/70">
         <BrandIcon :name="product.icon" :title="product.name" class="w-full h-full" />
       </div>
       <span

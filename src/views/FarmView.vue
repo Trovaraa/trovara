@@ -17,6 +17,12 @@ const operations = [
     highlights: ['Harvested at green and ripe stages', 'Zero synthetic chemicals or artificial ripening', 'Processed into chips and plantain flour', 'Export-grade quality for regional and global markets'],
   },
   {
+    icon: 'palm',
+    title: 'Oil Palm',
+    desc: 'Oil palm is part of the same regenerative system as our tropical crops. Fruit will be processed into traceable palm oil for retail and food-service formats, with first harvest forecast for December 2026.',
+    highlights: ['Grown within the regenerative farm plan', 'First harvest forecast December 2026', 'Retail and bulk formats planned', 'Traceable harvest and processing'],
+  },
+  {
     icon: 'poultry',
     title: 'Pasture-raised Poultry',
     desc: 'Our poultry plan puts animal welfare first: open pasture, grass-and-grain feeding, clean water, and no growth hormones. Chicken and eggs will open for sale only after production readiness is confirmed.',

@@ -8,25 +8,24 @@ type Service = {
   meaning?: string
   desc: string
   deliverables: string[]
-  featured?: boolean
 }
 
-const services: Service[] = [
-  {
-    icon: 'os',
-    title: 'Trovara Farm OS',
-    meaning: 'Operations System',
-    featured: true,
-    desc: 'The digital command center we run our own farm on - now available to yours. Trovara Farm OS (Operations System) brings daily tasks, field teams, inventory, harvest records, and sales into one place so managers see the farm clearly and workers know exactly what to do. Built for operational excellence in the field, not desk software that never leaves the office.',
-    deliverables: [
-      'Installable farm operations app (web + Home Screen PWA)',
-      'Task assignment, field completion, and supervisor approval',
-      'Crop, livestock, inventory, and zone/block records',
-      'Offline-friendly field capture with sync when connected',
-      'Telegram butler for staff updates and customer ordering',
-      'Setup, training, and ongoing operating support',
-    ],
-  },
+const farmOsService: Service = {
+  icon: 'os',
+  title: 'Trovara Farm OS',
+  meaning: 'Operations System',
+  desc: 'The digital command center we run our own farm on - now available to yours. Trovara Farm OS brings daily tasks, field teams, inventory, harvest records, and sales into one place so managers see the farm clearly and workers know exactly what to do. Built for operational excellence in the field, not desk software that never leaves the office.',
+  deliverables: [
+    'Installable farm operations app (web + Home Screen PWA)',
+    'Task assignment, field completion, and supervisor approval',
+    'Crop, livestock, inventory, and zone/block records',
+    'Offline-friendly field capture with sync when connected',
+    'Telegram butler for staff updates and customer ordering',
+    'Setup, training, and ongoing operating support',
+  ],
+}
+
+const advisoryServices: Service[] = [
   {
     icon: 'map',
     title: 'Farm Setup & Development',
@@ -105,7 +104,7 @@ const services: Service[] = [
     desc: 'We train farmers, farm managers, and agribusiness staff in modern, sustainable farming practices. Training is hands-on, practical, and delivered on-site at your farm.',
     deliverables: [
       'Crop production and management training',
-      'Free-range noilers & hens management and animal welfare',
+      'Pasture-raised poultry management and animal welfare',
       'Record-keeping and farm data management',
       'Financial literacy for farm businesses',
       'Group and individual training sessions',
@@ -142,35 +141,88 @@ const process = [
       <div class="absolute inset-0 bg-hero-pattern opacity-10 pointer-events-none" />
       <div class="container-trovara relative z-10">
         <div class="max-w-3xl">
-          <p class="section-subheading text-trovara-gold-300 mb-4">Ancillary Services</p>
+          <p class="section-subheading text-trovara-gold-300 mb-4">Farm Technology & Advisory</p>
           <h1 class="text-5xl md:text-6xl font-black text-white mb-6">
             We help other farms<br/>grow as well as ours.
           </h1>
           <p class="text-white/70 text-lg leading-relaxed max-w-xl">
-            From hands-on farm advisory to Trovara Farm OS - our Operations System for day-to-day
-            farm command - the expertise we've built across tropical crops, regenerative planning,
-            and pasture-raised poultry systems is available to you. Whether you're building a new farm
-            or running a better one, we walk the land with you.
+            Run daily operations with Trovara Farm OS, or work directly with our team through
+            hands-on Farm Advisory Services. Two distinct ways to apply the systems and experience
+            we have built on our own land.
           </p>
           <div class="flex flex-wrap gap-4 mt-10">
-            <RouterLink to="/contact" class="btn-gold text-base px-8 py-4">
-              Request a Consultation
-            </RouterLink>
             <a
-              href="#services"
+              href="#farm-os"
+              class="btn-gold text-base px-8 py-4"
+            >
+              Explore Farm OS
+            </a>
+            <a
+              href="#farm-advisory"
               class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border-2 border-white/30 text-white font-semibold hover:bg-white/10 transition-all duration-200 text-base"
             >
-              View All Services
+              View Farm Advisory
             </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Why Us Strip -->
-    <section class="py-12 bg-trovara-gold">
+    <!-- Farm OS -->
+    <section id="farm-os" class="py-20 md:py-28 bg-trovara-cream scroll-mt-20">
       <div class="container-trovara">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <SectionHeader
+          eyebrow="Farm Technology"
+          title="Trovara Farm OS"
+          subtitle="The Operations System that runs Trovara Farm is available as a dedicated product for farms that need clearer work, records, accountability, and customer coordination."
+          center
+        />
+
+        <div class="overflow-hidden rounded-3xl border border-trovara-green/20 bg-gradient-to-br from-white to-trovara-green/[0.04] shadow-sm dark:border-trovara-green/35 dark:to-trovara-green/20">
+          <div class="grid lg:grid-cols-[minmax(0,1.1fr)_minmax(22rem,0.9fr)]">
+            <div class="p-8 md:p-12 lg:p-14">
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+                <BrandIcon :name="farmOsService.icon" class="w-14 h-14" />
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest bg-trovara-green text-white">
+                  Operations System
+                </span>
+              </div>
+              <h3 class="text-3xl font-black text-trovara-dark mb-4">{{ farmOsService.title }}</h3>
+              <p class="text-gray-500 leading-relaxed">{{ farmOsService.desc }}</p>
+              <RouterLink to="/contact?subject=farm-os" class="btn-primary inline-flex mt-8 px-7 py-3.5">
+                Discuss Farm OS
+              </RouterLink>
+            </div>
+
+            <div class="border-t border-trovara-green/15 bg-trovara-green/[0.06] p-8 md:p-12 lg:border-l lg:border-t-0">
+              <p class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-5">What's included</p>
+              <ul class="space-y-3">
+                <li
+                  v-for="d in farmOsService.deliverables"
+                  :key="d"
+                  class="flex items-start gap-2.5 text-sm text-trovara-dark"
+                >
+                  <span class="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-trovara-green/15 text-trovara-green flex items-center justify-center text-[11px] font-black">✓</span>
+                  {{ d }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Farm Advisory Services -->
+    <section id="farm-advisory" class="py-20 md:py-28 bg-white scroll-mt-20">
+      <div class="container-trovara">
+        <SectionHeader
+          eyebrow="Farm Advisory Services"
+          title="Practical expertise, applied on your land."
+          subtitle="From farm setup and crop planning to post-harvest systems and market access, our advisory work comes from hard-won experience operating our own farm."
+          center
+        />
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center mb-12 rounded-3xl bg-trovara-gold p-6 md:p-8">
           <div v-for="item in [
             { icon: 'land', label: 'Hands-on experience, not just theory' },
             { icon: 'pin', label: 'On-site, in-field advisory' },
@@ -181,44 +233,17 @@ const process = [
             <p class="text-trovara-dark font-semibold text-sm leading-snug">{{ item.label }}</p>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Services Grid -->
-    <section id="services" class="py-20 md:py-28 bg-trovara-cream scroll-mt-20">
-      <div class="container-trovara">
-        <SectionHeader
-          eyebrow="What We Offer"
-          title="Farm development and Farm OS - built from real farming."
-          subtitle="Every service we offer comes from hard-won experience on our own land. We don't advise what we haven't done ourselves - including the Operations System that runs Trovara Farm."
-          center
-        />
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           <div
-            v-for="service in services"
+            v-for="service in advisoryServices"
             :key="service.title"
-            class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 group"
-            :class="service.featured ? 'md:col-span-2 border border-trovara-green/20 bg-gradient-to-br from-white to-trovara-green/[0.04]' : ''"
+            class="bg-trovara-cream rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 group"
           >
-            <div class="flex flex-wrap items-start justify-between gap-3 mb-5">
-              <BrandIcon :name="service.icon" class="w-12 h-12 group-hover:scale-105 transition-transform duration-300" />
-              <span
-                v-if="service.featured"
-                class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest bg-trovara-green text-white"
-              >
-                Featured
-              </span>
-            </div>
-            <h3 class="text-xl font-black text-trovara-dark mb-1">{{ service.title }}</h3>
-            <p
-              v-if="service.meaning"
-              class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-3"
-            >
-              {{ service.meaning }}
-            </p>
+            <BrandIcon :name="service.icon" class="w-12 h-12 mb-5 group-hover:scale-105 transition-transform duration-300" />
+            <h3 class="text-xl font-black text-trovara-dark mb-3">{{ service.title }}</h3>
             <p class="text-gray-500 text-sm leading-relaxed mb-6">{{ service.desc }}</p>
-
-            <div class="border-t border-gray-100 pt-5">
+            <div class="border-t border-gray-200 pt-5">
               <p class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-3">What's included</p>
               <ul class="space-y-2">
                 <li
@@ -279,7 +304,7 @@ const process = [
               combining Farm OS setup with soil advisory, crop planning, and irrigation design
               at a bundled rate.
             </p>
-            <RouterLink to="/contact" class="btn-primary px-8 py-4 text-base">
+            <RouterLink to="/contact?subject=farm-advisory" class="btn-primary px-8 py-4 text-base">
               Get a Free Quote
             </RouterLink>
           </div>
@@ -310,7 +335,7 @@ const process = [
           Talk to our team. The first conversation is free, and it might be the most
           valuable one you have this farming season.
         </p>
-        <RouterLink to="/contact" class="btn-gold text-base px-10 py-4">
+        <RouterLink to="/contact?subject=farm-advisory" class="btn-gold text-base px-10 py-4">
           Book a Free Consultation
         </RouterLink>
       </div>

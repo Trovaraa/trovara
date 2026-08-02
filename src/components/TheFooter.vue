@@ -16,23 +16,22 @@ function onHomeClick() {
 
 const links = {
   company: [
-    { label: 'About Us',    to: '/about' },
-    { label: 'The Farm',    to: '/farm' },
-    { label: 'Blog',        to: '/blog' },
-    { label: 'Our Story',   to: '/about#story' },
-    { label: 'Services',    to: '/services' },
-    { label: 'Wholesale',   to: '/wholesale' },
-    { label: 'FAQ',         to: '/faq' },
-    { label: 'Contact',     to: '/contact' },
+    { label: 'Shop',          to: '/shop' },
+    { label: 'Our Story',     to: '/about#story' },
+    { label: 'The Farm',      to: '/farm' },
+    { label: 'Journal',       to: '/blog' },
+    { label: 'Farm OS',       to: '/services#farm-os' },
+    { label: 'Farm Advisory', to: '/services#farm-advisory' },
+    { label: 'Wholesale',     to: '/wholesale' },
+    { label: 'FAQ',           to: '/faq' },
+    { label: 'Contact',       to: '/contact' },
   ],
   products: [
-    { label: 'Coconut',        to: '/products#coconut' },
-    { label: 'Plantain',       to: '/products#plantain' },
-    { label: 'Plantain Flour', to: '/products#plantain' },
+    { label: 'Coconut',                to: '/products#coconut' },
+    { label: 'Plantain',               to: '/products#plantain' },
     { label: 'Pasture-raised Chicken', to: '/products#poultry' },
-    { label: 'Eggs',           to: '/products#eggs' },
-    { label: 'Palm Oil',       to: '/products#palm-oil' },
-    { label: 'Coming Soon',    to: '/products#coming-soon' },
+    { label: 'Eggs',                   to: '/products#eggs' },
+    { label: 'Palm Oil',               to: '/products#palm-oil' },
   ],
 }
 </script>
@@ -109,7 +108,7 @@ const links = {
         <div>
           <h4 class="text-white font-bold text-sm uppercase tracking-widest mb-5">Company</h4>
           <ul class="space-y-3">
-            <li v-for="link in links.company" :key="link.to">
+            <li v-for="link in links.company" :key="link.label">
               <RouterLink
                 :to="link.to"
                 class="text-white/60 hover:text-trovara-gold text-sm transition-colors"
@@ -123,7 +122,7 @@ const links = {
         <div>
           <h4 class="text-white font-bold text-sm uppercase tracking-widest mb-5">Products</h4>
           <ul class="space-y-3">
-            <li v-for="link in links.products" :key="link.to">
+            <li v-for="link in links.products" :key="link.label">
               <RouterLink
                 :to="link.to"
                 class="text-white/60 hover:text-trovara-gold text-sm transition-colors"

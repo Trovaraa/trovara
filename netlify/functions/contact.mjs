@@ -22,7 +22,11 @@ const MAX_REQUESTS = 5
 const SUBJECT_LABELS = {
   general: 'General Enquiry',
   'bulk-order': 'Bulk Order / Wholesale',
+  waitlist: 'Product Waitlist / Availability',
+  shop: 'Shop Account / Orders',
+  'farm-visit': 'Farm Visit',
   'farm-os': 'Trovara Farm OS (Operations System)',
+  'farm-advisory': 'Farm Advisory Services',
   partnership: 'Distribution Partnership',
   export: 'Export Enquiry',
   media: 'Media & Press',

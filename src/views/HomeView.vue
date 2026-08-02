@@ -6,7 +6,6 @@ import SectionHeader from '../components/ui/SectionHeader.vue'
 import TestimonialsSection from '../components/ui/TestimonialsSection.vue'
 import InfographicFigure from '../components/ui/InfographicFigure.vue'
 import BrandIcon from '../components/brand/BrandIcon.vue'
-import { testimonials } from '../data/testimonials'
 
 const store = useProductsStore()
 const featuredProducts = store.availableProducts
@@ -19,7 +18,7 @@ const heroProducts = featuredProducts.map((product) => ({
 
 const stats = [
   { value: '24',    label: 'Acres in our farm plan', icon: 'land' },
-  { value: '6',     label: 'Planned product lines',  icon: 'harvest' },
+  { value: '5',     label: 'Planned product lines',  icon: 'harvest' },
   { value: '0',     label: 'Artificial chemicals',   icon: 'natural' },
   { value: '1',     label: 'Regenerative system',    icon: 'system' },
 ]
@@ -69,13 +68,13 @@ const principles = [
 
             <div class="flex flex-wrap gap-4">
               <RouterLink to="/products" class="btn-gold text-base px-7 py-4 rounded-full">
-                Explore our products
+                Explore products & waitlists
               </RouterLink>
               <RouterLink
-                to="/about"
+                to="/shop"
                 class="inline-flex items-center gap-2 px-7 py-4 rounded-full border border-white/25 text-white font-semibold hover:bg-white/10 transition-all duration-200 text-base"
               >
-                See how we grow
+                Create a shop account
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                 </svg>
@@ -154,15 +153,18 @@ const principles = [
         <SectionHeader
           eyebrow="What We Grow"
           title="Nature's finest, carefully cultivated"
-          subtitle="From tropical crops and palm oil to pasture-raised chicken and eggs, every Trovara product is planned with purpose, patience, and clear availability."
+          subtitle="From tropical crops and palm oil to pasture-raised chicken and eggs, every Trovara product has a clear forecast window. Join waitlists now; checkout opens as each harvest arrives."
           center
         />
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
           <ProductCard v-for="product in featuredProducts" :key="product.id" :product="product" />
         </div>
-        <div class="text-center mt-12">
+        <div class="mt-12 flex flex-wrap justify-center gap-4">
           <RouterLink to="/products" class="btn-primary text-base px-8 py-4">
-            View All Products
+            View products & waitlists
+          </RouterLink>
+          <RouterLink to="/shop" class="btn-secondary text-base px-8 py-4">
+            Create a shop account
           </RouterLink>
         </div>
       </div>
@@ -221,42 +223,50 @@ const principles = [
     <!-- ===== SERVICES TEASER ===== -->
     <section class="py-20 md:py-28 bg-white">
       <div class="container-trovara">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <SectionHeader
-              eyebrow="Ancillary Services"
-              title="We help other farms grow too."
-              subtitle="The expertise we've built at Trovara Farm is available to you - including Trovara Farm OS (Operations System), plus farm setup, soil advisory, crop planning, and market linkage."
-            />
-            <div class="grid grid-cols-2 gap-3 mb-8">
-              <div v-for="s in ['Trovara Farm OS', 'Farm Setup & Development', 'Soil Health Advisory', 'Crop Planning', 'Irrigation Design', 'Market Linkage']" :key="s"
-                class="flex items-center gap-2 text-sm text-trovara-dark font-medium"
-              >
-                <span class="w-4 h-4 rounded-full bg-trovara-green/10 text-trovara-green flex items-center justify-center text-[10px] font-black flex-shrink-0">✓</span>
-                {{ s }}
-              </div>
-            </div>
-            <RouterLink to="/services" class="btn-primary px-8 py-4 text-base">
-              See All Services
+        <SectionHeader
+          eyebrow="Farm Technology & Advisory"
+          title="Two ways we help other farms grow."
+          subtitle="Choose the Operations System built to run daily farm work, or hands-on advisory from people applying the same lessons on our own land."
+          center
+        />
+        <div class="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
+          <div class="rounded-3xl border border-trovara-green/20 bg-gradient-to-br from-white to-trovara-green/[0.04] p-8 lg:p-10 dark:border-trovara-green/35 dark:to-trovara-green/20">
+            <BrandIcon name="os" class="w-14 h-14 mb-6" />
+            <p class="text-xs font-black uppercase tracking-[0.18em] text-trovara-green mb-2">Farm Technology</p>
+            <h3 class="text-2xl font-black text-trovara-dark mb-4">Trovara Farm OS</h3>
+            <p class="text-gray-500 text-sm leading-relaxed mb-6">
+              One place for tasks, field teams, inventory, harvest records, sales, and customer coordination.
+            </p>
+            <RouterLink to="/services#farm-os" class="btn-primary inline-flex px-6 py-3">
+              Explore Farm OS
             </RouterLink>
           </div>
-          <div class="bg-trovara-light rounded-3xl p-10">
-            <BrandIcon name="land" class="w-16 h-16 mb-6" />
-            <blockquote class="text-2xl font-bold text-trovara-dark leading-tight mb-4">
-              "We don't advise what we haven't done ourselves."
-            </blockquote>
+
+          <div class="bg-trovara-light rounded-3xl p-8 lg:p-10">
+            <BrandIcon name="land" class="w-14 h-14 mb-6" />
+            <p class="text-xs font-black uppercase tracking-[0.18em] text-trovara-green mb-2">Hands-on Expertise</p>
+            <h3 class="text-2xl font-black text-trovara-dark mb-4">Farm Advisory Services</h3>
             <p class="text-gray-500 text-sm leading-relaxed mb-6">
-              Every service we offer is rooted in real, hands-on farming experience at Trovara Farm. No theory. No guesswork. Just what works.
+              Practical support for setup, soil health, crop planning, irrigation, training, post-harvest systems, and market access.
             </p>
-            <RouterLink to="/contact" class="text-trovara-green font-semibold text-sm hover:underline inline-flex items-center gap-1">
+            <RouterLink to="/services#farm-advisory" class="btn-primary inline-flex px-6 py-3">
+              View Farm Advisory
+            </RouterLink>
+          </div>
+        </div>
+
+        <div class="mt-8 text-center">
+          <p class="text-sm text-gray-500">
+            “We don't advise what we haven't done ourselves.”
+            <RouterLink to="/contact" class="ml-1 font-semibold text-trovara-green hover:underline">
               Book a free consultation →
             </RouterLink>
-          </div>
+          </p>
         </div>
       </div>
     </section>
 
-    <TestimonialsSection v-if="testimonials.length > 0" context="home" />
+    <TestimonialsSection context="home" />
 
     <!-- ===== CTA ===== -->
     <section class="py-20 bg-trovara-dark text-white">
@@ -266,7 +276,7 @@ const principles = [
           Let's grow something great together
         </h2>
         <p class="text-white/60 text-lg mb-10 max-w-lg mx-auto">
-          Whether you're a distributor, retailer, or consumer - we'd love to connect.
+          Join waitlists for upcoming harvests, create a shop account for when checkout opens, or talk with us about wholesale supply.
         </p>
         <div class="flex flex-wrap gap-4 justify-center">
           <RouterLink to="/contact" class="btn-gold text-base px-8 py-4">
@@ -276,7 +286,13 @@ const principles = [
             to="/products"
             class="inline-flex items-center gap-2 px-8 py-4 rounded-lg border-2 border-white/30 text-white font-semibold hover:bg-white/10 transition-all duration-200 text-base"
           >
-            See Products
+            Join waitlists
+          </RouterLink>
+          <RouterLink
+            to="/shop"
+            class="inline-flex items-center gap-2 px-8 py-4 rounded-lg border-2 border-white/30 text-white font-semibold hover:bg-white/10 transition-all duration-200 text-base"
+          >
+            Shop account
           </RouterLink>
         </div>
       </div>

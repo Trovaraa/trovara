@@ -58,6 +58,11 @@ function clearMessages() {
   notice.value = ''
 }
 
+function setAuthMode(mode: AuthMode) {
+  authMode.value = mode
+  clearMessages()
+}
+
 function orderTraceUrl(order: ShopOrder): string | null {
   return resolveTraceabilityUrl(order.traceabilityUrl)
 }
@@ -187,10 +192,16 @@ onMounted(async () => {
       <div class="container-trovara py-12 md:py-16">
         <div class="max-w-3xl">
           <p class="text-xs font-black uppercase tracking-[0.24em] text-trovara-gold">Trovara shop</p>
-          <h1 class="mt-4 text-4xl font-black leading-tight md:text-6xl">Shop farm-direct. Track every order.</h1>
+          <h1 class="mt-4 text-4xl font-black leading-tight md:text-6xl">Your farm account. Ready when harvest opens.</h1>
           <p class="mt-5 max-w-2xl text-base leading-7 text-white/70 md:text-lg">
-            Buy on the web or continue with our WhatsApp and Telegram assistants. One account keeps your orders, updates, and traceability links together.
+            Create an account now to track future orders, connect WhatsApp or Telegram, and receive waitlist updates. Live product checkout opens by SKU as each harvest window arrives.
           </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#shop-account" class="btn-gold px-6 py-3 text-sm">Create account</a>
+            <RouterLink to="/products" class="inline-flex items-center rounded-xl border border-white/30 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10">
+              Join product waitlists
+            </RouterLink>
+          </div>
         </div>
       </div>
     </section>
@@ -212,10 +223,10 @@ onMounted(async () => {
         <section>
           <div class="mb-6 flex items-end justify-between gap-4">
             <div>
-              <p class="text-xs font-black uppercase tracking-[0.2em] text-trovara-green">Available from Trovara OS</p>
+              <p class="text-xs font-black uppercase tracking-[0.2em] text-trovara-green">Live catalogue</p>
               <h2 class="mt-2 text-3xl font-black text-trovara-dark">Farm shop</h2>
             </div>
-            <p class="text-sm text-gray-500">Nationwide delivery</p>
+            <p class="text-sm text-gray-500">Opens by harvest window</p>
           </div>
           <div v-if="products.length" class="grid gap-5 sm:grid-cols-2">
             <article v-for="product in products" :key="product.id" class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
@@ -242,7 +253,13 @@ onMounted(async () => {
               </div>
             </article>
           </div>
-          <div v-else class="rounded-3xl border border-gray-200 bg-white p-8 text-center text-gray-500">No products are on sale right now. Please check again soon.</div>
+          <div v-else class="rounded-3xl border border-gray-200 bg-white p-8 text-center">
+            <p class="text-lg font-black text-trovara-dark">Checkout opens with each harvest</p>
+            <p class="mt-3 text-sm leading-6 text-gray-500">
+              Nothing is on sale yet. Join product waitlists for coconut, plantain, palm oil, chicken, and eggs, then create your shop account so orders and chat updates stay linked when supply starts.
+            </p>
+            <RouterLink to="/products" class="btn-primary mt-6 inline-flex px-6 py-3">View products & waitlists</RouterLink>
+          </div>
         </section>
 
         <aside class="h-fit rounded-3xl border border-gray-200 bg-white p-6 shadow-sm lg:sticky lg:top-24">
@@ -280,7 +297,7 @@ onMounted(async () => {
       </section>
 
       <section v-else class="mx-auto max-w-3xl">
-        <div class="mb-6"><p class="text-xs font-black uppercase tracking-[0.2em] text-trovara-green">One account everywhere</p><h2 class="mt-2 text-3xl font-black text-trovara-dark">Connect WhatsApp or Telegram</h2><p class="mt-3 leading-7 text-gray-600">Website orders only appear in chat after you link. Create a code below, open the customer bot, and send the exact message <code class="rounded bg-trovara-light px-1.5 py-0.5 text-sm font-semibold text-trovara-dark">link YOURCODE</code>. Opening Telegram alone is not enough.</p></div>
+        <div class="mb-6"><p class="text-xs font-black uppercase tracking-[0.2em] text-trovara-green">One account everywhere</p><h2 class="mt-2 text-3xl font-black text-trovara-dark">Connect WhatsApp or Telegram</h2><p class="mt-3 leading-7 text-gray-600">Website orders only appear in chat after you link. Create a code below, open the customer bot, and send the exact message <code class="rounded bg-trovara-light px-1.5 py-0.5 text-sm font-semibold text-trovara-dark">link YOURCODE</code>. Opening WhatsApp/Telegram alone is not enough.</p></div>
         <div v-if="account" class="rounded-3xl border border-gray-200 bg-white p-6 md:p-8">
           <div v-if="channels.length" class="mb-6"><p class="text-xs font-black uppercase tracking-wider text-gray-500">Connected now</p><div class="mt-3 flex flex-wrap gap-2"><span v-for="channel in channels" :key="channel.channel" class="rounded-full bg-trovara-green/10 px-4 py-2 text-sm font-bold capitalize text-trovara-green">{{ channel.channel }}</span></div></div>
           <button v-if="!linkCode" type="button" class="btn-primary" :disabled="busy" @click="createLinkCode">Create a secure link code</button>
@@ -294,7 +311,7 @@ onMounted(async () => {
           <div class="flex flex-wrap items-center justify-between gap-4"><div><p class="text-xs font-black uppercase tracking-wider text-trovara-green">Signed in</p><h2 class="mt-1 text-2xl font-black text-trovara-dark">{{ account.name }}</h2><p class="mt-1 text-sm text-gray-500">{{ account.email }}</p></div><button type="button" class="rounded-xl border border-gray-200 px-4 py-3 text-sm font-bold" :disabled="busy" @click="logout">Sign out</button></div>
         </template>
         <template v-else>
-          <div class="flex items-start justify-between gap-4"><div><p class="text-xs font-black uppercase tracking-wider text-trovara-green">Customer account</p><h2 class="mt-1 text-2xl font-black text-trovara-dark">{{ authMode === 'login' ? 'Welcome back' : 'Create your account' }}</h2></div><button type="button" class="text-sm font-bold text-trovara-green" @click="authMode = authMode === 'login' ? 'register' : 'login'; clearMessages()">{{ authMode === 'login' ? 'Create account' : 'I have an account' }}</button></div>
+          <div class="flex items-start justify-between gap-4"><div><p class="text-xs font-black uppercase tracking-wider text-trovara-green">Customer account</p><h2 class="mt-1 text-2xl font-black text-trovara-dark">{{ authMode === 'login' ? 'Welcome back' : 'Create your account' }}</h2></div><button type="button" class="text-sm font-bold text-trovara-green" @click="setAuthMode(authMode === 'login' ? 'register' : 'login')">{{ authMode === 'login' ? 'Create account' : 'I have an account' }}</button></div>
           <form class="mt-6 grid gap-4 sm:grid-cols-2" @submit.prevent="submitAuth">
             <label v-if="authMode === 'register'" class="text-sm font-bold text-trovara-dark">Name<input v-model="authForm.name" required minlength="2" autocomplete="name" class="mt-2 min-h-12 w-full rounded-xl border border-gray-200 px-4 font-normal outline-none focus:border-trovara-green" /></label>
             <label class="text-sm font-bold text-trovara-dark">Email<input v-model="authForm.email" required type="email" autocomplete="email" class="mt-2 min-h-12 w-full rounded-xl border border-gray-200 px-4 font-normal outline-none focus:border-trovara-green" /></label>
@@ -302,6 +319,12 @@ onMounted(async () => {
             <label class="text-sm font-bold text-trovara-dark">Password<input v-model="authForm.password" required type="password" minlength="8" autocomplete="current-password" class="mt-2 min-h-12 w-full rounded-xl border border-gray-200 px-4 font-normal outline-none focus:border-trovara-green" /></label>
             <button type="submit" class="btn-primary sm:col-span-2" :disabled="busy">{{ busy ? 'Please wait…' : authMode === 'login' ? 'Sign in' : 'Create account' }}</button>
           </form>
+          <p v-if="authMode === 'login'" class="mt-4 text-center text-sm text-gray-500">
+            New to Trovara?
+            <button type="button" class="font-bold text-trovara-green hover:underline" @click="setAuthMode('register')">
+              Create an account
+            </button>
+          </p>
         </template>
       </section>
     </div>

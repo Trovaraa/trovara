@@ -54,7 +54,7 @@ const filteredPosts = computed(() =>
       <div class="container-trovara">
         <SectionHeader
           eyebrow="Latest Posts"
-          title="The Trovara blog"
+          title="The Trovara journal"
           subtitle="New posts appear here as we share from the farm. Subscribe below so you never miss one."
         />
 

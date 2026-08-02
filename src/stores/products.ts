@@ -21,46 +21,15 @@ export const useProductsStore = defineStore('products', {
         color: '#7B4F2E',
         bgColor: '#FDF5EE',
         available: true,
+        waitlist: true,
         availabilityNote: 'First harvest forecast for June 2027',
         specs: [
-          { label: 'SKUs', value: 'TRV-COC-MATURE · whole mature coconut' },
+          { label: 'SKUs', value: 'TRV-COC-PIECE · whole mature coconut' },
           { label: 'Packaging', value: 'Mesh bags (25-50 kg) or custom bulk' },
           { label: 'Shelf life', value: '3-4 weeks at ambient; longer with cold chain' },
           { label: 'First harvest', value: 'June 2027 (forecast)' },
           { label: 'MOQ', value: 'Contact for volume-based minimums' },
           { label: 'Delivery', value: 'Nationwide across Nigeria' },
-        ],
-        orderTiers: [
-          {
-            id: 'one-time',
-            name: 'One-Time Order',
-            period: 'per order · quote-based',
-            description: 'A single delivery sized to your needs - homes, shops, or events.',
-            features: [
-              'Order any volume',
-              'Fresh, mature coconuts',
-              'Nationwide delivery across Nigeria',
-            ],
-            ctaLabel: 'Order on WhatsApp',
-            whatsappMessage:
-              "Hi Trovara Farm, I'd like to place a one-time coconut order. Please share pricing and availability.",
-          },
-          {
-            id: 'recurring',
-            name: 'Recurring Supply',
-            period: 'weekly or monthly',
-            description: 'A standing order delivered on a schedule - ideal for shops, juice bars & kitchens.',
-            features: [
-              'Priority harvest allocation',
-              'Locked-in supply schedule',
-              'Preferential recurring pricing',
-              'Pause or adjust anytime',
-            ],
-            ctaLabel: 'Set Up Recurring Supply',
-            popular: true,
-            whatsappMessage:
-              "Hi Trovara Farm, I'd like to set up a recurring coconut supply. Please share subscription pricing and scheduling.",
-          },
         ],
       },
       {
@@ -82,48 +51,17 @@ export const useProductsStore = defineStore('products', {
         color: '#C8841A',
         bgColor: '#FEFAED',
         available: true,
+        waitlist: true,
         availabilityNote: 'First harvest forecast for March 2027',
         image: '/images/products/fresh-plantain.jpg',
         imageAlt: 'Fresh green Trovara plantain packed in a graded carton',
         specs: [
-          { label: 'SKUs', value: 'TRV-PLT-GREEN · TRV-PLT-RIPE · green or ripe whole fruit' },
+          { label: 'SKUs', value: 'TRV-PLT-BUNCH · green or ripe whole fruit' },
           { label: 'Packaging', value: 'Graded cartons: 15 kg or 25 kg; pre-cut options available on request' },
           { label: 'Shelf life', value: 'Green: 7-10 days; ripe: 3-5 days; flour: 12 months' },
           { label: 'First harvest', value: 'March 2027 (forecast)' },
           { label: 'MOQ', value: 'Contact for product-specific minimums' },
           { label: 'Delivery', value: 'Nationwide across Nigeria' },
-        ],
-        orderTiers: [
-          {
-            id: 'one-time',
-            name: 'One-Time Order',
-            period: 'per order · quote-based',
-            description: 'A single delivery of green, ripe, chips, or flour - sized to your needs.',
-            features: [
-              'Green, ripe, chips or flour',
-              'Graded, export-quality',
-              'Nationwide delivery across Nigeria',
-            ],
-            ctaLabel: 'Order on WhatsApp',
-            whatsappMessage:
-              "Hi Trovara Farm, I'd like to place a one-time plantain order. Please share pricing and availability.",
-          },
-          {
-            id: 'recurring',
-            name: 'Recurring Supply',
-            period: 'weekly or monthly',
-            description: 'A standing order delivered on a schedule - ideal for kitchens, retailers & processors.',
-            features: [
-              'Priority harvest allocation',
-              'Locked-in supply schedule',
-              'Preferential recurring pricing',
-              'Pause or adjust anytime',
-            ],
-            ctaLabel: 'Set Up Recurring Supply',
-            popular: true,
-            whatsappMessage:
-              "Hi Trovara Farm, I'd like to set up a recurring plantain supply. Please share subscription pricing and scheduling.",
-          },
         ],
       },
       {
@@ -148,7 +86,7 @@ export const useProductsStore = defineStore('products', {
         image: '/images/products/pasture-raised-chicken.jpg',
         imageAlt: 'Trovara pasture-raised chickens foraging on open grass',
         specs: [
-          { label: 'SKUs', value: 'TRV-CHK-WHOLE · TRV-CHK-CUT' },
+          { label: 'SKUs', value: 'TRV-CHK-BIRD · whole dressed birds; cuts on request' },
           { label: 'Packaging', value: 'Whole dressed birds; pre-cut options available on request' },
           { label: 'Shelf life', value: 'Fresh dressed birds: 3-5 days refrigerated; longer frozen' },
           { label: 'Target supply', value: 'December 2026' },
@@ -176,7 +114,7 @@ export const useProductsStore = defineStore('products', {
         waitlist: true,
         availabilityNote: 'Join the waitlist for first availability',
         specs: [
-          { label: 'SKUs', value: 'TRV-EGG-30 · crate of 30 pasture-raised eggs' },
+          { label: 'SKUs', value: 'TRV-EGG-CRATE · crate of 30 pasture-raised eggs' },
           { label: 'Packaging', value: 'Crates of 30; half-crates on request' },
           { label: 'Freshness', value: 'Collected at dawn; date-stamped per crate' },
           { label: 'Delivery', value: 'Nationwide across Nigeria' },

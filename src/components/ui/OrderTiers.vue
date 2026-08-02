@@ -82,7 +82,7 @@ function tierLink(tier: OrderTier): string {
     </div>
 
     <p class="mt-4 text-xs text-gray-400 max-w-3xl">
-      Orders are confirmed over WhatsApp - we'll arrange delivery on our scheduled routes.
+      Orders are confirmed over WhatsApp once a product enters supply. Delivery schedules are shared with your quote.
     </p>
   </div>
 </template>
