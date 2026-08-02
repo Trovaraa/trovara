@@ -2,7 +2,7 @@
 export interface HarvestWindow {
   product: string
   period: string
-  status: 'available' | 'forecast' | 'planting'
+  status: 'available' | 'forecast' | 'planting' | 'waitlist'
   note?: string
 }
 
@@ -14,12 +14,14 @@ const statusStyles: Record<HarvestWindow['status'], string> = {
   available: 'bg-trovara-green/10 text-trovara-green border-trovara-green/20',
   forecast: 'bg-amber-50 text-amber-800 border-amber-200',
   planting: 'bg-blue-50 text-blue-800 border-blue-200',
+  waitlist: 'bg-violet-50 text-violet-800 border-violet-200',
 }
 
 const statusLabels: Record<HarvestWindow['status'], string> = {
   available: 'Available',
   forecast: 'Forecast',
   planting: 'Planting',
+  waitlist: 'Waitlist',
 }
 </script>
 

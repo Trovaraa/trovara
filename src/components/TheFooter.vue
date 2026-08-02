@@ -29,8 +29,9 @@ const links = {
     { label: 'Coconut',        to: '/products#coconut' },
     { label: 'Plantain',       to: '/products#plantain' },
     { label: 'Plantain Flour', to: '/products#plantain' },
-    { label: 'Noilers & Hens', to: '/products#poultry' },
+    { label: 'Pasture-raised Chicken', to: '/products#poultry' },
     { label: 'Eggs',           to: '/products#eggs' },
+    { label: 'Palm Oil',       to: '/products#palm-oil' },
     { label: 'Coming Soon',    to: '/products#coming-soon' },
   ],
 }
@@ -56,7 +57,7 @@ const links = {
             Food you can trust, from a farm built for tomorrow.
           </p>
           <p class="text-white/60 text-sm leading-relaxed max-w-xs mb-6">
-            Premium tropical produce and free-range dressed noilers & mature hens, grown with integrity and delivered with pride.
+            Tropical produce, palm oil, and pasture-raised poultry grown with integrity on one regenerative farm.
           </p>
           <div class="flex items-center gap-3" aria-label="Trovara on social media">
             <a

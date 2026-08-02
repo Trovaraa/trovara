@@ -2,6 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function () {
+        try {
+          var key = 'trovara-color-scheme'
+          var stored = localStorage.getItem(key)
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          var dark = stored === 'dark' || ((stored === 'auto' || stored == null) && prefersDark)
+          if (dark) document.documentElement.classList.add('dark')
+          document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
+        } catch (e) {}
+      })()
+    </script>
     <link rel="icon" type="image/svg+xml" href="/brand/trovara-monogram-tile-v1.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content="Trovara Farm - Food you can trust, from a farm built for tomorrow. Premium coconuts, plantains, and free-range dressed noilers & mature hens from the heart of the earth." />

@@ -2,13 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Light = default marketing look.
+  Dark = opt-in via html.dark (ThemeSwitcher). Brand green/gold/earth stay fixed;
+  cream surfaces and ink text remap. Intentional dark chrome (footer, heroes)
+  keeps bg-trovara-dark / green as painted.
+*/
+:root {
+  color-scheme: light;
+  --tv-canvas: #fafaf5;
+  --tv-ink: #1a1a0f;
+  --tv-surface: #ffffff;
+  --tv-muted: #f2f5ee;
+  --tv-border: rgba(26, 26, 15, 0.1);
+  --tv-muted-text: #6b7280;
+}
+
+html.dark {
+  color-scheme: dark;
+  --tv-canvas: #0f1612;
+  --tv-ink: #eef2ee;
+  --tv-surface: #15201b;
+  --tv-muted: #1a2820;
+  --tv-border: rgba(238, 242, 238, 0.12);
+  --tv-muted-text: #9ca3af;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply font-sans text-trovara-dark bg-trovara-cream antialiased;
+    @apply font-sans antialiased;
+    background-color: var(--tv-canvas);
+    color: var(--tv-ink);
     text-rendering: optimizeLegibility;
   }
 
@@ -34,15 +62,17 @@
   }
 
   .btn-gold {
-    @apply inline-flex items-center justify-center px-6 py-3 bg-trovara-gold text-trovara-dark font-semibold rounded-lg
+    @apply inline-flex items-center justify-center px-6 py-3 bg-trovara-gold font-semibold rounded-lg
            hover:bg-trovara-gold-500 active:bg-trovara-gold-600
            transition-all duration-200 ease-in-out
            focus:outline-none focus:ring-2 focus:ring-trovara-gold focus:ring-offset-2
            shadow-sm hover:shadow-md;
+    color: #1a1a0f;
   }
 
   .section-heading {
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold text-trovara-dark;
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold;
+    color: var(--tv-ink);
   }
 
   .section-subheading {
@@ -50,7 +80,8 @@
   }
 
   .card {
-    @apply bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden;
+    @apply rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden;
+    background-color: var(--tv-surface);
   }
 
   .container-trovara {
@@ -58,15 +89,18 @@
   }
 
   .blog-content {
-    @apply space-y-6 text-gray-600 leading-relaxed text-lg;
+    @apply space-y-6 leading-relaxed text-lg;
+    color: var(--tv-muted-text);
   }
 
   .blog-content h2 {
-    @apply text-2xl md:text-3xl font-bold text-trovara-dark pt-4;
+    @apply text-2xl md:text-3xl font-bold pt-4;
+    color: var(--tv-ink);
   }
 
   .blog-content h3 {
-    @apply text-xl md:text-2xl font-bold text-trovara-dark pt-2;
+    @apply text-xl md:text-2xl font-bold pt-2;
+    color: var(--tv-ink);
   }
 
   .blog-content p {
@@ -91,12 +125,119 @@
   }
 
   .blog-content blockquote p {
-    @apply text-xl font-medium text-trovara-dark italic leading-relaxed;
+    @apply text-xl font-medium italic leading-relaxed;
+    color: var(--tv-ink);
   }
 
   .blog-content a {
     @apply text-trovara-green font-medium hover:underline;
   }
+}
+
+/* ── Dark mode: remap light-only utility classes used across views ───────── */
+
+html.dark .bg-white {
+  background-color: var(--tv-surface) !important;
+}
+html.dark .bg-white\/95 {
+  background-color: rgb(15 22 18 / 0.95) !important;
+}
+html.dark .bg-white\/90 {
+  background-color: rgb(21 32 27 / 0.9) !important;
+}
+html.dark .bg-white\/80 {
+  background-color: rgb(21 32 27 / 0.8) !important;
+}
+html.dark .bg-white\/10 {
+  background-color: rgb(255 255 255 / 0.1) !important;
+}
+html.dark .bg-white\/20 {
+  background-color: rgb(255 255 255 / 0.2) !important;
+}
+
+html.dark .bg-trovara-cream {
+  background-color: var(--tv-canvas) !important;
+}
+html.dark .bg-trovara-light {
+  background-color: var(--tv-muted) !important;
+}
+
+/* Ink text flips; leave gold CTAs and dark chrome backgrounds alone */
+html.dark .text-trovara-dark:not(.btn-gold) {
+  color: var(--tv-ink) !important;
+}
+html.dark .btn-gold,
+html.dark .btn-gold.text-trovara-dark {
+  color: #1a1a0f !important;
+}
+
+html.dark .text-gray-900,
+html.dark .text-gray-800 {
+  color: #eef2ee !important;
+}
+html.dark .text-gray-700 {
+  color: #d1d5db !important;
+}
+html.dark .text-gray-600,
+html.dark .text-gray-500 {
+  color: var(--tv-muted-text) !important;
+}
+html.dark .text-gray-400 {
+  color: #9ca3af !important;
+}
+html.dark .text-gray-300 {
+  color: #d1d5db !important;
+}
+
+html.dark .border-gray-100,
+html.dark .border-gray-200,
+html.dark .border-gray-300 {
+  border-color: var(--tv-border) !important;
+}
+
+html.dark .divide-gray-100 > :not([hidden]) ~ :not([hidden]),
+html.dark .divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
+  border-color: var(--tv-border) !important;
+}
+
+html.dark .shadow-sm,
+html.dark .shadow,
+html.dark .shadow-md,
+html.dark .shadow-lg,
+html.dark .shadow-xl,
+html.dark .shadow-2xl {
+  --tw-shadow-color: rgb(0 0 0 / 0.45);
+}
+
+html.dark .focus\:ring-offset-2:focus {
+  --tw-ring-offset-color: var(--tv-canvas);
+}
+
+html.dark .placeholder\:text-gray-400::placeholder,
+html.dark .placeholder\:text-gray-500::placeholder {
+  color: #6b7280 !important;
+}
+
+/* Soften pale green washes used as section backgrounds */
+html.dark .bg-trovara-green-50 {
+  background-color: rgb(26 107 60 / 0.12) !important;
+}
+html.dark .bg-trovara-green-100 {
+  background-color: rgb(26 107 60 / 0.18) !important;
+}
+html.dark .bg-trovara-gold-50 {
+  background-color: rgb(232 164 39 / 0.12) !important;
+}
+
+html.dark .bg-\[\#f2ead8\] {
+  background-color: #2a3328 !important;
+}
+html.dark .bg-\[\#f3f5f1\] {
+  background-color: var(--tv-muted) !important;
+}
+
+html.dark .section-subheading {
+  color: #4bb583;
 }
 
 .hero-grid {

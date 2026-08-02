@@ -148,8 +148,8 @@ const process = [
           </h1>
           <p class="text-white/70 text-lg leading-relaxed max-w-xl">
             From hands-on farm advisory to Trovara Farm OS - our Operations System for day-to-day
-            farm command - the expertise we've built growing coconuts, plantains, and free-range
-            dressed noilers & mature hens is available to you. Whether you're building a new farm
+            farm command - the expertise we've built across tropical crops, regenerative planning,
+            and pasture-raised poultry systems is available to you. Whether you're building a new farm
             or running a better one, we walk the land with you.
           </p>
           <div class="flex flex-wrap gap-4 mt-10">

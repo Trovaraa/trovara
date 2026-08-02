@@ -15,6 +15,8 @@ const STATIC_ROUTES = [
   '/products/coconut',
   '/products/plantain',
   '/products/poultry',
+  '/products/eggs',
+  '/products/palm-oil',
   '/farm',
   '/services',
   '/faq',

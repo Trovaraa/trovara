@@ -12,49 +12,57 @@ const wholesaleWhatsAppLink = buildWhatsAppLink(
 
 const harvestWindows = [
   {
+    product: 'Palm oil',
+    period: 'December 2026',
+    status: 'forecast' as const,
+    note: 'First harvest forecast; pack formats will be confirmed before supply opens',
+  },
+  {
+    product: 'Pasture-raised chicken',
+    period: 'Target: December 2026',
+    status: 'forecast' as const,
+    note: 'Target first dressed-bird supply; join the waitlist for updates',
+  },
+  {
     product: 'Plantain',
-    period: 'From April 2026, year-round',
-    status: 'available' as const,
-    note: 'First commercial harvest from April 2026; continuous supply thereafter',
+    period: 'March 2027',
+    status: 'forecast' as const,
+    note: 'First commercial harvest forecast',
   },
   {
     product: 'Coconut',
-    period: 'From December 2026, year-round',
+    period: 'June 2027',
     status: 'forecast' as const,
-    note: 'First commercial harvest from December 2026; continuous supply thereafter',
+    note: 'First commercial harvest forecast',
   },
   {
-    product: 'Free-range dressed noilers & mature hens',
-    period: 'Year-round',
-    status: 'available' as const,
-    note: 'Recurring dressed-bird supply on contract',
-  },
-  {
-    product: 'Eggs',
-    period: 'Year-round',
-    status: 'available' as const,
-    note: 'Pasture-raised eggs available continuously',
+    product: 'Pasture-raised eggs',
+    period: 'Date to be confirmed',
+    status: 'waitlist' as const,
+    note: 'Join the product waitlist to receive the first availability date',
   },
 ]
 
 const productLines = [
   {
-    title: 'Graded Prepackaged Plantain',
-    detail:
-      'Consistent quality packs sorted by grade and maturity for kitchen operations and retail displays.',
-    points: ['Green plantain for cooking', 'Ripe plantain for ready-to-cook demand'],
+    title: 'Fresh Plantain',
+    detail: 'Green or ripe plantain graded for kitchens, retail, and processing.',
+    points: ['15 kg and 25 kg graded cartons', 'Pre-cut options available on request'],
   },
   {
     title: 'Plantain Chips',
-    detail:
-      'Crunchy, shelf-stable chips processed from carefully selected plantains for modern retail and hospitality snack channels.',
-    points: ['Food-service and retail packaging', 'Steady bulk supply windows'],
+    detail: 'Plantain chips supplied in pack sizes for shops, hotels, and restaurants.',
+    points: ['Retail and food-service packs', 'Bulk orders made to schedule'],
   },
   {
     title: 'Plantain Flour',
-    detail:
-      'Naturally gluten-free flour milled from mature plantains, suitable for bakeries, private kitchens, and manufacturers.',
-    points: ['Additive-free production', 'Bulk and private-label-ready formats'],
+    detail: 'Plantain flour for bakeries, professional kitchens, and food manufacturers.',
+    points: ['Made without additives', 'Bulk or private-label packs'],
+  },
+  {
+    title: 'Palm Oil',
+    detail: 'Traceable palm oil planned for retail and food-service buyers.',
+    points: ['First harvest forecast for December 2026', 'Pack sizes confirmed before supply opens'],
   },
 ]
 </script>
@@ -70,14 +78,14 @@ const productLines = [
         </h1>
         <p class="text-white/75 text-lg leading-relaxed">
           Trovara partners with procurement teams that need dependable quality, clear communication,
-          and repeatable delivery schedules across plantain-based product lines.
+          and repeatable delivery schedules across fresh and value-added product lines.
         </p>
         <div class="mt-8">
           <RouterLink
             to="/wholesale/one-pager"
             class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/30 text-white font-semibold hover:bg-white/10 transition-all duration-200 text-sm"
           >
-            Download one-pager
+            View wholesale supply brief
           </RouterLink>
         </div>
       </div>
@@ -90,7 +98,7 @@ const productLines = [
           title="Built for modern wholesale operations"
           subtitle="From fresh graded packs to processed plantain products, our B2B lineup is structured for kitchen, shelf, and distribution efficiency."
         />
-        <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           <article
             v-for="line in productLines"
             :key="line.title"
@@ -124,19 +132,19 @@ const productLines = [
         />
         <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
           <div class="rounded-2xl bg-white p-7 shadow-sm border border-gray-100">
-            <p class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-2">Delivery Zones</p>
-            <p class="text-trovara-dark font-semibold mb-2">Ogun, Lagos, and Ibadan</p>
+            <p class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-2">Delivery Coverage</p>
+            <p class="text-trovara-dark font-semibold mb-2">Nationwide across Nigeria</p>
             <p class="text-sm text-gray-600 leading-relaxed">
-              Structured route planning supports dependable recurring drops for hotel kitchens,
-              supermarket depots, and multi-branch buyers.
+              We coordinate nationwide dispatch for hotel kitchens, supermarket depots,
+              distributors, and multi-branch buyers. Timing and logistics are quoted by destination and volume.
             </p>
           </div>
           <div class="rounded-2xl bg-white p-7 shadow-sm border border-gray-100">
             <p class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-2">Harvest Timeline</p>
-            <p class="text-trovara-dark font-semibold mb-2">Plantain live; coconut from Dec 2026</p>
+            <p class="text-trovara-dark font-semibold mb-2">Clear first-harvest forecasts</p>
             <p class="text-sm text-gray-600 leading-relaxed">
-              Plantain is available year-round from April 2026. Coconut opens December 2026 and continues
-              year-round. Free-range dressed noilers, mature hens, and eggs ship every month on contract.
+              Palm oil and chicken are targeted for December 2026, plantain for March 2027,
+              and coconut for June 2027. Dates remain forecasts until harvest readiness is confirmed.
             </p>
           </div>
           <div class="rounded-2xl bg-white p-7 shadow-sm border border-gray-100">
@@ -164,7 +172,7 @@ const productLines = [
         <SectionHeader
           eyebrow="Supply Planning"
           title="Harvest forecast calendar"
-          subtitle="Public supply windows for procurement planning: plantain from April 2026, coconut from December 2026, and year-round free-range dressed noilers, mature hens, and eggs."
+          subtitle="Planning dates for first supply: palm oil and chicken in December 2026, plantain in March 2027, and coconut in June 2027."
         />
         <HarvestCalendar :windows="harvestWindows" />
         <p class="text-xs text-gray-400 mt-4 text-center">

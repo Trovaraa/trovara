@@ -128,7 +128,7 @@ const router = createRouter({
       meta: {
         title: 'Wholesale One-Pager - Trovara Farm',
         description:
-          'Print-ready one-page summary of Trovara Farm wholesale supply, product lines, delivery zones, and contact details.',
+          'Print-ready wholesale supply brief covering product lines, nationwide delivery, harvest windows, packaging, minimum orders, and contact details.',
       },
     },
     {

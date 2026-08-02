@@ -21,12 +21,14 @@ export const useProductsStore = defineStore('products', {
         color: '#7B4F2E',
         bgColor: '#FDF5EE',
         available: true,
+        availabilityNote: 'First harvest forecast for June 2027',
         specs: [
-          { label: 'Grades', value: 'Export-grade, mature coconuts' },
+          { label: 'SKUs', value: 'TRV-COC-MATURE · whole mature coconut' },
           { label: 'Packaging', value: 'Mesh bags (25-50 kg) or custom bulk' },
           { label: 'Shelf life', value: '3-4 weeks at ambient; longer with cold chain' },
+          { label: 'First harvest', value: 'June 2027 (forecast)' },
           { label: 'MOQ', value: 'Contact for volume-based minimums' },
-          { label: 'Delivery', value: 'Ogun, Lagos, Ibadan' },
+          { label: 'Delivery', value: 'Nationwide across Nigeria' },
         ],
         orderTiers: [
           {
@@ -37,7 +39,7 @@ export const useProductsStore = defineStore('products', {
             features: [
               'Order any volume',
               'Fresh, mature coconuts',
-              'Delivery in Ogun, Lagos & Ibadan',
+              'Nationwide delivery across Nigeria',
             ],
             ctaLabel: 'Order on WhatsApp',
             whatsappMessage:
@@ -80,12 +82,16 @@ export const useProductsStore = defineStore('products', {
         color: '#C8841A',
         bgColor: '#FEFAED',
         available: true,
+        availabilityNote: 'First harvest forecast for March 2027',
+        image: '/images/products/fresh-plantain.jpg',
+        imageAlt: 'Fresh green Trovara plantain packed in a graded carton',
         specs: [
-          { label: 'Grades', value: 'Grade A green; Grade A ripe (prepackaged boxes)' },
-          { label: 'Packaging', value: 'Graded cartons, 18-20 kg; chips & flour in sealed packs' },
+          { label: 'SKUs', value: 'TRV-PLT-GREEN · TRV-PLT-RIPE · green or ripe whole fruit' },
+          { label: 'Packaging', value: 'Graded cartons: 15 kg or 25 kg; pre-cut options available on request' },
           { label: 'Shelf life', value: 'Green: 7-10 days; ripe: 3-5 days; flour: 12 months' },
+          { label: 'First harvest', value: 'March 2027 (forecast)' },
           { label: 'MOQ', value: 'Contact for product-specific minimums' },
-          { label: 'Delivery', value: 'Ogun, Lagos, Ibadan - scheduled routes' },
+          { label: 'Delivery', value: 'Nationwide across Nigeria' },
         ],
         orderTiers: [
           {
@@ -96,7 +102,7 @@ export const useProductsStore = defineStore('products', {
             features: [
               'Green, ripe, chips or flour',
               'Graded, export-quality',
-              'Delivery in Ogun, Lagos & Ibadan',
+              'Nationwide delivery across Nigeria',
             ],
             ctaLabel: 'Order on WhatsApp',
             whatsappMessage:
@@ -122,60 +128,32 @@ export const useProductsStore = defineStore('products', {
       },
       {
         id: 'poultry',
-        name: 'Free-range Dressed Noilers & Mature Hens',
+        name: 'Pasture-raised Chicken',
         category: 'poultry' as const,
-        tagline: 'Raised with Care. Served with Pride.',
+        tagline: 'Grass-fed. Pasture-raised. Grown with care.',
         description:
-          'At Trovara Farm, our free-range dressed noilers and mature hens are raised in open environments with natural feed and clean water. We believe animals raised with dignity produce the finest quality meat - healthy birds, ethical practices, and carefully dressed birds ready for kitchens and retailers. (Looking for eggs? See our pasture-raised eggs.)',
+          'Our chickens are pasture-raised on open grass and fed a natural grass-and-grain diet with clean water. They are never caged and receive no growth hormones. Join the waitlist to be contacted when our first dressed birds are ready.',
         benefits: [
-          'Free-range, open environment',
-          'Natural grain-based feed',
+          'Grass-fed and pasture-raised',
+          'Natural grass-and-grain diet',
           'No growth hormones',
-          'Free-range dressed noilers & mature hens',
+          'Whole dressed birds and pre-cut options',
         ],
         icon: 'poultry',
         color: '#1A6B3C',
         bgColor: '#EDF7F1',
         available: true,
+        waitlist: true,
+        availabilityNote: 'Target first supply: December 2026',
+        image: '/images/products/pasture-raised-chicken.jpg',
+        imageAlt: 'Trovara pasture-raised chickens foraging on open grass',
         specs: [
-          { label: 'Grades', value: 'Free-range dressed noilers & mature hens' },
-          { label: 'Packaging', value: 'Vacuum-sealed or ice-packed' },
+          { label: 'SKUs', value: 'TRV-CHK-WHOLE · TRV-CHK-CUT' },
+          { label: 'Packaging', value: 'Whole dressed birds; pre-cut options available on request' },
           { label: 'Shelf life', value: 'Fresh dressed birds: 3-5 days refrigerated; longer frozen' },
+          { label: 'Target supply', value: 'December 2026' },
           { label: 'MOQ', value: 'Contact for recurring supply contracts' },
-          { label: 'Delivery', value: 'Ogun, Lagos, Ibadan' },
-        ],
-        orderTiers: [
-          {
-            id: 'one-time',
-            name: 'One-Time Order',
-            period: 'per order · quote-based',
-            description:
-              'A single delivery of free-range dressed noilers and mature hens, sized to your needs.',
-            features: [
-              'Whole dressed birds or cuts',
-              'Vacuum-sealed or ice-packed',
-              'Delivery in Ogun, Lagos & Ibadan',
-            ],
-            ctaLabel: 'Order on WhatsApp',
-            whatsappMessage:
-              "Hi Trovara Farm, I'd like to place a one-time order for free-range dressed noilers and mature hens. Please share pricing and availability.",
-          },
-          {
-            id: 'recurring',
-            name: 'Recurring Supply',
-            period: 'weekly or monthly',
-            description: 'A standing order delivered on a schedule - ideal for restaurants & retailers.',
-            features: [
-              'Priority production allocation',
-              'Locked-in supply schedule',
-              'Preferential recurring pricing',
-              'Pause or adjust anytime',
-            ],
-            ctaLabel: 'Set Up Recurring Supply',
-            popular: true,
-            whatsappMessage:
-              "Hi Trovara Farm, I'd like to set up a recurring supply of free-range dressed noilers and mature hens. Please share subscription pricing and scheduling.",
-          },
+          { label: 'Delivery', value: 'Nationwide across Nigeria' },
         ],
       },
       {
@@ -195,46 +173,41 @@ export const useProductsStore = defineStore('products', {
         color: '#D98A2B',
         bgColor: '#FEF6E7',
         available: true,
+        waitlist: true,
+        availabilityNote: 'Join the waitlist for first availability',
         specs: [
-          { label: 'Grades', value: 'Farm-fresh, graded pasture-raised eggs' },
+          { label: 'SKUs', value: 'TRV-EGG-30 · crate of 30 pasture-raised eggs' },
           { label: 'Packaging', value: 'Crates of 30; half-crates on request' },
           { label: 'Freshness', value: 'Collected at dawn; date-stamped per crate' },
-          { label: 'Delivery', value: 'Ogun, Lagos, Ibadan - scheduled routes' },
+          { label: 'Delivery', value: 'Nationwide across Nigeria' },
           { label: 'MOQ', value: 'None for home orders; volume pricing for trade' },
         ],
-        orderTiers: [
-          {
-            id: 'one-time',
-            name: 'One-Time Crate',
-            price: '₦6,500',
-            period: 'per crate (30 eggs)',
-            description: 'Order whenever you like - no commitment.',
-            features: [
-              '30 pasture-raised eggs',
-              'Collected at dawn, date-stamped',
-              'Delivered on our scheduled routes',
-            ],
-            ctaLabel: 'Order on WhatsApp',
-            whatsappMessage:
-              "Hi Trovara Farm, I'd like to order a one-time crate (30) of pasture-raised eggs. Please confirm price and delivery.",
-          },
-          {
-            id: 'subscription',
-            name: 'Weekly Subscription',
-            price: '₦23,400',
-            period: 'per month · 4 crates',
-            description: 'Fresh eggs delivered every week. Save 10% - pause or cancel anytime.',
-            features: [
-              '4 weekly crates (120 eggs)',
-              'Save 10% vs one-time',
-              'Priority on every harvest',
-              'Pause, skip or cancel anytime',
-            ],
-            ctaLabel: 'Subscribe on WhatsApp',
-            popular: true,
-            whatsappMessage:
-              "Hi Trovara Farm, I'd like to start a weekly pasture-raised egg subscription (4 crates/month). Please share next steps.",
-          },
+      },
+      {
+        id: 'palm-oil',
+        name: 'Palm Oil',
+        category: 'palm-oil' as const,
+        tagline: 'A Nigerian staple, grown with care.',
+        description:
+          'Trovara palm oil is planned from fruit grown within our regenerative farm system. Our first harvest is forecast for December 2026. Join the waitlist for harvest updates, pack sizes, and first access when supply opens.',
+        benefits: [
+          'Farm-grown oil palm fruit',
+          'Traceable harvest and processing',
+          'Retail and food-service formats planned',
+          'Nationwide delivery across Nigeria',
+        ],
+        icon: 'palm',
+        color: '#9A4D1A',
+        bgColor: '#FFF4E8',
+        available: true,
+        waitlist: true,
+        availabilityNote: 'First harvest forecast for December 2026',
+        specs: [
+          { label: 'SKUs', value: 'TRV-POL-1L · TRV-POL-BULK (planned)' },
+          { label: 'Packaging', value: 'Retail bottles and food-service bulk formats to be confirmed' },
+          { label: 'First harvest', value: 'December 2026 (forecast)' },
+          { label: 'MOQ', value: 'To be confirmed before supply opens' },
+          { label: 'Delivery', value: 'Nationwide across Nigeria' },
         ],
       },
       {

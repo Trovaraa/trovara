@@ -18,9 +18,9 @@ const operations = [
   },
   {
     icon: 'poultry',
-    title: 'Noilers & Hens Operations',
-    desc: 'Our free-range dressed noilers and mature hens are raised with animal welfare first. Birds roam freely in clean, open spaces and are fed natural grain-based diets. That commitment shows in the quality of every dressed bird - and every egg from our pasture flocks.',
-    highlights: ['Free-range open environment', 'Natural grain feed only', 'No growth hormones', 'Clean, ethical operations'],
+    title: 'Pasture-raised Poultry',
+    desc: 'Our poultry plan puts animal welfare first: open pasture, grass-and-grain feeding, clean water, and no growth hormones. Chicken and eggs will open for sale only after production readiness is confirmed.',
+    highlights: ['Grass-fed and pasture-raised', 'Rotational open pasture', 'No growth hormones', 'Waitlist before first supply'],
   },
 ]
 

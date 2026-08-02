@@ -21,7 +21,7 @@ export interface OrderTier {
 export interface Product {
   id: string
   name: string
-  category: 'coconut' | 'plantain' | 'poultry' | 'eggs' | 'coming-soon'
+  category: 'coconut' | 'plantain' | 'poultry' | 'eggs' | 'palm-oil' | 'coming-soon'
   tagline: string
   description: string
   benefits: string[]
@@ -31,6 +31,11 @@ export interface Product {
   color: string
   bgColor: string
   available: boolean
+  /** Product is visible, but not yet accepting orders. */
+  waitlist?: boolean
+  availabilityNote?: string
+  image?: string
+  imageAlt?: string
 }
 
 export interface TeamMember {

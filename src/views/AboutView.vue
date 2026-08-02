@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import SectionHeader from '../components/ui/SectionHeader.vue'
 import StatCard from '../components/ui/StatCard.vue'
-import InfographicFigure from '../components/ui/InfographicFigure.vue'
 import BrandIcon from '../components/brand/BrandIcon.vue'
 
 const milestones = [
@@ -17,8 +16,8 @@ const milestones = [
   },
   {
     year: 'Year 2',
-    title: 'Noilers & Hens Expansion',
-    desc: 'We launched free-range dressed noilers and mature hens, bringing the same ethics and standards that define our crop farming.',
+    title: 'Pasture-raised Poultry Plan',
+    desc: 'We designed our pasture-raised chicken and egg operation around open grass, animal welfare, and transparent production.',
   },
   {
     year: 'Today',
@@ -29,7 +28,7 @@ const milestones = [
 
 const stats = [
   { value: '24', label: 'Acres in our farm plan', icon: 'land' },
-  { value: '4',  label: 'Fresh Product Lines', icon: 'harvest' },
+  { value: '6',  label: 'Planned Product Lines', icon: 'harvest' },
   { value: '0',  label: 'Artificial Chemicals', icon: 'natural' },
   { value: '∞',  label: 'Passion for Quality', icon: 'quality' },
 ]
@@ -37,7 +36,7 @@ const stats = [
 const team = [
   { initials: 'TF', name: 'The Founder', role: 'Founder & Visionary', bio: 'Built Trovara with the belief that great farming changes lives - locally and globally.' },
   { initials: 'FD', name: 'Farm Director', role: 'Head of Agricultural Operations', bio: 'Oversees all crop cultivation across our plantations with decades of tropical farming knowledge.' },
-  { initials: 'PM', name: 'Poultry Manager', role: 'Head of Noilers & Hens', bio: 'Ensures every free-range noiler and mature hen is raised ethically, healthily, and dressed to the highest quality standards.' },
+  { initials: 'PM', name: 'Poultry Manager', role: 'Head of Pasture-raised Poultry', bio: 'Leads animal welfare, pasture rotation, flock health, and production readiness for chicken and eggs.' },
 ]
 </script>
 
@@ -77,9 +76,8 @@ const team = [
               to table.
             </p>
             <p class="text-gray-500 leading-relaxed">
-              Today, Trovara Farm cultivates premium coconuts and plantains across fertile tropical
-              plantations, and raises free-range dressed noilers and mature hens with the same care and ethics. We are
-              growing - adding new crops, expanding our reach, and building a brand that the world
+              Today, Trovara Farm is developing coconut, plantain, palm oil, chicken, and egg production
+              within one regenerative plan. We are growing - adding new crops, expanding our reach, and building a brand that the world
               can trust.
             </p>
           </div>
@@ -221,26 +219,6 @@ const team = [
             <p class="text-trovara-green text-sm font-medium mb-3">{{ member.role }}</p>
             <p class="text-gray-500 text-sm leading-relaxed">{{ member.bio }}</p>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Master plan -->
-    <section class="py-20 md:py-28 bg-trovara-cream">
-      <div class="container-trovara">
-        <SectionHeader
-          eyebrow="The Land"
-          title="A 24-acre regenerative ecosystem."
-          subtitle="Our farm is designed as one integrated system - agriculture, processing, and hospitality working together on a single master plan."
-          center
-        />
-        <div class="max-w-5xl mx-auto">
-          <InfographicFigure
-            src="/images/regen/masterplan.webp"
-            alt="Site plan of Trovara's 24-acre regenerative farm-to-hospitality ecosystem, showing colour-coded agricultural, processing, hospitality, residential, and infrastructure zones."
-            caption="24-Acre Farm-to-Hospitality Ecosystem"
-            summary="42% built-up, 50% green and productive land, targeting 100% energy self-sufficiency. Tap to explore each zone."
-          />
         </div>
       </div>
     </section>

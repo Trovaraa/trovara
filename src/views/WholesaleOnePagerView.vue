@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import TrovaraLogo from '../components/brand/TrovaraLogo.vue'
 import { buildWhatsAppLink } from '../lib/whatsapp'
 
 const wholesaleWhatsAppLink = buildWhatsAppLink(
-  "Hi Trovara Farm, I'd like to discuss a bulk order for hotels/supermarkets."
+  "Hi Trovara Farm, I'd like a wholesale supply plan. My product, volume, destination, and delivery frequency are:"
 )
 
 function printPage() {
@@ -10,91 +11,215 @@ function printPage() {
 }
 
 const products = [
-  'Graded prepackaged plantain (green and ripe)',
-  'Plantain chips (food-service and retail packs)',
-  'Plantain flour (bulk and private-label-ready)',
+  {
+    name: 'Fresh Plantain',
+    format: 'Green or ripe · 15 kg / 25 kg cartons · pre-cut on request',
+    window: 'First harvest · Mar 2027',
+  },
+  {
+    name: 'Coconut',
+    format: 'Mature coconuts for retail and processing',
+    window: 'First harvest · Jun 2027',
+  },
+  {
+    name: 'Pasture-raised Chicken',
+    format: 'Grass-fed · whole dressed or pre-cut on request',
+    window: 'Target first supply · Dec 2026',
+  },
+  {
+    name: 'Pasture-raised Eggs',
+    format: 'Graded crates · first availability to be confirmed',
+    window: 'Join the waitlist',
+  },
+  {
+    name: 'Plantain Chips',
+    format: 'Food-service and retail-ready packs',
+    window: 'After plantain harvest · scheduled runs',
+  },
+  {
+    name: 'Plantain Flour',
+    format: 'Bulk, sealed, and private-label formats',
+    window: 'After plantain harvest · scheduled runs',
+  },
+  {
+    name: 'Palm Oil',
+    format: 'Retail and food-service pack sizes planned',
+    window: 'First harvest · Dec 2026',
+  },
+]
+
+const supplyTerms = [
+  {
+    label: 'Delivery Coverage',
+    title: 'Nationwide across Nigeria',
+    detail: 'Dispatch timing and logistics are planned by destination, volume, product handling needs, and delivery cadence.',
+  },
+  {
+    label: 'Harvest Timeline',
+    title: 'Fresh and processed supply windows',
+    detail: 'Palm oil and chicken target December 2026, plantain March 2027, and coconut June 2027. Egg availability will be shared with waitlist members.',
+  },
+  {
+    label: 'Minimum Order',
+    title: 'Product-specific MOQs',
+    detail: 'Minimums vary by product, packaging, destination, and frequency. Share target volumes for a practical supply plan.',
+  },
+  {
+    label: 'Private Label',
+    title: 'Available for select lines',
+    detail: 'Qualified partners can request branded shelf-ready formats for plantain flour and plantain chips.',
+  },
+  {
+    label: 'Packaging',
+    title: 'Buyer-fit formats',
+    detail: 'Plantain ships in graded 15 kg or 25 kg cartons, with pre-cut options on request. Other formats are agreed by product and volume.',
+  },
+  {
+    label: 'Quality & Traceability',
+    title: 'Supply against agreed specifications',
+    detail: 'Orders are graded to buyer requirements with lot identification, dispatch checks, and handling requirements agreed upfront.',
+  },
+]
+
+const orderSteps = [
+  {
+    number: '01',
+    title: 'Share your requirement',
+    detail: 'Product, volume, destination, packaging, frequency, and preferred start date.',
+  },
+  {
+    number: '02',
+    title: 'Receive a supply plan',
+    detail: 'We confirm availability, MOQ, format, delivery schedule, logistics, and commercial quote.',
+  },
+  {
+    number: '03',
+    title: 'Confirm and dispatch',
+    detail: 'Final terms, payment, recurring cadence, and dispatch documentation are agreed before fulfilment.',
+  },
 ]
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#f8f9f6] py-8 print:bg-white print:py-0">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      <div class="no-print flex justify-end mb-4">
+  <div class="min-h-screen bg-[#f3f5f1] pt-24 pb-8 print:bg-white print:py-0">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 print:max-w-none print:px-0">
+      <div class="no-print flex items-center justify-between gap-4 mb-4">
+        <RouterLink to="/wholesale" class="text-sm font-semibold text-trovara-green hover:underline">
+          ← Back to wholesale
+        </RouterLink>
         <button type="button" class="btn-primary px-6 py-3 text-sm" @click="printPage">
           Print / Save as PDF
         </button>
       </div>
 
-      <article class="one-pager-sheet bg-white border border-gray-200 shadow-sm rounded-2xl p-8 sm:p-10 print:shadow-none print:border-0 print:rounded-none print:p-8">
-        <header class="border-b border-gray-200 pb-6 mb-6">
-          <p class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-2">
-            Trovara Fresh B2B
-          </p>
-          <h1 class="text-3xl sm:text-4xl font-black text-trovara-dark mb-3">
-            Wholesale Supply One-Pager
-          </h1>
-          <p class="text-sm text-gray-600 leading-relaxed max-w-3xl">
-            Trovara Farm supplies consistent, quality-assured plantain product lines for hospitality,
-            retail, and food-service buyers.
-          </p>
+      <article class="one-pager-sheet bg-white border border-gray-200 shadow-sm rounded-3xl overflow-hidden print:shadow-none print:border-0 print:rounded-none">
+        <header class="px-7 sm:px-10 pt-7 sm:pt-9 pb-6 border-b border-gray-100 print:px-0 print:pt-0 print:pb-4">
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-6">
+            <TrovaraLogo descriptor="Fresh" />
+            <div class="text-left sm:text-right">
+              <p class="text-[10px] font-black uppercase tracking-[0.24em] text-trovara-green">Wholesale supply brief</p>
+              <p class="text-xs text-gray-400 mt-1">Hospitality · Retail · Distribution · Food service</p>
+            </div>
+          </div>
         </header>
 
-        <section class="grid md:grid-cols-2 gap-6 mb-6">
-          <div class="rounded-xl bg-trovara-cream p-5 border border-gray-100">
-            <h2 class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-2">
-              Product Lines
-            </h2>
-            <ul class="space-y-2">
-              <li
+        <section class="mx-7 sm:mx-10 mt-6 rounded-2xl bg-trovara-dark text-white px-6 py-6 print:mx-0 print:mt-4 print:px-5 print:py-4">
+          <div class="grid md:grid-cols-[1.4fr_0.6fr] gap-5 items-end">
+            <div>
+              <p class="text-[10px] font-black uppercase tracking-[0.24em] text-[#B8C27A] mb-2">Trovara Fresh B2B</p>
+              <h1 class="text-2xl sm:text-3xl font-black leading-tight mb-2">
+                Reliable wholesale supply, planned around your procurement cycle.
+              </h1>
+              <p class="text-sm text-white/70 leading-relaxed max-w-2xl">
+                Farm-grown fresh and processed food lines for buyers who need consistent specifications,
+                transparent availability, and dependable nationwide fulfilment.
+              </p>
+            </div>
+            <div class="flex md:justify-end flex-wrap gap-2">
+              <span class="rounded-full bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider">Nationwide</span>
+              <span class="rounded-full bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider">Contract supply</span>
+              <span class="rounded-full bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider">Private label</span>
+            </div>
+          </div>
+        </section>
+
+        <div class="px-7 sm:px-10 py-7 print:px-0 print:py-5">
+          <section class="mb-7 print:mb-5">
+            <div class="flex items-end justify-between gap-4 mb-4 print:mb-3">
+              <div>
+                <p class="text-[10px] font-black uppercase tracking-[0.24em] text-trovara-green mb-1">Supply Portfolio</p>
+                <h2 class="text-xl font-black text-trovara-dark">Fresh and value-added product lines</h2>
+              </div>
+              <p class="text-xs text-gray-400 text-right hidden sm:block">Availability is confirmed against order volume.</p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 print:grid-cols-3">
+              <article
                 v-for="product in products"
-                :key="product"
-                class="flex items-start gap-2 text-sm text-trovara-dark"
+                :key="product.name"
+                class="break-inside-avoid rounded-xl bg-trovara-cream border border-trovara-green/10 p-4 print:p-3"
               >
-                <span class="mt-0.5">-</span>
-                <span>{{ product }}</span>
-              </li>
-            </ul>
-          </div>
+                <h3 class="font-black text-trovara-dark text-sm mb-1">{{ product.name }}</h3>
+                <p class="text-xs text-gray-600 leading-relaxed min-h-8">{{ product.format }}</p>
+                <p class="text-[10px] font-bold uppercase tracking-wide text-trovara-green mt-3">{{ product.window }}</p>
+              </article>
+            </div>
+          </section>
 
-          <div class="rounded-xl bg-trovara-cream p-5 border border-gray-100">
-            <h2 class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-2">
-              Delivery Zones
-            </h2>
-            <p class="text-sm text-trovara-dark mb-2">Ogun, Lagos, and Ibadan.</p>
-            <p class="text-xs text-gray-600 leading-relaxed">
-              Delivery routes are scheduled with procurement cycles to support recurring drops.
-            </p>
-          </div>
-        </section>
+          <section class="mb-7 print:mb-5">
+            <div class="mb-4 print:mb-3">
+              <p class="text-[10px] font-black uppercase tracking-[0.24em] text-trovara-green mb-1">Fulfilment Details</p>
+              <h2 class="text-xl font-black text-trovara-dark">Commercial terms at a glance</h2>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-3 print:grid-cols-2">
+              <article
+                v-for="term in supplyTerms"
+                :key="term.label"
+                class="break-inside-avoid rounded-xl border border-gray-200 p-4 print:p-3"
+              >
+                <p class="text-[9px] font-black uppercase tracking-[0.2em] text-trovara-green mb-1">{{ term.label }}</p>
+                <h3 class="font-black text-trovara-dark text-sm mb-1.5">{{ term.title }}</h3>
+                <p class="text-xs text-gray-600 leading-relaxed">{{ term.detail }}</p>
+              </article>
+            </div>
+          </section>
 
-        <section class="rounded-xl bg-white border border-gray-200 p-5 mb-6">
-          <h2 class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-2">MOQ Note</h2>
-          <p class="text-sm text-gray-700 leading-relaxed">
-            Minimum order quantities depend on product format, packaging, and route frequency.
-            Share target volumes and preferred cadence for a tailored quote.
-          </p>
-        </section>
+          <section class="mb-7 print:mb-5 break-inside-avoid">
+            <div class="mb-4 print:mb-3">
+              <p class="text-[10px] font-black uppercase tracking-[0.24em] text-trovara-green mb-1">How to Order</p>
+              <h2 class="text-xl font-black text-trovara-dark">From requirement to recurring delivery</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-3 print:grid-cols-3">
+              <div v-for="step in orderSteps" :key="step.number" class="rounded-xl bg-[#f3f5f1] p-4 print:p-3">
+                <div class="text-xs font-black text-[#889058] mb-2">{{ step.number }}</div>
+                <h3 class="font-black text-trovara-dark text-sm mb-1">{{ step.title }}</h3>
+                <p class="text-xs text-gray-600 leading-relaxed">{{ step.detail }}</p>
+              </div>
+            </div>
+          </section>
 
-        <footer class="grid md:grid-cols-2 gap-6 pt-2">
-          <div>
-            <h2 class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-2">
-              Contact
-            </h2>
-            <p class="text-sm text-trovara-dark">Trovara Farm, Abeokuta</p>
-            <p class="text-sm text-trovara-dark">info@trovara.farm</p>
-            <p class="text-sm text-trovara-dark">+234 810 369 3426</p>
-          </div>
-          <div class="text-sm text-gray-600 leading-relaxed md:text-right">
-            <p class="font-semibold text-trovara-dark mb-2">Ready to order?</p>
-            <p>Website: trovara.farm/wholesale</p>
-            <p>
-              WhatsApp:
-              <a :href="wholesaleWhatsAppLink" target="_blank" rel="noopener noreferrer" class="text-trovara-green underline underline-offset-2">
+          <footer class="break-inside-avoid rounded-2xl border border-trovara-green/20 bg-trovara-cream px-5 py-5 print:py-4">
+            <div class="grid md:grid-cols-[1fr_auto] gap-5 items-end">
+              <div>
+                <p class="text-[10px] font-black uppercase tracking-[0.24em] text-trovara-green mb-1">Request a Supply Plan</p>
+                <h2 class="text-lg font-black text-trovara-dark mb-2">Tell us what you need, where, and how often.</h2>
+                <div class="flex flex-wrap gap-x-5 gap-y-1 text-xs text-gray-600">
+                  <span>info@trovara.farm</span>
+                  <span>+234 810 369 3426</span>
+                  <span>trovara.farm/wholesale</span>
+                  <span>Trovara Farm · Abeokuta, Nigeria</span>
+                </div>
+              </div>
+              <a
+                :href="wholesaleWhatsAppLink"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="no-print inline-flex items-center justify-center rounded-lg bg-trovara-green px-5 py-3 text-sm font-bold text-white hover:bg-trovara-green/90"
+              >
                 Start bulk enquiry
               </a>
-            </p>
-          </div>
-        </footer>
+            </div>
+          </footer>
+        </div>
       </article>
     </div>
   </div>
@@ -102,13 +227,13 @@ const products = [
 
 <style scoped>
 .one-pager-sheet {
-  aspect-ratio: 1.414 / 1;
+  min-height: 70rem;
 }
 
 @media print {
   @page {
     size: A4 portrait;
-    margin: 12mm;
+    margin: 9mm;
   }
 
   .no-print {
@@ -116,7 +241,12 @@ const products = [
   }
 
   .one-pager-sheet {
-    aspect-ratio: auto;
+    min-height: auto;
+  }
+
+  :global(body) {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 }
 </style>

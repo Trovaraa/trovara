@@ -2,10 +2,13 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import TrovaraLogo from './brand/TrovaraLogo.vue'
+import ThemeSwitcher from './ThemeSwitcher.vue'
+import { useTheme } from '../lib/theme'
 
 const route = useRoute()
 const mobileMenuOpen = ref(false)
 const scrolled = ref(false)
+const { isDark } = useTheme()
 
 const navLinks = [
   { label: 'Products', to: '/products' },
@@ -17,6 +20,13 @@ const navLinks = [
 ]
 
 const isHome = computed(() => route.name === 'home')
+/** Transparent hero chrome (white type / light logo). */
+const overHero = computed(() => isHome.value && !scrolled.value)
+/** Solid bar: light logo on dark theme, dark logo on light theme. */
+const logoTone = computed(() => {
+  if (overHero.value) return 'light'
+  return isDark.value ? 'light' : 'dark'
+})
 
 function handleScroll() {
   scrolled.value = window.scrollY > 20
@@ -42,9 +52,9 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
   <header
     :class="[
       'fixed top-0 inset-x-0 z-50 transition-all duration-300',
-      scrolled || !isHome
-        ? 'bg-white/95 backdrop-blur-sm shadow-sm'
-        : 'bg-transparent',
+      overHero
+        ? 'bg-transparent'
+        : 'bg-white/95 backdrop-blur-sm shadow-sm dark:border-b dark:border-white/5',
     ]"
   >
     <nav class="container-trovara">
@@ -52,7 +62,7 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
 
         <!-- Logo -->
         <RouterLink to="/" class="flex items-center gap-2.5 group" @click="onNavClick('/')">
-          <TrovaraLogo :tone="scrolled || !isHome ? 'dark' : 'light'" compact />
+          <TrovaraLogo :tone="logoTone" compact />
         </RouterLink>
 
         <!-- Desktop Nav -->
@@ -63,38 +73,42 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
             :to="link.to"
             :class="[
               'px-3.5 py-2 rounded-full text-sm font-semibold transition-all duration-200',
-              scrolled || !isHome
-                ? 'text-trovara-dark hover:text-trovara-green hover:bg-trovara-light'
-                : 'text-white/90 hover:text-white hover:bg-white/10',
+              overHero
+                ? 'text-white/90 hover:text-white hover:bg-white/10'
+                : 'text-trovara-dark hover:text-trovara-green hover:bg-trovara-light',
               route.path === link.to
-                ? scrolled || !isHome
-                  ? '!text-trovara-green !bg-trovara-green/10'
-                  : '!text-white !bg-white/20'
+                ? overHero
+                  ? '!text-white !bg-white/20'
+                  : '!text-trovara-green !bg-trovara-green/10'
                 : '',
             ]"
             @click="onNavClick(link.to)"
           >
             {{ link.label }}
           </RouterLink>
-          <RouterLink to="/contact" class="ml-3 btn-gold text-sm py-2.5 px-5 rounded-full" @click="onNavClick('/contact')">
+          <ThemeSwitcher class="ml-2" :on-dark-chrome="overHero" />
+          <RouterLink to="/contact" class="ml-2 btn-gold text-sm py-2.5 px-5 rounded-full" @click="onNavClick('/contact')">
             Talk to us
           </RouterLink>
         </div>
 
-        <!-- Mobile Menu Button -->
-        <button
-          class="md:hidden p-2 rounded-lg transition-colors"
-          :class="scrolled || !isHome ? 'text-trovara-dark hover:bg-trovara-light' : 'text-white hover:bg-white/10'"
-          @click="mobileMenuOpen = !mobileMenuOpen"
-          aria-label="Toggle menu"
-        >
-          <svg v-if="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
-          <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
+        <!-- Mobile controls -->
+        <div class="md:hidden flex items-center gap-1.5">
+          <ThemeSwitcher :on-dark-chrome="overHero" />
+          <button
+            class="p-2 rounded-lg transition-colors"
+            :class="overHero ? 'text-white hover:bg-white/10' : 'text-trovara-dark hover:bg-trovara-light'"
+            @click="mobileMenuOpen = !mobileMenuOpen"
+            aria-label="Toggle menu"
+          >
+            <svg v-if="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+            <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
       </div>
 
       <!-- Mobile Menu -->

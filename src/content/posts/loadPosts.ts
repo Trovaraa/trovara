@@ -34,7 +34,8 @@ md.renderer.rules.link_open = (tokens, idx, options, _env, self) => {
 }
 
 const postFiles = import.meta.glob<string>('./*.md', {
-  as: 'raw',
+  query: '?raw',
+  import: 'default',
   eager: true,
 })
 

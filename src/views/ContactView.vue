@@ -194,7 +194,7 @@ const contactInfo = [
               <BrandIcon name="harvest" class="w-10 h-10 mb-3 icon-on-dark" />
               <h4 class="font-bold text-lg mb-2">Looking to order in bulk?</h4>
               <p class="text-white/70 text-sm leading-relaxed mb-5">
-                We supply coconuts, plantains, and free-range dressed noilers & mature hens at wholesale scale.
+                We plan nationwide wholesale supply across plantain, coconut, palm oil, and pasture-raised chicken.
                 Select "Bulk Order / Wholesale" in the form for priority handling - or
                 message the team / place an order on your preferred channel.
               </p>

@@ -49,6 +49,15 @@ const PRODUCT_COLOR_MAP: Record<string, ProductColorClasses> = {
     btnOutline:
       'border-trovara-gold-600 text-trovara-gold-600 hover:bg-trovara-gold-600 hover:text-white',
   },
+  'palm-oil': {
+    headerBg: 'bg-[#FFF4E8]',
+    overlayBg: 'bg-[#9A4D1A]',
+    text: 'text-[#9A4D1A]',
+    bgAccent: 'bg-[#9A4D1A]',
+    borderAccent: 'border-[#9A4D1A]',
+    ringAccent: 'ring-[#9A4D1A]',
+    btnOutline: 'border-[#9A4D1A] text-[#9A4D1A] hover:bg-[#9A4D1A] hover:text-white',
+  },
   'coming-soon': {
     headerBg: 'bg-trovara-green-50',
     overlayBg: 'bg-trovara-green-500',

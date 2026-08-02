@@ -20,10 +20,16 @@ const whatsappLink = computed(() => {
   <article class="card group cursor-pointer">
     <!-- Card Header -->
     <div
-      class="relative px-8 pt-10 pb-6 flex flex-col items-center text-center"
+      class="relative px-8 pt-10 pb-6 flex flex-col items-center text-center overflow-hidden"
       :class="colors.headerBg"
     >
-      <div class="w-20 h-20 mb-4 group-hover:scale-105 transition-transform duration-300">
+      <img
+        v-if="product.image"
+        :src="product.image"
+        :alt="product.imageAlt ?? product.name"
+        class="absolute inset-0 h-full w-full object-cover opacity-20"
+      />
+      <div v-if="!product.image" class="w-20 h-20 mb-4 group-hover:scale-105 transition-transform duration-300">
         <BrandIcon :name="product.icon" :title="product.name" class="w-full h-full" />
       </div>
       <span
@@ -32,8 +38,8 @@ const whatsappLink = computed(() => {
       >
         Coming Soon
       </span>
-      <h3 class="text-xl font-bold text-trovara-dark mb-1">{{ product.name }}</h3>
-      <p class="text-sm font-medium italic" :class="colors.text">
+      <h3 class="relative text-xl font-bold text-trovara-dark mb-1">{{ product.name }}</h3>
+      <p class="relative text-sm font-medium italic" :class="colors.text">
         {{ product.tagline }}
       </p>
     </div>
@@ -70,10 +76,10 @@ const whatsappLink = computed(() => {
           !product.available ? 'opacity-50 pointer-events-none' : '',
         ]"
       >
-        {{ product.available ? 'Learn More' : 'Stay Tuned' }}
+        {{ product.waitlist ? 'Join the waitlist' : product.available ? 'Learn More' : 'Stay Tuned' }}
       </RouterLink>
       <a
-        v-if="product.available && whatsappLink"
+        v-if="product.available && !product.waitlist && whatsappLink"
         :href="whatsappLink"
         target="_blank"
         rel="noopener noreferrer"

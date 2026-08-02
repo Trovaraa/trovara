@@ -49,15 +49,15 @@ const productSchemas = computed(() =>
         <SectionHeader
           eyebrow="How It Works"
           title="One regenerative system behind every product."
-          subtitle="Plantain, coconut, and free-range dressed noilers & mature hens feed a circular system where waste becomes value - flowing into two brands, Trovara Fresh and Trovara Harvest, and the products you see below."
+          subtitle="Plantain, coconut, oil palm, pasture-raised chicken, and eggs are part of one circular farm where waste becomes value across Trovara Fresh and Trovara Harvest."
           center
         />
         <div class="max-w-5xl mx-auto">
           <InfographicFigure
             src="/images/regen/system.webp"
-            alt="Trovara integrated regenerative system: plantain, coconut, and free-range noilers & hens inputs flow through a circular farm into Trovara Fresh and Trovara Harvest brands, producing fresh produce and processed goods, with by-products like compost, fertilizer, biogas, and animal feed."
+            alt="Trovara integrated regenerative system: crops and pasture-raised poultry flow through a circular farm into Trovara Fresh and Trovara Harvest, with by-products reused as compost, fertilizer, biogas, and animal feed."
             caption="From nature's inputs to trusted food solutions"
-            summary="Fresh produce (plantain, eggs, free-range dressed noilers & mature hens, mushrooms, coconut) and shelf-stable Harvest products (flours, chips, oils, powders) - all from one closed-loop farm. Tap to explore the full system."
+            summary="Fresh plantain, coconut, palm oil, pasture-raised chicken and eggs, plus value-added products, all come from one closed-loop farm."
           />
         </div>
       </div>
@@ -83,14 +83,28 @@ const productSchemas = computed(() =>
           >
             <!-- Visual -->
             <div
-              class="rounded-3xl p-12 flex items-center justify-center min-h-72 relative overflow-hidden"
-              :class="productColorClasses(product.id).headerBg"
+              class="rounded-3xl flex items-center justify-center min-h-72 relative overflow-hidden"
+              :class="[productColorClasses(product.id).headerBg, product.image ? 'p-0' : 'p-12']"
             >
-              <div
-                class="absolute inset-0 opacity-5"
-                :class="productColorClasses(product.id).overlayBg"
+              <img
+                v-if="product.image"
+                :src="product.image"
+                :alt="product.imageAlt ?? product.name"
+                class="absolute inset-0 h-full w-full object-cover"
               />
-              <BrandIcon :name="product.icon" :title="product.name" class="relative z-10 w-40 h-40" />
+              <template v-else>
+                <div
+                  class="absolute inset-0 opacity-5"
+                  :class="productColorClasses(product.id).overlayBg"
+                />
+                <BrandIcon :name="product.icon" :title="product.name" class="relative z-10 w-40 h-40" />
+              </template>
+              <div
+                v-if="product.availabilityNote"
+                class="absolute bottom-5 left-5 right-5 sm:right-auto rounded-full bg-white/95 px-4 py-2 text-center text-xs font-black text-trovara-dark shadow-sm"
+              >
+                {{ product.availabilityNote }}
+              </div>
               <div
                 v-if="!product.available"
                 class="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full text-white text-sm font-semibold"
@@ -106,7 +120,7 @@ const productSchemas = computed(() =>
                 class="text-xs font-bold uppercase tracking-widest mb-3"
                 :class="productColorClasses(product.id).text"
               >
-                Trovara {{ product.category !== 'coming-soon' ? product.category.charAt(0).toUpperCase() + product.category.slice(1) : 'Expansion' }}
+                {{ product.category !== 'coming-soon' ? `Trovara ${product.name}` : 'Trovara Expansion' }}
               </p>
               <h2 class="text-4xl md:text-5xl font-black text-trovara-dark mb-3">
                 {{ product.name }}
@@ -148,15 +162,17 @@ const productSchemas = computed(() =>
                 class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 font-semibold text-sm transition-all duration-200"
                 :class="productColorClasses(product.id).btnOutline"
               >
-                View Product Page
+                {{ product.waitlist ? 'Join the waitlist' : 'View Product Page' }}
               </RouterLink>
               <RouterLink
+                v-if="!product.waitlist"
                 to="/contact"
                 class="btn-primary"
               >
                 Enquire About {{ product.name }}
               </RouterLink>
               <a
+                v-if="!product.waitlist"
                 :href="TELEGRAM_ORDER_URL"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -165,7 +181,7 @@ const productSchemas = computed(() =>
                 Order on Telegram
               </a>
               <a
-                v-if="PRODUCT_MESSAGES[product.id as keyof typeof PRODUCT_MESSAGES]"
+                v-if="!product.waitlist && PRODUCT_MESSAGES[product.id as keyof typeof PRODUCT_MESSAGES]"
                 :href="buildWhatsAppLink(PRODUCT_MESSAGES[product.id as keyof typeof PRODUCT_MESSAGES])"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -246,8 +262,8 @@ const productSchemas = computed(() =>
           <BrandIcon name="package" class="w-16 h-16 mx-auto mb-6 icon-on-dark" />
           <h2 class="text-3xl md:text-4xl font-black mb-4">Bulk Orders & Export</h2>
           <p class="text-white/60 text-lg mb-10 leading-relaxed">
-            Are you a distributor, retailer, or wholesaler? Trovara Farm is ready to supply
-            premium tropical produce and free-range dressed noilers & mature hens at scale. Let's talk.
+            Are you a distributor, retailer, or wholesaler? Share your forecast so we can plan
+            future supply across tropical produce, palm oil, and pasture-raised chicken.
           </p>
           <div class="flex flex-wrap gap-4 justify-center">
             <RouterLink to="/wholesale" class="btn-gold text-base px-8 py-4">

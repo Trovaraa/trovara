@@ -8,10 +8,13 @@ import WhatsAppButton from './components/WhatsAppButton.vue'
 import InstallPrompt from './components/InstallPrompt.vue'
 import ConsentBanner from './components/ConsentBanner.vue'
 import { usePageMeta } from './composables/usePageMeta'
+import { useTheme } from './lib/theme'
 
 const route = useRoute()
 const router = useRouter()
 usePageMeta(router)
+// Keep html.dark + theme-color in sync for the session.
+useTheme()
 
 const routeKey = computed(() => route.path)
 

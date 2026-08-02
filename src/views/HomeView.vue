@@ -14,12 +14,12 @@ const featuredProducts = store.availableProducts
 /** Compact labels for hero chips so long product names do not crowd the layout. */
 const heroProducts = featuredProducts.map((product) => ({
   ...product,
-  shortName: product.id === 'poultry' ? 'Noilers & Hens' : product.name,
+  shortName: product.id === 'poultry' ? 'Chicken' : product.name,
 }))
 
 const stats = [
   { value: '24',    label: 'Acres in our farm plan', icon: 'land' },
-  { value: '4',     label: 'Fresh product lines',    icon: 'harvest' },
+  { value: '6',     label: 'Planned product lines',  icon: 'harvest' },
   { value: '0',     label: 'Artificial chemicals',   icon: 'natural' },
   { value: '1',     label: 'Regenerative system',    icon: 'system' },
 ]
@@ -64,12 +64,12 @@ const principles = [
             </h1>
 
             <p class="text-white/70 text-base md:text-lg leading-relaxed max-w-xl mb-9">
-              Traceable coconuts, plantains, pasture-raised eggs, and free-range poultry from one regenerative farm - harvested for homes, chefs, and food businesses with deep respect for the land.
+              Traceable plantain, coconut, palm oil, pasture-raised chicken, and eggs from one regenerative farm - planned for homes, chefs, and food businesses across Nigeria.
             </p>
 
             <div class="flex flex-wrap gap-4">
               <RouterLink to="/products" class="btn-gold text-base px-7 py-4 rounded-full">
-                Shop the harvest
+                Explore our products
               </RouterLink>
               <RouterLink
                 to="/about"
@@ -102,10 +102,10 @@ const principles = [
                 <div class="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-trovara-gold/25" />
                 <div class="relative z-10 flex items-start justify-between gap-6">
                   <div>
-                    <p class="text-[11px] font-black uppercase tracking-[0.18em] text-trovara-green">This week's harvest</p>
-                    <h2 class="mt-2 text-3xl font-black tracking-tight">Fresh from Trovara</h2>
+                    <p class="text-[11px] font-black uppercase tracking-[0.18em] text-trovara-green">Product roadmap</p>
+                    <h2 class="mt-2 text-3xl font-black tracking-tight">Growing at Trovara</h2>
                   </div>
-                  <span class="rounded-full bg-trovara-green px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-white">In season</span>
+                  <span class="rounded-full bg-trovara-green px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-white">Farm forecast</span>
                 </div>
 
                 <div class="relative z-10 grid grid-cols-2 gap-3 mt-8 flex-1">
@@ -154,7 +154,7 @@ const principles = [
         <SectionHeader
           eyebrow="What We Grow"
           title="Nature's finest, carefully cultivated"
-          subtitle="From tropical fruits to free-range dressed noilers & mature hens - every product at Trovara Farm is grown with purpose, patience, and pride."
+          subtitle="From tropical crops and palm oil to pasture-raised chicken and eggs, every Trovara product is planned with purpose, patience, and clear availability."
           center
         />
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
@@ -188,7 +188,7 @@ const principles = [
           <!-- Regenerative system visual -->
           <InfographicFigure
             src="/images/regen/system.webp"
-            alt="Trovara integrated regenerative system: plantain, coconut, and free-range noilers & hens inputs flow through a circular farm into Trovara Fresh and Trovara Harvest brands."
+            alt="Trovara integrated regenerative system: plantain, coconut, oil palm, and pasture-raised poultry flow through a circular farm into Trovara Fresh and Trovara Harvest."
             caption="One regenerative system behind every product"
             summary="Fresh produce and shelf-stable Harvest products - all from one closed-loop farm on 24 acres. Tap to explore the full system."
             dark

@@ -38,7 +38,7 @@ onMounted(() => {
           </div>
         </div>
         <p class="text-gray-600 text-sm leading-relaxed mb-4">
-          Hi there! Ask us anything about our plantain, coconut, free-range dressed noilers & mature hens, Farm OS, or farm development services.
+          Hi there! Ask us about plantain, coconut, palm oil, pasture-raised poultry, Farm OS, or farm development services.
         </p>
         <a
           :href="waLink"

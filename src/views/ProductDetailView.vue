@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import StructuredData from '../components/StructuredData.vue'
 import SpecSheet from '../components/ui/SpecSheet.vue'
 import OrderTiers from '../components/ui/OrderTiers.vue'
+import ProductWaitlist from '../components/ui/ProductWaitlist.vue'
 import { applyPageMeta } from '../composables/usePageMeta'
 import { productColorClasses } from '../lib/productColors'
 import { buildWhatsAppLink, PRODUCT_MESSAGES } from '../lib/whatsapp'
@@ -94,11 +95,25 @@ watch(
         <div class="container-trovara grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-14 items-start">
           <div>
             <div
-              class="rounded-3xl p-10 md:p-12 flex items-center justify-center min-h-72 relative overflow-hidden mb-8"
+              class="rounded-3xl flex items-center justify-center min-h-72 relative overflow-hidden mb-8"
               :class="productColorClasses(product.id).headerBg"
             >
-              <div class="absolute inset-0 opacity-5" :class="productColorClasses(product.id).overlayBg" />
-              <BrandIcon :name="product.icon" :title="product.name" class="relative z-10 w-40 h-40" />
+              <img
+                v-if="product.image"
+                :src="product.image"
+                :alt="product.imageAlt ?? product.name"
+                class="absolute inset-0 h-full w-full object-cover"
+              />
+              <template v-else>
+                <div class="absolute inset-0 opacity-5" :class="productColorClasses(product.id).overlayBg" />
+                <BrandIcon :name="product.icon" :title="product.name" class="relative z-10 w-40 h-40" />
+              </template>
+              <span
+                v-if="product.availabilityNote"
+                class="absolute bottom-4 left-4 right-4 sm:right-auto rounded-full bg-white/95 px-4 py-2 text-center text-xs font-black text-trovara-dark shadow-sm"
+              >
+                {{ product.availabilityNote }}
+              </span>
             </div>
 
             <h2 class="text-3xl md:text-4xl font-black text-trovara-dark mb-5">About this product</h2>
@@ -119,10 +134,14 @@ watch(
             </div>
 
             <div class="flex flex-wrap gap-3">
-              <RouterLink to="/contact" class="btn-primary">
+              <a v-if="product.waitlist" href="#waitlist" class="btn-primary">
+                Join the waitlist
+              </a>
+              <RouterLink v-else to="/contact" class="btn-primary">
                 Enquire About {{ product.name }}
               </RouterLink>
               <a
+                v-if="!product.waitlist"
                 :href="TELEGRAM_ORDER_URL"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -131,7 +150,7 @@ watch(
                 Order on Telegram
               </a>
               <a
-                v-if="whatsappLink"
+                v-if="!product.waitlist && whatsappLink"
                 :href="whatsappLink"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -156,6 +175,16 @@ watch(
               title="Procurement specs"
             />
           </div>
+        </div>
+      </section>
+
+      <section v-if="product.waitlist" id="waitlist" class="scroll-mt-24 py-16 md:py-20 bg-white border-t border-gray-100">
+        <div class="container-trovara max-w-5xl">
+          <ProductWaitlist
+            :product-id="product.id"
+            :product-name="product.name"
+            :availability-note="product.availabilityNote"
+          />
         </div>
       </section>
 
@@ -204,7 +233,7 @@ watch(
       </section>
 
       <!-- Order & Subscribe (all products with tiers) -->
-      <section v-if="product.orderTiers?.length" class="py-20 md:py-24 bg-white border-t border-gray-100">
+      <section v-if="product.orderTiers?.length && !product.waitlist" class="py-20 md:py-24 bg-white border-t border-gray-100">
         <div class="container-trovara">
           <p class="section-subheading mb-3" :class="productColorClasses(product.id).text">Order &amp; Subscribe</p>
           <h2 class="text-3xl md:text-4xl font-black text-trovara-dark mb-3">
@@ -230,9 +259,9 @@ watch(
             <div
               v-for="item in [
                 { q: 'What does “pasture-raised” actually mean?', a: 'Our hens live outdoors on open grass paddocks all day, every day - not in cages, and not packed into a barn with a tiny “free-range” door. We move them to fresh pasture regularly.' },
-                { q: 'How fresh are the eggs when they arrive?', a: 'Eggs are collected each dawn and graded before dispatch. Each crate is date-stamped so you always know exactly how fresh your eggs are.' },
-                { q: 'Where do you deliver?', a: 'We deliver on scheduled routes across Ogun, Lagos and Ibadan. Outside those areas? Message us anyway - we are adding routes as we grow.' },
-                { q: 'Can I pause or cancel my subscription?', a: 'Yes. Your weekly subscription is flexible - you can pause, skip, or cancel any time by messaging us on WhatsApp.' },
+                { q: 'Can I order eggs now?', a: 'Not yet. Join the waitlist and we will contact you when the first crates are available. No order or payment is taken today.' },
+                { q: 'Where do you deliver?', a: 'We deliver nationwide across Nigeria. Delivery timing and logistics are confirmed based on destination, order size, and product handling requirements.' },
+                { q: 'What happens after I join?', a: 'We will use the contact you provide to share the first availability date and buying details when supply opens.' },
               ]"
               :key="item.q"
               class="bg-white rounded-2xl shadow-sm p-6"
