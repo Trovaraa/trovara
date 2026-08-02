@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { shopApi, formatShopPrice, type ShopAccount, type ShopOrder, type ShopProduct } from '../lib/shop'
+import {
+  shopApi,
+  formatShopPrice,
+  resolveTraceabilityUrl,
+  type ShopAccount,
+  type ShopOrder,
+  type ShopProduct,
+} from '../lib/shop'
 import { buildWhatsAppLink } from '../lib/whatsapp'
 import { TELEGRAM_ORDER_URL } from '../lib/telegram'
 
@@ -49,6 +56,10 @@ function setQuantity(productId: string, quantity: number) {
 function clearMessages() {
   error.value = ''
   notice.value = ''
+}
+
+function orderTraceUrl(order: ShopOrder): string | null {
+  return resolveTraceabilityUrl(order.traceabilityUrl)
 }
 
 async function loadAccountData() {
@@ -253,7 +264,15 @@ onMounted(async () => {
           <article v-for="order in orders" :key="order.id" class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
             <div class="flex flex-wrap items-start justify-between gap-4"><div><p class="text-xs font-black uppercase tracking-wider text-trovara-green">{{ order.reference }}</p><h3 class="mt-1 text-xl font-black capitalize text-trovara-dark">{{ order.status.replace('_', ' ') }}</h3><p class="mt-1 text-xs text-gray-500">Ordered {{ new Date(order.createdAt).toLocaleDateString('en-NG') }} via {{ order.source }}</p></div><span class="rounded-full bg-trovara-light px-3 py-1 text-xs font-bold capitalize">{{ order.paymentStatus.replace('_', ' ') }}</span></div>
             <ul class="mt-5 space-y-2 border-t border-gray-100 pt-4 text-sm"><li v-for="item in order.items" :key="`${order.id}-${item.productName}`" class="flex justify-between gap-4"><span>{{ item.productName }}</span><span class="text-gray-500">{{ item.quantity }} {{ item.unit }}</span></li></ul>
-            <a v-if="order.traceabilityUrl" :href="order.traceabilityUrl" target="_blank" rel="noopener" class="mt-5 inline-flex items-center gap-2 rounded-xl border border-trovara-green px-4 py-3 text-sm font-bold text-trovara-green">Open traceability record <span aria-hidden="true">→</span></a>
+            <a
+              v-if="orderTraceUrl(order)"
+              :href="orderTraceUrl(order) ?? undefined"
+              target="_blank"
+              rel="noopener"
+              class="mt-5 inline-flex items-center gap-2 rounded-xl border border-trovara-green px-4 py-3 text-sm font-bold text-trovara-green"
+            >
+              Open traceability record <span aria-hidden="true">→</span>
+            </a>
             <p v-else class="mt-5 text-xs text-gray-500">Your traceability link will appear here when the lot is verified.</p>
           </article>
         </div>
@@ -261,7 +280,7 @@ onMounted(async () => {
       </section>
 
       <section v-else class="mx-auto max-w-3xl">
-        <div class="mb-6"><p class="text-xs font-black uppercase tracking-[0.2em] text-trovara-green">One account everywhere</p><h2 class="mt-2 text-3xl font-black text-trovara-dark">Connect WhatsApp or Telegram</h2><p class="mt-3 leading-7 text-gray-600">Linking lets the bot recognise your Trovara account. Orders placed in chat then appear here, and the bot can show the same order status and traceability information.</p></div>
+        <div class="mb-6"><p class="text-xs font-black uppercase tracking-[0.2em] text-trovara-green">One account everywhere</p><h2 class="mt-2 text-3xl font-black text-trovara-dark">Connect WhatsApp or Telegram</h2><p class="mt-3 leading-7 text-gray-600">Website orders only appear in chat after you link. Create a code below, open the customer bot, and send the exact message <code class="rounded bg-trovara-light px-1.5 py-0.5 text-sm font-semibold text-trovara-dark">link YOURCODE</code>. Opening Telegram alone is not enough.</p></div>
         <div v-if="account" class="rounded-3xl border border-gray-200 bg-white p-6 md:p-8">
           <div v-if="channels.length" class="mb-6"><p class="text-xs font-black uppercase tracking-wider text-gray-500">Connected now</p><div class="mt-3 flex flex-wrap gap-2"><span v-for="channel in channels" :key="channel.channel" class="rounded-full bg-trovara-green/10 px-4 py-2 text-sm font-bold capitalize text-trovara-green">{{ channel.channel }}</span></div></div>
           <button v-if="!linkCode" type="button" class="btn-primary" :disabled="busy" @click="createLinkCode">Create a secure link code</button>

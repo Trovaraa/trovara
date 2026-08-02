@@ -88,3 +88,27 @@ export function formatShopPrice(priceKobo: number, currency = 'NGN'): string {
     priceKobo / 100,
   )
 }
+
+/** Local OS SPA origin for public lot pages during marketing-site development. */
+const LOCAL_OS_URL = (import.meta.env.VITE_PUBLIC_OS_URL || 'http://127.0.0.1:5173').replace(/\/+$/, '')
+const PROD_OS_HOSTS = new Set(['os.trovara.farm', 'www.os.trovara.farm'])
+
+/**
+ * Point lot links at the local OS app when the marketing site is opened on
+ * localhost; keep production URLs everywhere else.
+ */
+export function resolveTraceabilityUrl(url: string | null | undefined): string | null {
+  if (!url) return null
+  const browsingLocal =
+    import.meta.env.DEV ||
+    (typeof window !== 'undefined' &&
+      /^(localhost|127\.0\.0\.1)$/i.test(window.location.hostname))
+  if (!browsingLocal) return url
+  try {
+    const parsed = new URL(url)
+    if (!PROD_OS_HOSTS.has(parsed.hostname.toLowerCase())) return url
+    return `${LOCAL_OS_URL}${parsed.pathname}${parsed.search}${parsed.hash}`
+  } catch {
+    return url
+  }
+}
