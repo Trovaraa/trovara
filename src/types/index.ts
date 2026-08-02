@@ -40,7 +40,10 @@ export interface Product {
 
 export interface TeamMember {
   name: string
+  /** Full role title shown in the biography dialog. */
   role: string
+  /** Abbreviated role shown on the team card (e.g. MD, CTO). */
+  roleShort: string
   /** Short blurb shown on the team card. */
   bio: string
   /** Full biography shown in the read-more dialog. */

@@ -67,6 +67,7 @@ const team: TeamMember[] = [
   {
     initials: 'BA',
     name: 'Bamidele',
+    roleShort: 'MD',
     role: 'Managing Director',
     bio: 'Provides strategic leadership across Trovara as it builds a trusted regenerative food company.',
     fullBio: [
@@ -79,6 +80,7 @@ const team: TeamMember[] = [
   {
     initials: 'AA',
     name: 'Adefemi',
+    roleShort: 'CTO',
     role: 'Chief Technology Officer',
     bio: 'Leads the technology behind Trovara, connecting farm operations, traceability, and customer experience.',
     fullBio: [
@@ -90,16 +92,18 @@ const team: TeamMember[] = [
   {
     initials: 'AY',
     name: 'Ayodeji',
-    role: 'Head of Operations',
+    roleShort: 'COO',
+    role: 'Chief Operating Officer',
     bio: 'Leads operational execution across the farm, supply chain, and wider business.',
     fullBio: [
-      'Ayodeji is Head of Operations at Trovara, responsible for turning farm plans into reliable daily execution. He coordinates fieldwork, supply-chain readiness and the operating rhythms that keep crops, livestock and processing moving together.',
+      'Ayodeji is the Chief Operating Officer of Trovara, responsible for turning farm plans into reliable daily execution. He coordinates fieldwork, supply-chain readiness and the operating rhythms that keep crops, livestock and processing moving together.',
       'His work sits between strategy and the land: clear standards, accountable teams and practical systems that protect quality as Trovara grows. He is focused on building operations that can scale without losing the care, consistency and regenerative intent at the heart of the farm.',
     ],
   },
   {
     initials: 'SA',
     name: 'Samuel',
+    roleShort: 'CGO',
     role: 'Chief Growth Officer',
     bio: 'Leads partnerships, market development, and the growth of Trovara’s customer reach.',
     fullBio: [
@@ -287,7 +291,7 @@ const team: TeamMember[] = [
             <button
               type="button"
               class="w-full text-center outline-none focus-visible:ring-2 focus-visible:ring-trovara-green focus-visible:ring-offset-2 rounded-xl"
-              :aria-label="`Read more about ${member.name}`"
+              :aria-label="`Read more about ${member.name}, ${member.role}`"
               @click="openBio(member)"
             >
               <img
@@ -304,7 +308,7 @@ const team: TeamMember[] = [
                 <span class="text-trovara-gold font-black text-xl">{{ member.initials }}</span>
               </div>
               <h3 class="font-bold text-trovara-dark underline-offset-4 group-hover:underline">{{ member.name }}</h3>
-              <p class="text-trovara-green text-sm font-medium mb-3">{{ member.role }}</p>
+              <p class="text-trovara-green text-sm font-medium mb-3" :title="member.role">{{ member.roleShort }}</p>
               <p class="text-gray-500 text-sm leading-relaxed">{{ member.bio }}</p>
               <span class="mt-4 inline-flex text-sm font-bold text-trovara-green">
                 Read more →
