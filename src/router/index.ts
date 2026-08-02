@@ -43,6 +43,16 @@ const router = createRouter({
       },
     },
     {
+      path: '/shop',
+      name: 'shop',
+      component: () => import('../views/ShopView.vue'),
+      meta: {
+        title: 'Shop Trovara Farm - Orders, Delivery & Traceability',
+        description:
+          'Shop Trovara Farm products, manage orders across the web, WhatsApp, and Telegram, and access traceability records from one customer account.',
+      },
+    },
+    {
       path: '/products/:slug',
       name: 'product-detail',
       component: () => import('../views/ProductDetailView.vue'),

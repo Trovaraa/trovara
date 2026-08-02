@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { buildWhatsAppLink } from '../lib/whatsapp'
 import { openConsentBanner } from '../lib/consent'
+import { TELEGRAM_CUSTOMER_BOT } from '../lib/telegram'
 
-const lastUpdated = '26 July 2026'
+const lastUpdated = '2 August 2026'
 
 const privacyWhatsAppLink = buildWhatsAppLink(
   'Hi Trovara Farm, I have a question about your Privacy Policy and how you handle my personal data.',
@@ -96,21 +97,13 @@ const rights = [
 const thirdParties = [
   {
     name: 'Formspree',
-    purpose: 'Delivers contact-form and newsletter submissions to our team inbox (via our Netlify function).',
-  },
-  {
-    name: 'Buttondown',
-    purpose: 'Manages newsletter subscriptions and email delivery for subscribers.',
+    purpose:
+      'Receives contact form, newsletter, and product waitlist submissions from this website (via our Netlify functions) and forwards them to our farm inbox.',
   },
   {
     name: 'WebMetrix Analytics',
     purpose:
       'An independent analytics company, not part of Trovara. The script loaded from analytics.webmetrix.ai records page views and on-page interactions against first-party cookies and sends them from your browser to WebMetrix, which stores and processes them on its own systems. The Trovara dashboard is our view onto that data, not a separate service we run.',
-  },
-  {
-    name: 'Plausible Analytics',
-    purpose:
-      'Privacy-first, cookieless website analytics loaded from plausible.io when configured - no personal data or cross-site tracking.',
   },
   {
     name: 'WhatsApp (Meta)',
@@ -127,8 +120,9 @@ const thirdParties = [
   },
   {
     name: 'Telegram',
-    purpose:
-      'Hosts the @TrovaraFarmBot customer order bot when you choose to order or track produce through Telegram.',
+    purpose: TELEGRAM_CUSTOMER_BOT
+      ? `Hosts the @${TELEGRAM_CUSTOMER_BOT} customer order bot when you choose to order or track produce through Telegram.`
+      : 'Hosts our customer order bot when you choose to order or track produce through Telegram.',
   },
   {
     name: 'Netlify',
@@ -331,19 +325,6 @@ const thirdParties = [
                   changes when the provider updates the service.
                 </p>
                 <p>
-                  We may additionally enable
-                  <a
-                    href="https://plausible.io"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-trovara-green font-semibold hover:underline"
-                  >Plausible Analytics</a>
-                  on our production site. Plausible is cookieless and collects only aggregated,
-                  anonymised statistics, again loaded under our Content Security Policy allowlist.
-                  Loading it still sends your IP address and browser details to Plausible, so we ask
-                  for the same permission before it runs as we do for WebMetrix.
-                </p>
-                <p>
                   You may optionally install this site to your device Home Screen. That stores a
                   lightweight app shell and static assets in your browser for faster repeat visits.
                   It is not used to track you, and it does not keep personal form data offline.
@@ -352,8 +333,8 @@ const thirdParties = [
                 <p>
                   Analytics is the only non-essential technology on this site, and
                   <strong>none of it loads until you allow it</strong>. On your first visit we ask you
-                  to accept or decline. Until you accept, neither analytics script is downloaded,
-                  neither provider is contacted, and no analytics cookie is created. Declining is one
+                  to accept or decline. Until you accept, the WebMetrix script is not downloaded,
+                  WebMetrix is not contacted, and no analytics cookie is created. Declining is one
                   click, exactly like accepting, and does not affect your ability to read the site,
                   contact us, or place an order. Your answer is remembered in your browser's local
                   storage under

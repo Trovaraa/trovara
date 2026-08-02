@@ -172,7 +172,7 @@ const productSchemas = computed(() =>
                 Enquire About {{ product.name }}
               </RouterLink>
               <a
-                v-if="!product.waitlist"
+                v-if="!product.waitlist && TELEGRAM_ORDER_URL"
                 :href="TELEGRAM_ORDER_URL"
                 target="_blank"
                 rel="noopener noreferrer"

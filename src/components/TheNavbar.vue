@@ -11,6 +11,7 @@ const scrolled = ref(false)
 const { isDark } = useTheme()
 
 const navLinks = [
+  { label: 'Shop', to: '/shop' },
   { label: 'Products', to: '/products' },
   { label: 'The Farm', to: '/farm' },
   { label: 'Our Story', to: '/about' },

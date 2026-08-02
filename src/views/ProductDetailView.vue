@@ -141,7 +141,7 @@ watch(
                 Enquire About {{ product.name }}
               </RouterLink>
               <a
-                v-if="!product.waitlist"
+                v-if="!product.waitlist && TELEGRAM_ORDER_URL"
                 :href="TELEGRAM_ORDER_URL"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -240,8 +240,13 @@ watch(
             Get your {{ product.name.toLowerCase() }}, your way.
           </h2>
           <p class="text-gray-500 leading-relaxed max-w-2xl mb-10">
-            Order a one-time delivery, or set up a recurring supply and never run out. Place orders
-            on Telegram (@{{ TELEGRAM_CUSTOMER_BOT }}), or message us on WhatsApp for a personal quote.
+            Order a one-time delivery, or set up a recurring supply and never run out.
+            <template v-if="TELEGRAM_CUSTOMER_BOT">
+              Place orders on Telegram (@{{ TELEGRAM_CUSTOMER_BOT }}), or message us on WhatsApp for a personal quote.
+            </template>
+            <template v-else>
+              Message us on WhatsApp for a personal quote.
+            </template>
           </p>
           <OrderTiers
             :tiers="product.orderTiers"

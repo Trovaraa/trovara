@@ -2,13 +2,8 @@ import { watch } from 'vue'
 import type { Router } from 'vue-router'
 import { consent } from './consent'
 
-// Plausible is loaded from https://plausible.io (CSP allowlist in netlify.toml).
-// No SRI: Plausible updates script.js without versioned URLs. Plausible runs only
-// when VITE_PLAUSIBLE_DOMAIN is set; otherwise that half is a no-op.
-const PLAUSIBLE_DOMAIN = import.meta.env.VITE_PLAUSIBLE_DOMAIN
-
 // WebMetrix (dashboard: https://trovara.webmetrix.ai) is loaded from
-// analytics.webmetrix.ai, also on the CSP allowlist. The tenant and tenantUid are
+// analytics.webmetrix.ai (CSP allowlist in netlify.toml). The tenant and tenantUid are
 // public identifiers that ship in the bundle by design. No SRI: the SDK is served
 // unversioned with a 10-second cache, so the file changes under the same URL.
 const WEBMETRIX_SRC = 'https://analytics.webmetrix.ai/sdk/webmetrix.analytics.min.js'
@@ -39,16 +34,6 @@ declare global {
 let sdkReady = false
 const pending: WebMetrixEvent[] = []
 let lastTrackedPath = ''
-
-function initPlausible() {
-  if (!PLAUSIBLE_DOMAIN) return
-
-  const script = document.createElement('script')
-  script.defer = true
-  script.dataset.domain = PLAUSIBLE_DOMAIN
-  script.src = 'https://plausible.io/js/script.js'
-  document.head.appendChild(script)
-}
 
 function initWebMetrix() {
   const script = document.createElement('script')
@@ -82,12 +67,10 @@ function start() {
   // router hook must not report that same path a second time. Taken at consent
   // time, not at startup, so pre-consent page views are never back-filled.
   lastTrackedPath = window.location.pathname
-  initPlausible()
   initWebMetrix()
 }
 
-// Nothing is requested until the visitor accepts - Plausible included, because
-// even cookieless it sends the visitor's IP address to a third party.
+// Nothing is requested until the visitor accepts - WebMetrix included.
 export function initAnalytics() {
   if (typeof document === 'undefined') return
 

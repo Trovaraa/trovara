@@ -6,7 +6,6 @@
  * Netlify env (Site settings → Environment variables):
  *   FORMSPREE_FORM_ID            - Formspree form id from https://formspree.io (required for contact)
  *   FORMSPREE_NEWSLETTER_FORM_ID - optional separate Formspree form for newsletter; falls back to FORMSPREE_FORM_ID
- *   BUTTONDOWN_USERNAME          - optional; tried before Formspree for newsletter
  */
 
 const RATE_BUCKETS = new Map()
@@ -125,38 +124,6 @@ export async function forwardToFormspree(fields, options = {}) {
     return {
       ok: false,
       error: error instanceof Error ? error.message : 'Formspree request failed.',
-    }
-  }
-}
-
-export async function subscribeViaButtondown(email, username) {
-  try {
-    const response = await fetch(
-      `https://buttondown.email/api/emails/embed-subscribe/${encodeURIComponent(username)}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({ email, tag: 'website' }),
-        signal: AbortSignal.timeout(12_000),
-      },
-    )
-
-    const result = await response.json().catch(() => null)
-    if (!response.ok) {
-      return {
-        ok: false,
-        error: result?.error ?? result?.message ?? 'Buttondown signup failed.',
-      }
-    }
-
-    return { ok: true }
-  } catch (error) {
-    return {
-      ok: false,
-      error: error instanceof Error ? error.message : 'Buttondown signup failed.',
     }
   }
 }

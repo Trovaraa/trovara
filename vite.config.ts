@@ -18,6 +18,7 @@ export default defineConfig({
         navigateFallback: '/index.html',
         navigateFallbackDenylist: [
           /^\/\.netlify/,
+          /^\/shop-api/,
           /^\/feed\.xml/,
           /^\/sitemap\.xml/,
           /^\/robots\.txt/,
@@ -42,4 +43,15 @@ export default defineConfig({
       },
     }),
   ],
+  server: {
+    proxy: {
+      // Customer shop API (Trovara OS). Keeps cookies same-origin so
+      // SameSite=Strict sessions work from http://localhost:5173.
+      '/shop-api': {
+        target: 'http://127.0.0.1:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/shop-api/, '/shop'),
+      },
+    },
+  },
 })

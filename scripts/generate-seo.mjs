@@ -12,6 +12,7 @@ const STATIC_ROUTES = [
   '/',
   '/about',
   '/products',
+  '/shop',
   '/products/coconut',
   '/products/plantain',
   '/products/poultry',

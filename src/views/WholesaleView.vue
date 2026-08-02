@@ -196,6 +196,7 @@ const productLines = [
             Contact Sales Team
           </RouterLink>
           <a
+            v-if="TELEGRAM_ORDER_URL"
             :href="TELEGRAM_ORDER_URL"
             target="_blank"
             rel="noopener noreferrer"

@@ -1,11 +1,10 @@
 /**
- * Newsletter signup handler - validates, rate-limits, forwards to Buttondown or Formspree.
+ * Newsletter signup handler - validates, rate-limits, forwards to Formspree.
  *
  * Local dev: run `netlify dev` (not plain `vite`) to exercise this endpoint at
  * `/.netlify/functions/newsletter`.
  *
  * Netlify env:
- *   BUTTONDOWN_USERNAME            - optional; tried first when set
  *   FORMSPREE_NEWSLETTER_FORM_ID   - optional dedicated Formspree form
  *   FORMSPREE_FORM_ID              - fallback Formspree form
  */
@@ -17,7 +16,6 @@ import {
   json,
   parseJsonBody,
   rateLimit,
-  subscribeViaButtondown,
 } from './_shared.mjs'
 
 const WINDOW_MS = 15 * 60 * 1000
@@ -48,14 +46,6 @@ export default async function handler(request) {
   const email = typeof body.email === 'string' ? body.email.trim().slice(0, 254) : ''
   if (!isValidEmail(email)) {
     return json(400, { ok: false, error: 'Please enter a valid email address.' })
-  }
-
-  const username = process.env.BUTTONDOWN_USERNAME?.trim()
-  if (username) {
-    const buttondownResult = await subscribeViaButtondown(email, username)
-    if (buttondownResult.ok) {
-      return json(200, { ok: true })
-    }
   }
 
   const newsletterFormId =

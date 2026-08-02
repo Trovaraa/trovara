@@ -200,6 +200,7 @@ const contactInfo = [
               </p>
               <div class="flex flex-col gap-2">
                 <a
+                  v-if="TELEGRAM_ORDER_URL"
                   :href="TELEGRAM_ORDER_URL"
                   target="_blank"
                   rel="noopener noreferrer"

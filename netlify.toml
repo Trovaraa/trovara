@@ -5,6 +5,14 @@
 [build.environment]
   NODE_VERSION = "20"
 
+# Proxy customer shop API to Trovara OS (same-origin cookies + CSP connect-src 'self').
+# Must stay above the SPA fallback.
+[[redirects]]
+  from   = "/shop-api/*"
+  to     = "https://os.trovara.farm/shop/:splat"
+  status = 200
+  force  = true
+
 [[redirects]]
   from   = "/*"
   to     = "/index.html"
@@ -21,4 +29,4 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
-    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' https://plausible.io https://analytics.webmetrix.ai; worker-src 'self'; manifest-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://plausible.io https://analytics.webmetrix.ai; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' https://analytics.webmetrix.ai; worker-src 'self'; manifest-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://analytics.webmetrix.ai; upgrade-insecure-requests"

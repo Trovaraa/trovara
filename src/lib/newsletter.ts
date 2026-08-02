@@ -1,5 +1,5 @@
 /**
- * Newsletter signups post to a Netlify Function (server-side Buttondown / Formspree).
+ * Newsletter signups post to a Netlify Function (server-side Formspree).
  * Local dev: use `netlify dev` - plain `vite` cannot reach `/.netlify/functions/*`.
  */
 const NEWSLETTER_ENDPOINT = '/.netlify/functions/newsletter'
