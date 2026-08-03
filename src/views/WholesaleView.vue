@@ -144,8 +144,8 @@ const productLines = [
             <p class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-2">Delivery Coverage</p>
             <p class="text-trovara-dark font-semibold mb-2">Nationwide across Nigeria</p>
             <p class="text-sm text-gray-600 leading-relaxed">
-              We coordinate nationwide dispatch for hotel kitchens, supermarket depots,
-              distributors, and multi-branch buyers. Timing and logistics are quoted by destination and volume.
+              We plan nationwide dispatch for hotel kitchens, supermarket depots,
+              distributors, and multi-branch buyers once each SKU enters supply. Timing and logistics will be quoted by destination and volume.
             </p>
           </div>
           <div class="rounded-2xl bg-white p-7 shadow-sm border border-gray-100">
@@ -158,10 +158,10 @@ const productLines = [
           </div>
           <div class="rounded-2xl bg-white p-7 shadow-sm border border-gray-100">
             <p class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-2">Private Label</p>
-            <p class="text-trovara-dark font-semibold mb-2">Available for select lines</p>
+            <p class="text-trovara-dark font-semibold mb-2">Planned for select lines</p>
             <p class="text-sm text-gray-600 leading-relaxed">
-              We support private-label packaging options for qualified partners seeking branded shelf-ready
-              plantain flour and chips formats.
+              We plan private-label packaging for qualified partners seeking branded shelf-ready
+              plantain flour and chips formats once milling and processing open after harvest.
             </p>
           </div>
           <div class="rounded-2xl bg-white p-7 shadow-sm border border-gray-100">
@@ -211,7 +211,7 @@ const productLines = [
             rel="noopener noreferrer"
             class="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-[#229ED9] hover:bg-[#1b8bc0] text-white font-semibold transition-colors text-base"
           >
-            Order on Telegram
+            Chat on Telegram
             <span class="text-white/80 font-normal text-sm">@{{ TELEGRAM_CUSTOMER_BOT }}</span>
           </a>
           <a

@@ -2,7 +2,7 @@
 import { reactive, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import SectionHeader from '../components/ui/SectionHeader.vue'
-import { submitContactForm } from '../lib/formsubmit'
+import { submitContactForm } from '../lib/contact'
 import { buildWhatsAppLink } from '../lib/whatsapp'
 import { TELEGRAM_CUSTOMER_BOT, TELEGRAM_ORDER_URL } from '../lib/telegram'
 import BrandIcon from '../components/brand/BrandIcon.vue'
@@ -200,11 +200,11 @@ const contactInfo = [
 
             <div class="mt-10 p-6 bg-trovara-green rounded-2xl text-white">
               <BrandIcon name="harvest" class="w-10 h-10 mb-3 icon-on-dark" />
-              <h4 class="font-bold text-lg mb-2">Looking to order in bulk?</h4>
+              <h4 class="font-bold text-lg mb-2">Planning a bulk supply?</h4>
               <p class="text-white/70 text-sm leading-relaxed mb-5">
-                We plan nationwide wholesale supply across plantain, coconut, palm oil, and pasture-raised chicken.
+                We plan nationwide wholesale supply across plantain, coconut, palm oil, pasture-raised chicken, and eggs.
                 Select "Bulk Order / Wholesale" in the form for priority handling - or
-                message the team / place an order on your preferred channel.
+                message the team on your preferred channel to share forecast volumes.
               </p>
               <div class="flex flex-col gap-2">
                 <a
@@ -214,7 +214,7 @@ const contactInfo = [
                   rel="noopener noreferrer"
                   class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-[#229ED9] hover:bg-[#1b8bc0] text-white font-semibold text-sm transition-colors"
                 >
-                  Order on Telegram
+                  Chat on Telegram
                   <span class="text-white/70 font-normal">@{{ TELEGRAM_CUSTOMER_BOT }}</span>
                 </a>
                 <a

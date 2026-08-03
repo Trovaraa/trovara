@@ -219,18 +219,20 @@ const toc: Section[] = [
             <div id="user-content" class="scroll-mt-28">
               <h2 class="text-2xl md:text-3xl font-black text-trovara-dark mb-4">10. User Submissions</h2>
               <p class="text-gray-700 leading-relaxed">
-                When you send us information through our contact form, newsletter signup, WhatsApp, or
-                email, you confirm that the information is accurate and that you have the right to
-                share it. You grant us permission to use such information to respond to and service
-                your enquiry. Do not submit content that is unlawful, infringing, or offensive.
+                When you send us information through our contact form, product waitlist, newsletter
+                signup, WhatsApp, or email, you confirm that the information is accurate and that you
+                have the right to share it. You grant us permission to use such information for the
+                purpose you selected, such as responding to your enquiry or providing a requested
+                product-availability update. Joining a product waitlist does not subscribe you to our
+                newsletter. Do not submit content that is unlawful, infringing, or offensive.
               </p>
             </div>
 
             <div id="third-party" class="scroll-mt-28">
               <h2 class="text-2xl md:text-3xl font-black text-trovara-dark mb-4">11. Third-Party Links & Services</h2>
               <p class="text-gray-700 leading-relaxed">
-                Our website may link to or rely on third-party services (such as messaging, forms, and
-                analytics providers). We are not responsible for the content, policies, or practices of
+                Our website may link to or rely on third-party services (such as hosting, messaging,
+                email-delivery, and analytics providers). We are not responsible for the content, policies, or practices of
                 third-party websites or services. Your use of them is governed by their own terms.
               </p>
             </div>

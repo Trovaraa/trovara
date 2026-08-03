@@ -162,6 +162,9 @@ html.dark .bg-white\/10 {
 html.dark .bg-white\/20 {
   background-color: rgb(255 255 255 / 0.2) !important;
 }
+html.dark .bg-white\/75 {
+  background-color: rgb(21 32 27 / 0.75) !important;
+}
 
 html.dark .bg-trovara-cream {
   background-color: var(--tv-canvas) !important;
@@ -222,8 +225,17 @@ html.dark .focus\:ring-offset-2:focus {
 }
 
 html.dark .placeholder\:text-gray-400::placeholder,
-html.dark .placeholder\:text-gray-500::placeholder {
+html.dark .placeholder\:text-gray-500::placeholder,
+html.dark .placeholder-gray-400::placeholder,
+html.dark .placeholder-gray-500::placeholder {
   color: #6b7280 !important;
+}
+
+html.dark .text-red-600 {
+  color: #fca5a5 !important;
+}
+html.dark .text-red-700 {
+  color: #fca5a5 !important;
 }
 
 /* Gradient starts that stay white break dark-mode ink remaps */

@@ -98,10 +98,24 @@ const filteredPosts = computed(() =>
           class="text-center py-16 px-8 bg-trovara-light rounded-2xl border border-trovara-green/10"
         >
           <BrandIcon name="sprout" class="w-12 h-12 mx-auto mb-4" />
-          <p class="text-trovara-dark font-bold text-lg mb-2">First posts coming soon</p>
-          <p class="text-gray-500 text-sm max-w-md mx-auto">
-            We are preparing stories from the field. Subscribe to be notified when they go live.
+          <p class="text-trovara-dark font-bold text-lg mb-2">
+            {{ posts.length ? 'No posts match these filters' : 'First posts coming soon' }}
           </p>
+          <p class="text-gray-500 text-sm max-w-md mx-auto">
+            {{
+              posts.length
+                ? 'Try another category or tag, or clear filters to see all journal posts.'
+                : 'We are preparing stories from the field. Subscribe to be notified when they go live.'
+            }}
+          </p>
+          <button
+            v-if="posts.length"
+            type="button"
+            class="btn-primary mt-6 px-6 py-3 text-sm"
+            @click="selectedCategory = 'All'; selectedTag = 'All'"
+          >
+            Clear filters
+          </button>
         </div>
       </div>
     </section>
@@ -112,7 +126,7 @@ const filteredPosts = computed(() =>
           <NewsletterSubscribe
             variant="inline"
             title="Never miss a post"
-            description="Get farm updates, new blog posts, and harvest news delivered to your inbox."
+            description="Get farm updates, new journal posts, and harvest news delivered to your inbox."
           />
         </div>
       </div>

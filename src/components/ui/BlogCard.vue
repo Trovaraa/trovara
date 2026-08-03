@@ -1,16 +1,9 @@
 <script setup lang="ts">
 import type { BlogPost } from '../../types'
+import { formatPublishedDate } from '../../lib/date'
 import BrandIcon from '../brand/BrandIcon.vue'
 
 defineProps<{ post: BlogPost }>()
-
-function formatDate(iso: string) {
-  return new Date(iso + 'T00:00:00').toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-}
 </script>
 
 <template>
@@ -43,7 +36,7 @@ function formatDate(iso: string) {
           {{ post.excerpt }}
         </p>
         <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-400">
-          <span>{{ formatDate(post.publishedAt) }}</span>
+          <span>{{ formatPublishedDate(post.publishedAt) }}</span>
           <span>{{ post.readTimeMinutes }} min read</span>
         </div>
       </div>

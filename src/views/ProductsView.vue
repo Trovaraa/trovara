@@ -210,7 +210,7 @@ const productSchemas = computed(() =>
               <div class="rounded-3xl p-12 flex flex-col items-center justify-center min-h-64 bg-amber-50 relative overflow-hidden">
                 <BrandIcon name="plantain" class="w-32 h-32" />
                 <span class="mt-4 px-4 py-1.5 rounded-full bg-amber-200/60 text-amber-800 text-xs font-bold uppercase tracking-widest">
-                  Processed Product
+                  Planned after harvest
                 </span>
               </div>
               <!-- Content -->
@@ -225,7 +225,7 @@ const productSchemas = computed(() =>
                   "The ancient staple, reimagined."
                 </p>
                 <p class="text-gray-500 leading-relaxed mb-6">
-                  Our plantain flour is milled from sun-dried, matured plantains grown on our own plantation - with zero additives, no bleaching agents, and no preservatives. It is naturally gluten-free, high in resistant starch, and rich in potassium and fiber. Trovara Plantain Flour is ideal for baking, thickening soups and stews, making porridges, and as a nutritious wheat flour substitute for health-conscious consumers and food manufacturers alike.
+                  After our first plantain harvest, we plan to mill flour from sun-dried, matured plantains grown on our plantation - with zero additives, no bleaching agents, and no preservatives. It will be naturally gluten-free, high in resistant starch, and rich in potassium and fiber: suited to baking, thickening soups and stews, porridges, and as a wheat-flour alternative for health-conscious buyers and food manufacturers.
                 </p>
                 <div class="grid grid-cols-2 gap-3 mb-8">
                   <div
@@ -235,7 +235,7 @@ const productSchemas = computed(() =>
                       'High in resistant starch and potassium',
                       'Milled from our own plantation plantains',
                       'Ideal for baking, soups, and porridge',
-                      'Available in bulk for food manufacturers',
+                      'Bulk formats planned for food manufacturers',
                     ]"
                     :key="point"
                     class="flex items-start gap-2.5 text-sm text-trovara-dark"
@@ -244,8 +244,8 @@ const productSchemas = computed(() =>
                     {{ point }}
                   </div>
                 </div>
-                <RouterLink to="/contact" class="btn-gold">
-                  Enquire About Plantain Flour
+                <RouterLink to="/contact?subject=waitlist" class="btn-gold">
+                  Enquire about plantain flour plans
                 </RouterLink>
               </div>
             </div>

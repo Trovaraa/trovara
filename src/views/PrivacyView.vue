@@ -3,7 +3,7 @@ import { buildWhatsAppLink } from '../lib/whatsapp'
 import { openConsentBanner } from '../lib/consent'
 import { TELEGRAM_CUSTOMER_BOT } from '../lib/telegram'
 
-const lastUpdated = '2 August 2026'
+const lastUpdated = '3 August 2026'
 
 const privacyWhatsAppLink = buildWhatsAppLink(
   'Hi Trovara Farm, I have a question about your Privacy Policy and how you handle my personal data.',
@@ -36,7 +36,7 @@ const dataWeCollect = [
   {
     label: 'Information you provide',
     detail:
-      'Your name, email address, phone number, company/organisation, delivery location, and the contents of any message when you use our contact form, request a quote, subscribe to our newsletter, message us on WhatsApp, or place an order through our Telegram customer bot.',
+      'Your name, email address, phone number, company/organisation, delivery location, product interest, and the contents of any message when you use our contact form, join a product waitlist, request a quote, subscribe to our newsletter, message us on WhatsApp, or place an order through our Telegram customer bot.',
   },
   {
     label: 'Transaction & enquiry details',
@@ -96,9 +96,14 @@ const rights = [
 
 const thirdParties = [
   {
-    name: 'Formspree',
+    name: 'Trovara OS',
     purpose:
-      'Receives contact form, newsletter, and product waitlist submissions from this website (via our Netlify functions) and forwards them to our farm inbox.',
+      'Stores contact enquiries and product-waitlist requests for those specific purposes. Separately, it stores newsletter subscriber details, consent choices, confirmation status, and unsubscribe status as our source of truth.',
+  },
+  {
+    name: 'Resend',
+    purpose:
+      'Sends internal notifications about contact enquiries and product-waitlist requests, and delivers newsletter confirmation messages and broadcasts. An enquiry or waitlist request is not treated as a newsletter subscription.',
   },
   {
     name: 'WebMetrix Analytics',
@@ -270,11 +275,24 @@ const thirdParties = [
                 Under the NDPA, we process personal data only where we have a lawful basis to do so:
               </p>
               <ul class="space-y-3 text-gray-700">
-                <li class="leading-relaxed"><strong>Consent</strong> - for example, when you subscribe to our newsletter, or when you allow analytics on this site.</li>
+                <li class="leading-relaxed"><strong>Consent</strong> - for example, when you subscribe to our newsletter, separately choose phone or WhatsApp contact, or allow analytics on this site.</li>
                 <li class="leading-relaxed"><strong>Contract</strong> - to respond to quotes and fulfil orders or partnership arrangements you request.</li>
                 <li class="leading-relaxed"><strong>Legal obligation</strong> - to meet tax, accounting, and regulatory requirements.</li>
                 <li class="leading-relaxed"><strong>Legitimate interests</strong> - to operate, secure, and improve our website and business, provided these interests do not override your rights.</li>
               </ul>
+              <div class="mt-6 space-y-4 text-gray-700 leading-relaxed">
+                <p>
+                  Newsletter signup uses <strong>double opt-in</strong>. After submitting the form,
+                  you must follow the link in the email we send and then select the confirmation
+                  button on our website before your email subscription becomes active. Merely
+                  opening the link does not confirm you.
+                </p>
+                <p>
+                  Providing a phone number is optional. If you provide one, we ask for a separate,
+                  explicit choice before we may contact you by phone or WhatsApp. Email-newsletter
+                  consent does not by itself authorise phone or WhatsApp contact.
+                </p>
+              </div>
             </div>
 
             <div id="cookies" class="scroll-mt-28">
@@ -419,6 +437,19 @@ const thirdParties = [
                   Those two periods describe the cookies in your browser. How long WebMetrix keeps the
                   analytics records on its own servers is set by WebMetrix, not by us, and we have not
                   confirmed that period with them - so we cannot state it here.
+                </p>
+                <p>
+                  For newsletter subscriptions, Trovara OS keeps subscriber and consent records while
+                  the subscription is active. When you unsubscribe, we stop newsletter delivery and
+                  retain the minimum unsubscribe or suppression record needed to honour that choice,
+                  prevent accidental re-mailing, demonstrate consent history, and meet legal
+                  obligations. We do not use suppression records to send marketing.
+                </p>
+                <p>
+                  Trovara OS keeps contact enquiries and product-waitlist requests only as long as
+                  needed to respond, manage the requested availability update, maintain appropriate
+                  business records, and meet legal obligations. These records remain purpose-specific
+                  and are not added to the newsletter subscriber list unless you subscribe separately.
                 </p>
               </div>
             </div>

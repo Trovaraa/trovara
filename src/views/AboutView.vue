@@ -286,28 +286,43 @@ const team: TeamMember[] = [
           <article
             v-for="member in team"
             :key="member.name"
-            class="group bg-white rounded-2xl p-8 text-center shadow-sm hover:shadow-md transition-shadow"
+            class="team-card bg-white rounded-2xl p-8 text-center shadow-sm hover:shadow-md transition-shadow"
           >
             <button
               type="button"
-              class="w-full text-center outline-none focus-visible:ring-2 focus-visible:ring-trovara-green focus-visible:ring-offset-2 rounded-xl"
+              class="team-card__button w-full text-center outline-none focus-visible:ring-2 focus-visible:ring-trovara-green focus-visible:ring-offset-2 rounded-xl"
               :aria-label="`Read more about ${member.name}, ${member.role}`"
               @click="openBio(member)"
             >
-              <img
-                v-if="member.image"
-                :src="member.image"
-                :alt="`${member.name}, ${member.role} at Trovara Farm`"
-                class="w-28 h-28 rounded-full object-cover mx-auto mb-4 ring-4 ring-trovara-green/10 grayscale brightness-75 contrast-125 transition-all duration-500 group-hover:grayscale-0 group-hover:brightness-100 group-hover:contrast-100"
-                :style="{ objectPosition: member.imagePosition || 'center top' }"
-                width="112"
-                height="112"
-                loading="lazy"
-              />
-              <div v-else class="w-28 h-28 rounded-full bg-trovara-green flex items-center justify-center mx-auto mb-4">
-                <span class="text-trovara-gold font-black text-xl">{{ member.initials }}</span>
+              <div class="team-avatar mx-auto mb-4" aria-hidden="true">
+                <div class="team-avatar__inner">
+                  <div class="team-avatar__face team-avatar__front">
+                    <img
+                      v-if="member.image"
+                      :src="member.image"
+                      :alt="`${member.name}, ${member.role} at Trovara Farm`"
+                      class="team-avatar__photo"
+                      :style="{ objectPosition: member.imagePosition || 'center top' }"
+                      width="112"
+                      height="112"
+                      loading="lazy"
+                    />
+                    <div v-else class="team-avatar__initials">
+                      <span>{{ member.initials }}</span>
+                    </div>
+                  </div>
+                  <div class="team-avatar__face team-avatar__back">
+                    <img
+                      src="/brand/trovara-monogram-tile-v1.svg"
+                      alt=""
+                      class="team-avatar__logo"
+                      width="56"
+                      height="56"
+                    />
+                  </div>
+                </div>
               </div>
-              <h3 class="font-bold text-trovara-dark underline-offset-4 group-hover:underline">{{ member.name }}</h3>
+              <h3 class="team-card__name font-bold text-trovara-dark underline-offset-4">{{ member.name }}</h3>
               <p class="text-trovara-green text-sm font-medium mb-3" :title="member.role">{{ member.roleShort }}</p>
               <p class="text-gray-500 text-sm leading-relaxed">{{ member.bio }}</p>
               <span class="mt-4 inline-flex text-sm font-bold text-trovara-green">
@@ -377,7 +392,7 @@ const team: TeamMember[] = [
     <section class="py-16 bg-trovara-dark text-white text-center">
       <div class="container-trovara max-w-2xl mx-auto">
         <h2 class="text-3xl md:text-4xl font-black mb-4">Ready to work with us?</h2>
-        <p class="text-white/60 mb-8">From bulk orders to distribution partnerships, we're open for business.</p>
+        <p class="text-white/60 mb-8">From waitlists and wholesale forecasts to distribution partnerships, we are building supply with buyers who plan ahead.</p>
         <RouterLink to="/contact" class="btn-gold text-base px-8 py-4">
           Contact Trovara Farm
         </RouterLink>
@@ -386,3 +401,101 @@ const team: TeamMember[] = [
 
   </div>
 </template>
+
+<style scoped>
+.team-avatar {
+  width: 7rem;
+  height: 7rem;
+  perspective: 1000px;
+}
+
+.team-avatar__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.team-avatar__face {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 0 0 4px rgb(26 107 60 / 0.1);
+}
+
+.team-avatar__front {
+  background: #edf7f1;
+}
+
+.team-avatar__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) brightness(0.75) contrast(1.25);
+  transition: filter 0.45s ease;
+}
+
+.team-avatar__initials {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background: #1a6b3c;
+  color: #e8a427;
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.team-avatar__back {
+  display: grid;
+  place-items: center;
+  background: #1a6b3c;
+  transform: rotateY(180deg);
+}
+
+.team-avatar__logo {
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 0.85rem;
+}
+
+.team-card:hover .team-avatar__inner,
+.team-card:focus-within .team-avatar__inner {
+  transform: rotateY(180deg);
+}
+
+.team-card:hover .team-avatar__photo,
+.team-card:focus-within .team-avatar__photo {
+  filter: grayscale(0) brightness(1) contrast(1);
+}
+
+.team-card:hover .team-avatar__face,
+.team-card:focus-within .team-avatar__face {
+  box-shadow: 0 0 0 4px rgb(26 107 60 / 0.18), 0 12px 28px rgb(26 107 60 / 0.18);
+}
+
+.team-card:hover .team-card__name,
+.team-card:focus-within .team-card__name {
+  text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-avatar__inner {
+    transition: none;
+  }
+
+  .team-card:hover .team-avatar__inner,
+  .team-card:focus-within .team-avatar__inner {
+    transform: none;
+  }
+
+  .team-card:hover .team-avatar__photo,
+  .team-card:focus-within .team-avatar__photo {
+    filter: grayscale(0) brightness(1) contrast(1);
+  }
+}
+</style>

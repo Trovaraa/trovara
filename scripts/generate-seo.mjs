@@ -4,6 +4,7 @@ import process from 'node:process'
 
 const BASE_URL = 'https://trovara.farm'
 const POSTS_DIR = path.resolve(process.cwd(), 'src/content/posts')
+const GENERATED_POSTS_DIR = path.resolve(process.cwd(), 'src/content/generated-posts')
 const PUBLIC_DIR = path.resolve(process.cwd(), 'public')
 const SITEMAP_PATH = path.resolve(PUBLIC_DIR, 'sitemap.xml')
 const FEED_PATH = path.resolve(PUBLIC_DIR, 'feed.xml')
@@ -137,7 +138,31 @@ async function readPublishedPosts() {
     })
   }
 
-  return posts.sort((a, b) => (b.publishedAt || '').localeCompare(a.publishedAt || ''))
+  let generatedEntries = []
+  try {
+    generatedEntries = await fs.readdir(GENERATED_POSTS_DIR, { withFileTypes: true })
+  } catch (error) {
+    if (error?.code !== 'ENOENT') throw error
+  }
+
+  for (const entry of generatedEntries) {
+    if (!entry.isFile() || !entry.name.endsWith('.json')) continue
+    const raw = await fs.readFile(path.join(GENERATED_POSTS_DIR, entry.name), 'utf8')
+    const post = JSON.parse(raw)
+    if (!post.published || !post.slug || !post.title) continue
+    posts.push({
+      slug: String(post.slug),
+      title: String(post.title),
+      excerpt: typeof post.excerpt === 'string' ? post.excerpt : '',
+      publishedAt: typeof post.publishedAt === 'string' ? post.publishedAt : '',
+    })
+  }
+
+  // OS-managed entries replace repository posts with the same slug.
+  const postsBySlug = new Map(posts.map((post) => [post.slug, post]))
+  return Array.from(postsBySlug.values()).sort((a, b) =>
+    (b.publishedAt || '').localeCompare(a.publishedAt || ''),
+  )
 }
 
 function buildSitemapXml(posts) {
@@ -162,7 +187,9 @@ function buildFeedXml(posts) {
     .map((post) => {
       const link = `${BASE_URL}/blog/${post.slug}`
       const pubDate = post.publishedAt
-        ? new Date(`${post.publishedAt}T00:00:00Z`).toUTCString()
+        ? new Date(
+            post.publishedAt.includes('T') ? post.publishedAt : `${post.publishedAt}T00:00:00Z`,
+          ).toUTCString()
         : new Date().toUTCString()
 
       return `    <item>
@@ -178,7 +205,7 @@ function buildFeedXml(posts) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>Trovara Farm Blog</title>
+    <title>Trovara Farm Journal</title>
     <link>${BASE_URL}/blog</link>
     <description>Stories, harvests, and lessons from Trovara Farm.</description>
     <language>en-us</language>

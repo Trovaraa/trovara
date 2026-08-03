@@ -55,7 +55,7 @@ const faqs: FaqGroup[] = [
       },
       {
         q: 'What payment methods do you accept?',
-        a: 'For local orders: bank transfer, mobile money, and corporate cheques. For export orders: bank wire transfer, letter of credit (L/C), and other agreed terms. Payment terms are discussed during quoting.',
+        a: 'Once supply opens, local orders will typically use bank transfer, mobile money, and corporate cheques. Export orders will use bank wire, letter of credit (L/C), or other agreed terms. Exact payment methods are confirmed during quoting for each harvest window.',
       },
     ],
   },
@@ -69,15 +69,15 @@ const faqs: FaqGroup[] = [
       },
       {
         q: 'How long does shipping take?',
-        a: 'Once a product enters supply, local deliveries are typically 1-3 business days and national shipping 3-7 days. Export timing depends on destination and mode - usually 1-6 weeks.',
+        a: 'Once a product enters supply, local deliveries are expected within about 1-3 business days and national shipping about 3-7 days. Export timing depends on destination and mode - often 1-6 weeks.',
       },
       {
         q: 'Do you handle export documentation?',
-        a: 'Yes. When export orders open, we provide phytosanitary certificates, certificates of origin, packing lists, and commercial invoices, and can coordinate with your freight forwarder.',
+        a: 'Yes. When export orders open, we plan to provide phytosanitary certificates, certificates of origin, packing lists, and commercial invoices, and can coordinate with your freight forwarder.',
       },
       {
         q: 'What if my shipment arrives damaged?',
-        a: 'We inspect every shipment before dispatch. In the rare event of damage in transit, contact us within 48 hours of receipt with photos, and we will work with you on replacement or credit.',
+        a: 'When shipping starts, we will inspect every shipment before dispatch. If damage occurs in transit, contact us within 48 hours of receipt with photos, and we will work with you on replacement or credit.',
       },
     ],
   },

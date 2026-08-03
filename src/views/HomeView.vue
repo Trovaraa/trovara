@@ -258,7 +258,7 @@ const principles = [
         <div class="mt-8 text-center">
           <p class="text-sm text-gray-500">
             “We don't advise what we haven't done ourselves.”
-            <RouterLink to="/contact" class="ml-1 font-semibold text-trovara-green hover:underline">
+            <RouterLink to="/contact?subject=farm-advisory" class="ml-1 font-semibold text-trovara-green hover:underline">
               Book a free consultation →
             </RouterLink>
           </p>

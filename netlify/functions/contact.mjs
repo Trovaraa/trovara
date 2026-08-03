@@ -1,14 +1,13 @@
 /**
- * Contact form handler - validates, rate-limits, and forwards to Formspree server-side.
+ * Contact form handler - validates, rate-limits, and forwards to Trovara OS server-side.
  *
  * Local dev: run `netlify dev` (not plain `vite`) to exercise this endpoint at
  * `/.netlify/functions/contact`.
- *
- * Netlify env: FORMSPREE_FORM_ID (required) - create a form at https://formspree.io
  */
 import {
-  forwardToFormspree,
+  forwardToMarketingLeads,
   getClientIp,
+  hasOnlyKeys,
   honeypotResponse,
   isValidEmail,
   json,
@@ -19,21 +18,19 @@ import {
 const WINDOW_MS = 15 * 60 * 1000
 const MAX_REQUESTS = 5
 
-const SUBJECT_LABELS = {
-  general: 'General Enquiry',
-  'bulk-order': 'Bulk Order / Wholesale',
-  waitlist: 'Product Waitlist / Availability',
-  shop: 'Shop Account / Orders',
-  'farm-visit': 'Farm Visit',
-  'farm-os': 'Trovara Farm OS (Operations System)',
-  'farm-advisory': 'Farm Advisory Services',
-  partnership: 'Distribution Partnership',
-  export: 'Export Enquiry',
-  media: 'Media & Press',
-  other: 'Other',
-}
-
-const VALID_SUBJECTS = new Set(Object.keys(SUBJECT_LABELS))
+const VALID_SUBJECTS = new Set([
+  'general',
+  'bulk-order',
+  'waitlist',
+  'shop',
+  'farm-visit',
+  'farm-os',
+  'farm-advisory',
+  'partnership',
+  'export',
+  'media',
+  'other',
+])
 
 const LIMITS = {
   name: 120,
@@ -41,39 +38,46 @@ const LIMITS = {
   phone: 40,
   message: 4000,
 }
+const ALLOWED_KEYS = new Set(['name', 'email', 'phone', 'message', 'subject', 'honey'])
 
-function trimString(value, maxLen) {
-  if (typeof value !== 'string') {
-    return ''
-  }
-  return value.trim().slice(0, maxLen)
+function trimString(value) {
+  return typeof value === 'string' ? value.trim() : ''
 }
 
 function validateContact(body) {
-  const name = trimString(body.name, LIMITS.name)
-  const email = trimString(body.email, LIMITS.email)
-  const phone = trimString(body.phone, LIMITS.phone)
-  const message = trimString(body.message, LIMITS.message)
-  const subject = typeof body.subject === 'string' ? body.subject.trim() : ''
+  if (!hasOnlyKeys(body, ALLOWED_KEYS)) {
+    return { error: 'Invalid contact request.' }
+  }
+  if (typeof body.honey !== 'undefined' && typeof body.honey !== 'string') {
+    return { error: 'Invalid contact request.' }
+  }
 
-  if (!name) {
+  const name = trimString(body.name)
+  const email = trimString(body.email)
+  const phone = trimString(body.phone)
+  const message = trimString(body.message)
+  const subject = trimString(body.subject)
+
+  if (!name || name.length > LIMITS.name) {
     return { error: 'Please enter your name.' }
   }
   if (!isValidEmail(email)) {
     return { error: 'Please enter a valid email address.' }
   }
+  if (typeof body.phone !== 'undefined' && typeof body.phone !== 'string') {
+    return { error: 'Please enter a valid phone number.' }
+  }
   if (phone.length > LIMITS.phone) {
     return { error: 'Phone number is too long.' }
   }
-  if (!message) {
+  if (!message || message.length > LIMITS.message) {
     return { error: 'Please enter a message.' }
   }
   if (!VALID_SUBJECTS.has(subject)) {
     return { error: 'Please choose a valid subject.' }
   }
 
-  const subjectLabel = SUBJECT_LABELS[subject]
-  return { name, email, phone, message, subjectLabel }
+  return { name, email, phone, message, subject }
 }
 
 export default async function handler(request) {
@@ -103,23 +107,17 @@ export default async function handler(request) {
     return json(400, { ok: false, error: validated.error })
   }
 
-  const { name, email, phone, message, subjectLabel } = validated
-  const result = await forwardToFormspree(
-    {
-      name,
-      email,
-      phone,
-      subject: subjectLabel,
-      message,
-      formType: 'contact',
-    },
-    {
-      subject: `[Trovara Contact] ${subjectLabel}`,
-    },
-  )
+  const { name, email, phone, message, subject } = validated
+  const result = await forwardToMarketingLeads('contact', {
+    name,
+    email,
+    ...(phone ? { phone } : {}),
+    message,
+    subject,
+  })
 
   if (!result.ok) {
-    return json(502, { ok: false, error: result.error ?? 'Failed to submit the form.' })
+    return json(result.status, { ok: false, error: result.error })
   }
 
   return json(200, { ok: true })

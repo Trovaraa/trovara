@@ -38,6 +38,12 @@ const whatsappLink = computed(() => {
       >
         Coming Soon
       </span>
+      <span
+        v-else-if="product.waitlist"
+        class="absolute top-4 right-4 px-2.5 py-1 bg-trovara-green/10 text-trovara-green text-xs font-semibold rounded-full"
+      >
+        Waitlist
+      </span>
       <h3 class="relative text-xl font-bold text-trovara-dark mb-1">{{ product.name }}</h3>
       <p class="relative text-sm font-medium italic" :class="colors.text">
         {{ product.tagline }}

@@ -66,8 +66,8 @@ const supplyTerms = [
   },
   {
     label: 'Private Label',
-    title: 'Available for select lines',
-    detail: 'Qualified partners can request branded shelf-ready formats for plantain flour and plantain chips.',
+    title: 'Planned for select lines',
+    detail: 'Qualified partners can request branded shelf-ready formats for plantain flour and chips once processing opens after harvest.',
   },
   {
     label: 'Packaging',

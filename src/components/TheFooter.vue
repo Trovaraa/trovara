@@ -27,6 +27,7 @@ const links = {
     { label: 'Contact',       to: '/contact' },
   ],
   products: [
+    { label: 'All products',           to: '/products' },
     { label: 'Coconut',                to: '/products#coconut' },
     { label: 'Plantain',               to: '/products#plantain' },
     { label: 'Pasture-raised Chicken', to: '/products#poultry' },

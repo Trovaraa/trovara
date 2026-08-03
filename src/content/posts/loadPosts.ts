@@ -39,6 +39,25 @@ const postFiles = import.meta.glob<string>('./*.md', {
   eager: true,
 })
 
+interface GeneratedJournalPost {
+  slug?: unknown
+  title?: unknown
+  excerpt?: unknown
+  author?: unknown
+  publishedAt?: unknown
+  category?: unknown
+  tags?: unknown
+  coverEmoji?: unknown
+  coverImage?: unknown
+  published?: unknown
+  bodyMarkdown?: unknown
+}
+
+const generatedPostFiles = import.meta.glob<GeneratedJournalPost>('../generated-posts/*.json', {
+  import: 'default',
+  eager: true,
+})
+
 function slugFromPath(path: string): string {
   return path.replace('./', '').replace(/\.md$/, '')
 }
@@ -189,9 +208,41 @@ function parsePost(path: string, raw: string): BlogPost | null {
   }
 }
 
-const allPosts: BlogPost[] = Object.entries(postFiles)
+function parseGeneratedPost(raw: GeneratedJournalPost): BlogPost | null {
+  const slug = asString(raw.slug)
+  const title = asString(raw.title)
+  const markdown = asString(raw.bodyMarkdown).trim()
+  if (!slug || !title || !markdown) return null
+
+  return {
+    slug,
+    title,
+    excerpt: asString(raw.excerpt),
+    author: asString(raw.author, 'Trovara Farm'),
+    publishedAt: asString(raw.publishedAt),
+    category: asString(raw.category, 'Farm Stories'),
+    tags: asStringArray(raw.tags),
+    coverEmoji: asString(raw.coverEmoji, 'sprout'),
+    coverImage: asString(raw.coverImage) || undefined,
+    readTimeMinutes: estimateReadTime(markdown),
+    published: asBoolean(raw.published, true),
+    html: md.render(markdown),
+  }
+}
+
+const repositoryPosts = Object.entries(postFiles)
   .map(([path, raw]) => parsePost(path, raw))
   .filter((post): post is BlogPost => post !== null)
+
+const osPosts = Object.values(generatedPostFiles)
+  .map((raw) => parseGeneratedPost(raw))
+  .filter((post): post is BlogPost => post !== null)
+
+// OS-managed posts replace a repository post with the same slug during migration.
+const postsBySlug = new Map(repositoryPosts.map((post) => [post.slug, post]))
+for (const post of osPosts) postsBySlug.set(post.slug, post)
+
+const allPosts: BlogPost[] = Array.from(postsBySlug.values())
   .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
 
 export function getPostBySlug(slug: string): BlogPost | undefined {

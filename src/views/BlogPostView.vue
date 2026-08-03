@@ -6,6 +6,7 @@ import BlogCard from '../components/ui/BlogCard.vue'
 import NewsletterSubscribe from '../components/ui/NewsletterSubscribe.vue'
 import StructuredData from '../components/StructuredData.vue'
 import { applyPageMeta } from '../composables/usePageMeta'
+import { formatPublishedDate } from '../lib/date'
 
 const BASE_URL = 'https://trovara.farm'
 
@@ -33,11 +34,11 @@ const articleSchema = computed(() => {
     description: p.excerpt,
     author: { '@type': 'Organization', name: p.author },
     datePublished: p.publishedAt,
-    image: p.coverImage ? `${BASE_URL}${p.coverImage}` : `${BASE_URL}/brand/trovara-social-card-v2.png`,
+    image: p.coverImage ? `${BASE_URL}${p.coverImage}` : `${BASE_URL}/brand/trovara-social-card-v2.svg`,
     publisher: {
       '@type': 'Organization',
       name: 'Trovara Farm',
-      logo: { '@type': 'ImageObject', url: `${BASE_URL}/brand/trovara-monogram-tile-v1.png` },
+      logo: { '@type': 'ImageObject', url: `${BASE_URL}/brand/trovara-monogram-tile-v1.svg` },
     },
     mainEntityOfPage: `${BASE_URL}/blog/${p.slug}`,
   }
@@ -55,20 +56,12 @@ watch(
         title: `${p.title} - Trovara Farm`,
         description: p.excerpt,
         canonicalPath: `/blog/${p.slug}`,
-        ogImage: p.coverImage ? `${BASE_URL}${p.coverImage}` : `${BASE_URL}/brand/trovara-social-card-v2.png`,
+        ogImage: p.coverImage ? `${BASE_URL}${p.coverImage}` : `${BASE_URL}/brand/trovara-social-card-v2.svg`,
       })
     }
   },
   { immediate: true },
 )
-
-function formatDate(iso: string) {
-  return new Date(iso + 'T00:00:00').toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-}
 </script>
 
 <template>
@@ -84,14 +77,14 @@ function formatDate(iso: string) {
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
           </svg>
-          Back to blog
+          Back to journal
         </RouterLink>
 
         <div class="flex flex-wrap items-center gap-3 mb-6">
           <span class="px-3 py-1 bg-white/10 text-trovara-gold-300 text-xs font-semibold rounded-full">
             {{ post.category }}
           </span>
-          <span class="text-white/50 text-sm">{{ formatDate(post.publishedAt) }}</span>
+          <span class="text-white/50 text-sm">{{ formatPublishedDate(post.publishedAt) }}</span>
           <span class="text-white/50 text-sm">·</span>
           <span class="text-white/50 text-sm">{{ post.readTimeMinutes }} min read</span>
         </div>

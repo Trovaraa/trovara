@@ -39,7 +39,7 @@ const router = createRouter({
       meta: {
         title: 'Our Products - Trovara Farm',
         description:
-          'Explore Trovara Farm products including fresh produce and farm-made goods sourced with quality and care.',
+          'Explore Trovara Farm product lines and join waitlists for coconut, plantain, palm oil, pasture-raised chicken, and eggs ahead of first harvest.',
       },
     },
     {
@@ -47,9 +47,9 @@ const router = createRouter({
       name: 'shop',
       component: () => import('../views/ShopView.vue'),
       meta: {
-        title: 'Shop Trovara Farm - Orders, Delivery & Traceability',
+        title: 'Shop Account - Trovara Farm',
         description:
-          'Shop Trovara Farm products, manage orders across the web, WhatsApp, and Telegram, and access traceability records from one customer account.',
+          'Create a Trovara Farm shop account to track future orders, connect WhatsApp or Telegram, and get ready for checkout as each harvest window opens.',
       },
     },
     {
@@ -139,6 +139,24 @@ const router = createRouter({
         title: 'Wholesale One-Pager - Trovara Farm',
         description:
           'Print-ready wholesale supply brief covering product lines, nationwide delivery, harvest windows, packaging, minimum orders, and contact details.',
+      },
+    },
+    {
+      path: '/newsletter/confirm',
+      name: 'newsletter-confirm',
+      component: () => import('../views/NewsletterConfirmView.vue'),
+      meta: {
+        title: 'Confirm Newsletter Subscription - Trovara Farm',
+        description: 'Confirm your subscription to Trovara Farm email updates.',
+      },
+    },
+    {
+      path: '/newsletter/unsubscribe',
+      name: 'newsletter-unsubscribe',
+      component: () => import('../views/NewsletterUnsubscribeView.vue'),
+      meta: {
+        title: 'Unsubscribe from Newsletter - Trovara Farm',
+        description: 'Manage your Trovara Farm newsletter subscription.',
       },
     },
     {

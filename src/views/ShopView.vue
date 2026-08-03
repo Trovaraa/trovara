@@ -19,7 +19,7 @@ const busy = ref(false)
 const error = ref('')
 const notice = ref('')
 const activeTab = ref<Tab>('shop')
-const authMode = ref<AuthMode>('login')
+const authMode = ref<AuthMode>('register')
 const account = ref<ShopAccount | null>(null)
 const products = ref<ShopProduct[]>([])
 const orders = ref<ShopOrder[]>([])
@@ -61,6 +61,11 @@ function clearMessages() {
 function setAuthMode(mode: AuthMode) {
   authMode.value = mode
   clearMessages()
+}
+
+function goCreateAccount() {
+  setAuthMode('register')
+  document.getElementById('shop-account')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
 }
 
 function orderTraceUrl(order: ShopOrder): string | null {
@@ -197,7 +202,7 @@ onMounted(async () => {
             Create an account now to track future orders, connect WhatsApp or Telegram, and receive waitlist updates. Live product checkout opens by SKU as each harvest window arrives.
           </p>
           <div class="mt-8 flex flex-wrap gap-3">
-            <a href="#shop-account" class="btn-gold px-6 py-3 text-sm">Create account</a>
+            <a href="#shop-account" class="btn-gold px-6 py-3 text-sm" @click.prevent="goCreateAccount">Create account</a>
             <RouterLink to="/products" class="inline-flex items-center rounded-xl border border-white/30 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10">
               Join product waitlists
             </RouterLink>
@@ -223,7 +228,7 @@ onMounted(async () => {
         <section>
           <div class="mb-6 flex items-end justify-between gap-4">
             <div>
-              <p class="text-xs font-black uppercase tracking-[0.2em] text-trovara-green">Live catalogue</p>
+              <p class="text-xs font-black uppercase tracking-[0.2em] text-trovara-green">{{ products.length ? 'Open SKUs' : 'Harvest catalogue' }}</p>
               <h2 class="mt-2 text-3xl font-black text-trovara-dark">Farm shop</h2>
             </div>
             <p class="text-sm text-gray-500">Opens by harvest window</p>
@@ -267,10 +272,12 @@ onMounted(async () => {
           <div v-if="cartLines.length" class="mt-5 divide-y divide-gray-100">
             <div v-for="line in cartLines" :key="line.product.id" class="flex justify-between gap-4 py-4 text-sm"><div><p class="font-bold text-trovara-dark">{{ line.product.name }}</p><p class="text-gray-500">{{ line.quantity }} × {{ line.product.unit }}</p></div><p class="font-bold">{{ formatShopPrice(line.product.priceKobo * line.quantity, line.product.currency) }}</p></div>
           </div>
-          <p v-else class="mt-5 rounded-2xl bg-trovara-light p-5 text-sm leading-6 text-gray-500">Add a product to begin. Your basket stays on this device until checkout.</p>
+          <p v-else class="mt-5 rounded-2xl bg-trovara-light p-5 text-sm leading-6 text-gray-500">
+            {{ products.length ? 'Add a product to begin. Your basket stays on this device until checkout.' : 'Checkout is closed until harvest SKUs open. Create an account or message us about waitlists.' }}
+          </p>
           <div class="mt-5 flex justify-between border-t border-gray-200 pt-5"><span class="font-bold">Estimated total</span><strong class="text-xl text-trovara-green">{{ formatShopPrice(cartTotalKobo) }}</strong></div>
           <button type="button" class="btn-primary mt-5 w-full disabled:cursor-not-allowed disabled:opacity-50" :disabled="!cartCount" @click="beginCheckout">Continue to checkout</button>
-          <div class="mt-5 border-t border-gray-200 pt-5"><p class="text-xs font-bold uppercase tracking-wider text-gray-500">Or continue with a chat assistant</p><div class="mt-3 grid gap-2" :class="TELEGRAM_ORDER_URL ? 'grid-cols-2' : 'grid-cols-1'"><a :href="buildWhatsAppLink('Hi Trovara Farm, I would like to shop your available products.')" target="_blank" rel="noopener" class="rounded-xl bg-[#25D366] px-3 py-3 text-center text-xs font-bold text-white">WhatsApp</a><a v-if="TELEGRAM_ORDER_URL" :href="TELEGRAM_ORDER_URL" target="_blank" rel="noopener" class="rounded-xl bg-[#229ED9] px-3 py-3 text-center text-xs font-bold text-white">Telegram</a></div></div>
+          <div class="mt-5 border-t border-gray-200 pt-5"><p class="text-xs font-bold uppercase tracking-wider text-gray-500">Or continue with a chat assistant</p><div class="mt-3 grid gap-2" :class="TELEGRAM_ORDER_URL ? 'grid-cols-2' : 'grid-cols-1'"><a :href="buildWhatsAppLink(products.length ? 'Hi Trovara Farm, I would like help with products currently in the farm shop.' : 'Hi Trovara Farm, I would like waitlist updates and to prepare a shop account before harvest checkout opens.')" target="_blank" rel="noopener" class="rounded-xl bg-[#25D366] px-3 py-3 text-center text-xs font-bold text-white">WhatsApp</a><a v-if="TELEGRAM_ORDER_URL" :href="TELEGRAM_ORDER_URL" target="_blank" rel="noopener" class="rounded-xl bg-[#229ED9] px-3 py-3 text-center text-xs font-bold text-white">Telegram</a></div></div>
         </aside>
       </div>
 
@@ -297,11 +304,44 @@ onMounted(async () => {
       </section>
 
       <section v-else class="mx-auto max-w-3xl">
-        <div class="mb-6"><p class="text-xs font-black uppercase tracking-[0.2em] text-trovara-green">One account everywhere</p><h2 class="mt-2 text-3xl font-black text-trovara-dark">Connect WhatsApp or Telegram</h2><p class="mt-3 leading-7 text-gray-600">Website orders only appear in chat after you link. Create a code below, open the customer bot, and send the exact message <code class="rounded bg-trovara-light px-1.5 py-0.5 text-sm font-semibold text-trovara-dark">link YOURCODE</code>. Opening WhatsApp/Telegram alone is not enough.</p></div>
+        <div class="mb-6">
+          <p class="text-xs font-black uppercase tracking-[0.2em] text-trovara-green">One account everywhere</p>
+          <h2 class="mt-2 text-3xl font-black text-trovara-dark">Connect Telegram (or WhatsApp later)</h2>
+          <p class="mt-3 leading-7 text-gray-600">
+            Website orders only appear in chat after you link.
+            <template v-if="TELEGRAM_ORDER_URL">
+              Create a code below, open the <strong>Telegram customer bot</strong>, and send the exact message
+              <code class="rounded bg-trovara-light px-1.5 py-0.5 text-sm font-semibold text-trovara-dark">link YOURCODE</code>.
+              Opening the chat alone is not enough.
+            </template>
+            <template v-else>
+              Telegram customer bot username is not configured on this site build yet — ask the farm for the bot link, then send
+              <code class="rounded bg-trovara-light px-1.5 py-0.5 text-sm font-semibold text-trovara-dark">link YOURCODE</code>.
+            </template>
+          </p>
+          <p class="mt-3 text-sm leading-6 text-gray-500">
+            The WhatsApp button opens the farm’s personal WhatsApp number for human help. It is
+            <strong>not</strong> the Meta customer bot yet, so <code class="rounded bg-trovara-light px-1 py-0.5 text-xs font-semibold">link CODE</code>
+            will not attach your shop account on WhatsApp until that bot goes live. Prefer Telegram for account linking.
+          </p>
+        </div>
         <div v-if="account" class="rounded-3xl border border-gray-200 bg-white p-6 md:p-8">
           <div v-if="channels.length" class="mb-6"><p class="text-xs font-black uppercase tracking-wider text-gray-500">Connected now</p><div class="mt-3 flex flex-wrap gap-2"><span v-for="channel in channels" :key="channel.channel" class="rounded-full bg-trovara-green/10 px-4 py-2 text-sm font-bold capitalize text-trovara-green">{{ channel.channel }}</span></div></div>
           <button v-if="!linkCode" type="button" class="btn-primary" :disabled="busy" @click="createLinkCode">Create a secure link code</button>
-          <div v-else class="rounded-2xl bg-trovara-dark p-6 text-white"><p class="text-xs font-bold uppercase tracking-wider text-white/60">Send this exact message to {{ TELEGRAM_ORDER_URL ? 'either bot' : 'the WhatsApp bot' }}</p><div class="mt-3 flex flex-wrap items-center justify-between gap-4"><code class="text-xl font-black text-trovara-gold">link {{ linkCode }}</code><button type="button" class="rounded-xl bg-white/10 px-4 py-2 text-sm font-bold hover:bg-white/20" @click="copyLinkCommand">Copy</button></div><p class="mt-3 text-xs text-white/60">Expires {{ new Date(linkExpiry).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }} and works once.</p><div class="mt-5 flex flex-wrap gap-3"><a :href="buildWhatsAppLink(`link ${linkCode}`)" target="_blank" rel="noopener" class="rounded-xl bg-[#25D366] px-4 py-3 text-sm font-bold text-white">Open WhatsApp</a><a v-if="TELEGRAM_ORDER_URL" :href="TELEGRAM_ORDER_URL" target="_blank" rel="noopener" class="rounded-xl bg-[#229ED9] px-4 py-3 text-sm font-bold text-white">Open Telegram</a></div></div>
+          <div v-else class="rounded-2xl bg-trovara-dark p-6 text-white">
+            <p class="text-xs font-bold uppercase tracking-wider text-white/60">
+              {{ TELEGRAM_ORDER_URL ? 'Send this exact message to the Telegram customer bot' : 'Send this exact message to the Telegram customer bot (ask the farm for the username)' }}
+            </p>
+            <div class="mt-3 flex flex-wrap items-center justify-between gap-4">
+              <code class="text-xl font-black text-trovara-gold">link {{ linkCode }}</code>
+              <button type="button" class="rounded-xl bg-white/10 px-4 py-2 text-sm font-bold hover:bg-white/20" @click="copyLinkCommand">Copy</button>
+            </div>
+            <p class="mt-3 text-xs text-white/60">Expires {{ new Date(linkExpiry).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }} and works once.</p>
+            <div class="mt-5 flex flex-wrap gap-3">
+              <a v-if="TELEGRAM_ORDER_URL" :href="TELEGRAM_ORDER_URL" target="_blank" rel="noopener" class="rounded-xl bg-[#229ED9] px-4 py-3 text-sm font-bold text-white">Open Telegram</a>
+              <a :href="buildWhatsAppLink(products.length ? 'Hi Trovara Farm, I need help with my shop account.' : 'Hi Trovara Farm, I would like waitlist updates and help with my shop account.')" target="_blank" rel="noopener" class="rounded-xl bg-[#25D366] px-4 py-3 text-sm font-bold text-white">Message WhatsApp (human)</a>
+            </div>
+          </div>
         </div>
         <div v-else class="rounded-3xl border border-gray-200 bg-white p-7 text-gray-600">Create an account or sign in below before linking a chat.</div>
       </section>
@@ -316,7 +356,7 @@ onMounted(async () => {
             <label v-if="authMode === 'register'" class="text-sm font-bold text-trovara-dark">Name<input v-model="authForm.name" required minlength="2" autocomplete="name" class="mt-2 min-h-12 w-full rounded-xl border border-gray-200 px-4 font-normal outline-none focus:border-trovara-green" /></label>
             <label class="text-sm font-bold text-trovara-dark">Email<input v-model="authForm.email" required type="email" autocomplete="email" class="mt-2 min-h-12 w-full rounded-xl border border-gray-200 px-4 font-normal outline-none focus:border-trovara-green" /></label>
             <label v-if="authMode === 'register'" class="text-sm font-bold text-trovara-dark">Phone <span class="font-normal text-gray-500">(optional)</span><input v-model="authForm.phone" type="tel" autocomplete="tel" class="mt-2 min-h-12 w-full rounded-xl border border-gray-200 px-4 font-normal outline-none focus:border-trovara-green" /></label>
-            <label class="text-sm font-bold text-trovara-dark">Password<input v-model="authForm.password" required type="password" minlength="8" autocomplete="current-password" class="mt-2 min-h-12 w-full rounded-xl border border-gray-200 px-4 font-normal outline-none focus:border-trovara-green" /></label>
+            <label class="text-sm font-bold text-trovara-dark">Password<input v-model="authForm.password" required type="password" minlength="8" :autocomplete="authMode === 'register' ? 'new-password' : 'current-password'" class="mt-2 min-h-12 w-full rounded-xl border border-gray-200 px-4 font-normal outline-none focus:border-trovara-green" /></label>
             <button type="submit" class="btn-primary sm:col-span-2" :disabled="busy">{{ busy ? 'Please wait…' : authMode === 'login' ? 'Sign in' : 'Create account' }}</button>
           </form>
           <p v-if="authMode === 'login'" class="mt-4 text-center text-sm text-gray-500">

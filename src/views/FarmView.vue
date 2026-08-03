@@ -7,14 +7,14 @@ const operations = [
   {
     icon: 'coconut',
     title: 'Coconut Plantation',
-    desc: 'Our coconut trees are cultivated across fertile, well-draining tropical soil. We practice intercropping and organic soil enrichment to ensure maximum yield and quality with zero synthetic chemicals.',
-    highlights: ['Organic soil management', 'No synthetic pesticides', 'Harvested at peak maturity', 'Multi-use processing'],
+    desc: 'Our coconut trees are cultivated across fertile, well-draining tropical soil. We practice intercropping and organic soil enrichment to build yield and quality with zero synthetic chemicals. First harvest is forecast for June 2027.',
+    highlights: ['Organic soil management', 'No synthetic pesticides', 'Grown for peak-maturity harvest', 'Multi-use processing planned'],
   },
   {
     icon: 'plantain',
     title: 'Plantain Plantation',
-    desc: 'Our plantain cultivation follows strict agronomic practices across fertile tropical soil. Unlike regular bananas, plantains are a cooking staple - starchier, heartier, and harvested at different stages for different uses. We grow and supply green plantains for savory cooking, ripe plantains for sweeter dishes, and also process them into dried chips and flour for wider market reach.',
-    highlights: ['Harvested at green and ripe stages', 'Zero synthetic chemicals or artificial ripening', 'Processed into chips and plantain flour', 'Export-grade quality for regional and global markets'],
+    desc: 'Our plantain cultivation follows strict agronomic practices across fertile tropical soil. Unlike regular bananas, plantains are a cooking staple - starchier, heartier, and harvested at different stages for different uses. We are establishing green and ripe fruit supply, with dried chips and flour planned after first harvest (forecast March 2027).',
+    highlights: ['Green and ripe harvest stages planned', 'Zero synthetic chemicals or artificial ripening', 'Chips and plantain flour planned post-harvest', 'Export-grade standards for regional and global markets'],
   },
   {
     icon: 'palm',

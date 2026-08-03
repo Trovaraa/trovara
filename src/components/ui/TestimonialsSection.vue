@@ -11,9 +11,16 @@ defineProps<{
   <section class="py-20 md:py-24 bg-white border-t border-gray-100">
     <div class="container-trovara">
       <SectionHeader
+        v-if="testimonials.length > 0"
         eyebrow="Testimonials"
         title="What partners say about Trovara"
         subtitle="Feedback from buyers, kitchen teams, and distribution partners."
+      />
+      <SectionHeader
+        v-else
+        eyebrow="Partnerships"
+        title="Building our first partner stories"
+        subtitle="We will feature buyer and kitchen feedback here as wholesale relationships mature."
       />
 
       <div v-if="testimonials.length > 0" class="grid md:grid-cols-2 gap-6 lg:gap-8">

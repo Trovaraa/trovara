@@ -43,6 +43,17 @@ const productSchema = computed(() => {
       '@type': 'Brand',
       name: 'Trovara Farm',
     },
+    offers: {
+      '@type': 'Offer',
+      url: `${BASE_URL}/products/${product.value.id}`,
+      availability: product.value.waitlist
+        ? 'https://schema.org/PreOrder'
+        : 'https://schema.org/InStock',
+      priceCurrency: 'NGN',
+      description: product.value.waitlist
+        ? product.value.availabilityNote ?? 'Join the waitlist for first supply updates.'
+        : undefined,
+    },
   }
 })
 
@@ -265,7 +276,7 @@ watch(
               v-for="item in [
                 { q: 'What does “pasture-raised” actually mean?', a: 'Our hens live outdoors on open grass paddocks all day, every day - not in cages, and not packed into a barn with a tiny “free-range” door. We move them to fresh pasture regularly.' },
                 { q: 'Can I order eggs now?', a: 'Not yet. Join the waitlist and we will contact you when the first crates are available. No order or payment is taken today.' },
-                { q: 'Where do you deliver?', a: 'We deliver nationwide across Nigeria. Delivery timing and logistics are confirmed based on destination, order size, and product handling requirements.' },
+                { q: 'Where will you deliver?', a: 'We plan nationwide delivery across Nigeria once egg supply opens. Timing and logistics will be confirmed by destination, order size, and product handling needs.' },
                 { q: 'What happens after I join?', a: 'We will use the contact you provide to share the first availability date and buying details when supply opens.' },
               ]"
               :key="item.q"
@@ -287,7 +298,7 @@ watch(
             <div class="rounded-3xl p-12 flex flex-col items-center justify-center min-h-64 bg-amber-50 relative overflow-hidden">
               <BrandIcon name="plantain" class="w-32 h-32" />
               <span class="mt-4 px-4 py-1.5 rounded-full bg-amber-200/60 text-amber-800 text-xs font-bold uppercase tracking-widest">
-                Processed Product
+                Planned after harvest
               </span>
             </div>
             <div>
@@ -301,7 +312,7 @@ watch(
                 "The ancient staple, reimagined."
               </p>
               <p class="text-gray-500 leading-relaxed mb-6">
-                Our plantain flour is milled from sun-dried, matured plantains grown on our own plantation - with zero additives, no bleaching agents, and no preservatives. It is naturally gluten-free, high in resistant starch, and rich in potassium and fiber. Trovara Plantain Flour is ideal for baking, thickening soups and stews, making porridges, and as a nutritious wheat flour substitute for health-conscious consumers and food manufacturers alike.
+                After our first plantain harvest, we plan to mill flour from sun-dried, matured plantains grown on our plantation - with zero additives, no bleaching agents, and no preservatives. It will be naturally gluten-free, high in resistant starch, and rich in potassium and fiber: suited to baking, thickening soups and stews, porridges, and as a wheat-flour alternative for health-conscious buyers and food manufacturers.
               </p>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
                 <div
@@ -311,7 +322,7 @@ watch(
                     'High in resistant starch and potassium',
                     'Milled from our own plantation plantains',
                     'Ideal for baking, soups, and porridge',
-                    'Available in bulk for food manufacturers',
+                    'Bulk formats planned for food manufacturers',
                   ]"
                   :key="point"
                   class="flex items-start gap-2.5 text-sm text-trovara-dark"
@@ -321,11 +332,11 @@ watch(
                 </div>
               </div>
               <div class="flex flex-wrap gap-3">
-                <RouterLink to="/contact" class="btn-gold">
-                  Enquire About Plantain Flour
+                <RouterLink to="/contact?subject=waitlist" class="btn-gold">
+                  Enquire about plantain flour plans
                 </RouterLink>
                 <RouterLink to="/wholesale" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 border-amber-300 text-amber-700 font-semibold text-sm hover:bg-amber-50 transition-all duration-200">
-                  Request Wholesale Details
+                  Request wholesale forecast
                 </RouterLink>
               </div>
             </div>

@@ -44,7 +44,4 @@ export async function submitContactForm(payload: ContactPayload): Promise<Submit
   }
 }
 
-/** @deprecated Use submitContactForm */
-export const submitToFormSubmit = submitContactForm
-
-// Client posts only to our Netlify function; Formspree credentials stay server-side.
+// Client posts only to our same-origin Netlify function; lead storage stays server-side.

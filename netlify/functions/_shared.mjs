@@ -2,15 +2,12 @@
  * Shared helpers for Trovara Netlify form functions.
  *
  * Local dev: these functions only run with `netlify dev` (netlify-cli), not plain `vite dev`.
- *
- * Netlify env (Site settings → Environment variables):
- *   FORMSPREE_FORM_ID            - Formspree form id from https://formspree.io (required for contact)
- *   FORMSPREE_NEWSLETTER_FORM_ID - optional separate Formspree form for newsletter; falls back to FORMSPREE_FORM_ID
  */
 
 const RATE_BUCKETS = new Map()
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const MARKETING_LEADS_TIMEOUT_MS = 10_000
 
 export function json(status, body) {
   return new Response(JSON.stringify(body), {
@@ -57,73 +54,98 @@ export function isValidEmail(value) {
   return typeof value === 'string' && value.length > 0 && value.length <= 254 && EMAIL_RE.test(value)
 }
 
-function formspreeEndpoint(formId) {
-  const id = formId?.trim()
-  if (!id) return null
-  // Allow full URL or bare form id (e.g. xpzgkqyw)
-  if (id.startsWith('https://')) return id
-  return `https://formspree.io/f/${encodeURIComponent(id)}`
+export function hasOnlyKeys(body, allowed) {
+  return Object.keys(body).every((key) => allowed.has(key))
 }
 
-function formspreeErrorMessage(result, status) {
-  if (!result || typeof result !== 'object') {
-    return `Formspree request failed (${status}).`
+function marketingLeadsApiUrl() {
+  const configured = process.env.MARKETING_LEADS_API_URL?.trim()
+  if (!configured) return null
+
+  try {
+    const url = new URL(configured)
+    if (
+      !['http:', 'https:'].includes(url.protocol) ||
+      url.username ||
+      url.password ||
+      url.search ||
+      url.hash
+    ) {
+      return null
+    }
+    return url.toString().replace(/\/+$/, '')
+  } catch {
+    return null
   }
-  if (typeof result.error === 'string' && result.error.trim()) {
-    return result.error
+}
+
+function safeClientError(result) {
+  if (!result || typeof result !== 'object' || typeof result.error !== 'string') {
+    return null
   }
-  if (Array.isArray(result.errors) && result.errors.length) {
-    const parts = result.errors.map((e) => e.message || e.field || String(e)).filter(Boolean)
-    if (parts.length) return parts.join(' ')
+
+  const message = result.error.trim()
+  if (!message || message.length > 300 || /[\u0000-\u001f\u007f<>]/.test(message)) {
+    return null
   }
-  return `Formspree request failed (${status}).`
+  return message
 }
 
 /**
- * POST JSON to Formspree. Works from Netlify Functions (unlike FormSubmit's browser-only checks).
- *
- * @param {Record<string, string>} fields
- * @param {{ subject?: string, formId?: string }} [options]
+ * POST a validated lead to Trovara OS.
+ * @param {'contact' | 'waitlist'} resource
+ * @param {Record<string, string>} payload
  */
-export async function forwardToFormspree(fields, options = {}) {
-  const formId = options.formId?.trim() || process.env.FORMSPREE_FORM_ID?.trim()
-  const endpoint = formspreeEndpoint(formId)
-  if (!endpoint) {
+export async function forwardToMarketingLeads(resource, payload) {
+  const baseUrl = marketingLeadsApiUrl()
+  if (!baseUrl) {
     return {
       ok: false,
-      error: 'Form delivery is not configured. Set FORMSPREE_FORM_ID in Netlify.',
+      status: 503,
+      error: 'Form service is not configured.',
     }
   }
 
-  const body = { ...fields }
-  if (options.subject) {
-    body._subject = options.subject
-  }
-
   try {
-    const response = await fetch(endpoint, {
+    const response = await fetch(`${baseUrl}/${resource}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify(body),
-      signal: AbortSignal.timeout(12_000),
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(MARKETING_LEADS_TIMEOUT_MS),
     })
 
     const result = await response.json().catch(() => null)
-    if (!response.ok) {
+    if (
+      response.status === 202 &&
+      result &&
+      typeof result === 'object' &&
+      result.ok === true &&
+      result.accepted === true
+    ) {
+      return { ok: true }
+    }
+
+    if (response.status >= 400 && response.status < 500) {
       return {
         ok: false,
-        error: formspreeErrorMessage(result, response.status),
+        status: response.status,
+        error: safeClientError(result) ?? 'The submitted information was not accepted.',
       }
     }
 
-    return { ok: true }
-  } catch (error) {
     return {
       ok: false,
-      error: error instanceof Error ? error.message : 'Formspree request failed.',
+      status: 502,
+      error: 'Form service is temporarily unavailable. Please try again.',
+    }
+  } catch {
+    return {
+      ok: false,
+      status: 502,
+      error: 'Form service is temporarily unavailable. Please try again.',
     }
   }
 }

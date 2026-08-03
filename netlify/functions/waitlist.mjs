@@ -2,8 +2,9 @@
  * Product waitlist handler. Captures interest only; it does not create an order or take payment.
  */
 import {
-  forwardToFormspree,
+  forwardToMarketingLeads,
   getClientIp,
+  hasOnlyKeys,
   honeypotResponse,
   isValidEmail,
   json,
@@ -14,38 +15,42 @@ import {
 const WINDOW_MS = 15 * 60 * 1000
 const MAX_REQUESTS = 10
 
-const PRODUCT_LABELS = {
-  poultry: 'Pasture-raised Chicken',
-  eggs: 'Pasture-raised Eggs',
-  'palm-oil': 'Palm Oil',
-}
+const VALID_PRODUCTS = new Set(['coconut', 'plantain', 'poultry', 'eggs', 'palm-oil'])
 
 const PHONE_RE = /^[+()\d][+()\d\s-]{6,39}$/
+const ALLOWED_KEYS = new Set(['name', 'contact', 'product', 'honey'])
 
-function trimString(value, maxLength) {
-  return typeof value === 'string' ? value.trim().slice(0, maxLength) : ''
+function trimString(value) {
+  return typeof value === 'string' ? value.trim() : ''
 }
 
 function validateWaitlist(body) {
-  const name = trimString(body.name, 120)
-  const contact = trimString(body.contact, 254)
-  const product = trimString(body.product, 40)
+  if (!hasOnlyKeys(body, ALLOWED_KEYS)) {
+    return { error: 'Invalid waitlist request.' }
+  }
+  if (typeof body.honey !== 'undefined' && typeof body.honey !== 'string') {
+    return { error: 'Invalid waitlist request.' }
+  }
 
-  if (!name) return { error: 'Please enter your name.' }
-  if (!contact) return { error: 'Please enter an email or WhatsApp number.' }
+  const name = trimString(body.name)
+  const contact = trimString(body.contact)
+  const product = trimString(body.product)
+
+  if (!name || name.length > 120) return { error: 'Please enter your name.' }
+  if (!contact || contact.length > 254) {
+    return { error: 'Please enter an email or WhatsApp number.' }
+  }
   if (!isValidEmail(contact) && !PHONE_RE.test(contact)) {
     return { error: 'Please enter a valid email or WhatsApp number.' }
   }
-  if (!Object.prototype.hasOwnProperty.call(PRODUCT_LABELS, product)) {
+  if (!VALID_PRODUCTS.has(product)) {
     return { error: 'Please choose a valid product.' }
   }
 
   return {
     name,
     contact,
-    email: isValidEmail(contact) ? contact : '',
-    phone: isValidEmail(contact) ? '' : contact,
-    productLabel: PRODUCT_LABELS[product],
+    product,
   }
 }
 
@@ -70,23 +75,15 @@ export default async function handler(request) {
     return json(400, { ok: false, error: validated.error })
   }
 
-  const { name, contact, email, phone, productLabel } = validated
-  const result = await forwardToFormspree(
-    {
-      name,
-      contact,
-      email,
-      phone,
-      product: productLabel,
-      subject: `${productLabel} waitlist`,
-      message: `${name} joined the ${productLabel} availability waitlist.`,
-      formType: 'product-waitlist',
-    },
-    { subject: `[Trovara Waitlist] ${productLabel}` },
-  )
+  const { name, contact, product } = validated
+  const result = await forwardToMarketingLeads('waitlist', {
+    name,
+    contact,
+    product,
+  })
 
   if (!result.ok) {
-    return json(502, { ok: false, error: result.error ?? 'Failed to join the waitlist.' })
+    return json(result.status, { ok: false, error: result.error })
   }
 
   return json(200, { ok: true })

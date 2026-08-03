@@ -1,9 +1,15 @@
 [build]
   command   = "npm run build"
   publish   = "dist"
+  functions = "netlify/deploy-functions"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "22"
+  JOURNAL_API_URL = "https://os.trovara.farm/public/journal"
+
+[context.production.environment]
+  NEWSLETTER_API_URL = "https://os.trovara.farm/public/newsletter"
+  MARKETING_LEADS_API_URL = "https://os.trovara.farm/public/leads"
 
 # Proxy customer shop API to Trovara OS (same-origin cookies + CSP connect-src 'self').
 # Must stay above the SPA fallback.
