@@ -11,6 +11,7 @@ import {
   honeypotResponse,
   isValidEmail,
   json,
+  MARKETING_LEAD_CONSENT_VERSION,
   parseJsonBody,
   rateLimit,
 } from './_shared.mjs'
@@ -38,7 +39,7 @@ const LIMITS = {
   phone: 40,
   message: 4000,
 }
-const ALLOWED_KEYS = new Set(['name', 'email', 'phone', 'message', 'subject', 'honey'])
+const ALLOWED_KEYS = new Set(['name', 'email', 'phone', 'message', 'subject', 'consent', 'consentVersion', 'honey'])
 
 function trimString(value) {
   return typeof value === 'string' ? value.trim() : ''
@@ -51,12 +52,22 @@ function validateContact(body) {
   if (typeof body.honey !== 'undefined' && typeof body.honey !== 'string') {
     return { error: 'Invalid contact request.' }
   }
+  if (body.consent !== true) {
+    return { error: 'Please consent to Trovara processing your enquiry details.' }
+  }
+  if (
+    typeof body.consentVersion !== 'undefined' &&
+    (typeof body.consentVersion !== 'string' || !body.consentVersion.trim() || body.consentVersion.trim().length > 32)
+  ) {
+    return { error: 'Invalid contact request.' }
+  }
 
   const name = trimString(body.name)
   const email = trimString(body.email)
   const phone = trimString(body.phone)
   const message = trimString(body.message)
   const subject = trimString(body.subject)
+  const consentVersion = trimString(body.consentVersion) || MARKETING_LEAD_CONSENT_VERSION
 
   if (!name || name.length > LIMITS.name) {
     return { error: 'Please enter your name.' }
@@ -77,7 +88,7 @@ function validateContact(body) {
     return { error: 'Please choose a valid subject.' }
   }
 
-  return { name, email, phone, message, subject }
+  return { name, email, phone, message, subject, consentVersion }
 }
 
 export default async function handler(request) {
@@ -107,13 +118,15 @@ export default async function handler(request) {
     return json(400, { ok: false, error: validated.error })
   }
 
-  const { name, email, phone, message, subject } = validated
+  const { name, email, phone, message, subject, consentVersion } = validated
   const result = await forwardToMarketingLeads('contact', {
     name,
     email,
     ...(phone ? { phone } : {}),
     message,
     subject,
+    consent: true,
+    consentVersion,
   })
 
   if (!result.ok) {

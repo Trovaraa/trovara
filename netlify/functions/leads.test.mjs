@@ -51,6 +51,8 @@ test('contact proxies the validated OS contract and preserves browser success', 
       phone: '',
       message: '  Please send wholesale details.  ',
       subject: 'bulk-order',
+      consent: true,
+      consentVersion: '1.0',
       honey: '',
     }),
   )
@@ -63,6 +65,8 @@ test('contact proxies the validated OS contract and preserves browser success', 
     email: 'ada@example.com',
     message: 'Please send wholesale details.',
     subject: 'bulk-order',
+    consent: true,
+    consentVersion: '1.0',
   })
   assert.ok(outbound.options.signal instanceof AbortSignal)
 })
@@ -78,7 +82,13 @@ test('all five product IDs retain their stable OS keys', async () => {
     }
 
     const response = await waitlistHandler(
-      request({ name: 'Ada Example', contact: '+234 801 234 5678', product, honey: '' }),
+      request({
+        name: 'Ada Example',
+        contact: '+234 801 234 5678',
+        product,
+        consent: true,
+        honey: '',
+      }),
     )
 
     assert.equal(response.status, 200)
@@ -87,8 +97,39 @@ test('all five product IDs retain their stable OS keys', async () => {
       name: 'Ada Example',
       contact: '+234 801 234 5678',
       product,
+      consent: true,
+      consentVersion: '1.0',
     })
   }
+})
+
+test('rejects submissions without consent before proxying', async () => {
+  let fetchCalls = 0
+  globalThis.fetch = async () => {
+    fetchCalls += 1
+    return Response.json({ ok: true, accepted: true }, { status: 202 })
+  }
+
+  const contact = await contactHandler(
+    request({
+      name: 'Ada Example',
+      email: 'ada@example.com',
+      message: 'Hello',
+      subject: 'general',
+    }),
+  )
+  const waitlist = await waitlistHandler(
+    request({
+      name: 'Ada Example',
+      contact: 'ada@example.com',
+      product: 'coconut',
+      consent: false,
+    }),
+  )
+
+  assert.equal(contact.status, 400)
+  assert.equal(waitlist.status, 400)
+  assert.equal(fetchCalls, 0)
 })
 
 test('strict validation rejects unknown and oversized fields before proxying', async () => {
@@ -103,6 +144,7 @@ test('strict validation rejects unknown and oversized fields before proxying', a
       name: 'Ada Example',
       contact: 'ada@example.com',
       product: 'coconut',
+      consent: true,
       campaign: 'unexpected',
     }),
   )
@@ -113,6 +155,7 @@ test('strict validation rejects unknown and oversized fields before proxying', a
       phone: '',
       message: 'x'.repeat(4001),
       subject: 'general',
+      consent: true,
     }),
   )
 
@@ -134,6 +177,7 @@ test('honeypot submissions return fake success without proxying', async () => {
       email: 'bot@example.com',
       message: 'spam',
       subject: 'general',
+      consent: true,
       honey: 'filled',
     }),
   )
@@ -148,7 +192,12 @@ test('safe upstream 4xx errors are preserved', async () => {
     Response.json({ error: 'This email is already on this waitlist.' }, { status: 409 })
 
   const response = await waitlistHandler(
-    request({ name: 'Ada Example', contact: 'ada@example.com', product: 'plantain' }),
+    request({
+      name: 'Ada Example',
+      contact: 'ada@example.com',
+      product: 'plantain',
+      consent: true,
+    }),
   )
 
   assert.equal(response.status, 409)
@@ -166,12 +215,18 @@ test('upstream failures and malformed success responses stay generic', async () 
       email: 'ada@example.com',
       message: 'Hello',
       subject: 'general',
+      consent: true,
     }),
   )
 
   globalThis.fetch = async () => Response.json({ ok: true }, { status: 202 })
   const malformedSuccess = await waitlistHandler(
-    request({ name: 'Ada Example', contact: 'ada@example.com', product: 'coconut' }),
+    request({
+      name: 'Ada Example',
+      contact: 'ada@example.com',
+      product: 'coconut',
+      consent: true,
+    }),
   )
 
   const generic = {

@@ -41,7 +41,7 @@ const dataWeCollect = [
   {
     label: 'Transaction & enquiry details',
     detail:
-      'Products of interest, order quantities, wholesale or partnership requirements, and correspondence related to your enquiries.',
+      'Products of interest, order quantities, wholesale or partnership requirements, and correspondence related to your enquiries. Free-text farm or produce questions you send through our Telegram customer bot (and WhatsApp when that channel is used) may be processed by an AI provider to help draft a reply; catalogue browsing, cart, and order-placement steps remain largely deterministic and do not require that AI step.',
   },
   {
     label: 'Technical information',
@@ -128,6 +128,11 @@ const thirdParties = [
     purpose: TELEGRAM_CUSTOMER_BOT
       ? `Hosts the @${TELEGRAM_CUSTOMER_BOT} customer order bot when you choose to order or track produce through Telegram.`
       : 'Hosts our customer order bot when you choose to order or track produce through Telegram.',
+  },
+  {
+    name: 'OpenAI',
+    purpose:
+      'Processes free-text customer enquiries (for example farm or produce questions via our Telegram bot, and WhatsApp when used) to help draft answers, and supports staff AI features in Trovara OS. We send the message text and the minimum operational context needed for the reply. OpenAI does not receive your data for sale, and we do not sell it.',
   },
   {
     name: 'Netlify',
@@ -276,9 +281,9 @@ const thirdParties = [
               </p>
               <ul class="space-y-3 text-gray-700">
                 <li class="leading-relaxed"><strong>Consent</strong> - for example, when you subscribe to our newsletter, separately choose phone or WhatsApp contact, or allow analytics on this site.</li>
-                <li class="leading-relaxed"><strong>Contract</strong> - to respond to quotes and fulfil orders or partnership arrangements you request.</li>
+                <li class="leading-relaxed"><strong>Contract</strong> - to respond to quotes, answer product or farm enquiries you send us, and fulfil orders or partnership arrangements you request.</li>
                 <li class="leading-relaxed"><strong>Legal obligation</strong> - to meet tax, accounting, and regulatory requirements.</li>
-                <li class="leading-relaxed"><strong>Legitimate interests</strong> - to operate, secure, and improve our website and business, provided these interests do not override your rights.</li>
+                <li class="leading-relaxed"><strong>Legitimate interests</strong> - to operate, secure, and improve our website and business, and to answer customer enquiries efficiently (including drafting replies with AI assistance where needed), provided these interests do not override your rights.</li>
               </ul>
               <div class="mt-6 space-y-4 text-gray-700 leading-relaxed">
                 <p>
@@ -418,6 +423,15 @@ const thirdParties = [
                   WebMetrix where its servers are located, so we cannot tell you which country that
                   data is stored in, and we would rather say so than guess. If this matters to you,
                   decline analytics - the choice is entirely yours and costs you nothing on this site.
+                </p>
+                <p>
+                  <strong>OpenAI</strong> processes enquiry text and related context in the
+                  United States when we use it to draft answers to free-text customer questions or
+                  to support staff AI features. We minimise what we send and rely on the contractual
+                  and product safeguards OpenAI offers for API use; we are not inventing further
+                  transfer paperwork here. If you prefer not to have a free-text question processed
+                  that way, contact us by email or WhatsApp instead of asking the bot an open-ended
+                  farm question.
                 </p>
               </div>
             </div>

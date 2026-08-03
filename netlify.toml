@@ -12,21 +12,20 @@
   MARKETING_LEADS_API_URL = "https://os.trovara.farm/public/leads"
 
 # Proxy customer shop API to Trovara OS (same-origin cookies + CSP connect-src 'self').
-# Must stay above the SPA fallback.
-[[redirects]]
-  from   = "/shop-api/*"
-  to     = "https://os.trovara.farm/shop/:splat"
-  status = 200
-  force  = true
+# Production URLs live in public/_redirects (copied into dist). Do not hardcode
+# os.trovara.farm here — `netlify dev --dir dist` would then ignore local OS.
+# For local netlify: npm run dev:netlify (rewrites dist/_redirects → 127.0.0.1:3000).
+# For Vite-only local: npm run dev (vite.config.ts proxies /shop-api and /lot-api).
 
 [[redirects]]
   from   = "/*"
   to     = "/index.html"
   status = 200
 
-# Also kept in public/_headers, which ships inside the publish directory. A
-# check on 26 July 2026 found the live site serving none of these headers, the
-# same reason public/_redirects duplicates the redirect below.
+# Canonical security headers for Netlify. Do not reintroduce public/_headers —
+# that file duplicated these values and caused dual-source drift. (SPA redirects
+# still live in both [[redirects]] above and public/_redirects for publish-dir
+# fallback; that is intentional and separate from CSP/HSTS.)
 [[headers]]
   for = "/*"
   [headers.values]

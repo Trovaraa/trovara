@@ -4,6 +4,8 @@ export interface WaitlistPayload {
   name: string
   contact: string
   product: string
+  consent: true
+  consentVersion: string
   honey?: string
 }
 

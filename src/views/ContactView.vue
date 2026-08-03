@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { reactive, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { RouterLink, useRoute } from 'vue-router'
 import SectionHeader from '../components/ui/SectionHeader.vue'
 import { submitContactForm } from '../lib/contact'
+import { MARKETING_LEAD_CONSENT_VERSION } from '../lib/marketing-lead-consent'
 import { buildWhatsAppLink } from '../lib/whatsapp'
 import { TELEGRAM_CUSTOMER_BOT, TELEGRAM_ORDER_URL } from '../lib/telegram'
 import BrandIcon from '../components/brand/BrandIcon.vue'
@@ -29,6 +30,7 @@ const form = reactive({
   phone: '',
   subject: 'general',
   message: '',
+  consent: false,
   honey: '',
 })
 
@@ -79,6 +81,7 @@ function resetForm() {
     phone: '',
     subject: 'general',
     message: '',
+    consent: false,
     honey: '',
   })
 }
@@ -103,6 +106,9 @@ function validateContactForm(): string | null {
   }
   if (!validSubjects.has(form.subject)) {
     return 'Please choose a valid subject.'
+  }
+  if (!form.consent) {
+    return 'Please consent to Trovara processing your enquiry details.'
   }
   return null
 }
@@ -130,6 +136,8 @@ async function handleSubmit() {
     phone: form.phone.trim().slice(0, FIELD_LIMITS.phone),
     subject: form.subject,
     message: form.message.trim().slice(0, FIELD_LIMITS.message),
+    consent: true,
+    consentVersion: MARKETING_LEAD_CONSENT_VERSION,
     honey: form.honey,
   })
 
@@ -333,6 +341,22 @@ const contactInfo = [
                     {{ form.message.length }} / {{ FIELD_LIMITS.message }}
                   </p>
                 </div>
+
+                <label class="flex items-start gap-3 text-xs leading-relaxed text-gray-600 cursor-pointer">
+                  <input
+                    v-model="form.consent"
+                    type="checkbox"
+                    required
+                    class="mt-0.5 h-4 w-4 rounded border-gray-300 text-trovara-green focus:ring-trovara-gold"
+                    :disabled="submitting"
+                  />
+                  <span>
+                    I agree that Trovara Farm may process my details to respond to this enquiry, as described in the
+                    <RouterLink to="/privacy" class="font-semibold text-trovara-green underline underline-offset-2 hover:text-trovara-dark">
+                      Privacy Notice
+                    </RouterLink>.
+                  </span>
+                </label>
 
                 <button
                   type="submit"

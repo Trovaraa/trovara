@@ -406,7 +406,7 @@ const team: TeamMember[] = [
 .team-avatar {
   width: 7rem;
   height: 7rem;
-  perspective: 1000px;
+  perspective: 1200px;
 }
 
 .team-avatar__inner {
@@ -414,7 +414,8 @@ const team: TeamMember[] = [
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: center;
+  will-change: transform;
 }
 
 .team-avatar__face {
@@ -425,6 +426,7 @@ const team: TeamMember[] = [
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   box-shadow: 0 0 0 4px rgb(26 107 60 / 0.1);
+  transition: box-shadow 0.45s ease;
 }
 
 .team-avatar__front {
@@ -453,19 +455,36 @@ const team: TeamMember[] = [
 .team-avatar__back {
   display: grid;
   place-items: center;
-  background: #1a6b3c;
+  background:
+    radial-gradient(circle at 30% 25%, rgb(232 164 39 / 0.28), transparent 55%),
+    #1a6b3c;
   transform: rotateY(180deg);
 }
 
 .team-avatar__logo {
-  width: 3.25rem;
-  height: 3.25rem;
-  border-radius: 0.85rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 0.9rem;
+  box-shadow: 0 8px 20px rgb(0 0 0 / 0.22);
+}
+
+@keyframes team-avatar-spin {
+  0% {
+    transform: rotateY(0deg) scale(1);
+  }
+
+  45% {
+    transform: rotateY(180deg) scale(1.06);
+  }
+
+  100% {
+    transform: rotateY(360deg) scale(1);
+  }
 }
 
 .team-card:hover .team-avatar__inner,
 .team-card:focus-within .team-avatar__inner {
-  transform: rotateY(180deg);
+  animation: team-avatar-spin 1.35s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .team-card:hover .team-avatar__photo,
@@ -475,7 +494,9 @@ const team: TeamMember[] = [
 
 .team-card:hover .team-avatar__face,
 .team-card:focus-within .team-avatar__face {
-  box-shadow: 0 0 0 4px rgb(26 107 60 / 0.18), 0 12px 28px rgb(26 107 60 / 0.18);
+  box-shadow:
+    0 0 0 4px rgb(26 107 60 / 0.18),
+    0 12px 28px rgb(26 107 60 / 0.18);
 }
 
 .team-card:hover .team-card__name,
@@ -484,13 +505,9 @@ const team: TeamMember[] = [
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .team-avatar__inner {
-    transition: none;
-  }
-
   .team-card:hover .team-avatar__inner,
   .team-card:focus-within .team-avatar__inner {
-    transform: none;
+    animation: none;
   }
 
   .team-card:hover .team-avatar__photo,

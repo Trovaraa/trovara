@@ -38,9 +38,9 @@ fresh marketing build. Local builds use repository posts only unless
 Contact and product-waitlist submissions use the same-origin
 `/.netlify/functions/contact` and `/.netlify/functions/waitlist` endpoints.
 Those functions validate and rate-limit requests before sending purpose-specific
-lead records to Trovara OS through the server-only `MARKETING_LEADS_API_URL`.
-Production uses `https://os.trovara.farm/public/leads`, configured in
-`netlify.toml`.
+lead records to Trovara OS through the server-only `MARKETING_LEADS_API_URL`
+(required; missing → HTTP 503). Production sets it in
+`netlify.toml` `[context.production.environment]`.
 
 For local development, set `MARKETING_LEADS_API_URL` to the local OS
 `/public/leads` base and run `netlify dev`. Do not add a `VITE_` prefix or call
@@ -49,11 +49,48 @@ Trovara OS directly from browser code.
 ## Newsletter
 
 Newsletter subscribe, confirm, and unsubscribe requests go through the
-same-origin `/.netlify/functions/newsletter` proxy. The function calls Trovara
-OS at the server-only `NEWSLETTER_API_URL`; production is configured in
-`netlify.toml` as `https://os.trovara.farm/public/newsletter`.
+same-origin `/.netlify/functions/newsletter` proxy. The function requires
+server-only `NEWSLETTER_API_URL` (no hardcoded production fallback — preview
+deploys fail closed with 503 if unset). Production sets it in
+`netlify.toml` `[context.production.environment]`.
 
 For local development, set `NEWSLETTER_API_URL` to the local OS
 `/public/newsletter` base and run `netlify dev`. Do not add `VITE_` to this
 variable, and do not configure a Resend API key in the marketing site: Trovara
 OS owns subscriber records and email delivery credentials.
+
+## Local shop / lot API proxy
+
+Production `public/_redirects` sends `/shop-api` and `/lot-api` to
+`https://os.trovara.farm`. That is correct for Netlify deploys.
+
+For local testing against Trovara OS on `:3000`:
+
+```bash
+# Option A — Vite (simplest for /shop UI)
+npm run dev
+# → http://localhost:5173  (vite proxies /shop-api → 127.0.0.1:3000)
+
+# Option B — netlify dev on :8888 (functions + static dist)
+npm run dev:netlify
+# builds, rewrites dist/_redirects to 127.0.0.1:3000, then netlify dev
+```
+
+If you build manually, rewrite proxies before `netlify dev`:
+
+```bash
+JOURNAL_API_URL=http://127.0.0.1:3000/public/journal npm run build
+node scripts/point-shop-proxy-local.mjs
+NEWSLETTER_API_URL=http://127.0.0.1:3000/public/newsletter \
+MARKETING_LEADS_API_URL=http://127.0.0.1:3000/public/leads \
+npx netlify dev --dir dist --port 8888
+```
+
+Without that rewrite step, `netlify dev` will still register shop accounts on
+**production**.
+
+## Security headers (CSP / HSTS)
+
+Canonical Netlify security headers live only in `netlify.toml` `[[headers]]`.
+Do not add `public/_headers` — that duplicate was removed to avoid dual-source
+drift.

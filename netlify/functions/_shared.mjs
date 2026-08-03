@@ -9,6 +9,9 @@ const RATE_BUCKETS = new Map()
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const MARKETING_LEADS_TIMEOUT_MS = 10_000
 
+/** Keep in sync with `src/lib/marketing-lead-consent.ts`. */
+export const MARKETING_LEAD_CONSENT_VERSION = '1.0'
+
 export function json(status, body) {
   return new Response(JSON.stringify(body), {
     status,

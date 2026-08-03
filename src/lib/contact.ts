@@ -7,6 +7,8 @@ export interface ContactPayload {
   message: string
   /** Subject key, e.g. `general`, `bulk-order` */
   subject: string
+  consent: true
+  consentVersion: string
   honey?: string
 }
 

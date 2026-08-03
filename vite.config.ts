@@ -19,6 +19,7 @@ export default defineConfig({
         navigateFallbackDenylist: [
           /^\/\.netlify/,
           /^\/shop-api/,
+          /^\/lot-api/,
           /^\/feed\.xml/,
           /^\/sitemap\.xml/,
           /^\/robots\.txt/,
@@ -51,6 +52,12 @@ export default defineConfig({
         target: 'http://127.0.0.1:3000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/shop-api/, '/shop'),
+      },
+      // Public lot JSON (Trovara OS). Same-origin so CSP connect-src 'self' works.
+      '/lot-api': {
+        target: 'http://127.0.0.1:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/lot-api/, '/public/lots'),
       },
     },
   },

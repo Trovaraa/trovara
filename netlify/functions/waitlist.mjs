@@ -8,6 +8,7 @@ import {
   honeypotResponse,
   isValidEmail,
   json,
+  MARKETING_LEAD_CONSENT_VERSION,
   parseJsonBody,
   rateLimit,
 } from './_shared.mjs'
@@ -18,7 +19,7 @@ const MAX_REQUESTS = 10
 const VALID_PRODUCTS = new Set(['coconut', 'plantain', 'poultry', 'eggs', 'palm-oil'])
 
 const PHONE_RE = /^[+()\d][+()\d\s-]{6,39}$/
-const ALLOWED_KEYS = new Set(['name', 'contact', 'product', 'honey'])
+const ALLOWED_KEYS = new Set(['name', 'contact', 'product', 'consent', 'consentVersion', 'honey'])
 
 function trimString(value) {
   return typeof value === 'string' ? value.trim() : ''
@@ -31,10 +32,20 @@ function validateWaitlist(body) {
   if (typeof body.honey !== 'undefined' && typeof body.honey !== 'string') {
     return { error: 'Invalid waitlist request.' }
   }
+  if (body.consent !== true) {
+    return { error: 'Please consent to Trovara processing your waitlist details.' }
+  }
+  if (
+    typeof body.consentVersion !== 'undefined' &&
+    (typeof body.consentVersion !== 'string' || !body.consentVersion.trim() || body.consentVersion.trim().length > 32)
+  ) {
+    return { error: 'Invalid waitlist request.' }
+  }
 
   const name = trimString(body.name)
   const contact = trimString(body.contact)
   const product = trimString(body.product)
+  const consentVersion = trimString(body.consentVersion) || MARKETING_LEAD_CONSENT_VERSION
 
   if (!name || name.length > 120) return { error: 'Please enter your name.' }
   if (!contact || contact.length > 254) {
@@ -51,6 +62,7 @@ function validateWaitlist(body) {
     name,
     contact,
     product,
+    consentVersion,
   }
 }
 
@@ -75,11 +87,13 @@ export default async function handler(request) {
     return json(400, { ok: false, error: validated.error })
   }
 
-  const { name, contact, product } = validated
+  const { name, contact, product, consentVersion } = validated
   const result = await forwardToMarketingLeads('waitlist', {
     name,
     contact,
     product,
+    consent: true,
+    consentVersion,
   })
 
   if (!result.ok) {

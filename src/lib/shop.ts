@@ -37,6 +37,18 @@ export type ShopOrder = {
 
 let csrfToken = ''
 
+export class ShopApiError extends Error {
+  status: number
+  needsVerification: boolean
+
+  constructor(message: string, status: number, needsVerification = false) {
+    super(message)
+    this.name = 'ShopApiError'
+    this.status = status
+    this.needsVerification = needsVerification
+  }
+}
+
 async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const method = (init.method || 'GET').toUpperCase()
   const headers = new Headers(init.headers)
@@ -47,9 +59,19 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
     headers,
     credentials: 'include',
   })
-  const data = (await response.json().catch(() => ({}))) as T & { error?: string; csrfToken?: string }
+  const data = (await response.json().catch(() => ({}))) as T & {
+    error?: string
+    csrfToken?: string
+    needsVerification?: boolean
+  }
   if (data.csrfToken) csrfToken = data.csrfToken
-  if (!response.ok) throw new Error(data.error || 'Something went wrong. Please try again.')
+  if (!response.ok) {
+    throw new ShopApiError(
+      data.error || 'Something went wrong. Please try again.',
+      response.status,
+      data.needsVerification === true,
+    )
+  }
   return data
 }
 
@@ -57,12 +79,12 @@ export const shopApi = {
   session: () => request<{ csrfToken: string; account: ShopAccount | null }>('/session'),
   catalog: () => request<{ products: ShopProduct[]; farm: { name: string } }>('/catalog'),
   register: (body: { name: string; email: string; phone?: string; password: string }) =>
-    request<{ account: ShopAccount; csrfToken: string }>('/register', {
+    request<{ message: string }>('/register', {
       method: 'POST',
       body: JSON.stringify(body),
     }),
   login: (body: { email: string; password: string }) =>
-    request<{ account: ShopAccount; csrfToken: string }>('/login', {
+    request<{ account: ShopAccount; csrfToken: string; needsVerification?: boolean }>('/login', {
       method: 'POST',
       body: JSON.stringify(body),
     }),
@@ -80,6 +102,26 @@ export const shopApi = {
       '/orders',
       { method: 'POST', body: JSON.stringify(body) },
     ),
+  forgotPassword: (body: { email: string }) =>
+    request<{ message: string }>('/forgot-password', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
+  resetPassword: (body: { token: string; newPassword: string }) =>
+    request<{ message: string }>('/reset-password', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
+  verifyEmail: (body: { token: string }) =>
+    request<{ message: string }>('/verify-email', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
+  resendVerification: (body: { email: string }) =>
+    request<{ message: string }>('/resend-verification', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
 }
 
 export function formatShopPrice(priceKobo: number, currency = 'NGN'): string {
@@ -89,13 +131,14 @@ export function formatShopPrice(priceKobo: number, currency = 'NGN'): string {
   )
 }
 
-/** Local OS SPA origin for public lot pages during marketing-site development. */
+/** Local OS SPA origin for non-lot OS links during marketing-site development. */
 const LOCAL_OS_URL = (import.meta.env.VITE_PUBLIC_OS_URL || 'http://127.0.0.1:5173').replace(/\/+$/, '')
 const PROD_OS_HOSTS = new Set(['os.trovara.farm', 'www.os.trovara.farm'])
+const PROD_MARKETING_HOSTS = new Set(['trovara.farm', 'www.trovara.farm'])
 
 /**
- * Point lot links at the local OS app when the marketing site is opened on
- * localhost; keep production URLs everywhere else.
+ * Point lot links at the local marketing app when browsing on localhost;
+ * rewrite other OS URLs to the local OS origin. Keep production URLs elsewhere.
  */
 export function resolveTraceabilityUrl(url: string | null | undefined): string | null {
   if (!url) return null
@@ -106,8 +149,20 @@ export function resolveTraceabilityUrl(url: string | null | undefined): string |
   if (!browsingLocal) return url
   try {
     const parsed = new URL(url)
-    if (!PROD_OS_HOSTS.has(parsed.hostname.toLowerCase())) return url
-    return `${LOCAL_OS_URL}${parsed.pathname}${parsed.search}${parsed.hash}`
+    const host = parsed.hostname.toLowerCase()
+    const isProdOs = PROD_OS_HOSTS.has(host)
+    const isProdMarketing = PROD_MARKETING_HOSTS.has(host)
+    if (!isProdOs && !isProdMarketing) return url
+    // Track C: branded lot pages live on the marketing site.
+    if (parsed.pathname.startsWith('/lot/')) {
+      const origin =
+        typeof window !== 'undefined' ? window.location.origin : LOCAL_OS_URL
+      return `${origin}${parsed.pathname}${parsed.search}${parsed.hash}`
+    }
+    if (isProdOs) {
+      return `${LOCAL_OS_URL}${parsed.pathname}${parsed.search}${parsed.hash}`
+    }
+    return url
   } catch {
     return url
   }

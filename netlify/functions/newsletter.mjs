@@ -4,7 +4,7 @@
  * Local dev: run `netlify dev` (not plain `vite`) and set NEWSLETTER_API_URL
  * to a local OS endpoint when needed.
  *
- * Netlify env:
+ * Netlify env (required — no production hardcode; preview deploys fail closed):
  *   NEWSLETTER_API_URL - base URL ending in /public/newsletter
  */
 import {
@@ -20,12 +20,12 @@ import {
 const WINDOW_MS = 15 * 60 * 1000
 const MAX_REQUESTS = 10
 const REQUEST_TIMEOUT_MS = 10_000
-const DEFAULT_API_URL = 'https://os.trovara.farm/public/newsletter'
 const ACTIONS = new Set(['subscribe', 'confirm', 'unsubscribe'])
 const TOKEN_RE = /^[A-Za-z0-9._~+/=-]+$/
 
 function cleanApiUrl() {
-  const configured = process.env.NEWSLETTER_API_URL?.trim() || DEFAULT_API_URL
+  const configured = process.env.NEWSLETTER_API_URL?.trim()
+  if (!configured) return null
   try {
     const url = new URL(configured)
     if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) return null
@@ -89,7 +89,11 @@ function validateTokenAction(body) {
 async function proxyToNewsletterApi(action, payload) {
   const apiUrl = cleanApiUrl()
   if (!apiUrl) {
-    return json(503, { ok: false, error: 'Newsletter service is not configured.' })
+    return json(503, {
+      ok: false,
+      error:
+        'Newsletter service is not configured. Set NEWSLETTER_API_URL to the Trovara OS /public/newsletter base.',
+    })
   }
 
   try {

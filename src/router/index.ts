@@ -53,6 +53,34 @@ const router = createRouter({
       },
     },
     {
+      path: '/shop/reset-password',
+      name: 'shop-reset-password',
+      component: () => import('../views/ResetPasswordView.vue'),
+      meta: {
+        title: 'Reset Password - Trovara Farm',
+        description: 'Set a new password for your Trovara Farm shop account.',
+      },
+    },
+    {
+      path: '/shop/verify-email',
+      name: 'shop-verify-email',
+      component: () => import('../views/VerifyEmailView.vue'),
+      meta: {
+        title: 'Verify Email - Trovara Farm',
+        description: 'Verify your email address for your Trovara Farm shop account.',
+      },
+    },
+    {
+      path: '/lot/:farmSlug/:lotCode',
+      name: 'lot-trace',
+      component: () => import('../views/LotTraceView.vue'),
+      meta: {
+        title: 'Harvest verification - Trovara Farm',
+        description:
+          'Verify a Trovara Farm harvest lot from a QR code or share link — product, plot, and farm confirmation.',
+      },
+    },
+    {
       path: '/products/:slug',
       name: 'product-detail',
       component: () => import('../views/ProductDetailView.vue'),

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 import {
   shopApi,
+  ShopApiError,
   formatShopPrice,
   resolveTraceabilityUrl,
   type ShopAccount,
@@ -12,12 +13,16 @@ import { buildWhatsAppLink } from '../lib/whatsapp'
 import { TELEGRAM_ORDER_URL } from '../lib/telegram'
 
 type Tab = 'shop' | 'orders' | 'connect'
-type AuthMode = 'login' | 'register'
+type AuthMode = 'login' | 'register' | 'forgot'
 
 const loading = ref(true)
 const busy = ref(false)
+/** Page-level messages (catalog/checkout/orders) — shown near the active tab. */
 const error = ref('')
 const notice = ref('')
+/** Auth form messages — always shown next to #shop-account. */
+const authError = ref('')
+const authNotice = ref('')
 const activeTab = ref<Tab>('shop')
 const authMode = ref<AuthMode>('register')
 const account = ref<ShopAccount | null>(null)
@@ -26,11 +31,36 @@ const orders = ref<ShopOrder[]>([])
 const channels = ref<{ channel: string; name: string | null }[]>([])
 const linkCode = ref('')
 const linkExpiry = ref('')
+const showLinkForm = ref(false)
 const cart = reactive<Record<string, number>>({})
 const showCheckout = ref(false)
+const needsVerification = ref(false)
 
 const authForm = reactive({ name: '', email: '', phone: '', password: '' })
 const checkoutForm = reactive({ address: '', phone: '' })
+
+const telegramLinked = computed(() =>
+  channels.value.some((channel) => channel.channel.toLowerCase() === 'telegram'),
+)
+const whatsappLinked = computed(() =>
+  channels.value.some((channel) => channel.channel.toLowerCase() === 'whatsapp'),
+)
+const hasLinkedChannels = computed(() => channels.value.length > 0)
+
+let linkPollTimer: ReturnType<typeof setInterval> | null = null
+
+function stopLinkPoll() {
+  if (linkPollTimer) {
+    clearInterval(linkPollTimer)
+    linkPollTimer = null
+  }
+}
+
+async function refreshChannels() {
+  if (!account.value) return
+  const me = await shopApi.me()
+  channels.value = me.channels
+}
 
 const cartLines = computed(() =>
   products.value
@@ -56,16 +86,27 @@ function setQuantity(productId: string, quantity: number) {
 function clearMessages() {
   error.value = ''
   notice.value = ''
+  authError.value = ''
+  authNotice.value = ''
+}
+
+function clearAuthMessages() {
+  authError.value = ''
+  authNotice.value = ''
 }
 
 function setAuthMode(mode: AuthMode) {
   authMode.value = mode
-  clearMessages()
+  clearAuthMessages()
+}
+
+function scrollToAccount() {
+  document.getElementById('shop-account')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
 }
 
 function goCreateAccount() {
   setAuthMode('register')
-  document.getElementById('shop-account')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  scrollToAccount()
 }
 
 function orderTraceUrl(order: ShopOrder): string | null {
@@ -80,25 +121,66 @@ async function loadAccountData() {
 }
 
 async function submitAuth() {
-  clearMessages()
+  clearAuthMessages()
   busy.value = true
   try {
-    const result =
-      authMode.value === 'register'
-        ? await shopApi.register({
-            name: authForm.name,
-            email: authForm.email,
-            phone: authForm.phone || undefined,
-            password: authForm.password,
-          })
-        : await shopApi.login({ email: authForm.email, password: authForm.password })
-    account.value = result.account
-    checkoutForm.phone = result.account.phone ?? ''
-    authForm.password = ''
-    notice.value = authMode.value === 'register' ? 'Your Trovara account is ready.' : 'Welcome back.'
-    await loadAccountData()
+    if (authMode.value === 'register') {
+      const result = await shopApi.register({
+        name: authForm.name,
+        email: authForm.email,
+        phone: authForm.phone || undefined,
+        password: authForm.password,
+      })
+      authForm.password = ''
+      authNotice.value = result.message || 'Check your email to verify your account.'
+      needsVerification.value = true
+    } else {
+      const result = await shopApi.login({ email: authForm.email, password: authForm.password })
+      account.value = result.account
+      checkoutForm.phone = result.account.phone ?? ''
+      authForm.password = ''
+      needsVerification.value = false
+      authNotice.value = 'Welcome back.'
+      await loadAccountData()
+    }
   } catch (err) {
-    error.value = err instanceof Error ? err.message : 'Unable to sign in.'
+    if (err instanceof ShopApiError && err.needsVerification) {
+      needsVerification.value = true
+      authNotice.value = err.message || 'Please verify your email address before signing in.'
+      authError.value = ''
+    } else {
+      authError.value = err instanceof Error ? err.message : 'Unable to sign in.'
+    }
+    scrollToAccount()
+  } finally {
+    busy.value = false
+  }
+}
+
+async function submitForgotPassword() {
+  clearAuthMessages()
+  busy.value = true
+  try {
+    const result = await shopApi.forgotPassword({ email: authForm.email })
+    authNotice.value = result.message || 'Check your email for a password reset link.'
+    authForm.email = ''
+  } catch (err) {
+    authError.value = err instanceof Error ? err.message : 'Unable to send reset link.'
+    scrollToAccount()
+  } finally {
+    busy.value = false
+  }
+}
+
+async function resendVerification() {
+  clearAuthMessages()
+  busy.value = true
+  try {
+    const result = await shopApi.resendVerification({ email: authForm.email })
+    authNotice.value = result.message || 'Verification email sent. Check your inbox.'
+  } catch (err) {
+    authError.value = err instanceof Error ? err.message : 'Unable to resend verification.'
+    scrollToAccount()
   } finally {
     busy.value = false
   }
@@ -113,6 +195,8 @@ async function logout() {
     orders.value = []
     channels.value = []
     linkCode.value = ''
+    showLinkForm.value = false
+    stopLinkPoll()
     activeTab.value = 'shop'
   } finally {
     busy.value = false
@@ -123,8 +207,10 @@ function beginCheckout() {
   clearMessages()
   if (!cartCount.value) return
   if (!account.value) {
-    error.value = 'Create an account or sign in before checkout so your order can be tracked.'
-    document.getElementById('shop-account')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    authMode.value = 'login'
+    authError.value = 'Create an account or sign in before checkout so your order can be tracked.'
+    authNotice.value = ''
+    scrollToAccount()
     return
   }
   checkoutForm.phone = checkoutForm.phone || account.value.phone || ''
@@ -163,8 +249,62 @@ async function createLinkCode() {
     const result = await shopApi.linkCode()
     linkCode.value = result.code
     linkExpiry.value = result.expiresAt
+    showLinkForm.value = true
+    startLinkPoll()
   } catch (err) {
     error.value = err instanceof Error ? err.message : 'Unable to create a link code.'
+  } finally {
+    busy.value = false
+  }
+}
+
+function startLinkPoll() {
+  stopLinkPoll()
+  const linkedBefore = new Set(channels.value.map((c) => c.channel.toLowerCase()))
+  linkPollTimer = setInterval(async () => {
+    try {
+      if (linkExpiry.value && Date.now() > new Date(linkExpiry.value).getTime()) {
+        stopLinkPoll()
+        return
+      }
+      await refreshChannels()
+      const newlyLinked = channels.value.find(
+        (c) => !linkedBefore.has(c.channel.toLowerCase()),
+      )
+      if (newlyLinked) {
+        linkCode.value = ''
+        showLinkForm.value = false
+        notice.value = `${newlyLinked.channel.charAt(0).toUpperCase()}${newlyLinked.channel.slice(1)} is linked to your shop account.`
+        stopLinkPoll()
+      }
+    } catch {
+      // Keep polling through transient network blips while the code is live.
+    }
+  }, 3000)
+}
+
+async function checkLinkStatus() {
+  clearMessages()
+  busy.value = true
+  try {
+    const before = channels.value.length
+    await refreshChannels()
+    if (channels.value.length > before || hasLinkedChannels.value) {
+      if (hasLinkedChannels.value) {
+        linkCode.value = ''
+        showLinkForm.value = false
+        notice.value = telegramLinked.value
+          ? 'Telegram is linked to your shop account.'
+          : 'Your chat channel is linked.'
+        stopLinkPoll()
+      } else {
+        notice.value = 'Not linked yet. Send the link message in Telegram, then check again.'
+      }
+    } else {
+      notice.value = 'Not linked yet. Send the link message in Telegram, then check again.'
+    }
+  } catch (err) {
+    error.value = err instanceof Error ? err.message : 'Unable to check link status.'
   } finally {
     busy.value = false
   }
@@ -176,18 +316,47 @@ async function copyLinkCommand() {
   notice.value = 'Link command copied.'
 }
 
-onMounted(async () => {
-  try {
-    const [session, catalog] = await Promise.all([shopApi.session(), shopApi.catalog()])
-    account.value = session.account
-    products.value = catalog.products
-    checkoutForm.phone = account.value?.phone ?? ''
-    if (account.value) await loadAccountData()
-  } catch (err) {
-    error.value = err instanceof Error ? err.message : 'The shop is temporarily unavailable.'
-  } finally {
-    loading.value = false
+watch(activeTab, (tab) => {
+  if (tab === 'connect' && account.value) {
+    void refreshChannels().catch(() => {
+      /* ignore — page still usable */
+    })
   }
+})
+
+onUnmounted(stopLinkPoll)
+
+onMounted(async () => {
+  // Load independently so a session glitch cannot wipe an otherwise-good catalog.
+  const [sessionResult, catalogResult] = await Promise.allSettled([
+    shopApi.session(),
+    shopApi.catalog(),
+  ])
+  if (catalogResult.status === 'fulfilled') {
+    products.value = catalogResult.value.products ?? []
+  } else {
+    error.value =
+      catalogResult.reason instanceof Error
+        ? catalogResult.reason.message
+        : 'The shop catalogue is temporarily unavailable.'
+  }
+  if (sessionResult.status === 'fulfilled') {
+    account.value = sessionResult.value.account
+    checkoutForm.phone = account.value?.phone ?? ''
+    if (account.value) {
+      try {
+        await loadAccountData()
+      } catch (err) {
+        error.value = err instanceof Error ? err.message : 'Unable to load your account.'
+      }
+    }
+  } else if (!error.value) {
+    error.value =
+      sessionResult.reason instanceof Error
+        ? sessionResult.reason.message
+        : 'Unable to start a shop session.'
+  }
+  loading.value = false
 })
 </script>
 
@@ -211,20 +380,32 @@ onMounted(async () => {
       </div>
     </section>
 
-    <div class="container-trovara py-8 md:py-12">
-      <div v-if="error || notice" class="mb-6 rounded-2xl border px-5 py-4 text-sm font-semibold" :class="error ? 'border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-300' : 'border-trovara-green/30 bg-trovara-green/10 text-trovara-green-700 dark:text-trovara-green-300'">
+    <div class="container-trovara flex flex-col py-8 md:py-12">
+      <div v-if="error || notice" class="order-1 mb-6 rounded-2xl border px-5 py-4 text-sm font-semibold" :class="error ? 'border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-300' : 'border-trovara-green/30 bg-trovara-green/10 text-trovara-green-700 dark:text-trovara-green-300'">
         {{ error || notice }}
       </div>
 
-      <div class="mb-8 flex gap-2 overflow-x-auto rounded-2xl border border-gray-200 bg-white p-2" aria-label="Shop sections">
+      <div class="order-2 mb-8 flex gap-2 overflow-x-auto rounded-2xl border border-gray-200 bg-white p-2" aria-label="Shop sections">
         <button v-for="tab in (['shop', 'orders', 'connect'] as Tab[])" :key="tab" type="button" class="min-h-11 shrink-0 rounded-xl px-5 text-sm font-bold capitalize transition" :class="activeTab === tab ? 'bg-trovara-green text-white' : 'text-gray-600 hover:bg-trovara-light'" @click="activeTab = tab">
-          {{ tab === 'orders' ? `My orders${orders.length ? ` (${orders.length})` : ''}` : tab === 'connect' ? 'Connect chat' : `Shop${cartCount ? ` (${cartCount})` : ''}` }}
+          {{
+            tab === 'orders'
+              ? `My orders${orders.length ? ` (${orders.length})` : ''}`
+              : tab === 'connect'
+                ? hasLinkedChannels
+                  ? 'Connect chat · Linked'
+                  : 'Connect chat'
+                : `Shop${cartCount ? ` (${cartCount})` : ''}`
+          }}
         </button>
       </div>
 
-      <div v-if="loading" class="grid min-h-64 place-items-center text-gray-500">Loading the farm shop…</div>
+      <div v-if="loading" class="order-3 grid min-h-64 place-items-center text-gray-500">Loading the farm shop…</div>
 
-      <div v-else-if="activeTab === 'shop'" class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_23rem]">
+      <div
+        v-else-if="activeTab === 'shop'"
+        class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_23rem]"
+        :class="account ? 'order-3' : 'order-4 mt-8'"
+      >
         <section>
           <div class="mb-6 flex items-end justify-between gap-4">
             <div>
@@ -281,7 +462,7 @@ onMounted(async () => {
         </aside>
       </div>
 
-      <section v-else-if="activeTab === 'orders'" class="mx-auto max-w-4xl">
+      <section v-else-if="activeTab === 'orders'" class="order-3 mx-auto max-w-4xl">
         <div class="mb-6"><p class="text-xs font-black uppercase tracking-[0.2em] text-trovara-green">Order centre</p><h2 class="mt-2 text-3xl font-black text-trovara-dark">Your orders</h2></div>
         <div v-if="!account" class="rounded-3xl border border-gray-200 bg-white p-7 text-gray-600">Sign in below to see orders placed on the website, WhatsApp, or Telegram.</div>
         <div v-else-if="orders.length" class="space-y-4">
@@ -303,55 +484,152 @@ onMounted(async () => {
         <div v-else-if="account" class="rounded-3xl border border-gray-200 bg-white p-8 text-center text-gray-500">No orders yet. Your first order will appear here.</div>
       </section>
 
-      <section v-else class="mx-auto max-w-3xl">
+      <section v-else class="order-3 mx-auto max-w-3xl">
         <div class="mb-6">
           <p class="text-xs font-black uppercase tracking-[0.2em] text-trovara-green">One account everywhere</p>
-          <h2 class="mt-2 text-3xl font-black text-trovara-dark">Connect Telegram (or WhatsApp later)</h2>
-          <p class="mt-3 leading-7 text-gray-600">
-            Website orders only appear in chat after you link.
-            <template v-if="TELEGRAM_ORDER_URL">
-              Create a code below, open the <strong>Telegram customer bot</strong>, and send the exact message
-              <code class="rounded bg-trovara-light px-1.5 py-0.5 text-sm font-semibold text-trovara-dark">link YOURCODE</code>.
-              Opening the chat alone is not enough.
-            </template>
-            <template v-else>
-              Telegram customer bot username is not configured on this site build yet — ask the farm for the bot link, then send
-              <code class="rounded bg-trovara-light px-1.5 py-0.5 text-sm font-semibold text-trovara-dark">link YOURCODE</code>.
-            </template>
+          <h2 class="mt-2 text-3xl font-black text-trovara-dark">
+            {{ telegramLinked ? 'Telegram linked' : 'Connect Telegram (or WhatsApp later)' }}
+          </h2>
+          <p v-if="telegramLinked" class="mt-3 leading-7 text-gray-600">
+            Your shop account is connected to Telegram. Website orders and updates can appear in that chat.
           </p>
-          <p class="mt-3 text-sm leading-6 text-gray-500">
-            The WhatsApp button opens the farm’s personal WhatsApp number for human help. It is
-            <strong>not</strong> the Meta customer bot yet, so <code class="rounded bg-trovara-light px-1 py-0.5 text-xs font-semibold">link CODE</code>
-            will not attach your shop account on WhatsApp until that bot goes live. Prefer Telegram for account linking.
-          </p>
-        </div>
-        <div v-if="account" class="rounded-3xl border border-gray-200 bg-white p-6 md:p-8">
-          <div v-if="channels.length" class="mb-6"><p class="text-xs font-black uppercase tracking-wider text-gray-500">Connected now</p><div class="mt-3 flex flex-wrap gap-2"><span v-for="channel in channels" :key="channel.channel" class="rounded-full bg-trovara-green/10 px-4 py-2 text-sm font-bold capitalize text-trovara-green">{{ channel.channel }}</span></div></div>
-          <button v-if="!linkCode" type="button" class="btn-primary" :disabled="busy" @click="createLinkCode">Create a secure link code</button>
-          <div v-else class="rounded-2xl bg-trovara-dark p-6 text-white">
-            <p class="text-xs font-bold uppercase tracking-wider text-white/60">
-              {{ TELEGRAM_ORDER_URL ? 'Send this exact message to the Telegram customer bot' : 'Send this exact message to the Telegram customer bot (ask the farm for the username)' }}
+          <template v-else>
+            <p class="mt-3 leading-7 text-gray-600">
+              Website orders only appear in chat after you link.
+              <template v-if="TELEGRAM_ORDER_URL">
+                Create a code below, open the <strong>Telegram customer bot</strong>, and send the exact message
+                <code class="rounded bg-trovara-light px-1.5 py-0.5 text-sm font-semibold text-trovara-dark">link YOURCODE</code>.
+                Opening the chat alone is not enough.
+              </template>
+              <template v-else>
+                Telegram customer bot username is not configured on this site build yet — ask the farm for the bot link, then send
+                <code class="rounded bg-trovara-light px-1.5 py-0.5 text-sm font-semibold text-trovara-dark">link YOURCODE</code>.
+              </template>
             </p>
-            <div class="mt-3 flex flex-wrap items-center justify-between gap-4">
-              <code class="text-xl font-black text-trovara-gold">link {{ linkCode }}</code>
-              <button type="button" class="rounded-xl bg-white/10 px-4 py-2 text-sm font-bold hover:bg-white/20" @click="copyLinkCommand">Copy</button>
+            <p class="mt-3 text-sm leading-6 text-gray-500">
+              The WhatsApp button opens the farm’s personal WhatsApp number for human help. It is
+              <strong>not</strong> the Meta customer bot yet, so <code class="rounded bg-trovara-light px-1 py-0.5 text-xs font-semibold">link CODE</code>
+              will not attach your shop account on WhatsApp until that bot goes live. Prefer Telegram for account linking.
+            </p>
+          </template>
+        </div>
+
+        <div v-if="account" class="rounded-3xl border border-gray-200 bg-white p-6 md:p-8">
+          <div
+            v-if="hasLinkedChannels"
+            class="rounded-2xl border border-trovara-green/30 bg-trovara-green/10 p-5"
+            role="status"
+          >
+            <p class="text-xs font-black uppercase tracking-wider text-trovara-green">Connected now</p>
+            <p class="mt-2 text-lg font-black text-trovara-dark">
+              <template v-if="telegramLinked && whatsappLinked">Telegram and WhatsApp are linked to this shop account.</template>
+              <template v-else-if="telegramLinked">Telegram is linked to this shop account.</template>
+              <template v-else-if="whatsappLinked">WhatsApp is linked to this shop account.</template>
+              <template v-else>A chat channel is linked to this shop account.</template>
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span
+                v-for="channel in channels"
+                :key="channel.channel"
+                class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold capitalize text-trovara-green ring-1 ring-trovara-green/20"
+              >
+                <span aria-hidden="true">✓</span>
+                {{ channel.channel }}
+                <span v-if="channel.name" class="font-medium text-gray-500 normal-case">({{ channel.name }})</span>
+              </span>
             </div>
-            <p class="mt-3 text-xs text-white/60">Expires {{ new Date(linkExpiry).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }} and works once.</p>
             <div class="mt-5 flex flex-wrap gap-3">
-              <a v-if="TELEGRAM_ORDER_URL" :href="TELEGRAM_ORDER_URL" target="_blank" rel="noopener" class="rounded-xl bg-[#229ED9] px-4 py-3 text-sm font-bold text-white">Open Telegram</a>
-              <a :href="buildWhatsAppLink(products.length ? 'Hi Trovara Farm, I need help with my shop account.' : 'Hi Trovara Farm, I would like waitlist updates and help with my shop account.')" target="_blank" rel="noopener" class="rounded-xl bg-[#25D366] px-4 py-3 text-sm font-bold text-white">Message WhatsApp (human)</a>
+              <a
+                v-if="TELEGRAM_ORDER_URL && telegramLinked"
+                :href="TELEGRAM_ORDER_URL"
+                target="_blank"
+                rel="noopener"
+                class="rounded-xl bg-[#229ED9] px-4 py-3 text-sm font-bold text-white"
+              >Open Telegram</a>
+              <button
+                v-if="!showLinkForm && !linkCode"
+                type="button"
+                class="rounded-xl border border-trovara-green px-4 py-3 text-sm font-bold text-trovara-green"
+                @click="showLinkForm = true"
+              >
+                Link another chat
+              </button>
+            </div>
+          </div>
+
+          <div v-if="!hasLinkedChannels || showLinkForm || linkCode" class="mt-6" :class="hasLinkedChannels ? 'border-t border-gray-100 pt-6' : ''">
+            <p v-if="hasLinkedChannels" class="mb-4 text-sm text-gray-500">
+              Generate a new code only if you need to link a different Telegram account.
+            </p>
+            <button
+              v-if="!linkCode"
+              type="button"
+              class="btn-primary"
+              :disabled="busy"
+              @click="createLinkCode"
+            >
+              {{ busy ? 'Creating…' : 'Create a secure link code' }}
+            </button>
+            <div v-else class="rounded-2xl bg-trovara-dark p-6 text-white">
+              <p class="text-xs font-bold uppercase tracking-wider text-white/60">
+                {{ TELEGRAM_ORDER_URL ? 'Send this exact message to the Telegram customer bot' : 'Send this exact message to the Telegram customer bot (ask the farm for the username)' }}
+              </p>
+              <div class="mt-3 flex flex-wrap items-center justify-between gap-4">
+                <code class="text-xl font-black text-trovara-gold">link {{ linkCode }}</code>
+                <button type="button" class="rounded-xl bg-white/10 px-4 py-2 text-sm font-bold hover:bg-white/20" @click="copyLinkCommand">Copy</button>
+              </div>
+              <p class="mt-3 text-xs text-white/60">Expires {{ new Date(linkExpiry).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }} and works once. This page checks automatically after you send it.</p>
+              <div class="mt-5 flex flex-wrap gap-3">
+                <a v-if="TELEGRAM_ORDER_URL" :href="TELEGRAM_ORDER_URL" target="_blank" rel="noopener" class="rounded-xl bg-[#229ED9] px-4 py-3 text-sm font-bold text-white">Open Telegram</a>
+                <button type="button" class="rounded-xl bg-white/10 px-4 py-3 text-sm font-bold hover:bg-white/20" :disabled="busy" @click="checkLinkStatus">
+                  {{ busy ? 'Checking…' : "I've sent it — check status" }}
+                </button>
+                <a :href="buildWhatsAppLink(products.length ? 'Hi Trovara Farm, I need help with my shop account.' : 'Hi Trovara Farm, I would like waitlist updates and help with my shop account.')" target="_blank" rel="noopener" class="rounded-xl bg-[#25D366] px-4 py-3 text-sm font-bold text-white">Message WhatsApp (human)</a>
+              </div>
             </div>
           </div>
         </div>
         <div v-else class="rounded-3xl border border-gray-200 bg-white p-7 text-gray-600">Create an account or sign in below before linking a chat.</div>
       </section>
 
-      <section id="shop-account" class="mx-auto mt-12 max-w-3xl rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-8">
+      <section
+        id="shop-account"
+        class="mx-auto max-w-3xl rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-8"
+        :class="!account && activeTab === 'shop' ? 'order-3 mt-0 w-full' : 'order-4 mt-12 w-full'"
+      >
+        <div
+          v-if="authError || authNotice"
+          class="mb-6 rounded-2xl border px-5 py-4 text-sm font-semibold"
+          :class="authError ? 'border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-300' : 'border-trovara-green/30 bg-trovara-green/10 text-trovara-green-700 dark:text-trovara-green-300'"
+          role="alert"
+        >
+          {{ authError || authNotice }}
+        </div>
         <template v-if="account">
           <div class="flex flex-wrap items-center justify-between gap-4"><div><p class="text-xs font-black uppercase tracking-wider text-trovara-green">Signed in</p><h2 class="mt-1 text-2xl font-black text-trovara-dark">{{ account.name }}</h2><p class="mt-1 text-sm text-gray-500">{{ account.email }}</p></div><button type="button" class="rounded-xl border border-gray-200 px-4 py-3 text-sm font-bold" :disabled="busy" @click="logout">Sign out</button></div>
         </template>
+        <template v-else-if="authMode === 'forgot'">
+          <div class="flex items-start justify-between gap-4"><div><p class="text-xs font-black uppercase tracking-wider text-trovara-green">Reset password</p><h2 class="mt-1 text-2xl font-black text-trovara-dark">Forgot your password?</h2><p class="mt-2 text-sm text-gray-600">Enter your email and we'll send you a reset link.</p></div><button type="button" class="text-sm font-bold text-trovara-green" @click="setAuthMode('login')">Back to sign in</button></div>
+          <form class="mt-6 grid gap-4" @submit.prevent="submitForgotPassword">
+            <label class="text-sm font-bold text-trovara-dark">Email<input v-model="authForm.email" required type="email" autocomplete="email" class="mt-2 min-h-12 w-full rounded-xl border border-gray-200 px-4 font-normal outline-none focus:border-trovara-green" /></label>
+            <button type="submit" class="btn-primary" :disabled="busy">{{ busy ? 'Sending…' : 'Send reset link' }}</button>
+          </form>
+        </template>
         <template v-else>
           <div class="flex items-start justify-between gap-4"><div><p class="text-xs font-black uppercase tracking-wider text-trovara-green">Customer account</p><h2 class="mt-1 text-2xl font-black text-trovara-dark">{{ authMode === 'login' ? 'Welcome back' : 'Create your account' }}</h2></div><button type="button" class="text-sm font-bold text-trovara-green" @click="setAuthMode(authMode === 'login' ? 'register' : 'login')">{{ authMode === 'login' ? 'Create account' : 'I have an account' }}</button></div>
+          <div v-if="needsVerification" class="mt-5 rounded-2xl border border-trovara-green/30 bg-trovara-green/10 p-5">
+            <p class="text-sm font-bold text-trovara-green-700">Email verification required</p>
+            <p class="mt-2 text-sm leading-6 text-gray-600">Check your inbox for a verification link. If you didn't receive it, enter your email and we'll send it again.</p>
+            <button type="button" class="mt-4 rounded-xl bg-trovara-green px-4 py-2 text-sm font-bold text-white" :disabled="busy || !authForm.email" @click="resendVerification">{{ busy ? 'Sending…' : 'Resend verification' }}</button>
+            <div class="mt-5 border-t border-trovara-green/20 pt-5">
+              <p class="text-sm font-bold text-trovara-green-700">Already have an account?</p>
+              <p class="mt-1 text-sm leading-6 text-gray-600">If you verified already, sign in. Forgot your password? Reset it below.</p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                <button type="button" class="rounded-xl bg-trovara-green px-4 py-2 text-sm font-bold text-white" @click="setAuthMode('login')">Sign in</button>
+                <button type="button" class="rounded-xl border border-trovara-green px-4 py-2 text-sm font-bold text-trovara-green" @click="setAuthMode('forgot')">Forgot password</button>
+              </div>
+            </div>
+          </div>
           <form class="mt-6 grid gap-4 sm:grid-cols-2" @submit.prevent="submitAuth">
             <label v-if="authMode === 'register'" class="text-sm font-bold text-trovara-dark">Name<input v-model="authForm.name" required minlength="2" autocomplete="name" class="mt-2 min-h-12 w-full rounded-xl border border-gray-200 px-4 font-normal outline-none focus:border-trovara-green" /></label>
             <label class="text-sm font-bold text-trovara-dark">Email<input v-model="authForm.email" required type="email" autocomplete="email" class="mt-2 min-h-12 w-full rounded-xl border border-gray-200 px-4 font-normal outline-none focus:border-trovara-green" /></label>
@@ -359,12 +637,28 @@ onMounted(async () => {
             <label class="text-sm font-bold text-trovara-dark">Password<input v-model="authForm.password" required type="password" minlength="8" :autocomplete="authMode === 'register' ? 'new-password' : 'current-password'" class="mt-2 min-h-12 w-full rounded-xl border border-gray-200 px-4 font-normal outline-none focus:border-trovara-green" /></label>
             <button type="submit" class="btn-primary sm:col-span-2" :disabled="busy">{{ busy ? 'Please wait…' : authMode === 'login' ? 'Sign in' : 'Create account' }}</button>
           </form>
-          <p v-if="authMode === 'login'" class="mt-4 text-center text-sm text-gray-500">
-            New to Trovara?
-            <button type="button" class="font-bold text-trovara-green hover:underline" @click="setAuthMode('register')">
-              Create an account
+          <div v-if="authMode === 'login'" class="mt-4 flex flex-wrap items-center justify-between gap-2 text-sm">
+            <button type="button" class="font-bold text-trovara-green hover:underline" @click="setAuthMode('forgot')">
+              Forgot password?
             </button>
-          </p>
+            <p class="text-gray-500">
+              New to Trovara?
+              <button type="button" class="font-bold text-trovara-green hover:underline" @click="setAuthMode('register')">
+                Create an account
+              </button>
+            </p>
+          </div>
+          <div v-else class="mt-4 flex flex-wrap items-center justify-between gap-2 text-sm">
+            <p class="text-gray-500">
+              Already have an account?
+              <button type="button" class="font-bold text-trovara-green hover:underline" @click="setAuthMode('login')">
+                Sign in
+              </button>
+            </p>
+            <button type="button" class="font-bold text-trovara-green hover:underline" @click="setAuthMode('forgot')">
+              Forgot password?
+            </button>
+          </div>
         </template>
       </section>
     </div>

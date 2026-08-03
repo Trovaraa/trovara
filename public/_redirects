@@ -1,2 +1,3 @@
 /shop-api/*  https://os.trovara.farm/shop/:splat  200!
+/lot-api/*   https://os.trovara.farm/public/lots/:splat  200!
 /*    /index.html   200
