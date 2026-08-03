@@ -32,9 +32,19 @@ function run(cmd, args, opts = {}) {
 run('npm', ['run', 'build'])
 run('node', ['scripts/point-shop-proxy-local.mjs'])
 
+// Use npx (not a package.json dep) so npm ci stays free of netlify-cli
+// transitive deprecation / audit noise on every deploy install.
 const child = spawn(
   'npx',
-  ['netlify', 'dev', '--dir', 'dist', '--port', process.env.NETLIFY_DEV_PORT || '8888'],
+  [
+    '--yes',
+    'netlify-cli@27',
+    'dev',
+    '--dir',
+    'dist',
+    '--port',
+    process.env.NETLIFY_DEV_PORT || '8888',
+  ],
   { cwd: root, env, stdio: 'inherit', shell: process.platform === 'win32' },
 )
 child.on('exit', (code) => process.exit(code ?? 0))

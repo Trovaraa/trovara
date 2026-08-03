@@ -1,0 +1,46 @@
+---
+description: Keep npm audit clean and silence deprecation warnings for OS + marketing
+alwaysApply: true
+---
+
+# npm audit and deprecation hygiene
+
+Applies to **both** `trovara-os/` and `trovera/` (marketing). Deploy and CI treat
+high+ audit findings as blockers; deprecation warnings during `npm ci` should not
+show up on every deploy.
+
+## When this applies
+
+After any change that touches `package.json`, `package-lock.json`, dependencies,
+overrides, or adds a new npm package — and before finishing dependency-related
+work — verify both repos as needed:
+
+```bash
+# Trovara OS (deploy gate)
+nvm use 22 && cd trovara-os && npm ci 2>&1 | tee /tmp/os-npm-ci.log
+npm audit --workspaces --audit-level=high
+# Fail the task if npm ci printed "npm warn deprecated"
+
+# Marketing (Netlify gate uses production deps)
+nvm use 22 && cd trovera && npm ci 2>&1 | tee /tmp/mkt-npm-ci.log
+npm audit --omit=dev --audit-level=high
+# Fail the task if npm ci printed "npm warn deprecated"
+```
+
+## Required outcomes
+
+1. **Audit**: `npm audit … --audit-level=high` must report **0** vulnerabilities
+   (OS: workspaces; marketing: `--omit=dev` to match Netlify CI).
+2. **Deprecations**: `npm ci` must not emit `npm warn deprecated …` lines.
+3. Prefer fixing the offending package (upgrade/replace) over blanket ignores.
+4. Root/workspace `overrides` are OK when a transitive dep is abandoned but
+   still required — pin a patched/non-deprecated version and re-run `npm ci` +
+   audit to prove the warning is gone.
+5. Do not leave known high/critical findings for “later” after adding a dependency.
+
+## Do not
+
+- Use `npm audit fix --force` without checking that it won’t downgrade/break apps.
+- Add packages that pull deprecated tooling only for unused scripts if a cleaner
+  alternative exists (prefer `npx pkg@range` for one-off CLIs like `netlify-cli`).
+- Commit lockfile changes without re-checking audit + deprecation output.

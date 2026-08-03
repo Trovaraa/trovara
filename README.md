@@ -88,7 +88,7 @@ JOURNAL_API_URL=http://127.0.0.1:3000/public/journal npm run build
 node scripts/point-shop-proxy-local.mjs
 NEWSLETTER_API_URL=http://127.0.0.1:3000/public/newsletter \
 MARKETING_LEADS_API_URL=http://127.0.0.1:3000/public/leads \
-npx netlify dev --dir dist --port 8888
+npx --yes netlify-cli@27 dev --dir dist --port 8888
 ```
 
 Without that rewrite step, `netlify dev` will still register shop accounts on
