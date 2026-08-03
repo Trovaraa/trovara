@@ -4,7 +4,7 @@ const BASE_URL = 'https://trovara.farm'
 const DEFAULT_TITLE = 'Trovara Farm'
 const DEFAULT_DESCRIPTION =
   'Food you can trust, from a farm built for tomorrow. Trovara Farm grows premium regenerative food for homes and businesses in Nigeria.'
-const DEFAULT_OG_IMAGE = `${BASE_URL}/brand/trovara-social-card-v2.svg`
+const DEFAULT_OG_IMAGE = `${BASE_URL}/brand/trovara-social-card-v2.png`
 
 type RouteMetaLike = {
   title?: unknown

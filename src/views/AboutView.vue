@@ -166,7 +166,7 @@ const team: TeamMember[] = [
           <div class="space-y-6">
             <div class="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
               <img
-                src="/brand/trovara-social-card-v2.svg"
+                src="/brand/trovara-social-card-v2.png"
                 alt="Trovara - Food you can trust from a farm built for tomorrow"
                 class="w-full h-auto object-cover"
                 width="1200"

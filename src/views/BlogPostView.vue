@@ -34,7 +34,7 @@ const articleSchema = computed(() => {
     description: p.excerpt,
     author: { '@type': 'Organization', name: p.author },
     datePublished: p.publishedAt,
-    image: p.coverImage ? `${BASE_URL}${p.coverImage}` : `${BASE_URL}/brand/trovara-social-card-v2.svg`,
+    image: p.coverImage ? `${BASE_URL}${p.coverImage}` : `${BASE_URL}/brand/trovara-social-card-v2.png`,
     publisher: {
       '@type': 'Organization',
       name: 'Trovara Farm',
@@ -56,7 +56,7 @@ watch(
         title: `${p.title} - Trovara Farm`,
         description: p.excerpt,
         canonicalPath: `/blog/${p.slug}`,
-        ogImage: p.coverImage ? `${BASE_URL}${p.coverImage}` : `${BASE_URL}/brand/trovara-social-card-v2.svg`,
+        ogImage: p.coverImage ? `${BASE_URL}${p.coverImage}` : `${BASE_URL}/brand/trovara-social-card-v2.png`,
       })
     }
   },
