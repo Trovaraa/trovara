@@ -1,7 +1,8 @@
 /**
  * Shared helpers for Trovara Netlify form functions.
  *
- * Local dev: these functions only run with `netlify dev` (netlify-cli), not plain `vite dev`.
+ * Local Vite (`npm run dev`) loads these via `scripts/vite-netlify-functions-dev.mjs`;
+ * production / `npm run dev:netlify` use Netlify Functions.
  */
 
 const RATE_BUCKETS = new Map()

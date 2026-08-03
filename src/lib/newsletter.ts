@@ -1,6 +1,7 @@
 /**
  * Newsletter actions use a same-origin Netlify Function proxy.
- * Local dev: use `netlify dev` - plain `vite` cannot reach `/.netlify/functions/*`.
+ * Local Vite (`npm run dev`) serves `/.netlify/functions/newsletter` via
+ * `scripts/vite-netlify-functions-dev.mjs`; production uses Netlify Functions.
  */
 const NEWSLETTER_ENDPOINT = '/.netlify/functions/newsletter'
 

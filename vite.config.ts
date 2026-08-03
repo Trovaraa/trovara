@@ -1,12 +1,14 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { VitePWA } from 'vite-plugin-pwa'
+import { netlifyFunctionsDevPlugin } from './scripts/vite-netlify-functions-dev.mjs'
 
 // Lightweight brand PWA: cache the app shell + static assets for faster repeat visits
 // and Add to Home Screen. Not an offline operations app (that is Trovara OS).
 export default defineConfig({
   plugins: [
     vue(),
+    netlifyFunctionsDevPlugin(),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['brand/trovara-monogram-tile-v1.svg', 'icons/trovara-monogram-icon-v1.svg'],

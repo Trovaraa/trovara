@@ -42,9 +42,12 @@ lead records to Trovara OS through the server-only `MARKETING_LEADS_API_URL`
 (required; missing → HTTP 503). Production sets it in
 `netlify.toml` `[context.production.environment]`.
 
-For local development, set `MARKETING_LEADS_API_URL` to the local OS
-`/public/leads` base and run `netlify dev`. Do not add a `VITE_` prefix or call
-Trovara OS directly from browser code.
+For local development, plain `npm run dev` serves
+`/.netlify/functions/contact|waitlist|newsletter` via Vite middleware (defaults
+`MARKETING_LEADS_API_URL` / `NEWSLETTER_API_URL` to local OS `:3000`). Override
+those env vars if needed. `npm run dev:netlify` remains available for a full
+Netlify-like stack. Do not add a `VITE_` prefix or call Trovara OS directly from
+browser code.
 
 ## Newsletter
 
@@ -54,10 +57,10 @@ server-only `NEWSLETTER_API_URL` (no hardcoded production fallback — preview
 deploys fail closed with 503 if unset). Production sets it in
 `netlify.toml` `[context.production.environment]`.
 
-For local development, set `NEWSLETTER_API_URL` to the local OS
-`/public/newsletter` base and run `netlify dev`. Do not add `VITE_` to this
-variable, and do not configure a Resend API key in the marketing site: Trovara
-OS owns subscriber records and email delivery credentials.
+For local development, `npm run dev` is enough (see Contact section). Do not add
+`VITE_` to `NEWSLETTER_API_URL`, and do not configure a Resend API key in the
+marketing site: Trovara OS owns subscriber records and email delivery
+credentials.
 
 ## Local shop / lot API proxy
 
@@ -67,11 +70,13 @@ Production `public/_redirects` sends `/shop-api` and `/lot-api` to
 For local testing against Trovara OS on `:3000`:
 
 ```bash
-# Option A — Vite (simplest for /shop UI)
+# Option A — Vite (shop + contact/waitlist/newsletter functions)
 npm run dev
-# → http://localhost:5173  (vite proxies /shop-api → 127.0.0.1:3000)
+# → http://localhost:5173
+#    /shop-api → 127.0.0.1:3000/shop
+#    /.netlify/functions/* → local Netlify function handlers
 
-# Option B — netlify dev on :8888 (functions + static dist)
+# Option B — netlify dev on :8888 (full Netlify-like stack)
 npm run dev:netlify
 # builds, rewrites dist/_redirects to 127.0.0.1:3000, then netlify dev
 ```

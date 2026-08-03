@@ -1,8 +1,8 @@
 /**
  * Contact form handler - validates, rate-limits, and forwards to Trovara OS server-side.
  *
- * Local dev: run `netlify dev` (not plain `vite`) to exercise this endpoint at
- * `/.netlify/functions/contact`.
+ * Local Vite serves this at `/.netlify/functions/contact` via
+ * `scripts/vite-netlify-functions-dev.mjs`.
  */
 import {
   forwardToMarketingLeads,

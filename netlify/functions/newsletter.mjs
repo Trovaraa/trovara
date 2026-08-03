@@ -1,10 +1,9 @@
 /**
  * Same-origin proxy for the public Trovara OS newsletter API.
  *
- * Local dev: run `netlify dev` (not plain `vite`) and set NEWSLETTER_API_URL
- * to a local OS endpoint when needed.
- *
- * Netlify env (required — no production hardcode; preview deploys fail closed):
+ * Local Vite serves this via `scripts/vite-netlify-functions-dev.mjs` (defaults
+ * NEWSLETTER_API_URL to local OS). Production Netlify env (required — no
+ * production hardcode; preview deploys fail closed):
  *   NEWSLETTER_API_URL - base URL ending in /public/newsletter
  */
 import {
