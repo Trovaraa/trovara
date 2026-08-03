@@ -93,7 +93,7 @@ const team: TeamMember[] = [
   {
     initials: 'AY',
     name: 'Ayodeji',
-    roleShort: 'Ops',
+    roleShort: 'COO',
     role: 'Head of Operations',
     bio: 'Leads operational strategy and execution across farm production, supply chain, and fulfilment.',
     fullBio: [
