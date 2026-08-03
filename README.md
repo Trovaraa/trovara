@@ -75,6 +75,8 @@ npm run dev
 # → http://localhost:5173
 #    /shop-api → 127.0.0.1:3000/shop
 #    /.netlify/functions/* → local Netlify function handlers
+# If the SPA stays blank with "504 Outdated Optimize Dep" in the console:
+#   rm -rf node_modules/.vite && npm run dev
 
 # Option B — netlify dev on :8888 (full Netlify-like stack)
 npm run dev:netlify

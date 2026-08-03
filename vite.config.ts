@@ -6,6 +6,11 @@ import { netlifyFunctionsDevPlugin } from './scripts/vite-netlify-functions-dev.
 // Lightweight brand PWA: cache the app shell + static assets for faster repeat visits
 // and Add to Home Screen. Not an offline operations app (that is Trovara OS).
 export default defineConfig({
+  // Pre-bundle common deps so local Playwright/QA is less likely to hit
+  // "504 Outdated Optimize Dep" after lockfile or dependency changes.
+  optimizeDeps: {
+    include: ['vue', 'vue-router', 'pinia', '@vueuse/core', 'markdown-it'],
+  },
   plugins: [
     vue(),
     netlifyFunctionsDevPlugin(),
