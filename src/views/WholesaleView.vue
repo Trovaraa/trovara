@@ -18,9 +18,9 @@ const harvestWindows = [
   },
   {
     product: 'Pasture-raised chicken',
-    period: 'Target: December 2026',
+    period: 'December 2026',
     status: 'forecast' as const,
-    note: 'Target first dressed-bird supply; join the waitlist for updates',
+    note: 'First supply forecast; join the waitlist for updates',
   },
   {
     product: 'Plantain',
@@ -32,7 +32,7 @@ const harvestWindows = [
     product: 'Coconut',
     period: 'June 2027',
     status: 'forecast' as const,
-    note: 'First commercial harvest forecast',
+    note: 'First commercial harvest forecast; milk, chips, and oil planned after',
   },
   {
     product: 'Pasture-raised eggs',
@@ -51,7 +51,7 @@ const productLines = [
   {
     title: 'Pasture-raised Chicken',
     detail: 'Dressed birds planned for kitchens, hotels, and retail cold chain.',
-    points: ['Target first supply December 2026', 'Whole birds; cuts on request'],
+    points: ['First supply forecast for December 2026', 'Whole birds; cuts on request'],
   },
   {
     title: 'Fresh Plantain',
@@ -65,8 +65,13 @@ const productLines = [
   },
   {
     title: 'Coconut',
-    detail: 'Mature coconuts for juice bars, retail, and bulk trade.',
+    detail: 'Mature whole fruit for retail and processing, with milk, chips, and oil planned after harvest.',
     points: ['First harvest forecast for June 2027', 'Mesh bags or custom bulk'],
+  },
+  {
+    title: 'Coconut Milk, Chips & Oil',
+    detail: 'Farm-direct processed coconut formats for homes, chefs, and food manufacturers.',
+    points: ['Planned after coconut harvest', 'Retail and food-service packs'],
   },
   {
     title: 'Pasture-raised Eggs',
@@ -161,7 +166,7 @@ const productLines = [
             <p class="text-trovara-dark font-semibold mb-2">Planned for select lines</p>
             <p class="text-sm text-gray-600 leading-relaxed">
               We plan private-label packaging for qualified partners seeking branded shelf-ready
-              plantain flour and chips formats once milling and processing open after harvest.
+              plantain flour and chips, plus coconut milk, chips, and oil once processing opens after harvest.
             </p>
           </div>
           <div class="rounded-2xl bg-white p-7 shadow-sm border border-gray-100">

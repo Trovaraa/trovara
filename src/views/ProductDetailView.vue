@@ -290,56 +290,126 @@ watch(
       </section>
 
       <section
+        v-if="product.id === 'coconut'"
+        class="py-20 md:py-24 bg-[#FDF5EE] border-t border-orange-100"
+      >
+        <div class="container-trovara">
+          <div class="mb-10 max-w-2xl">
+            <p class="text-xs font-bold uppercase tracking-widest text-[#7B4F2E] mb-3">
+              Trovara Coconut - Processed
+            </p>
+            <h2 class="text-3xl md:text-4xl font-black text-trovara-dark mb-3">
+              Milk, chips &amp; oil
+            </h2>
+            <p class="text-gray-500 leading-relaxed">
+              After our first coconut harvest, we plan three farm-direct formats from the same mature fruit - coconut milk, toasted coconut chips, and cold-pressed coconut oil - for homes, chefs, and food manufacturers.
+            </p>
+          </div>
+          <div class="grid sm:grid-cols-3 gap-5">
+            <div
+              v-for="format in [
+                {
+                  icon: 'coconut-milk',
+                  name: 'Coconut Milk',
+                  sku: 'TRV-COC-MILK',
+                  tagline: 'Creamy, pour-ready.',
+                  body: 'Pressed from mature Trovara coconut flesh for cooking, baking, and beverages - no synthetic thickeners planned.',
+                },
+                {
+                  icon: 'coconut-chips',
+                  name: 'Coconut Chips',
+                  sku: 'TRV-COC-CHIPS',
+                  tagline: 'Crunch from the farm.',
+                  body: 'Lightly dried coconut slices for snacking, toppings, and trail mixes - traceable back to harvest lots.',
+                },
+                {
+                  icon: 'coconut-oil',
+                  name: 'Coconut Oil',
+                  sku: 'TRV-COC-OIL',
+                  tagline: 'Clear, kitchen-ready oil.',
+                  body: 'Oil pressed from our own mature coconuts for cooking and food service, with retail and bulk packs planned.',
+                },
+              ]"
+              :key="format.sku"
+              class="rounded-3xl border border-[#7B4F2E]/10 bg-white p-6 flex flex-col shadow-sm"
+            >
+              <div class="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-[#FDF5EE] p-2">
+                <BrandIcon :name="format.icon" :title="format.name" class="h-full w-full" />
+              </div>
+              <span class="mb-3 self-center rounded-full bg-[#7B4F2E]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[#7B4F2E]">
+                Planned after harvest
+              </span>
+              <h3 class="text-xl font-black text-trovara-dark text-center">{{ format.name }}</h3>
+              <p class="mt-1 text-center text-sm font-medium italic text-[#7B4F2E]/80">{{ format.tagline }}</p>
+              <p class="mt-3 flex-1 text-sm leading-relaxed text-gray-600 text-center">{{ format.body }}</p>
+            </div>
+          </div>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <RouterLink to="/contact?subject=waitlist" class="btn-gold">
+              Ask about milk, chips &amp; oil
+            </RouterLink>
+            <RouterLink to="/wholesale" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 border-[#7B4F2E]/25 text-[#7B4F2E] font-semibold text-sm hover:bg-white transition-all duration-200">
+              Request wholesale forecast
+            </RouterLink>
+          </div>
+        </div>
+      </section>
+
+      <section
         v-if="product.id === 'plantain'"
         class="py-20 md:py-24 bg-trovara-cream border-t border-amber-100"
       >
         <div class="container-trovara">
-          <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div class="rounded-3xl p-12 flex flex-col items-center justify-center min-h-64 bg-amber-50 relative overflow-hidden">
-              <BrandIcon name="plantain" class="w-32 h-32" />
-              <span class="mt-4 px-4 py-1.5 rounded-full bg-amber-200/60 text-amber-800 text-xs font-bold uppercase tracking-widest">
+          <div class="mb-10 max-w-2xl">
+            <p class="text-xs font-bold uppercase tracking-widest text-amber-700 mb-3">
+              Trovara Plantain - Processed
+            </p>
+            <h2 class="text-3xl md:text-4xl font-black text-trovara-dark mb-3">
+              Chips &amp; flour
+            </h2>
+            <p class="text-gray-500 leading-relaxed">
+              After our first plantain harvest, we plan dried plantain chips and milled plantain flour from the same plantation fruit - for homes, bakeries, and food manufacturers.
+            </p>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div
+              v-for="format in [
+                {
+                  icon: 'plantain',
+                  name: 'Plantain Chips',
+                  sku: 'chips',
+                  tagline: 'Crunch from the farm.',
+                  body: 'Lightly dried plantain slices for snacking and food service - traceable back to harvest lots, with retail and bulk packs planned.',
+                },
+                {
+                  icon: 'package',
+                  name: 'Plantain Flour',
+                  sku: 'flour',
+                  tagline: 'The ancient staple, reimagined.',
+                  body: 'Milled from sun-dried plantation plantains with no additives, bleaching agents, or preservatives - suited to baking, soups, porridges, and wholesale.',
+                },
+              ]"
+              :key="format.sku"
+              class="rounded-3xl border border-amber-100 bg-white p-6 flex flex-col shadow-sm"
+            >
+              <div class="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-amber-50 p-2">
+                <BrandIcon :name="format.icon" :title="format.name" class="h-full w-full" />
+              </div>
+              <span class="mb-3 self-center rounded-full bg-amber-200/60 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-amber-800">
                 Planned after harvest
               </span>
+              <h3 class="text-xl font-black text-trovara-dark text-center">{{ format.name }}</h3>
+              <p class="mt-1 text-center text-sm font-medium italic text-amber-800/80">{{ format.tagline }}</p>
+              <p class="mt-3 flex-1 text-sm leading-relaxed text-gray-600 text-center">{{ format.body }}</p>
             </div>
-            <div>
-              <p class="text-xs font-bold uppercase tracking-widest text-amber-700 mb-3">
-                Trovara Plantain - Processed
-              </p>
-              <h3 class="text-3xl md:text-4xl font-black text-trovara-dark mb-3">
-                Plantain Flour
-              </h3>
-              <p class="text-lg font-medium italic text-gray-400 mb-6">
-                "The ancient staple, reimagined."
-              </p>
-              <p class="text-gray-500 leading-relaxed mb-6">
-                After our first plantain harvest, we plan to mill flour from sun-dried, matured plantains grown on our plantation - with zero additives, no bleaching agents, and no preservatives. It will be naturally gluten-free, high in resistant starch, and rich in potassium and fiber: suited to baking, thickening soups and stews, porridges, and as a wheat-flour alternative for health-conscious buyers and food manufacturers.
-              </p>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                <div
-                  v-for="point in [
-                    '100% natural - no additives or preservatives',
-                    'Naturally gluten-free',
-                    'High in resistant starch and potassium',
-                    'Milled from our own plantation plantains',
-                    'Ideal for baking, soups, and porridge',
-                    'Bulk formats planned for food manufacturers',
-                  ]"
-                  :key="point"
-                  class="flex items-start gap-2.5 text-sm text-trovara-dark"
-                >
-                  <span class="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-amber-500 flex items-center justify-center text-white text-[10px] font-black">✓</span>
-                  {{ point }}
-                </div>
-              </div>
-              <div class="flex flex-wrap gap-3">
-                <RouterLink to="/contact?subject=waitlist" class="btn-gold">
-                  Enquire about plantain flour plans
-                </RouterLink>
-                <RouterLink to="/wholesale" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 border-amber-300 text-amber-700 font-semibold text-sm hover:bg-amber-50 transition-all duration-200">
-                  Request wholesale forecast
-                </RouterLink>
-              </div>
-            </div>
+          </div>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <RouterLink to="/contact?subject=waitlist" class="btn-gold">
+              Ask about chips &amp; flour
+            </RouterLink>
+            <RouterLink to="/wholesale" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 border-amber-300 text-amber-700 font-semibold text-sm hover:bg-amber-50 transition-all duration-200">
+              Request wholesale forecast
+            </RouterLink>
           </div>
         </div>
       </section>

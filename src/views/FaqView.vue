@@ -29,11 +29,11 @@ const faqs: FaqGroup[] = [
       },
       {
         q: 'What plantain varieties do you grow?',
-        a: 'We cultivate multiple plantain varieties suited for different uses - including cooking plantains harvested green for savory dishes, and sweeter ripe plantains for fried and dessert applications. Plantain flour is planned from fully mature plantains after harvest.',
+        a: 'We cultivate multiple plantain varieties suited for different uses - including cooking plantains harvested green for savory dishes, and sweeter ripe plantains for fried and dessert applications. Plantain chips and flour are planned from fully mature fruit after harvest.',
       },
       {
-        q: 'Do you offer plantain flour in retail packaging?',
-        a: 'Plantain flour is planned after our first plantain harvest. Join the plantain waitlist and tell us you want flour packs - we will share sizes and pricing when milling begins.',
+        q: 'Do you offer plantain chips and flour in retail packaging?',
+        a: 'Both are planned after our first plantain harvest. Join the plantain waitlist and tell us which packs you want - we will share sizes and pricing when processing begins.',
       },
     ],
   },

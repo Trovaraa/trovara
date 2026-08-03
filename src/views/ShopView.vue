@@ -368,7 +368,7 @@ onMounted(async () => {
           <p class="text-xs font-black uppercase tracking-[0.24em] text-trovara-gold">Trovara shop</p>
           <h1 class="mt-4 text-4xl font-black leading-tight md:text-6xl">Your farm account. Ready when harvest opens.</h1>
           <p class="mt-5 max-w-2xl text-base leading-7 text-white/70 md:text-lg">
-            Create an account now to track future orders, connect WhatsApp or Telegram, and receive waitlist updates. Live product checkout opens by SKU as each harvest window arrives.
+            Create an account now to prepare for harvest checkout, connect WhatsApp or Telegram, and stay linked to waitlist updates. Products appear in the shop by SKU as each supply window opens - nothing is sold here until then.
           </p>
           <div class="mt-8 flex flex-wrap gap-3">
             <a href="#shop-account" class="btn-gold px-6 py-3 text-sm" @click.prevent="goCreateAccount">Create account</a>
@@ -454,7 +454,7 @@ onMounted(async () => {
             <div v-for="line in cartLines" :key="line.product.id" class="flex justify-between gap-4 py-4 text-sm"><div><p class="font-bold text-trovara-dark">{{ line.product.name }}</p><p class="text-gray-500">{{ line.quantity }} × {{ line.product.unit }}</p></div><p class="font-bold">{{ formatShopPrice(line.product.priceKobo * line.quantity, line.product.currency) }}</p></div>
           </div>
           <p v-else class="mt-5 rounded-2xl bg-trovara-light p-5 text-sm leading-6 text-gray-500">
-            {{ products.length ? 'Add a product to begin. Your basket stays on this device until checkout.' : 'Checkout is closed until harvest SKUs open. Create an account or message us about waitlists.' }}
+            {{ products.length ? 'Add a product when SKUs are live. Your basket stays on this device until checkout.' : 'Checkout is closed until harvest SKUs open. Create an account and join product waitlists in the meantime.' }}
           </p>
           <div class="mt-5 flex justify-between border-t border-gray-200 pt-5"><span class="font-bold">Estimated total</span><strong class="text-xl text-trovara-green">{{ formatShopPrice(cartTotalKobo) }}</strong></div>
           <button type="button" class="btn-primary mt-5 w-full disabled:cursor-not-allowed disabled:opacity-50" :disabled="!cartCount" @click="beginCheckout">Continue to checkout</button>

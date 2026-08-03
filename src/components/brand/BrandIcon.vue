@@ -23,6 +23,30 @@ defineProps<{
       <path d="M30 13c3 2 5 5 6 9"/>
     </g>
 
+    <g v-else-if="name === 'coconut-milk'" stroke="#0B3A25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 14h16v22c0 2-2 4-4 4H20c-2 0-4-2-4-4V14Z" fill="#F7F3E8"/>
+      <path d="M18 14V11c0-2 2-4 6-4s6 2 6 4v3" fill="#DCEDE3"/>
+      <path d="M18 24h12v8c0 1.5-1.5 3-3 3h-6c-1.5 0-3-1.5-3-3v-8Z" fill="#F1D8AA"/>
+      <circle cx="24" cy="20" r="2.5" fill="#FFFFFF"/>
+      <path d="M22 12c1.5-2 4-3 6-2" stroke="#2D9960"/>
+    </g>
+
+    <g v-else-if="name === 'coconut-chips'" stroke="#0B3A25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 30c4 6 12 8 18 3-6 1-11-2-14-7-2 1-3 2-4 4Z" fill="#F1D8AA"/>
+      <path d="M15 24c5 6 12 8 18 4-5 0-10-4-13-9-2 1-4 3-5 5Z" fill="#F7F3E8"/>
+      <path d="M21 18c4 5 10 7 16 4-5-1-9-4-12-9-2 1-3 3-4 5Z" fill="#E8A427"/>
+      <path d="M28 12c3-2 6-3 9-2" stroke="#2D9960"/>
+      <path d="M34 12c2 1 3 3 4 5"/>
+    </g>
+
+    <g v-else-if="name === 'coconut-oil'" stroke="#0B3A25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 8h8v5l2 2v4H18v-4l2-2V8Z" fill="#DCEDE3"/>
+      <path d="M17 19h14v19c0 2-2 4-4 4h-6c-2 0-4-2-4-4V19Z" fill="#F7F3E8"/>
+      <path d="M19 28h10v7c0 1-1 2-2 2h-6c-1 0-2-1-2-2v-7Z" fill="#E8A427"/>
+      <circle cx="24" cy="23" r="2" fill="#F1D8AA" stroke="none"/>
+      <path d="M22 11c2-3 5-4 8-3" stroke="#2D9960"/>
+    </g>
+
     <g v-else-if="name === 'plantain'" stroke="#0B3A25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M13 28c5 7 14 8 21 2-7 1-13-2-17-8-2 1-3 3-4 6Z" fill="#E8A427"/>
       <path d="M18 22c5 6 12 8 19 5-6-1-11-5-14-11-3 1-4 3-5 6Z" fill="#F5C357"/>

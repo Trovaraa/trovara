@@ -18,13 +18,28 @@ const products = [
   },
   {
     name: 'Coconut',
-    format: 'Mature coconuts for retail and processing',
+    format: 'Mature whole fruit · milk, chips & oil planned after harvest',
     window: 'First harvest · Jun 2027',
+  },
+  {
+    name: 'Coconut Milk',
+    format: 'Retail and food-service packs',
+    window: 'After coconut harvest · scheduled runs',
+  },
+  {
+    name: 'Coconut Chips',
+    format: 'Snack and topping packs',
+    window: 'After coconut harvest · scheduled runs',
+  },
+  {
+    name: 'Coconut Oil',
+    format: 'Retail bottles and bulk formats',
+    window: 'After coconut harvest · scheduled runs',
   },
   {
     name: 'Pasture-raised Chicken',
     format: 'Grass-fed · whole dressed or pre-cut on request',
-    window: 'Target first supply · Dec 2026',
+    window: 'First supply forecast · Dec 2026',
   },
   {
     name: 'Pasture-raised Eggs',

@@ -42,17 +42,17 @@ const milestones = [
   {
     year: 'Farm Diversification',
     title: 'Palm Oil, Chicken & Eggs',
-    desc: 'We added traceable palm oil and designed pasture-raised chicken and egg production around open grass, animal welfare, and transparent handling.',
+    desc: 'We added traceable palm oil and designed pasture-raised chicken and egg production around open grass, animal welfare, and transparent handling. Palm oil and chicken target first supply in December 2026; eggs remain on waitlist until their first date is confirmed.',
   },
   {
     year: 'December 2026',
     title: 'First Supply Window',
-    desc: 'Our roadmap targets first supplies of pasture-raised chicken and palm oil in December 2026, followed by plantain (March 2027) and coconut (June 2027).',
+    desc: 'Our roadmap targets first supplies of pasture-raised chicken and palm oil in December 2026, followed by plantain (March 2027) and coconut (June 2027). Eggs stay on the waitlist until availability is confirmed.',
   },
   {
     year: 'Today',
     title: 'Five Product Lines, One Standard',
-    desc: 'Coconut, plantain, palm oil, pasture-raised chicken, and eggs are being built for traceable supply across Nigeria - with more formats planned after first harvest.',
+    desc: 'Coconut, plantain, palm oil, pasture-raised chicken, and eggs are being built for traceable supply across Nigeria - with milk, chips, oil, flour, and other formats planned after first harvest.',
   },
 ]
 

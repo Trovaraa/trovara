@@ -49,7 +49,7 @@ const router = createRouter({
       meta: {
         title: 'Shop Account - Trovara Farm',
         description:
-          'Create a Trovara Farm shop account to track future orders, connect WhatsApp or Telegram, and get ready for checkout as each harvest window opens.',
+          'Create a Trovara Farm shop account to prepare for harvest checkout, connect WhatsApp or Telegram, and stay linked to waitlist updates as each supply window opens.',
       },
     },
     {
