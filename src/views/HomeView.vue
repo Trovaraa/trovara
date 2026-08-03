@@ -120,7 +120,7 @@ const principles = [
                   </RouterLink>
                 </div>
 
-                <div class="relative z-10 mt-5 flex items-center justify-between border-t border-trovara-dark/10 pt-4 text-xs font-semibold text-trovara-dark/60">
+                <div class="hero-farm-card__footer relative z-10 mt-5 flex items-center justify-between border-t border-trovara-dark/10 pt-4 text-xs font-semibold text-trovara-dark/70">
                   <span>Farm-direct</span><span>Traceable</span><span>Naturally grown</span>
                 </div>
               </div>

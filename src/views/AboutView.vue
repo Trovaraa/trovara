@@ -473,7 +473,12 @@ const team: TeamMember[] = [
     transform: rotateY(0deg) scale(1);
   }
 
-  45% {
+  42% {
+    transform: rotateY(180deg) scale(1.06);
+  }
+
+  /* Hold the logo face briefly so the mid-spin read isn’t a blink. */
+  58% {
     transform: rotateY(180deg) scale(1.06);
   }
 
@@ -484,7 +489,7 @@ const team: TeamMember[] = [
 
 .team-card:hover .team-avatar__inner,
 .team-card:focus-within .team-avatar__inner {
-  animation: team-avatar-spin 1.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: team-avatar-spin 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .team-card:hover .team-avatar__photo,

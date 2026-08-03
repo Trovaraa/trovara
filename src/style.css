@@ -177,6 +177,18 @@ html.dark .bg-trovara-light {
 html.dark .text-trovara-dark:not(.btn-gold) {
   color: var(--tv-ink) !important;
 }
+/* Opacity variants use a different class name and need their own remap */
+html.dark .text-trovara-dark\/50,
+html.dark .text-trovara-dark\/60,
+html.dark .text-trovara-dark\/70,
+html.dark .text-trovara-dark\/75,
+html.dark .text-trovara-dark\/80 {
+  color: rgb(238 242 238 / 0.78) !important;
+}
+html.dark .border-trovara-dark\/10,
+html.dark .border-trovara-dark\/15 {
+  border-color: rgb(238 242 238 / 0.18) !important;
+}
 html.dark .btn-gold,
 html.dark .btn-gold.text-trovara-dark {
   color: #1a1a0f !important;
