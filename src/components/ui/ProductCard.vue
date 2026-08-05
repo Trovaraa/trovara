@@ -51,8 +51,8 @@ const whatsappLink = computed(() => {
         Waitlist
       </span>
       <div v-if="product.image" class="w-full px-8 pt-5 pb-2 text-left">
-        <h3 class="text-xl font-bold text-trovara-dark mb-1">{{ product.name }}</h3>
-        <p class="text-sm font-medium italic" :class="colors.text">
+        <h3 class="text-xl font-bold text-white mb-1">{{ product.name }}</h3>
+        <p class="text-sm font-medium italic text-trovara-gold-300">
           {{ product.tagline }}
         </p>
       </div>
