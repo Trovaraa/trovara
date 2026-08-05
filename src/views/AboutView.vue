@@ -37,7 +37,7 @@ const milestones = [
   {
     year: 'Crop Establishment',
     title: 'Coconut & Plantain',
-    desc: 'We established tropical crop lines for mature coconut (TRV-COC-PIECE) and green or ripe plantain (TRV-PLT-BUNCH), with first harvests forecast for plantain in March 2027 and coconut in June 2027.',
+    desc: 'We established tropical crop lines for mature coconut and green or ripe plantain, with first harvests forecast for plantain in March 2027 and coconut in June 2027.',
   },
   {
     year: 'Farm Diversification',
