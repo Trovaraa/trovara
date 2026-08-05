@@ -50,6 +50,10 @@ jobs:
         uses: nwtgck/actions-netlify@79e338a95494cff63e8989766a283d91b0564198 # v3.0
         with:
           publish-dir: ./dist
+          # CLI/API deploys skip netlify.toml `functions = …` unless passed here.
+          # Without this, /.netlify/functions/* 404 and forms show a generic failure.
+          functions-dir: ./netlify/deploy-functions
+          netlify-config-path: ./netlify.toml
           production-branch: main
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "Deploy from GitHub Actions (${{ github.sha }})"
