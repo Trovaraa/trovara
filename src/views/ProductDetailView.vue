@@ -314,6 +314,7 @@ watch(
                   sku: 'TRV-COC-MILK',
                   tagline: 'Creamy, pour-ready.',
                   body: 'Pressed from mature Trovara coconut flesh for cooking, baking, and beverages - no synthetic thickeners planned.',
+                  image: '/images/products/trovara-harvest-coconut-milk.jpg',
                 },
                 {
                   icon: 'coconut-chips',
@@ -321,6 +322,7 @@ watch(
                   sku: 'TRV-COC-CHIPS',
                   tagline: 'Crunch from the farm.',
                   body: 'Lightly dried coconut slices for snacking, toppings, and trail mixes - traceable back to harvest lots.',
+                  image: '/images/products/trovara-harvest-coconut-chips.jpg',
                 },
                 {
                   icon: 'coconut-oil',
@@ -328,20 +330,26 @@ watch(
                   sku: 'TRV-COC-OIL',
                   tagline: 'Clear, kitchen-ready oil.',
                   body: 'Oil pressed from our own mature coconuts for cooking and food service, with retail and bulk packs planned.',
+                  image: '/images/products/trovara-harvest-coconut-oil.jpg',
                 },
               ]"
               :key="format.sku"
-              class="rounded-3xl border border-[#7B4F2E]/10 bg-white p-6 flex flex-col shadow-sm"
+              class="rounded-3xl border border-[#7B4F2E]/10 bg-white overflow-hidden flex flex-col shadow-sm"
             >
-              <div class="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-[#FDF5EE] p-2">
-                <BrandIcon :name="format.icon" :title="format.name" class="h-full w-full" />
+              <img
+                :src="format.image"
+                :alt="format.name"
+                class="w-full aspect-[3/2] object-cover object-left"
+                loading="lazy"
+              />
+              <div class="p-6 flex flex-col flex-1">
+                <span class="mb-3 self-center rounded-full bg-[#7B4F2E]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[#7B4F2E]">
+                  Planned after harvest
+                </span>
+                <h3 class="text-xl font-black text-trovara-dark text-center">{{ format.name }}</h3>
+                <p class="mt-1 text-center text-sm font-medium italic text-[#7B4F2E]/80">{{ format.tagline }}</p>
+                <p class="mt-3 flex-1 text-sm leading-relaxed text-gray-600 text-center">{{ format.body }}</p>
               </div>
-              <span class="mb-3 self-center rounded-full bg-[#7B4F2E]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[#7B4F2E]">
-                Planned after harvest
-              </span>
-              <h3 class="text-xl font-black text-trovara-dark text-center">{{ format.name }}</h3>
-              <p class="mt-1 text-center text-sm font-medium italic text-[#7B4F2E]/80">{{ format.tagline }}</p>
-              <p class="mt-3 flex-1 text-sm leading-relaxed text-gray-600 text-center">{{ format.body }}</p>
             </div>
           </div>
           <div class="mt-8 flex flex-wrap gap-3">
@@ -380,6 +388,7 @@ watch(
                   sku: 'chips',
                   tagline: 'Crunch from the farm.',
                   body: 'Lightly dried plantain slices for snacking and food service - traceable back to harvest lots, with retail and bulk packs planned.',
+                  image: '/images/products/trovara-harvest-plantain-chips.jpg',
                 },
                 {
                   icon: 'package',
@@ -387,20 +396,26 @@ watch(
                   sku: 'flour',
                   tagline: 'The ancient staple, reimagined.',
                   body: 'Milled from sun-dried plantation plantains with no additives, bleaching agents, or preservatives - suited to baking, soups, porridges, and wholesale.',
+                  image: '/images/products/trovara-harvest-plantain-flour.jpg',
                 },
               ]"
               :key="format.sku"
-              class="rounded-3xl border border-amber-100 bg-white p-6 flex flex-col shadow-sm"
+              class="rounded-3xl border border-amber-100 bg-white overflow-hidden flex flex-col shadow-sm"
             >
-              <div class="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-amber-50 p-2">
-                <BrandIcon :name="format.icon" :title="format.name" class="h-full w-full" />
+              <img
+                :src="format.image"
+                :alt="format.name"
+                class="w-full aspect-[3/2] object-cover object-left"
+                loading="lazy"
+              />
+              <div class="p-6 flex flex-col flex-1">
+                <span class="mb-3 self-center rounded-full bg-amber-200/60 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-amber-800">
+                  Planned after harvest
+                </span>
+                <h3 class="text-xl font-black text-trovara-dark text-center">{{ format.name }}</h3>
+                <p class="mt-1 text-center text-sm font-medium italic text-amber-800/80">{{ format.tagline }}</p>
+                <p class="mt-3 flex-1 text-sm leading-relaxed text-gray-600 text-center">{{ format.body }}</p>
               </div>
-              <span class="mb-3 self-center rounded-full bg-amber-200/60 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-amber-800">
-                Planned after harvest
-              </span>
-              <h3 class="text-xl font-black text-trovara-dark text-center">{{ format.name }}</h3>
-              <p class="mt-1 text-center text-sm font-medium italic text-amber-800/80">{{ format.tagline }}</p>
-              <p class="mt-3 flex-1 text-sm leading-relaxed text-gray-600 text-center">{{ format.body }}</p>
             </div>
           </div>
           <div class="mt-8 flex flex-wrap gap-3">
