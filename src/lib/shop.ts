@@ -66,11 +66,12 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   }
   if (data.csrfToken) csrfToken = data.csrfToken
   if (!response.ok) {
-    throw new ShopApiError(
-      data.error || 'Something went wrong. Please try again.',
-      response.status,
-      data.needsVerification === true,
-    )
+    const rawError = data.error
+    const message =
+      typeof rawError === 'string' && rawError.trim()
+        ? rawError
+        : 'Something went wrong. Please try again.'
+    throw new ShopApiError(message, response.status, data.needsVerification === true)
   }
   return data
 }

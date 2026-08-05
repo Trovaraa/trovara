@@ -70,6 +70,15 @@ const router = createRouter({
         description: 'Verify your email address for your Trovara Farm shop account.',
       },
     },
+    // Aliases for mistyped / truncated inbox links (keep query: token=...).
+    {
+      path: '/verify-email',
+      redirect: (to) => ({ path: '/shop/verify-email', query: to.query, hash: to.hash }),
+    },
+    {
+      path: '/reset-password',
+      redirect: (to) => ({ path: '/shop/reset-password', query: to.query, hash: to.hash }),
+    },
     {
       path: '/lot/:farmSlug/:lotCode',
       name: 'lot-trace',

@@ -21,17 +21,24 @@ export default defineConfig({
       workbox: {
         // Avoid Workbox terser early-exit under Node 22 (same as Trovara OS).
         mode: 'development',
-        globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2,ico,webmanifest}'],
-        navigateFallback: '/index.html',
-        navigateFallbackDenylist: [
-          /^\/\.netlify/,
-          /^\/shop-api/,
-          /^\/lot-api/,
-          /^\/feed\.xml/,
-          /^\/sitemap\.xml/,
-          /^\/robots\.txt/,
-        ],
+        // Do not precache HTML or use navigateFallback. Netlify already SPA-fallbacks
+        // to index.html; a precached shell is what made email deep links (e.g.
+        // /shop/verify-email) render the branded 404 after a route shipped.
+        globPatterns: ['**/*.{js,css,svg,png,webp,woff2,ico,webmanifest}'],
+        navigateFallback: null,
         runtimeCaching: [
+          {
+            urlPattern: ({ request }) => request.mode === 'navigate',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'trovara-pages',
+              networkTimeoutSeconds: 3,
+              expiration: {
+                maxEntries: 16,
+                maxAgeSeconds: 60 * 60 * 24,
+              },
+            },
+          },
           {
             urlPattern: ({ request }) =>
               request.destination === 'image' || request.destination === 'font',

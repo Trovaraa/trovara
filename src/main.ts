@@ -17,6 +17,16 @@ import './style.css'
 applyThemeClassEarly()
 initAnalytics()
 
+// Reload once when a new SW takes control so deep links never run against a
+// stale router table from a previous deploy.
+if ('serviceWorker' in navigator) {
+  let refreshing = false
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (refreshing) return
+    refreshing = true
+    window.location.reload()
+  })
+}
 registerSW({ immediate: true })
 
 const app = createApp(App)
