@@ -83,14 +83,18 @@ const productSchemas = computed(() =>
           >
             <!-- Visual -->
             <div
-              class="rounded-3xl flex items-center justify-center min-h-72 relative overflow-hidden"
-              :class="[productColorClasses(product.id).headerBg, product.image ? 'p-0' : 'p-12']"
+              class="rounded-3xl relative overflow-hidden"
+              :class="[
+                product.image
+                  ? 'bg-trovara-dark'
+                  : ['flex items-center justify-center min-h-72 p-12', productColorClasses(product.id).headerBg],
+              ]"
             >
               <img
                 v-if="product.image"
                 :src="product.image"
                 :alt="product.imageAlt ?? product.name"
-                class="absolute inset-0 h-full w-full object-cover"
+                class="w-full aspect-[3/2] object-cover object-left"
               />
               <template v-else>
                 <div

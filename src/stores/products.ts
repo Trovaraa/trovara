@@ -23,6 +23,8 @@ export const useProductsStore = defineStore('products', {
         available: true,
         waitlist: true,
         availabilityNote: 'First harvest forecast for June 2027',
+        image: '/images/products/trovara-fresh-coconut.jpg',
+        imageAlt: 'Trovara Fresh Coconut — naturally grown, responsibly farmed',
         specs: [
           { label: 'Fresh SKU', value: 'TRV-COC-PIECE · whole mature coconut' },
           { label: 'Processed SKUs', value: 'TRV-COC-MILK · TRV-COC-CHIPS · TRV-COC-OIL (planned)' },
@@ -54,8 +56,8 @@ export const useProductsStore = defineStore('products', {
         available: true,
         waitlist: true,
         availabilityNote: 'First harvest forecast for March 2027',
-        image: '/images/products/fresh-plantain.jpg',
-        imageAlt: 'Fresh green Trovara plantain packed in a graded carton',
+        image: '/images/products/trovara-fresh-plantain.jpg',
+        imageAlt: 'Trovara Fresh Plantain — naturally grown, responsibly farmed',
         specs: [
           { label: 'Fresh SKU', value: 'TRV-PLT-BUNCH · green or ripe whole fruit' },
           { label: 'Processed SKUs', value: 'TRV-DRP-PACK · dried chips · TRV-PLF-PACK · flour (planned)' },
@@ -115,6 +117,8 @@ export const useProductsStore = defineStore('products', {
         available: true,
         waitlist: true,
         availabilityNote: 'Join the waitlist for first availability',
+        image: '/images/products/trovara-fresh-eggs.jpg',
+        imageAlt: 'Trovara Fresh Eggs — pasture-raised eggs you can trust',
         specs: [
           { label: 'SKUs', value: 'TRV-EGG-CRATE · crate of 30 pasture-raised eggs' },
           { label: 'Packaging', value: 'Crates of 30; half-crates on request' },
@@ -142,6 +146,8 @@ export const useProductsStore = defineStore('products', {
         available: true,
         waitlist: true,
         availabilityNote: 'First harvest forecast for December 2026',
+        image: '/images/products/trovara-fresh-palm-oil.jpg',
+        imageAlt: 'Trovara Fresh Palm Oil — naturally grown, responsibly farmed',
         specs: [
           { label: 'SKUs', value: 'TRV-POL-1L · TRV-POL-BULK (planned)' },
           { label: 'Packaging', value: 'Retail bottles and food-service bulk formats to be confirmed' },

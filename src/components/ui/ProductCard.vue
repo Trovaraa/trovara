@@ -17,37 +17,45 @@ const whatsappLink = computed(() => {
 </script>
 
 <template>
-  <article class="card group cursor-pointer">
+  <article class="card group cursor-pointer overflow-hidden">
     <!-- Card Header -->
     <div
-      class="relative px-8 pt-10 pb-6 flex flex-col items-center text-center overflow-hidden"
-      :class="colors.headerBg"
+      class="relative flex flex-col items-center text-center overflow-hidden"
+      :class="product.image ? 'bg-trovara-dark' : ['px-8 pt-10 pb-6', colors.headerBg]"
     >
       <img
         v-if="product.image"
         :src="product.image"
         :alt="product.imageAlt ?? product.name"
-        class="absolute inset-0 h-full w-full object-cover opacity-25"
+        class="w-full aspect-[3/2] object-cover object-left"
       />
-      <div class="relative z-10 w-20 h-20 mb-4 rounded-2xl bg-white/80 p-2 shadow-sm group-hover:scale-105 transition-transform duration-300 dark:bg-trovara-dark/70">
-        <BrandIcon :name="product.icon" :title="product.name" class="w-full h-full" />
-      </div>
+      <template v-else>
+        <div class="w-20 h-20 mb-4 rounded-2xl bg-white/80 p-2 shadow-sm group-hover:scale-105 transition-transform duration-300 dark:bg-trovara-dark/70">
+          <BrandIcon :name="product.icon" :title="product.name" class="w-full h-full" />
+        </div>
+        <h3 class="relative text-xl font-bold text-trovara-dark mb-1">{{ product.name }}</h3>
+        <p class="relative text-sm font-medium italic" :class="colors.text">
+          {{ product.tagline }}
+        </p>
+      </template>
       <span
         v-if="!product.available"
-        class="absolute top-4 right-4 px-2.5 py-1 bg-trovara-green/10 text-trovara-green text-xs font-semibold rounded-full"
+        class="absolute top-4 right-4 z-10 px-2.5 py-1 bg-white/95 text-trovara-green text-xs font-semibold rounded-full shadow-sm"
       >
         Coming Soon
       </span>
       <span
         v-else-if="product.waitlist"
-        class="absolute top-4 right-4 px-2.5 py-1 bg-trovara-green/10 text-trovara-green text-xs font-semibold rounded-full"
+        class="absolute top-4 right-4 z-10 px-2.5 py-1 bg-white/95 text-trovara-green text-xs font-semibold rounded-full shadow-sm"
       >
         Waitlist
       </span>
-      <h3 class="relative text-xl font-bold text-trovara-dark mb-1">{{ product.name }}</h3>
-      <p class="relative text-sm font-medium italic" :class="colors.text">
-        {{ product.tagline }}
-      </p>
+      <div v-if="product.image" class="w-full px-8 pt-5 pb-2 text-left">
+        <h3 class="text-xl font-bold text-trovara-dark mb-1">{{ product.name }}</h3>
+        <p class="text-sm font-medium italic" :class="colors.text">
+          {{ product.tagline }}
+        </p>
+      </div>
     </div>
 
     <!-- Card Body -->

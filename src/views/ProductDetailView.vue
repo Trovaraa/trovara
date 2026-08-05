@@ -106,14 +106,14 @@ watch(
         <div class="container-trovara grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-14 items-start">
           <div>
             <div
-              class="rounded-3xl flex items-center justify-center min-h-72 relative overflow-hidden mb-8"
-              :class="productColorClasses(product.id).headerBg"
+              class="rounded-3xl relative overflow-hidden mb-8"
+              :class="product.image ? 'bg-trovara-dark' : ['flex items-center justify-center min-h-72', productColorClasses(product.id).headerBg]"
             >
               <img
                 v-if="product.image"
                 :src="product.image"
                 :alt="product.imageAlt ?? product.name"
-                class="absolute inset-0 h-full w-full object-cover"
+                class="w-full aspect-[3/2] object-cover object-left"
               />
               <template v-else>
                 <div class="absolute inset-0 opacity-5" :class="productColorClasses(product.id).overlayBg" />

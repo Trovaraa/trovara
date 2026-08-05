@@ -74,7 +74,10 @@ const cartTotalKobo = computed(() =>
 
 function productImage(name: string): string | null {
   const lower = name.toLowerCase()
-  if (lower.includes('plantain')) return '/images/products/fresh-plantain.jpg'
+  if (lower.includes('plantain')) return '/images/products/trovara-fresh-plantain.jpg'
+  if (lower.includes('coconut')) return '/images/products/trovara-fresh-coconut.jpg'
+  if (lower.includes('egg')) return '/images/products/trovara-fresh-eggs.jpg'
+  if (lower.includes('palm')) return '/images/products/trovara-fresh-palm-oil.jpg'
   if (lower.includes('chicken') || lower.includes('poultry')) return '/images/products/pasture-raised-chicken.jpg'
   return null
 }
