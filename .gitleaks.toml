@@ -1,0 +1,17 @@
+# Gitleaks config for Trovara marketing CI.
+# Extends defaults; allowlists known false positives (not real secrets).
+
+title = "trovera"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "False positives: PWA localStorage keys, docs placeholders"
+paths = [
+  '''(^|/)docs/''',
+  '''useInstallPrompt\.ts$''',
+]
+regexes = [
+  '''a2hs-dismissed''',
+]
