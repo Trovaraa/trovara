@@ -89,6 +89,8 @@ function safeClientError(result) {
   }
 
   const message = result.error.trim()
+  // Reject control chars / markup in upstream error text before echoing to clients.
+  // eslint-disable-next-line no-control-regex -- intentional control-char gate
   if (!message || message.length > 300 || /[\u0000-\u001f\u007f<>]/.test(message)) {
     return null
   }
