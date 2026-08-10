@@ -7,6 +7,7 @@ import StructuredData from './components/StructuredData.vue'
 import WhatsAppButton from './components/WhatsAppButton.vue'
 import InstallPrompt from './components/InstallPrompt.vue'
 import ConsentBanner from './components/ConsentBanner.vue'
+import { bannerOpen } from './lib/consent'
 import { usePageMeta } from './composables/usePageMeta'
 import { useTheme } from './lib/theme'
 
@@ -53,8 +54,8 @@ router.afterEach((to) => {
       </RouterView>
     </main>
     <TheFooter />
-    <WhatsAppButton />
-    <InstallPrompt />
+    <WhatsAppButton v-if="!bannerOpen" />
+    <InstallPrompt v-if="!bannerOpen" />
   </div>
 </template>
 

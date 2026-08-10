@@ -134,7 +134,7 @@ const router = createRouter({
       name: 'blog',
       component: () => import('../views/BlogView.vue'),
       meta: {
-        title: 'Journal - Trovara Farm',
+        title: 'Blog - Trovara Farm',
         description:
           'Read stories, field notes, and insights from Trovara Farm on food, farming, and the future of agriculture.',
       },
@@ -144,8 +144,37 @@ const router = createRouter({
       name: 'blog-post',
       component: () => import('../views/BlogPostView.vue'),
       meta: {
-        title: 'Journal - Trovara Farm',
-        description: 'Read a Trovara Farm journal post with field updates, lessons, and practical farming insights.',
+        title: 'Blog - Trovara Farm',
+        description: 'Read a Trovara Farm blog post with field updates, lessons, and practical farming insights.',
+      },
+    },
+    {
+      path: '/moments',
+      name: 'moments',
+      component: () => import('../views/MomentsView.vue'),
+      meta: {
+        title: 'Moments - Trovara Farm',
+        description:
+          'Photos and videos from our farm community — harvest days, happy moments, and the people behind Trovara.',
+      },
+    },
+    {
+      path: '/careers',
+      name: 'careers',
+      component: () => import('../views/CareersView.vue'),
+      meta: {
+        title: 'Careers - Trovara Farm',
+        description:
+          'Open roles at Trovara Farm. Join the team growing regenerative food from Abeokuta.',
+      },
+    },
+    {
+      path: '/careers/:slug',
+      name: 'career-post',
+      component: () => import('../views/CareerPostView.vue'),
+      meta: {
+        title: 'Role - Trovara Farm',
+        description: 'Career opening at Trovara Farm.',
       },
     },
     {
@@ -176,6 +205,15 @@ const router = createRouter({
         title: 'Wholesale One-Pager - Trovara Farm',
         description:
           'Print-ready wholesale supply brief covering product lines, nationwide delivery, harvest windows, packaging, minimum orders, and contact details.',
+      },
+    },
+    {
+      path: '/brand/:token',
+      name: 'brand-pack',
+      component: () => import('../views/BrandPackView.vue'),
+      meta: {
+        title: 'Brand pack - Trovara Farm',
+        description: 'View and download Trovara Farm brand assets from a shared press pack.',
       },
     },
     {

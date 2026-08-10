@@ -218,7 +218,7 @@ const orderSteps = [
                 <p class="text-[10px] font-black uppercase tracking-[0.24em] text-trovara-green mb-1">Request a Supply Plan</p>
                 <h2 class="text-lg font-black text-trovara-dark mb-2">Tell us what you need, where, and how often.</h2>
                 <div class="flex flex-wrap gap-x-5 gap-y-1 text-xs text-gray-600">
-                  <span>info@trovara.farm</span>
+                  <span>hello@trovara.farm</span>
                   <span>+234 810 369 3426</span>
                   <span>trovara.farm/wholesale</span>
                   <span>Trovara Farm · Abeokuta, Nigeria</span>

@@ -31,10 +31,13 @@ html.dark {
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: clip;
   }
 
   body {
     @apply font-sans antialiased;
+    min-width: 0;
+    overflow-x: clip;
     background-color: var(--tv-canvas);
     color: var(--tv-ink);
     text-rendering: optimizeLegibility;
@@ -44,8 +47,15 @@ html.dark {
   input,
   textarea,
   select {
+    max-width: 100%;
     color: var(--tv-ink);
     background-color: var(--tv-surface);
+  }
+
+  img,
+  video,
+  svg {
+    max-width: 100%;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -94,6 +104,8 @@ html.dark {
 
   .container-trovara {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    width: 100%;
+    min-width: 0;
   }
 
   .blog-content {
@@ -139,6 +151,23 @@ html.dark {
 
   .blog-content a {
     @apply text-trovara-green font-medium hover:underline;
+  }
+}
+
+@media (max-width: 639px) {
+  input,
+  textarea,
+  select {
+    /* Prevent iOS from zooming the viewport when a field receives focus. */
+    font-size: 16px !important;
+  }
+
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    touch-action: manipulation;
   }
 }
 

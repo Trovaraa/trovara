@@ -1,3 +1,12 @@
-/shop-api/*  https://os.trovara.farm/shop/:splat  200!
-/lot-api/*   https://os.trovara.farm/public/lots/:splat  200!
-/*    /index.html   200
+/shop-api/*    https://os.trovara.farm/shop/:splat  200!
+/lot-api/*     https://os.trovara.farm/public/lots/:splat  200!
+/brand-api     https://os.trovara.farm/public/brand  200!
+/brand-api/    https://os.trovara.farm/public/brand  200!
+/brand-api/*   https://os.trovara.farm/public/brand/:splat  200!
+/moments-api   https://os.trovara.farm/public/moments  200!
+/moments-api/  https://os.trovara.farm/public/moments  200!
+/moments-api/* https://os.trovara.farm/public/moments/:splat  200!
+/careers-api   https://os.trovara.farm/public/careers  200!
+/careers-api/  https://os.trovara.farm/public/careers  200!
+/careers-api/* https://os.trovara.farm/public/careers/:splat  200!
+/*             /index.html   200

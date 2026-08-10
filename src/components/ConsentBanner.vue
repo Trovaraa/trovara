@@ -32,7 +32,7 @@ onBeforeUnmount(() => {
   <Transition name="consent">
     <div
       v-if="bannerOpen"
-      class="fixed inset-x-0 bottom-0 z-[70] p-4 sm:p-6 pointer-events-none"
+      class="fixed inset-x-0 bottom-0 z-[70] p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] sm:p-6 pointer-events-none"
     >
       <div
         ref="panel"
@@ -40,7 +40,7 @@ onBeforeUnmount(() => {
         role="dialog"
         aria-labelledby="consent-title"
         aria-describedby="consent-body"
-        class="pointer-events-auto max-w-3xl mx-auto rounded-2xl bg-trovara-dark text-white shadow-2xl border border-white/10 p-5 sm:p-6 focus:outline-none focus:ring-2 focus:ring-trovara-gold/60"
+        class="pointer-events-auto max-h-[calc(100dvh-2rem)] overflow-y-auto max-w-3xl mx-auto rounded-2xl bg-trovara-dark text-white shadow-2xl border border-white/10 p-5 sm:p-6 focus:outline-none focus:ring-2 focus:ring-trovara-gold/60"
       >
         <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-6">
           <div class="flex-1 min-w-0">
@@ -63,14 +63,14 @@ onBeforeUnmount(() => {
           <div class="flex gap-3 sm:flex-shrink-0">
             <button
               type="button"
-              class="btn-gold text-sm px-5 py-2.5 flex-1 sm:flex-none"
+              class="btn-gold min-h-11 text-sm px-5 py-2.5 flex-1 sm:flex-none"
               @click="setConsent('granted')"
             >
               Accept
             </button>
             <button
               type="button"
-              class="inline-flex items-center justify-center flex-1 sm:flex-none px-5 py-2.5 rounded-lg border-2 border-white/25 bg-white/10 text-white font-semibold text-sm hover:bg-white/20 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-white/50"
+              class="inline-flex min-h-11 items-center justify-center flex-1 sm:flex-none px-5 py-2.5 rounded-lg border-2 border-white/25 bg-white/10 text-white font-semibold text-sm hover:bg-white/20 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-white/50"
               @click="setConsent('denied')"
             >
               Decline

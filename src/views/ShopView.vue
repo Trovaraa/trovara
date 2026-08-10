@@ -369,7 +369,7 @@ onMounted(async () => {
       <div class="container-trovara py-12 md:py-16">
         <div class="max-w-3xl">
           <p class="text-xs font-black uppercase tracking-[0.24em] text-trovara-gold">Trovara shop</p>
-          <h1 class="mt-4 text-4xl font-black leading-tight md:text-6xl">Your farm account. Ready when harvest opens.</h1>
+          <h1 class="mt-4 text-3xl font-black leading-tight sm:text-4xl md:text-6xl">Your farm account. Ready when harvest opens.</h1>
           <p class="mt-5 max-w-2xl text-base leading-7 text-white/70 md:text-lg">
             Create an account now to prepare for harvest checkout, connect WhatsApp or Telegram, and stay linked to waitlist updates. Products appear in the shop by SKU as each supply window opens - nothing is sold here until then.
           </p>
@@ -410,7 +410,7 @@ onMounted(async () => {
         :class="account ? 'order-3' : 'order-4 mt-8'"
       >
         <section>
-          <div class="mb-6 flex items-end justify-between gap-4">
+          <div class="mb-6 flex flex-col items-start gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
             <div>
               <p class="text-xs font-black uppercase tracking-[0.2em] text-trovara-green">{{ products.length ? 'Open SKUs' : 'Harvest catalogue' }}</p>
               <h2 class="mt-2 text-3xl font-black text-trovara-dark">Farm shop</h2>
@@ -426,12 +426,12 @@ onMounted(async () => {
                 </div>
                 <span class="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-trovara-green">{{ product.sku }}</span>
               </div>
-              <div class="p-5">
-                <div class="flex items-start justify-between gap-3">
+              <div class="p-4 sm:p-5">
+                <div class="flex flex-wrap items-start justify-between gap-3">
                   <div><h3 class="text-xl font-black text-trovara-dark">{{ product.name }}</h3><p class="mt-1 text-xs text-gray-500">Sold per {{ product.unit }}</p></div>
                   <p class="shrink-0 font-black text-trovara-green">{{ formatShopPrice(product.priceKobo, product.currency) }}</p>
                 </div>
-                <div class="mt-5 flex items-center justify-between gap-3">
+                <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
                   <div class="inline-flex items-center rounded-xl border border-gray-200">
                     <button type="button" class="h-11 w-11 text-xl" :aria-label="`Remove one ${product.name}`" @click="setQuantity(product.id, (cart[product.id] ?? 0) - 1)">−</button>
                     <span class="min-w-9 text-center font-black">{{ cart[product.id] ?? 0 }}</span>
@@ -666,9 +666,9 @@ onMounted(async () => {
       </section>
     </div>
 
-    <div v-if="showCheckout" class="fixed inset-0 z-[80] grid place-items-center bg-black/70 p-4" @click.self="showCheckout = false">
-      <form class="w-full max-w-lg rounded-3xl bg-white p-6 shadow-2xl md:p-8" @submit.prevent="placeOrder">
-        <div class="flex items-start justify-between gap-4"><div><p class="text-xs font-black uppercase tracking-wider text-trovara-green">Delivery details</p><h2 class="mt-1 text-2xl font-black text-trovara-dark">Complete your order</h2></div><button type="button" class="grid h-10 w-10 place-items-center rounded-xl border border-gray-200" aria-label="Close checkout" @click="showCheckout = false">×</button></div>
+    <div v-if="showCheckout" class="fixed inset-0 z-[80] grid place-items-center overflow-y-auto bg-black/70 p-4" @click.self="showCheckout = false">
+      <form class="my-auto max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-3xl bg-white p-5 shadow-2xl sm:p-6 md:p-8" @submit.prevent="placeOrder">
+        <div class="flex items-start justify-between gap-4"><div class="min-w-0"><p class="text-xs font-black uppercase tracking-wider text-trovara-green">Delivery details</p><h2 class="mt-1 text-2xl font-black text-trovara-dark">Complete your order</h2></div><button type="button" class="grid h-11 w-11 flex-shrink-0 place-items-center rounded-xl border border-gray-200" aria-label="Close checkout" @click="showCheckout = false">×</button></div>
         <label class="mt-6 block text-sm font-bold text-trovara-dark">Delivery address<textarea v-model="checkoutForm.address" required minlength="5" rows="4" class="mt-2 w-full rounded-xl border border-gray-200 px-4 py-3 font-normal outline-none focus:border-trovara-green" /></label>
         <label class="mt-4 block text-sm font-bold text-trovara-dark">Delivery phone<input v-model="checkoutForm.phone" type="tel" class="mt-2 min-h-12 w-full rounded-xl border border-gray-200 px-4 font-normal outline-none focus:border-trovara-green" /></label>
         <div class="mt-6 flex items-center justify-between border-t border-gray-200 pt-5"><span class="font-bold">Estimated total</span><strong class="text-xl text-trovara-green">{{ formatShopPrice(cartTotalKobo) }}</strong></div>

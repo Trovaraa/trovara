@@ -17,6 +17,7 @@
     "@fontsource/inter": "^5.2.8",
     "@vueuse/core": "^14.4.0",
     "markdown-it": "^14.2.0",
+    "netlify-cli": "^27.1.1",
     "pinia": "^3.0.4",
     "vue": "^3.3.4",
     "vue-router": "^4.6.4"

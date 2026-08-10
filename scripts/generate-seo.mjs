@@ -205,7 +205,7 @@ function buildFeedXml(posts) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>Trovara Farm Journal</title>
+    <title>Trovara Farm Blog</title>
     <link>${BASE_URL}/blog</link>
     <description>Stories, harvests, and lessons from Trovara Farm.</description>
     <language>en-us</language>

@@ -47,7 +47,7 @@ const faqs: FaqGroup[] = [
       },
       {
         q: 'How do I get a price quote?',
-        a: 'Use the contact form, WhatsApp, or email us at info@trovara.farm with the product, quantity, and delivery location. We typically respond within one business day. Quotes for harvest-window products are indicative until first supply opens.',
+        a: 'Use the contact form, WhatsApp, or email us at hello@trovara.farm with the product, quantity, and delivery location. We typically respond within one business day. Quotes for harvest-window products are indicative until first supply opens.',
       },
       {
         q: 'Do you accept large bulk and export orders?',
@@ -55,7 +55,7 @@ const faqs: FaqGroup[] = [
       },
       {
         q: 'What payment methods do you accept?',
-        a: 'Once supply opens, local orders will typically use bank transfer, mobile money, and corporate cheques. Export orders will use bank wire, letter of credit (L/C), or other agreed terms. Exact payment methods are confirmed during quoting for each harvest window.',
+        a: 'Once supply opens, local orders will typically use bank transfer, mobile money, and corporate cheques. Export orders will use bank wire, letter of credit (L/C), or other agreed terms. Exact payment methods are confirmed during quoting for each harvest window. For invoice or payment questions, email finance@trovara.farm.',
       },
     ],
   },

@@ -73,6 +73,21 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/lot-api/, '/public/lots'),
       },
+      '/brand-api': {
+        target: 'http://127.0.0.1:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/brand-api/, '/public/brand'),
+      },
+      '/moments-api': {
+        target: 'http://127.0.0.1:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/moments-api/, '/public/moments'),
+      },
+      '/careers-api': {
+        target: 'http://127.0.0.1:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/careers-api/, '/public/careers'),
+      },
     },
   },
 })

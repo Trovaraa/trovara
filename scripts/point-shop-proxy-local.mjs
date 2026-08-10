@@ -25,9 +25,19 @@ if (!existsSync(redirectsPath)) {
   process.exit(1)
 }
 
-const next = `/shop-api/*  ${osOrigin}/shop/:splat  200!
-/lot-api/*   ${osOrigin}/public/lots/:splat  200!
-/*    /index.html   200
+// Exact list endpoints must not keep a trailing slash (OS returns 404 for `/public/.../`).
+const next = `/shop-api/*     ${osOrigin}/shop/:splat  200!
+/lot-api/*      ${osOrigin}/public/lots/:splat  200!
+/brand-api      ${osOrigin}/public/brand  200!
+/brand-api/     ${osOrigin}/public/brand  200!
+/brand-api/*    ${osOrigin}/public/brand/:splat  200!
+/moments-api    ${osOrigin}/public/moments  200!
+/moments-api/   ${osOrigin}/public/moments  200!
+/moments-api/*  ${osOrigin}/public/moments/:splat  200!
+/careers-api    ${osOrigin}/public/careers  200!
+/careers-api/   ${osOrigin}/public/careers  200!
+/careers-api/*  ${osOrigin}/public/careers/:splat  200!
+/*              /index.html   200
 `
 
 writeFileSync(redirectsPath, next)

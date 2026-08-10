@@ -16,7 +16,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
+  <div class="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-4 sm:bottom-6 sm:right-6 z-40 flex max-w-[calc(100vw-2rem)] flex-col items-end gap-3">
 
     <Transition
       enter-active-class="transition duration-300 ease-out"
@@ -28,7 +28,7 @@ onMounted(() => {
     >
       <div
         v-if="expanded"
-        class="bg-white rounded-2xl shadow-2xl p-5 w-72 border border-gray-100"
+        class="bg-white rounded-2xl shadow-2xl p-4 sm:p-5 w-72 max-w-full border border-gray-100"
       >
         <div class="flex items-start gap-3 mb-3">
           <img src="/brand/trovara-monogram-tile-v1.svg" alt="" class="w-10 h-10 flex-shrink-0" width="40" height="40" />
