@@ -5,6 +5,15 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
+    groups:
+      npm-compatible-updates:
+        update-types:
+          - "minor"
+          - "patch"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -12,6 +21,6 @@ updates:
       interval: "weekly"
     open-pull-requests-limit: 10
     groups:
-      codeql-actions:
+      github-actions:
         patterns:
-          - "github/codeql-action/*"
+          - "*"

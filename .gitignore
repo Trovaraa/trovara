@@ -24,6 +24,7 @@ dist-ssr
 *.sw?
 .vscode/
 .netlify/
+.lighthouseci/
 
 # Separate repo - lives at ../trovara-os
 trovara-os/

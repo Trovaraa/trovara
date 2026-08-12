@@ -50,7 +50,7 @@ jobs:
           JOURNAL_API_URL: https://os.trovara.farm/public/journal
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@79e338a95494cff63e8989766a283d91b0564198 # v3.0
+        uses: nwtgck/actions-netlify@d22a32a27c918fe470bbc562e984f80ec48c2668 # v4.0.0
         with:
           publish-dir: ./dist
           # CLI/API deploys skip netlify.toml `functions = …` unless passed here.

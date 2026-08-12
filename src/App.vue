@@ -49,7 +49,10 @@ router.afterEach((to) => {
     <!-- Ahead of the page so the banner is the first thing keyboard focus reaches. -->
     <ConsentBanner />
     <TheNavbar />
-    <main id="main-content" ref="mainContent" class="flex-1" tabindex="-1">
+    <!-- Keep the footer below the initial viewport while an async route chunk
+         resolves. Without this reserve, deep links render the footer first and
+         then push it away, producing a large layout shift. -->
+    <main id="main-content" ref="mainContent" class="min-h-screen flex-1" tabindex="-1">
       <RouterView v-slot="{ Component }">
         <!-- No mode="out-in": that emptied <main> during leave and parked the
              viewport on the footer (looked like a broken navigation). -->
