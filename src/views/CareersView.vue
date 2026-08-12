@@ -10,6 +10,10 @@ type CareerPost = {
   department: string | null
   location: string | null
   employmentType: string
+  engagementDetails: string | null
+  projectName: string | null
+  duration: string | null
+  applicationDeadline: string | null
   summary: string
   applyEmail: string
   publishedAt: string | null
@@ -25,6 +29,8 @@ const employmentLabel: Record<string, string> = {
   contract: 'Contract',
   internship: 'Internship',
   temporary: 'Temporary',
+  consultancy: 'Consultancy',
+  graduate_placement: 'Graduate placement',
 }
 
 const hasOpenRoles = computed(() => posts.value.length > 0)
@@ -88,6 +94,7 @@ onMounted(load)
             <div class="min-w-0 flex-1">
               <p class="text-xs font-bold uppercase tracking-wide text-trovara-gold mb-2">
                 {{ employmentLabel[post.employmentType] || post.employmentType }}
+                <span v-if="post.engagementDetails"> · {{ post.engagementDetails }}</span>
                 <span v-if="post.department"> · {{ post.department }}</span>
                 <span v-if="post.location"> · {{ post.location }}</span>
               </p>
@@ -97,6 +104,9 @@ onMounted(load)
                 </RouterLink>
               </h2>
               <p class="text-trovara-muted leading-relaxed">{{ post.summary }}</p>
+              <p v-if="post.applicationDeadline" class="mt-3 text-sm font-semibold text-trovara-dark">
+                Apply by {{ new Date(`${post.applicationDeadline}T00:00:00`).toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' }) }}
+              </p>
             </div>
             <RouterLink class="btn-primary w-full sm:w-auto" :to="`/careers/${post.slug}`">View role</RouterLink>
           </article>

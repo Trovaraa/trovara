@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import {
   MOMENTS_CONSENT_VERSION,
   MOMENTS_MAX_UPLOAD_BYTES,
@@ -15,6 +15,7 @@ type Moment = {
   durationSeconds?: number | null
   createdAt: string
   description?: string | null
+  groupLabel?: string | null
 }
 
 type MomentsResponse = {
@@ -24,6 +25,18 @@ type MomentsResponse = {
 const moments = ref<Moment[]>([])
 const loading = ref(true)
 const loadError = ref('')
+
+const groupedMoments = computed(() => {
+  const groups = new Map<string, { label: string; moments: Moment[] }>()
+  for (const moment of moments.value) {
+    const month = new Intl.DateTimeFormat('en', { month: 'long', year: 'numeric' }).format(new Date(moment.createdAt))
+    const label = moment.groupLabel?.trim() || month
+    const group = groups.get(label) ?? { label, moments: [] }
+    group.moments.push(moment)
+    groups.set(label, group)
+  }
+  return [...groups.values()]
+})
 
 const uploading = ref(false)
 const uploaded = ref(false)
@@ -338,27 +351,32 @@ onMounted(() => {
           <p>No moments have been published yet. You can share one below.</p>
         </div>
 
-        <div v-else class="moments-grid">
-          <div v-for="moment in moments" :key="moment.id" class="moment-card">
-            <div class="moment-media-wrapper">
-              <img
-                v-if="moment.mediaKind === 'image'"
-                :src="moment.mediaUrl"
-                :alt="moment.description || 'A moment shared by the Trovara Farm community'"
-                class="moment-media"
-                loading="lazy"
-              />
-              <video
-                v-else
-                :src="moment.mediaUrl"
-                :poster="moment.posterUrl || undefined"
-                controls
-                :aria-label="moment.description || 'Video shared by the Trovara Farm community'"
-                class="moment-media"
-                preload="metadata"
-              />
+        <div v-else class="gallery-groups">
+          <section v-for="group in groupedMoments" :key="group.label" class="gallery-group">
+            <h3 class="gallery-group-title">{{ group.label }}</h3>
+            <div class="moments-grid">
+              <div v-for="moment in group.moments" :key="moment.id" class="moment-card">
+                <div class="moment-media-wrapper">
+                  <img
+                    v-if="moment.mediaKind === 'image'"
+                    :src="moment.mediaUrl"
+                    :alt="moment.description || 'A moment shared by the Trovara Farm community'"
+                    class="moment-media"
+                    loading="lazy"
+                  />
+                  <video
+                    v-else
+                    :src="moment.mediaUrl"
+                    :poster="moment.posterUrl || undefined"
+                    controls
+                    :aria-label="moment.description || 'Video shared by the Trovara Farm community'"
+                    class="moment-media"
+                    preload="metadata"
+                  />
+                </div>
+              </div>
             </div>
-          </div>
+          </section>
         </div>
       </div>
     </section>
@@ -653,6 +671,18 @@ onMounted(() => {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
+}
+
+.gallery-groups {
+  display: grid;
+  gap: 3rem;
+}
+
+.gallery-group-title {
+  margin: 0 0 1rem;
+  color: #2f6b3b;
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  font-weight: 800;
 }
 
 @media (max-width: 768px) {

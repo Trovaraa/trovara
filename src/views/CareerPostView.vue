@@ -12,9 +12,16 @@ type CareerPost = {
   department: string | null
   location: string | null
   employmentType: string
+  engagementDetails: string | null
+  projectName: string | null
+  duration: string | null
+  applicationDeadline: string | null
+  expectedStartDate: string | null
   summary: string
   bodyMarkdown: string
   applyEmail: string
+  applySubject: string | null
+  applicationInstructions: string | null
   publishedAt: string | null
 }
 
@@ -30,11 +37,13 @@ const employmentLabel: Record<string, string> = {
   contract: 'Contract',
   internship: 'Internship',
   temporary: 'Temporary',
+  consultancy: 'Consultancy',
+  graduate_placement: 'Graduate placement',
 }
 
 const applyHref = computed(() => {
   const email = post.value?.applyEmail || CONTACT_EMAILS.hello
-  const subject = post.value ? `Application: ${post.value.title}` : 'Career application'
+  const subject = post.value?.applySubject || (post.value ? `Application: ${post.value.title}` : 'Career application')
   return mailto(email, subject)
 })
 
@@ -94,10 +103,18 @@ watch(() => route.params.slug, load)
         <article v-else>
           <p class="text-xs font-bold uppercase tracking-wide text-trovara-gold mb-6">
             {{ employmentLabel[post.employmentType] || post.employmentType }}
+            <span v-if="post.engagementDetails"> · {{ post.engagementDetails }}</span>
             <span v-if="post.department"> · {{ post.department }}</span>
             <span v-if="post.location"> · {{ post.location }}</span>
           </p>
+          <dl v-if="post.projectName || post.duration || post.applicationDeadline || post.expectedStartDate" class="mb-8 grid gap-3 rounded-2xl border border-trovara-border bg-trovara-cream/40 p-5 sm:grid-cols-2">
+            <div v-if="post.projectName"><dt class="text-xs font-bold uppercase tracking-wide text-trovara-muted">Project / programme</dt><dd class="mt-1 font-semibold text-trovara-dark">{{ post.projectName }}</dd></div>
+            <div v-if="post.duration"><dt class="text-xs font-bold uppercase tracking-wide text-trovara-muted">Duration</dt><dd class="mt-1 font-semibold text-trovara-dark">{{ post.duration }}</dd></div>
+            <div v-if="post.applicationDeadline"><dt class="text-xs font-bold uppercase tracking-wide text-trovara-muted">Application deadline</dt><dd class="mt-1 font-semibold text-trovara-dark">{{ new Date(`${post.applicationDeadline}T00:00:00`).toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' }) }}</dd></div>
+            <div v-if="post.expectedStartDate"><dt class="text-xs font-bold uppercase tracking-wide text-trovara-muted">Expected start</dt><dd class="mt-1 font-semibold text-trovara-dark">{{ new Date(`${post.expectedStartDate}T00:00:00`).toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' }) }}</dd></div>
+          </dl>
           <div class="prose prose-trovara max-w-none career-body" v-html="renderSafeMarkdown(post.bodyMarkdown)" />
+          <p v-if="post.applicationInstructions" class="mt-8 text-trovara-muted leading-relaxed whitespace-pre-line">{{ post.applicationInstructions }}</p>
           <a class="btn-primary mt-8 flex w-full sm:inline-flex sm:w-auto" :href="applyHref">Apply via email</a>
         </article>
       </div>
