@@ -40,7 +40,8 @@ async function load() {
   error.value = null
   try {
     // No trailing slash — Netlify → OS `/public/careers/` 404s an empty list.
-    const response = await fetch('/careers-api')
+    // Bypass caches: OS nginx historically marked all /public/* immutable for a year.
+    const response = await fetch('/careers-api', { cache: 'no-store' })
     if (!response.ok) throw new Error('Failed to load careers')
     const data = (await response.json()) as { posts?: CareerPost[] }
     posts.value = Array.isArray(data.posts) ? data.posts : []

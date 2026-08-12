@@ -74,10 +74,10 @@ watch(() => route.params.slug, load)
 </script>
 
 <template>
-  <div>
+  <div class="career-page">
     <section class="pt-28 pb-12 sm:pt-32 sm:pb-16 bg-trovara-green relative overflow-hidden">
       <div class="absolute inset-0 bg-hero-pattern opacity-10 pointer-events-none" />
-      <div class="container-trovara relative z-10 text-center max-w-3xl mx-auto">
+      <div class="container-trovara relative z-10 mx-auto max-w-4xl text-center">
         <p class="section-subheading text-trovara-gold-300 mb-4">Careers</p>
         <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 break-words">
           {{ post?.title || 'Open role' }}
@@ -88,33 +88,33 @@ watch(() => route.params.slug, load)
       </div>
     </section>
 
-    <section class="section-padding">
-      <div class="container-trovara max-w-3xl mx-auto">
-        <p class="mb-6">
+    <section class="career-detail section-padding">
+      <div class="container-trovara mx-auto max-w-3xl">
+        <p class="career-back-link">
           <RouterLink to="/careers" class="text-trovara-green font-semibold hover:underline">
             ← All roles
           </RouterLink>
         </p>
         <div v-if="loading" class="text-trovara-muted">Loading role…</div>
-        <div v-else-if="error || !post" class="rounded-2xl border border-trovara-border bg-trovara-cream/40 p-6">
+        <div v-else-if="error || !post" class="career-state-card">
           <p class="text-trovara-muted mb-4">{{ error || 'Role not found' }}</p>
           <RouterLink to="/careers" class="btn-primary">Back to careers</RouterLink>
         </div>
-        <article v-else>
-          <p class="text-xs font-bold uppercase tracking-wide text-trovara-gold mb-6">
+        <article v-else class="career-post">
+          <p class="career-role-meta">
             {{ employmentLabel[post.employmentType] || post.employmentType }}
             <span v-if="post.engagementDetails"> · {{ post.engagementDetails }}</span>
             <span v-if="post.department"> · {{ post.department }}</span>
             <span v-if="post.location"> · {{ post.location }}</span>
           </p>
-          <dl v-if="post.projectName || post.duration || post.applicationDeadline || post.expectedStartDate" class="mb-8 grid gap-3 rounded-2xl border border-trovara-border bg-trovara-cream/40 p-5 sm:grid-cols-2">
-            <div v-if="post.projectName"><dt class="text-xs font-bold uppercase tracking-wide text-trovara-muted">Project / programme</dt><dd class="mt-1 font-semibold text-trovara-dark">{{ post.projectName }}</dd></div>
-            <div v-if="post.duration"><dt class="text-xs font-bold uppercase tracking-wide text-trovara-muted">Duration</dt><dd class="mt-1 font-semibold text-trovara-dark">{{ post.duration }}</dd></div>
-            <div v-if="post.applicationDeadline"><dt class="text-xs font-bold uppercase tracking-wide text-trovara-muted">Application deadline</dt><dd class="mt-1 font-semibold text-trovara-dark">{{ new Date(`${post.applicationDeadline}T00:00:00`).toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' }) }}</dd></div>
-            <div v-if="post.expectedStartDate"><dt class="text-xs font-bold uppercase tracking-wide text-trovara-muted">Expected start</dt><dd class="mt-1 font-semibold text-trovara-dark">{{ new Date(`${post.expectedStartDate}T00:00:00`).toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' }) }}</dd></div>
+          <dl v-if="post.projectName || post.duration || post.applicationDeadline || post.expectedStartDate" class="career-facts">
+            <div v-if="post.projectName" class="career-fact"><dt>Project / programme</dt><dd>{{ post.projectName }}</dd></div>
+            <div v-if="post.duration" class="career-fact"><dt>Duration</dt><dd>{{ post.duration }}</dd></div>
+            <div v-if="post.applicationDeadline" class="career-fact"><dt>Application deadline</dt><dd>{{ new Date(`${post.applicationDeadline}T00:00:00`).toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' }) }}</dd></div>
+            <div v-if="post.expectedStartDate" class="career-fact"><dt>Expected start</dt><dd>{{ new Date(`${post.expectedStartDate}T00:00:00`).toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' }) }}</dd></div>
           </dl>
           <div class="prose prose-trovara max-w-none career-body" v-html="renderSafeMarkdown(post.bodyMarkdown)" />
-          <p v-if="post.applicationInstructions" class="mt-8 text-trovara-muted leading-relaxed whitespace-pre-line">{{ post.applicationInstructions }}</p>
+          <p v-if="post.applicationInstructions" class="career-application-instructions">{{ post.applicationInstructions }}</p>
           <a class="btn-primary mt-8 flex w-full sm:inline-flex sm:w-auto" :href="applyHref">Apply via email</a>
         </article>
       </div>
@@ -123,15 +123,83 @@ watch(() => route.params.slug, load)
 </template>
 
 <style scoped>
+.career-page,
+.career-detail {
+  background: var(--tv-canvas);
+}
+
+.career-back-link {
+  margin-bottom: 2rem;
+}
+
+.career-state-card {
+  padding: 1.5rem;
+  border: 1px solid var(--tv-border);
+  border-radius: 1rem;
+  background: var(--tv-surface);
+}
+
+.career-role-meta {
+  margin-bottom: 1.25rem;
+  color: #b6872e;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.career-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0 0 3rem;
+  overflow: hidden;
+  border: 1px solid var(--tv-border);
+  border-radius: 1rem;
+  background: var(--tv-surface);
+}
+
+.career-fact {
+  min-width: 0;
+  padding: 1.25rem;
+  border-bottom: 1px solid var(--tv-border);
+}
+
+.career-fact:nth-last-child(-n + 2) {
+  border-bottom: 0;
+}
+
+.career-fact:nth-child(odd) {
+  border-right: 1px solid var(--tv-border);
+}
+
+.career-fact dt {
+  color: var(--tv-muted-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.career-fact dd {
+  margin-top: 0.4rem;
+  color: var(--tv-ink);
+  font-weight: 700;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
 .career-body :deep(h2),
 .career-body :deep(h3) {
   margin: 1.5rem 0 0.6rem;
-  color: #18311f;
+  color: var(--tv-ink);
   font-weight: 800;
+  line-height: 1.25;
 }
 .career-body :deep(p),
 .career-body :deep(li) {
-  color: #617064;
+  color: var(--tv-muted-text);
   line-height: 1.65;
   overflow-wrap: anywhere;
 }
@@ -142,5 +210,32 @@ watch(() => route.params.slug, load)
 
 .career-body :deep(a) {
   overflow-wrap: anywhere;
+}
+
+.career-body :deep(li::marker) {
+  color: #b6872e;
+}
+
+.career-application-instructions {
+  margin-top: 2rem;
+  color: var(--tv-muted-text);
+  line-height: 1.65;
+  white-space: pre-line;
+}
+
+@media (max-width: 639px) {
+  .career-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .career-fact,
+  .career-fact:nth-last-child(-n + 2) {
+    border-right: 0;
+    border-bottom: 1px solid var(--tv-border);
+  }
+
+  .career-fact:last-child {
+    border-bottom: 0;
+  }
 }
 </style>
