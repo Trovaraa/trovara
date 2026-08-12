@@ -20,6 +20,28 @@ test('mobile navigation traps focus and supports Escape', async () => {
   assert.match(navbar, /aria-modal="true"/)
 })
 
+test('local marketing and OS servers use separate fixed ports', async () => {
+  const config = await read('vite.config.ts')
+  assert.match(config, /port:\s*4173/)
+  assert.match(config, /strictPort:\s*true/)
+  assert.match(config, /'\/shop-api'[\s\S]*target:\s*'http:\/\/127\.0\.0\.1:3000'/)
+})
+
+test('shop network failures are actionable and recoverable', async () => {
+  const [client, view] = await Promise.all([
+    read('src/lib/shop.ts'),
+    read('src/views/ShopView.vue'),
+  ])
+  assert.match(client, /farm shop is temporarily offline/)
+  assert.match(view, /@click="loadShop"/)
+  assert.match(view, /Try again/)
+})
+
+test('shop pages keep the floating chat button off account forms', async () => {
+  const app = await read('src/App.vue')
+  assert.match(app, /!route\.path\.startsWith\('\/shop'\)/)
+})
+
 test('Moments upload contract includes accessible description and versioned consent', async () => {
   const moments = await read('src/views/MomentsView.vue')
   assert.match(moments, /MOMENTS_MAX_UPLOAD_BYTES/)

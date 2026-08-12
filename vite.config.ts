@@ -64,6 +64,11 @@ export default defineConfig({
     }),
   ],
   server: {
+    // Trovara OS owns 5173. Keep the marketing site on its documented local
+    // origin so both products can run together and /shop-api can reach OS.
+    host: '127.0.0.1',
+    port: 4173,
+    strictPort: true,
     proxy: {
       // Customer shop API (Trovara OS). Keeps cookies same-origin so
       // SameSite=Strict sessions work from http://localhost:5173.

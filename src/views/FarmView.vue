@@ -48,7 +48,7 @@ const practices = [
         <div class="max-w-3xl">
           <p class="section-subheading text-trovara-gold-300 mb-4">Behind the brand</p>
           <h1 class="text-5xl md:text-6xl font-black text-white mb-6">
-            How we farm<br/>in Ogun State.
+            How we farm<br /> in Ogun State.
           </h1>
           <p class="text-white/70 text-lg leading-relaxed max-w-xl">
             Trovara Farm is a regenerative production site where crop, poultry, and soil practices

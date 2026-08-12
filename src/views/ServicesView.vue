@@ -143,7 +143,7 @@ const process = [
         <div class="max-w-3xl">
           <p class="section-subheading text-trovara-gold-300 mb-4">Farm Technology & Advisory</p>
           <h1 class="text-5xl md:text-6xl font-black text-white mb-6">
-            We help other farms<br/>grow as well as ours.
+            We help other farms<br /> grow as well as ours.
           </h1>
           <p class="text-white/70 text-lg leading-relaxed max-w-xl">
             Run daily operations with Trovara Farm OS, or work directly with our team through

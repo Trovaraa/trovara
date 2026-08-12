@@ -59,7 +59,9 @@ router.afterEach((to) => {
       </RouterView>
     </main>
     <TheFooter />
-    <WhatsAppButton v-if="!bannerOpen" />
+    <!-- Shop already has account-aware chat actions. On phones the floating
+         button otherwise covers the account form. -->
+    <WhatsAppButton v-if="!bannerOpen && !route.path.startsWith('/shop')" />
     <InstallPrompt v-if="!bannerOpen" />
   </div>
 </template>

@@ -70,7 +70,10 @@ onMounted(bootstrap)
   <section class="min-h-[70vh] bg-trovara-cream pt-28 pb-20">
     <div class="container-trovara">
       <p v-if="loading" class="text-center text-trovara-dark/70">Loading pack…</p>
-      <p v-else-if="error" class="text-center text-red-700" role="alert">{{ error }}</p>
+      <div v-else-if="error" class="mx-auto max-w-xl text-center" role="alert">
+        <h1 class="text-3xl sm:text-4xl font-black text-trovara-dark">Brand pack unavailable</h1>
+        <p class="mt-4 text-red-700">{{ error }}</p>
+      </div>
 
       <template v-else-if="meta">
         <header class="max-w-3xl mb-10">

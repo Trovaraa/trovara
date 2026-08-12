@@ -22,15 +22,18 @@ export function json(status, body) {
 }
 
 export function getClientIp(request) {
+  // Netlify supplies the socket-derived connection IP. Prefer it over
+  // X-Forwarded-For, which a direct caller can spoof to evade rate limits.
+  const platformIp =
+    request.headers.get('x-nf-client-connection-ip') ??
+    request.headers.get('client-ip')
+  if (platformIp?.trim()) return platformIp.trim()
+
   const forwarded = request.headers.get('x-forwarded-for')
   if (forwarded) {
     return forwarded.split(',')[0].trim()
   }
-  return (
-    request.headers.get('client-ip') ??
-    request.headers.get('x-nf-client-connection-ip') ??
-    'unknown'
-  )
+  return 'unknown'
 }
 
 export function trustedClientHeaders(ip) {

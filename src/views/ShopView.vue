@@ -329,7 +329,9 @@ watch(activeTab, (tab) => {
 
 onUnmounted(stopLinkPoll)
 
-onMounted(async () => {
+async function loadShop() {
+  loading.value = true
+  error.value = ''
   // Load independently so a session glitch cannot wipe an otherwise-good catalog.
   const [sessionResult, catalogResult] = await Promise.allSettled([
     shopApi.session(),
@@ -360,7 +362,9 @@ onMounted(async () => {
         : 'Unable to start a shop session.'
   }
   loading.value = false
-})
+}
+
+onMounted(loadShop)
 </script>
 
 <template>
@@ -384,8 +388,17 @@ onMounted(async () => {
     </section>
 
     <div class="container-trovara flex flex-col py-8 md:py-12">
-      <div v-if="error || notice" class="order-1 mb-6 rounded-2xl border px-5 py-4 text-sm font-semibold" :class="error ? 'border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-300' : 'border-trovara-green/30 bg-trovara-green/10 text-trovara-green-700 dark:text-trovara-green-300'">
-        {{ error || notice }}
+      <div v-if="error || notice" class="order-1 mb-6 flex flex-col gap-3 rounded-2xl border px-5 py-4 text-sm font-semibold sm:flex-row sm:items-center sm:justify-between" :class="error ? 'border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-300' : 'border-trovara-green/30 bg-trovara-green/10 text-trovara-green-700 dark:text-trovara-green-300'" role="status">
+        <span>{{ error || notice }}</span>
+        <button
+          v-if="error"
+          type="button"
+          class="min-h-11 shrink-0 rounded-xl border border-current px-4 py-2 font-bold transition hover:bg-white/40 dark:hover:bg-white/10"
+          :disabled="loading"
+          @click="loadShop"
+        >
+          {{ loading ? 'Checking…' : 'Try again' }}
+        </button>
       </div>
 
       <div class="order-2 mb-8 flex gap-2 overflow-x-auto rounded-2xl border border-gray-200 bg-white p-2" aria-label="Shop sections">

@@ -3,6 +3,7 @@ import { afterEach, beforeEach, test } from 'node:test'
 
 import contactHandler from './contact.mjs'
 import waitlistHandler from './waitlist.mjs'
+import { getClientIp } from './_shared.mjs'
 
 const originalFetch = globalThis.fetch
 const originalApiUrl = process.env.MARKETING_LEADS_API_URL
@@ -40,6 +41,17 @@ function request(body) {
 async function responseBody(response) {
   return response.json()
 }
+
+test('rate-limit identity prefers Netlify connection IP over spoofable forwarding headers', () => {
+  const inbound = new Request('https://trovara.farm/.netlify/functions/contact', {
+    headers: {
+      'x-nf-client-connection-ip': '198.51.100.7',
+      'x-forwarded-for': '203.0.113.99, 198.51.100.7',
+    },
+  })
+
+  assert.equal(getClientIp(inbound), '198.51.100.7')
+})
 
 test('contact proxies the validated OS contract and preserves browser success', async () => {
   let outbound
