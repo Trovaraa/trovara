@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import TrovaraLogo from './brand/TrovaraLogo.vue'
 import ThemeSwitcher from './ThemeSwitcher.vue'
 import { useTheme } from '../lib/theme'
+import { buildWhatsAppLink } from '../lib/whatsapp'
 
 const route = useRoute()
 const mobileMenuOpen = ref(false)
@@ -12,37 +13,39 @@ const menuButton = ref<HTMLButtonElement | null>(null)
 const mobileMenu = ref<HTMLElement | null>(null)
 let restoreFocusTo: HTMLElement | null = null
 const { isDark } = useTheme()
+const mobileWhatsAppLink = buildWhatsAppLink("Hi Trovara Farm, I'd like help finding the right product or service.")
 
 const serviceLinks = [
-  { label: 'Farm OS', to: '/services#farm-os' },
-  { label: 'Farm Advisory', to: '/services#farm-advisory' },
+  { label: 'Farm OS', to: '/farm-os' },
+  { label: 'Farm Advisory', to: '/farm-advisory' },
 ]
 
 /** Secondary destinations — kept off the primary rail so the bar stays short. */
 const moreLinks = [
-  { label: 'Wholesale', to: '/wholesale' },
+  { label: 'Blog', to: '/blog' },
   { label: 'Moments', to: '/moments' },
   { label: 'Careers', to: '/careers' },
+  { label: 'FAQ', to: '/faq' },
 ]
 
 const desktopNavItems = [
-  { label: 'Shop', to: '/shop' },
   { label: 'Products', to: '/products' },
+  { label: 'Wholesale', to: '/wholesale' },
   { label: 'The Farm', to: '/farm' },
-  { label: 'Our Story', to: '/about' },
   { label: 'Services', children: serviceLinks },
+  { label: 'Our Story', to: '/about' },
   { label: 'More', children: moreLinks },
-  { label: 'Blog', to: '/blog' },
+  { label: 'Account', to: '/shop' },
 ]
 
 const mobileNavLinks = [
-  { label: 'Shop', to: '/shop' },
   { label: 'Products', to: '/products' },
+  { label: 'Wholesale', to: '/wholesale' },
+  { label: 'Account', to: '/shop' },
   { label: 'The Farm', to: '/farm' },
-  { label: 'Our Story', to: '/about' },
   ...serviceLinks,
+  { label: 'Our Story', to: '/about' },
   ...moreLinks,
-  { label: 'Blog', to: '/blog' },
 ]
 
 const isHome = computed(() => route.name === 'home')
@@ -104,7 +107,7 @@ function childLinkActive(to: string) {
 }
 
 function dropdownActive(item: { label: string; children?: { to: string }[] }) {
-  if (item.label === 'Services') return route.path === '/services'
+  if (item.label === 'Services') return route.path === '/services' || route.path === '/farm-os' || route.path === '/farm-advisory'
   return item.children?.some((link) => route.path === childPath(link.to)) ?? false
 }
 
@@ -283,6 +286,14 @@ onUnmounted(() => {
               <RouterLink to="/contact" class="btn-primary w-full text-sm" @click="onNavClick('/contact')">
                 Get in Touch
               </RouterLink>
+              <a
+                :href="mobileWhatsAppLink"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-2 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[#25D366] px-5 py-3 text-sm font-bold text-white"
+              >
+                Ask us on WhatsApp
+              </a>
             </div>
           </div>
         </div>

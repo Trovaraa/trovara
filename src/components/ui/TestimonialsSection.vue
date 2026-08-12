@@ -18,9 +18,9 @@ defineProps<{
       />
       <SectionHeader
         v-else
-        eyebrow="Partnerships"
-        title="Building our first partner stories"
-        subtitle="We will feature buyer and kitchen feedback here as wholesale relationships mature."
+        eyebrow="Supply planning"
+        title="Planning with buyers before first harvest"
+        subtitle="We are setting volume, formats, and delivery expectations now so the first supply agreements are workable on both sides."
       />
 
       <div v-if="testimonials.length > 0" class="grid md:grid-cols-2 gap-6 lg:gap-8">
@@ -43,21 +43,18 @@ defineProps<{
         v-else
         class="rounded-3xl bg-trovara-light border border-gray-100 px-8 py-10 md:px-12 md:py-12 text-center"
       >
-        <p class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-3">
-          Partner with us
-        </p>
+        <p class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-3">How it starts</p>
         <h3 class="text-2xl md:text-3xl font-black text-trovara-dark mb-3">
-          Be among the first wholesale partners we feature
+          Share the product and volume you need
         </h3>
         <p class="text-sm text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed">
-          We are onboarding procurement teams and retail buyers who need consistent quality and
-          clear supply coordination.
+          We will confirm the planned SKU, packaging, minimum order, forecast window, and delivery assumptions before either side commits.
         </p>
         <RouterLink
           :to="context === 'wholesale' ? '/contact?subject=bulk-order' : '/contact'"
           class="btn-primary px-8 py-4 text-base"
         >
-          Partner with us
+          Start a supply conversation
         </RouterLink>
       </div>
     </div>

@@ -59,7 +59,7 @@ const milestones = [
 const stats = [
   { value: '24', label: 'Acres in our farm plan', icon: 'land' },
   { value: '5',  label: 'Planned product lines', icon: 'harvest' },
-  { value: '0',  label: 'Artificial chemicals', icon: 'natural' },
+  { value: '1',  label: 'Integrated farm system', icon: 'natural' },
   { value: '1',  label: 'Closed-loop farm system', icon: 'quality' },
 ]
 

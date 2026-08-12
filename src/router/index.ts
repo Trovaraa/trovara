@@ -123,6 +123,26 @@ const router = createRouter({
       },
     },
     {
+      path: '/farm-os',
+      name: 'farm-os',
+      component: () => import('../views/FarmOsView.vue'),
+      meta: {
+        title: 'Trovara Farm OS - Farm Operations Software',
+        description:
+          'Run tasks, field reports, products, inventory, traceability, sales, and customer support in one role-aware farm operations system.',
+      },
+    },
+    {
+      path: '/farm-advisory',
+      name: 'farm-advisory',
+      component: () => import('../views/FarmAdvisoryView.vue'),
+      meta: {
+        title: 'Farm Advisory Services - Trovara Farm',
+        description:
+          'Practical farm advisory for setup, crops, soil, irrigation, post-harvest work, team training, and market readiness.',
+      },
+    },
+    {
       path: '/faq',
       name: 'faq',
       component: () => import('../views/FaqView.vue'),

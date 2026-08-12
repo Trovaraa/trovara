@@ -23,6 +23,9 @@ const notice = ref('')
 /** Auth form messages — always shown next to #shop-account. */
 const authError = ref('')
 const authNotice = ref('')
+/** Read-only service warnings should never make the whole page look broken. */
+const catalogWarning = ref('')
+const sessionWarning = ref('')
 const activeTab = ref<Tab>('shop')
 const authMode = ref<AuthMode>('register')
 const account = ref<ShopAccount | null>(null)
@@ -332,6 +335,8 @@ onUnmounted(stopLinkPoll)
 async function loadShop() {
   loading.value = true
   error.value = ''
+  catalogWarning.value = ''
+  sessionWarning.value = ''
   // Load independently so a session glitch cannot wipe an otherwise-good catalog.
   const [sessionResult, catalogResult] = await Promise.allSettled([
     shopApi.session(),
@@ -340,10 +345,8 @@ async function loadShop() {
   if (catalogResult.status === 'fulfilled') {
     products.value = catalogResult.value.products ?? []
   } else {
-    error.value =
-      catalogResult.reason instanceof Error
-        ? catalogResult.reason.message
-        : 'The shop catalogue is temporarily unavailable.'
+    products.value = []
+    catalogWarning.value = 'Live checkout is unavailable right now. Product forecasts and waitlists are still available.'
   }
   if (sessionResult.status === 'fulfilled') {
     account.value = sessionResult.value.account
@@ -351,15 +354,12 @@ async function loadShop() {
     if (account.value) {
       try {
         await loadAccountData()
-      } catch (err) {
-        error.value = err instanceof Error ? err.message : 'Unable to load your account.'
+      } catch {
+        sessionWarning.value = 'We could not refresh your orders or chat links. Your signed-in account is still available.'
       }
     }
-  } else if (!error.value) {
-    error.value =
-      sessionResult.reason instanceof Error
-        ? sessionResult.reason.message
-        : 'Unable to start a shop session.'
+  } else {
+    sessionWarning.value = 'Account services are temporarily unavailable. You can still browse product forecasts and try again shortly.'
   }
   loading.value = false
 }
@@ -373,9 +373,9 @@ onMounted(loadShop)
       <div class="container-trovara py-12 md:py-16">
         <div class="max-w-3xl">
           <p class="text-xs font-black uppercase tracking-[0.24em] text-trovara-gold">Trovara shop</p>
-          <h1 class="mt-4 text-3xl font-black leading-tight sm:text-4xl md:text-6xl">Your farm account. Ready when harvest opens.</h1>
+          <h1 class="mt-4 text-3xl font-black leading-tight sm:text-4xl md:text-6xl">One account for every Trovara order.</h1>
           <p class="mt-5 max-w-2xl text-base leading-7 text-white/70 md:text-lg">
-            Create an account now to prepare for harvest checkout, connect WhatsApp or Telegram, and stay linked to waitlist updates. Products appear in the shop by SKU as each supply window opens - nothing is sold here until then.
+            Create an account before harvest opens. It will keep website orders, chat updates, and traceability links together when products become available.
           </p>
           <div class="mt-8 flex flex-wrap gap-3">
             <a href="#shop-account" class="btn-gold px-6 py-3 text-sm" @click.prevent="goCreateAccount">Create account</a>
@@ -388,6 +388,22 @@ onMounted(loadShop)
     </section>
 
     <div class="container-trovara flex flex-col py-8 md:py-12">
+      <div
+        v-if="catalogWarning || sessionWarning"
+        class="order-1 mb-6 rounded-2xl border border-trovara-gold/35 bg-trovara-gold/10 px-5 py-4 text-sm text-trovara-dark"
+        role="status"
+      >
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p class="font-black">Some live shop services are taking a break.</p>
+            <p class="mt-1 leading-6 text-gray-600">{{ [catalogWarning, sessionWarning].filter(Boolean).join(' ') }}</p>
+          </div>
+          <button type="button" class="min-h-11 shrink-0 rounded-xl border border-trovara-dark/20 px-4 py-2 font-bold" :disabled="loading" @click="loadShop">
+            {{ loading ? 'Checking…' : 'Check again' }}
+          </button>
+        </div>
+      </div>
+
       <div v-if="error || notice" class="order-1 mb-6 flex flex-col gap-3 rounded-2xl border px-5 py-4 text-sm font-semibold sm:flex-row sm:items-center sm:justify-between" :class="error ? 'border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-300' : 'border-trovara-green/30 bg-trovara-green/10 text-trovara-green-700 dark:text-trovara-green-300'" role="status">
         <span>{{ error || notice }}</span>
         <button
@@ -419,8 +435,11 @@ onMounted(loadShop)
 
       <div
         v-else-if="activeTab === 'shop'"
-        class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_23rem]"
-        :class="account ? 'order-3' : 'order-4 mt-8'"
+        class="grid gap-8"
+        :class="[
+          products.length ? 'lg:grid-cols-[minmax(0,1fr)_23rem]' : 'grid-cols-1',
+          account ? 'order-3' : 'order-4 mt-8',
+        ]"
       >
         <section>
           <div class="mb-6 flex flex-col items-start gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
@@ -464,7 +483,7 @@ onMounted(loadShop)
           </div>
         </section>
 
-        <aside class="h-fit rounded-3xl border border-gray-200 bg-white p-6 shadow-sm lg:sticky lg:top-24">
+        <aside v-if="products.length" class="h-fit rounded-3xl border border-gray-200 bg-white p-6 shadow-sm lg:sticky lg:top-24">
           <div class="flex items-center justify-between"><h2 class="text-xl font-black text-trovara-dark">Your basket</h2><span class="rounded-full bg-trovara-light px-3 py-1 text-xs font-black text-trovara-green">{{ cartCount }} items</span></div>
           <div v-if="cartLines.length" class="mt-5 divide-y divide-gray-100">
             <div v-for="line in cartLines" :key="line.product.id" class="flex justify-between gap-4 py-4 text-sm"><div><p class="font-bold text-trovara-dark">{{ line.product.name }}</p><p class="text-gray-500">{{ line.quantity }} × {{ line.product.unit }}</p></div><p class="font-bold">{{ formatShopPrice(line.product.priceKobo * line.quantity, line.product.currency) }}</p></div>

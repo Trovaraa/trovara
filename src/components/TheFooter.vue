@@ -16,25 +16,25 @@ function onHomeClick() {
 
 const links = {
   company: [
-    { label: 'Shop',          to: '/shop' },
+    { label: 'Customer account', to: '/shop' },
     { label: 'Our Story',     to: '/about#story' },
     { label: 'The Farm',      to: '/farm' },
     { label: 'Moments',       to: '/moments' },
     { label: 'Careers',       to: '/careers' },
     { label: 'Blog',          to: '/blog' },
-    { label: 'Farm OS',       to: '/services#farm-os' },
-    { label: 'Farm Advisory', to: '/services#farm-advisory' },
+    { label: 'Farm OS',       to: '/farm-os' },
+    { label: 'Farm Advisory', to: '/farm-advisory' },
     { label: 'Wholesale',     to: '/wholesale' },
     { label: 'FAQ',           to: '/faq' },
     { label: 'Contact',       to: '/contact' },
   ],
   products: [
     { label: 'All products',           to: '/products' },
-    { label: 'Coconut',                to: '/products#coconut' },
-    { label: 'Plantain',               to: '/products#plantain' },
-    { label: 'Pasture-raised Chicken', to: '/products#poultry' },
-    { label: 'Eggs',                   to: '/products#eggs' },
-    { label: 'Palm Oil',               to: '/products#palm-oil' },
+    { label: 'Coconut',                to: '/products/coconut' },
+    { label: 'Plantain',               to: '/products/plantain' },
+    { label: 'Pasture-raised Chicken', to: '/products/poultry' },
+    { label: 'Eggs',                   to: '/products/eggs' },
+    { label: 'Palm Oil',               to: '/products/palm-oil' },
   ],
 }
 </script>

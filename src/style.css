@@ -241,6 +241,22 @@ html.dark .text-gray-300 {
   color: #d1d5db !important;
 }
 
+/* Brand green needs a lighter value when it is used as text on dark surfaces. */
+html.dark .text-trovara-green,
+html.dark .text-trovara-green-600,
+html.dark .text-trovara-green-700,
+html.dark .text-trovara-green-300 {
+  color: #78c8a2 !important;
+}
+html.dark .btn-secondary {
+  border-color: #78c8a2 !important;
+  color: #78c8a2 !important;
+}
+html.dark .btn-secondary:hover {
+  background-color: #1a6b3c !important;
+  color: #ffffff !important;
+}
+
 html.dark .border-gray-100,
 html.dark .border-gray-200,
 html.dark .border-gray-300 {

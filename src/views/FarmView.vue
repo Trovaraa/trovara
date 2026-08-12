@@ -26,7 +26,7 @@ const operations = [
     icon: 'poultry',
     title: 'Pasture-raised Poultry',
     desc: 'Our poultry plan puts animal welfare first: open pasture, grass-and-grain feeding, clean water, and no growth hormones. Chicken and eggs will open for sale only after production readiness is confirmed.',
-    highlights: ['Grass-fed and pasture-raised', 'Rotational open pasture', 'No growth hormones', 'Waitlist before first supply'],
+    highlights: ['Grass-fed and pasture-raised', 'Rotational open pasture', 'No growth hormones in the planned standard', 'Waitlist before first supply'],
   },
 ]
 

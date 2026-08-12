@@ -13,7 +13,7 @@ export const useProductsStore = defineStore('products', {
           'Our coconuts grow in tropical soil and are harvested at peak maturity for retail and processing. Whole mature fruit ships first; after harvest we plan farm-direct coconut milk, toasted coconut chips, and cold-pressed coconut oil for homes, chefs, and food manufacturers.',
         benefits: [
           'Harvested at full maturity for retail and processing',
-          'Naturally grown, chemical-free',
+          'Regenerative soil and input plan',
           'Whole fruit SKU for trade and kitchens',
           'Milk, chips, and oil planned after first harvest',
         ],
@@ -47,7 +47,7 @@ export const useProductsStore = defineStore('products', {
           'Rich in potassium, vitamin C, and fiber',
           'Versatile: boiled, fried, dried into chips, or milled into flour',
           'Lower glycemic index than regular bananas',
-          'No artificial ripening - grown and harvested naturally',
+          'No artificial ripening planned',
           'Chips and flour planned after first harvest',
         ],
         icon: 'plantain',
@@ -78,7 +78,7 @@ export const useProductsStore = defineStore('products', {
         benefits: [
           'Grass-fed and pasture-raised',
           'Natural grass-and-grain diet',
-          'No growth hormones',
+          'No growth hormones in the planned production standard',
           'Whole dressed birds and pre-cut options',
         ],
         icon: 'poultry',
@@ -108,7 +108,7 @@ export const useProductsStore = defineStore('products', {
         benefits: [
           'Pasture-raised: hens on grass every day',
           'Deep-golden yolks',
-          'No antibiotics, no hormones',
+          'No routine antibiotics or hormones in the planned production standard',
           'Hand-collected at dawn and date-stamped',
         ],
         icon: 'eggs',

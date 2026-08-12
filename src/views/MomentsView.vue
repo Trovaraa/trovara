@@ -335,7 +335,7 @@ onMounted(() => {
         </div>
 
         <div v-else-if="moments.length === 0" class="empty-state">
-          <p>No moments shared yet. Be the first!</p>
+          <p>No moments have been published yet. You can share one below.</p>
         </div>
 
         <div v-else class="moments-grid">
@@ -367,6 +367,8 @@ onMounted(() => {
 
 <style scoped>
 .moments-view {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   background: linear-gradient(180deg, #f9faf8 0%, #ffffff 40%);
 }
@@ -378,6 +380,7 @@ onMounted(() => {
 }
 
 .moments-hero {
+  order: 1;
   position: relative;
   overflow: hidden;
   padding: 8rem 0 4rem;
@@ -418,6 +421,7 @@ onMounted(() => {
 
 /* Upload Section */
 .upload-section {
+  order: 3;
   padding: 3rem 0 4rem;
 }
 
@@ -609,6 +613,7 @@ onMounted(() => {
 
 /* Gallery Section */
 .gallery-section {
+  order: 2;
   padding: 4rem 0 6rem 0;
 }
 

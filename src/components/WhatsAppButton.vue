@@ -16,7 +16,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-4 sm:bottom-6 sm:right-6 z-40 flex max-w-[calc(100vw-2rem)] flex-col items-end gap-3">
+  <div class="fixed bottom-[calc(0.75rem+env(safe-area-inset-bottom))] right-3 sm:bottom-6 sm:right-6 z-40 flex max-w-[calc(100vw-1.5rem)] flex-col items-end gap-3">
 
     <Transition
       enter-active-class="transition duration-300 ease-out"
@@ -28,7 +28,7 @@ onMounted(() => {
     >
       <div
         v-if="expanded"
-        class="bg-white rounded-2xl shadow-2xl p-4 sm:p-5 w-72 max-w-full border border-gray-100"
+        class="w-[calc(100vw-1.5rem)] max-w-72 rounded-2xl border border-gray-100 bg-white p-4 shadow-2xl sm:p-5"
       >
         <div class="flex items-start gap-3 mb-3">
           <img src="/brand/trovara-monogram-tile-v1.svg" alt="" class="w-10 h-10 flex-shrink-0" width="40" height="40" />
@@ -64,7 +64,7 @@ onMounted(() => {
     >
       <div
         v-if="showTooltip && !expanded"
-        class="bg-white text-trovara-dark text-sm font-medium px-4 py-2.5 rounded-xl shadow-lg border border-gray-100 mr-2 relative whitespace-nowrap"
+        class="relative mr-2 hidden whitespace-nowrap rounded-xl border border-gray-100 bg-white px-4 py-2.5 text-sm font-medium text-trovara-dark shadow-lg sm:block"
       >
         Chat with us
         <span class="absolute right-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white border-r border-b border-gray-100 transform rotate-[-45deg]"></span>
@@ -74,7 +74,7 @@ onMounted(() => {
     <button
       @click="expanded = !expanded; showTooltip = false"
       :aria-label="expanded ? 'Close WhatsApp chat' : 'Open WhatsApp chat'"
-      class="w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#1ebe57] shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-200 hover:scale-105 group relative"
+      class="group relative flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] shadow-lg transition-all duration-200 hover:scale-105 hover:bg-[#1ebe57] hover:shadow-xl sm:h-14 sm:w-14"
     >
       <Transition
         enter-active-class="transition duration-200"
