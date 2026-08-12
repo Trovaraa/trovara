@@ -154,9 +154,9 @@ async function handleSubmit() {
 
 const contactInfo = [
   { icon: 'pin', label: 'Location', value: 'Trovara Farm, Abeokuta.' },
-  { icon: 'phone', label: 'Phone', value: '+234 810 369 3426' },
-  { icon: 'mail', label: 'General', value: CONTACT_EMAILS.hello },
-  { icon: 'mail', label: 'Finance', value: CONTACT_EMAILS.finance },
+  { icon: 'phone', label: 'Phone', value: '+234 810 369 3426', href: 'tel:+2348103693426' },
+  { icon: 'mail', label: 'General', value: CONTACT_EMAILS.hello, href: `mailto:${CONTACT_EMAILS.hello}` },
+  { icon: 'mail', label: 'Finance', value: CONTACT_EMAILS.finance, href: `mailto:${CONTACT_EMAILS.finance}` },
   { icon: 'clock', label: 'Response', value: 'Within 24 business hours' },
 ]
 </script>
@@ -168,13 +168,12 @@ const contactInfo = [
     <section class="pt-28 pb-14 sm:pt-32 sm:pb-20 bg-trovara-green relative overflow-hidden">
       <div class="absolute inset-0 bg-hero-pattern opacity-10 pointer-events-none" />
       <div class="container-trovara relative z-10 text-center max-w-3xl mx-auto">
-        <p class="section-subheading text-trovara-gold-300 mb-4">Let's Connect</p>
+        <p class="section-subheading text-trovara-gold-300 mb-4">Contact</p>
         <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-6">
-          We'd love to hear from you.
+          Talk to the farm team.
         </h1>
         <p class="text-white/70 text-lg leading-relaxed">
-          Whether you're a buyer, distributor, investor, or simply curious -
-          Trovara Farm is always open.
+          Buyers, distributors, investors, and curious visitors are all welcome. Send a note and we will reply within one business day.
         </p>
       </div>
     </section>
@@ -203,7 +202,12 @@ const contactInfo = [
                   <div class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-0.5">
                     {{ info.label }}
                   </div>
-                  <div class="text-trovara-dark font-medium">{{ info.value }}</div>
+                  <a
+                    v-if="'href' in info"
+                    class="text-trovara-dark font-medium hover:text-trovara-green hover:underline"
+                    :href="info.href"
+                  >{{ info.value }}</a>
+                  <div v-else class="text-trovara-dark font-medium">{{ info.value }}</div>
                 </div>
               </div>
             </div>

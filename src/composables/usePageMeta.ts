@@ -9,6 +9,7 @@ const DEFAULT_OG_IMAGE = `${BASE_URL}/brand/trovara-social-card-v2.png`
 type RouteMetaLike = {
   title?: unknown
   description?: unknown
+  robots?: unknown
 }
 
 type PageMetaOverrides = {
@@ -16,6 +17,7 @@ type PageMetaOverrides = {
   description?: string
   canonicalPath?: string
   ogImage?: string
+  robots?: string
 }
 
 function upsertMeta(key: 'name' | 'property', value: string, content: string) {
@@ -65,6 +67,9 @@ export function applyPageMeta(route: RouteLocationNormalizedLoaded, overrides: P
   upsertMeta('name', 'twitter:title', title)
   upsertMeta('name', 'twitter:description', description)
   upsertMeta('name', 'twitter:image', socialImage)
+  const robots =
+    overrides.robots ?? (typeof routeMeta.robots === 'string' ? routeMeta.robots : 'index, follow')
+  upsertMeta('name', 'robots', robots)
   upsertCanonical(canonical)
 }
 

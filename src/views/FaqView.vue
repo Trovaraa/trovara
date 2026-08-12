@@ -91,7 +91,7 @@ const faqs: FaqGroup[] = [
       },
       {
         q: 'What is Trovara Farm OS?',
-        a: 'Farm OS stands for Operations System - the digital command center we use to run Trovara Farm. It covers daily tasks, field teams, inventory, records, and channel bots. We offer it as a service so other farms can run with the same operational clarity.',
+        a: 'Farm OS stands for Operations System: the software we use to run Trovara Farm. It covers daily tasks, field teams, inventory, records, and channel bots. We offer it as a service so other farms can run with the same clarity.',
       },
       {
         q: 'How much do your farm services cost?',

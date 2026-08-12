@@ -14,7 +14,7 @@ const farmOsService: Service = {
   icon: 'os',
   title: 'Trovara Farm OS',
   meaning: 'Operations System',
-  desc: 'The digital command center we run our own farm on - now available to yours. Trovara Farm OS brings daily tasks, field teams, inventory, harvest records, and sales into one place so managers see the farm clearly and workers know exactly what to do. Built for operational excellence in the field, not desk software that never leaves the office.',
+  desc: 'The operations software we run our own farm on, now available to yours. Trovara Farm OS puts daily tasks, field teams, inventory, harvest records, and sales in one place so managers can see the work and field staff know what to do next. Built for use in the field, not only at a desk.',
   deliverables: [
     'Installable farm operations app (web + Home Screen PWA)',
     'Task assignment, field completion, and supervisor approval',
@@ -29,7 +29,7 @@ const advisoryServices: Service[] = [
   {
     icon: 'map',
     title: 'Farm Setup & Development',
-    desc: 'Starting a farm from scratch? We guide you from land assessment and layout design to infrastructure setup, equipment sourcing, and first planting. We help you build a farm that is productive from day one.',
+    desc: 'If you are starting from scratch, we cover land assessment, layout, infrastructure, equipment sourcing, and the first planting plan before you put money in the ground.',
     deliverables: [
       'Land suitability assessment',
       'Farm layout and zoning plan',
@@ -41,7 +41,7 @@ const advisoryServices: Service[] = [
   {
     icon: 'sprout',
     title: 'Crop Planning & Variety Selection',
-    desc: 'Choosing the right crop and the right variety for your soil, climate, and market is the most important decision a farmer makes. We help you make it with data, not guesswork.',
+    desc: 'We help match crop and variety to your soil, climate, and market using soil and climate analysis, suitability mapping, and a seasonal planting calendar.',
     deliverables: [
       'Soil and climate analysis',
       'Crop suitability mapping',
@@ -53,7 +53,7 @@ const advisoryServices: Service[] = [
   {
     icon: 'flask',
     title: 'Soil Health & Management Advisory',
-    desc: 'Healthy soil is the foundation of every great farm. We provide soil testing, interpretation, and organic soil management plans that build long-term fertility without synthetic inputs.',
+    desc: 'We handle soil testing and interpretation, then set organic management plans aimed at fertility over time without synthetic inputs.',
     deliverables: [
       'Soil sampling and laboratory testing',
       'Nutrient deficiency diagnosis',
@@ -65,7 +65,7 @@ const advisoryServices: Service[] = [
   {
     icon: 'water',
     title: 'Irrigation System Design',
-    desc: 'Water is life on a farm. We design efficient, low-cost irrigation systems tailored to your crop, land size, and water source - from simple gravity-fed systems to drip irrigation setups.',
+    desc: 'Water limits what a farm can grow. We design low-cost irrigation for your crop, land size, and water source, including gravity-fed and drip setups.',
     deliverables: [
       'Water source assessment',
       'Irrigation system design and layout',
@@ -77,7 +77,7 @@ const advisoryServices: Service[] = [
   {
     icon: 'pest',
     title: 'Pest & Disease Management',
-    desc: 'Crop losses from pests and disease can devastate a season. We provide integrated pest management (IPM) plans that protect your crops using biological, cultural, and minimal-chemical approaches.',
+    desc: 'We build integrated pest management (IPM) plans that use biological and cultural controls first, and chemicals only where needed and allowed.',
     deliverables: [
       'Pest and disease identification',
       'Integrated pest management (IPM) plan',
@@ -89,7 +89,7 @@ const advisoryServices: Service[] = [
   {
     icon: 'package',
     title: 'Post-Harvest Handling & Storage',
-    desc: 'Quality starts at the harvest and ends at the market. Poor post-harvest handling destroys value. We help you set up the right storage, grading, and packaging systems to preserve quality and extend shelf life.',
+    desc: 'Poor handling after harvest costs money. We help set up storage, grading, and packaging so produce keeps its quality longer on the way to market.',
     deliverables: [
       'Harvest timing and technique guidance',
       'Grading and sorting standards',
@@ -101,7 +101,7 @@ const advisoryServices: Service[] = [
   {
     icon: 'education',
     title: 'Farm Management Training',
-    desc: 'We train farmers, farm managers, and agribusiness staff in modern, sustainable farming practices. Training is hands-on, practical, and delivered on-site at your farm.',
+    desc: 'We train farmers, managers, and agribusiness staff on site. Sessions are hands-on and tied to the work on your farm.',
     deliverables: [
       'Crop production and management training',
       'Pasture-raised poultry management and animal welfare',
@@ -113,7 +113,7 @@ const advisoryServices: Service[] = [
   {
     icon: 'world',
     title: 'Market Linkage & Export Support',
-    desc: 'Growing great produce is only half the job - getting it to the right buyer at the right price is the other half. We connect farmers and agribusinesses to local buyers, regional markets, and export channels.',
+    desc: 'We introduce farmers and agribusinesses to local buyers, regional markets, and export channels, and help with pricing, documentation, and quality certification.',
     deliverables: [
       'Buyer identification and introduction',
       'Export documentation and compliance support',
@@ -128,8 +128,8 @@ const process = [
   { step: '01', title: 'Initial Consultation', desc: 'We begin with a free consultation to understand your farm, your goals, and your challenges.' },
   { step: '02', title: 'Site Assessment', desc: 'Our team visits your farm to assess land, soil, water, infrastructure, and current operations.' },
   { step: '03', title: 'Custom Plan', desc: 'We deliver a tailored service plan with clear timelines, deliverables, and expected outcomes.' },
-  { step: '04', title: 'Implementation', desc: 'We work alongside you to implement the plan - hands-on, practical, and results-focused.' },
-  { step: '05', title: 'Follow-Up Support', desc: 'Our relationship doesn\'t end at delivery. We provide ongoing check-ins and adjustments as your farm evolves.' },
+  { step: '04', title: 'Implementation', desc: 'We work alongside you to put the plan in place, with practical steps and clear owners.' },
+  { step: '05', title: 'Follow-Up Support', desc: 'Work does not stop at delivery. We stay available for check-ins and adjustments as your farm changes.' },
 ]
 </script>
 
@@ -217,17 +217,17 @@ const process = [
       <div class="container-trovara">
         <SectionHeader
           eyebrow="Farm Advisory Services"
-          title="Practical expertise, applied on your land."
-          subtitle="From farm setup and crop planning to post-harvest systems and market access, our advisory work comes from hard-won experience operating our own farm."
+          title="Advice applied on your land."
+          subtitle="Setup, crop planning, post-harvest systems, and market access. The advice comes from running our own farm."
           center
         />
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center mb-12 rounded-3xl bg-trovara-gold p-6 md:p-8">
           <div v-for="item in [
-            { icon: 'land', label: 'Hands-on experience, not just theory' },
-            { icon: 'pin', label: 'On-site, in-field advisory' },
-            { icon: 'trust', label: 'Tailored to your specific farm' },
-            { icon: 'sprout', label: 'Sustainable, chemical-minimal approach' },
+            { icon: 'land', label: 'From people who run a farm' },
+            { icon: 'pin', label: 'On-site work in the field' },
+            { icon: 'trust', label: 'Plans fitted to your farm' },
+            { icon: 'sprout', label: 'Chemical-minimal by default' },
           ]" :key="item.label">
             <BrandIcon :name="item.icon" class="w-10 h-10 mx-auto mb-2" />
             <p class="text-trovara-dark font-semibold text-sm leading-snug">{{ item.label }}</p>

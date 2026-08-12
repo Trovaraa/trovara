@@ -152,8 +152,8 @@ const principles = [
       <div class="container-trovara">
         <SectionHeader
           eyebrow="What We Grow"
-          title="Nature's finest, carefully cultivated"
-          subtitle="From tropical crops and palm oil to pasture-raised chicken and eggs, every Trovara product has a clear forecast window. Join waitlists now; checkout opens as each harvest arrives."
+          title="Crops and poultry with clear harvest windows"
+          subtitle="Plantain, coconut, palm oil, pasture-raised chicken, and eggs each have a forecast date. Join waitlists now; checkout opens as each harvest arrives."
           center
         />
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
@@ -178,12 +178,12 @@ const principles = [
           <div>
             <SectionHeader
               eyebrow="Our Promise"
-              title="From our roots, to your world."
-              subtitle="Trovara Farm was built on a single belief: that the best food comes from honest farming. No shortcuts. No chemicals. Just the earth, the sun, and the care of human hands."
+              title="One farm, food you can trace."
+              subtitle="Trovara grows food without synthetic shortcuts: healthy soil, clear records, and harvests people can follow from field to plate."
               light
             />
             <RouterLink to="/about" class="btn-gold text-base px-8 py-4 inline-flex">
-              Read Our Story
+              Read our story
             </RouterLink>
           </div>
 
@@ -271,16 +271,16 @@ const principles = [
     <!-- ===== CTA ===== -->
     <section class="py-20 bg-trovara-dark text-white">
       <div class="container-trovara text-center">
-        <p class="section-subheading text-trovara-gold mb-4">Ready to Partner?</p>
+        <p class="section-subheading text-trovara-gold mb-4">Work with us</p>
         <h2 class="text-4xl md:text-5xl font-black text-white mb-6 max-w-2xl mx-auto">
-          Let's grow something great together
+          Join a waitlist or talk wholesale
         </h2>
         <p class="text-white/60 text-lg mb-10 max-w-lg mx-auto">
           Join waitlists for upcoming harvests, create a shop account for when checkout opens, or talk with us about wholesale supply.
         </p>
         <div class="flex flex-wrap gap-4 justify-center">
           <RouterLink to="/contact" class="btn-gold text-base px-8 py-4">
-            Get in Touch
+            Get in touch
           </RouterLink>
           <RouterLink
             to="/products"

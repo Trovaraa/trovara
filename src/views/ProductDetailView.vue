@@ -394,8 +394,8 @@ watch(
                   icon: 'package',
                   name: 'Plantain Flour',
                   sku: 'flour',
-                  tagline: 'The ancient staple, reimagined.',
-                  body: 'Milled from sun-dried plantation plantains with no additives, bleaching agents, or preservatives - suited to baking, soups, porridges, and wholesale.',
+                  tagline: 'Milled for kitchens and bakeries.',
+                  body: 'Milled from sun-dried plantation plantains with no additives, bleaching agents, or preservatives. Suited to baking, soups, porridges, and wholesale.',
                   image: '/images/products/trovara-harvest-plantain-flour.jpg',
                 },
               ]"

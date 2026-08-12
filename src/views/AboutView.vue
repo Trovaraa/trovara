@@ -58,9 +58,9 @@ const milestones = [
 
 const stats = [
   { value: '24', label: 'Acres in our farm plan', icon: 'land' },
-  { value: '5',  label: 'Planned Product Lines', icon: 'harvest' },
-  { value: '0',  label: 'Artificial Chemicals', icon: 'natural' },
-  { value: '∞',  label: 'Passion for Quality', icon: 'quality' },
+  { value: '5',  label: 'Planned product lines', icon: 'harvest' },
+  { value: '0',  label: 'Artificial chemicals', icon: 'natural' },
+  { value: '1',  label: 'Closed-loop farm system', icon: 'quality' },
 ]
 
 const team: TeamMember[] = [
@@ -69,10 +69,10 @@ const team: TeamMember[] = [
     name: 'Bamidele',
     roleShort: 'MD',
     role: 'Managing Director',
-    bio: 'Provides strategic leadership across Trovara as it builds a trusted regenerative food company.',
+    bio: 'Sets company direction as Trovara builds a regenerative food business in Nigeria.',
     fullBio: [
-      'Bamidele is the Managing Director of Trovara, providing strategic leadership across the business as it works to build a trusted, regenerative food company for Africa. He leads the development of the company\'s long-term vision, commercial strategy and operational growth while ensuring that every investment supports sustainable value creation.',
-      'With a background in accounting, audit and corporate finance across Nigeria and the United Kingdom, Bamidele combines financial discipline with entrepreneurial thinking to build a resilient business rooted in transparency, innovation and responsible farming. He believes that trust is earned through consistently delivering food of exceptional quality while caring for the land, the people who produce it and the communities Trovara serves.',
+      'Bamidele is the Managing Director of Trovara. He sets long-term direction, commercial strategy, and growth plans, and he checks that spending supports a durable business.',
+      'His background is in accounting, audit, and corporate finance in Nigeria and the United Kingdom. He pairs financial discipline with practical farming decisions, and he treats trust as something earned by consistent food quality and care for the land, the people who produce it, and the communities Trovara serves.',
     ],
     image: '/images/team/bamidele-afolabi.png',
     imagePosition: 'center 18%',
@@ -82,10 +82,10 @@ const team: TeamMember[] = [
     name: 'Adefemi',
     roleShort: 'CTO',
     role: 'Chief Technology Officer',
-    bio: 'Leads the technology behind Trovara, connecting farm operations, traceability, and customer experience.',
+    bio: 'Runs the software that connects farm work, traceability, and customer ordering.',
     fullBio: [
-      'Adefemi is the Chief Technology Officer of Trovara, leading the technology strategy and systems that connect farm operations, traceability, customer ordering and day-to-day field work. A platform and cloud engineer with experience across software engineering, infrastructure automation and DevOps, he has built and operated systems using technologies including Kubernetes, Terraform, AWS, Azure and modern CI/CD platforms. His technology career spans Nigeria, Europe (including the Netherlands) and the United States.',
-      'At Trovara, Adefemi works across the technology stack - from resilient cloud foundations, offline-friendly field tools and secure customer accounts to machine learning and AI capabilities that turn farm data into practical forecasts, advisory and automation. Drawing on formal training in data science, machine learning and artificial intelligence, as well as hands-on work building AI-powered software, he focuses on technology that solves real farming problems and strengthens trust from soil records to the plate.',
+      'Adefemi is the Chief Technology Officer of Trovara. He owns the systems that connect farm operations, traceability, customer ordering, and day-to-day field work. As a platform and cloud engineer, he has built and run software across engineering, infrastructure automation, and DevOps, including Kubernetes, Terraform, AWS, Azure, and modern CI/CD. His technology career spans Nigeria, Europe (including the Netherlands), and the United States.',
+      'At Trovara he works across the stack: resilient cloud foundations, offline-friendly field tools, secure customer accounts, and machine learning that turns farm data into forecasts, advisory, and automation. With formal training in data science, machine learning, and artificial intelligence, plus hands-on work building AI-powered software, he focuses on tools that solve real farming problems and keep soil records tied to what reaches the plate.',
     ],
     image: '/images/team/adefemi-afuwape.png',
     imagePosition: 'center 42%',
@@ -95,11 +95,11 @@ const team: TeamMember[] = [
     name: 'Ayodeji',
     roleShort: 'COO',
     role: 'Head of Operations',
-    bio: 'Leads operational strategy and execution across farm production, supply chain, and fulfilment.',
+    bio: 'Runs day-to-day production, supply chain, and fulfilment.',
     fullBio: [
-      'Ayodeji is the Head of Operations at Trovara, leading the operational strategy and execution that connects farm production, supply chain coordination, customer fulfilment, and day-to-day business operations. With experience in operations management, process improvement, and agricultural systems, he focuses on building efficient, scalable processes that enable farmers, partners, and customers to succeed.',
-      'At Trovara, Ayodeji oversees the operational backbone of the business, from coordinating farm activities and logistics to ensuring product quality, customer satisfaction, and cross-functional collaboration. Working closely with technology, commercial, and production teams, he helps translate strategy into practical execution, ensuring the business delivers consistently while continuing to grow.',
-      'Driven by a passion for operational excellence and sustainable agriculture, Ayodeji is committed to creating systems that improve productivity, strengthen accountability, and support Trovara’s mission of making farming more efficient, transparent, and impactful through innovation.',
+      'Ayodeji is the Head of Operations at Trovara. He runs operational strategy and execution across farm production, supply chain coordination, customer fulfilment, and daily business work. His background covers operations management, process improvement, and agricultural systems, with a focus on processes that farmers, partners, and customers can rely on.',
+      'He coordinates farm activities and logistics, product quality, and work across technology, commercial, and production teams so plans turn into consistent delivery as the business grows.',
+      'He cares about clear accountability and transparent farming practices that make Trovara more efficient without losing track of what happens on the ground.',
     ],
     image: '/images/team/ayodeji.png',
     imagePosition: '28% 18%',
@@ -109,10 +109,10 @@ const team: TeamMember[] = [
     name: 'Samuel',
     roleShort: 'CGO',
     role: 'Chief Growth Officer',
-    bio: 'Leads partnerships, market development, and the growth of Trovara’s customer reach.',
+    bio: 'Builds partnerships and market reach as each harvest window opens.',
     fullBio: [
-      'Samuel is the Chief Growth Officer of Trovara, leading partnerships, market development and the relationships that connect farm production to homes, kitchens and trade buyers. He helps shape how Trovara reaches customers across Nigeria as each harvest window opens.',
-      'His focus is disciplined growth: clear offtake conversations, trusted wholesale relationships and customer experiences that match the promise of regenerative farming. He believes Trovara grows best when quality, transparency and long-term partnerships move together.',
+      'Samuel is the Chief Growth Officer of Trovara. He leads partnerships, market development, and the relationships that connect farm production to homes, kitchens, and trade buyers. He shapes how Trovara reaches customers across Nigeria as each harvest window opens.',
+      'His focus is disciplined growth: clear offtake conversations, trusted wholesale relationships, and customer experiences that match regenerative farming. He believes Trovara grows best when quality, transparency, and long-term partnerships move together.',
     ],
     image: '/images/team/samuel-afolabi.png',
     imagePosition: 'center 18%',
@@ -130,11 +130,11 @@ const team: TeamMember[] = [
         <div class="max-w-3xl">
           <p class="section-subheading text-trovara-gold-300 mb-4">About Trovara</p>
           <h1 class="text-5xl md:text-6xl font-black text-white mb-6">
-            We believe the earth<br/> deserves better farming.
+            Better farming for better food.
           </h1>
           <p class="text-white/70 text-lg leading-relaxed max-w-xl">
-            Trovara Farm exists to prove that premium quality and ethical farming are not opposites -
-            they are inseparable. Every crop, every bird, every harvest is a testimony to that belief.
+            Trovara Farm grows premium food with ethical practices on the same land.
+            Quality and care for soil are not a trade-off here; they are how we farm.
           </p>
         </div>
       </div>
@@ -146,19 +146,18 @@ const team: TeamMember[] = [
         <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div>
             <SectionHeader
-              eyebrow="Our Story"
-              title="Born from the land, built for the world."
-              subtitle="Trovara Farm started with a patch of tropical land, a handful of coconut seedlings, and an unshakeable belief that great food begins with great farming."
+              eyebrow="Our story"
+              title="Started on tropical land in Ogun State."
+              subtitle="Trovara Farm began with a patch of tropical land, a handful of coconut seedlings, and a simple bet: great food starts with how you farm."
             />
             <p class="text-gray-500 leading-relaxed mb-6">
-              The name TROVARA means "to find" - and that's exactly what we set out to do. Find the
-              finest varieties. Find the best farming practices. Find the most honest path from soil
-              to table.
+              The name TROVARA means "to find", and that is what we set out to do: find strong
+              varieties, sound farming practices, and an honest path from soil to table.
             </p>
             <p class="text-gray-500 leading-relaxed">
-              Today, Trovara Farm is developing coconut, plantain, palm oil, chicken, and egg production
-              within one regenerative plan. We are growing - adding new crops, expanding our reach, and building a brand that the world
-              can trust.
+              Today we are developing coconut, plantain, palm oil, chicken, and egg production
+              inside one regenerative plan. We are adding crops and formats as harvest windows open,
+              and building a brand buyers can trust.
             </p>
           </div>
 
@@ -176,7 +175,7 @@ const team: TeamMember[] = [
             </div>
             <div class="bg-trovara-light rounded-3xl p-8 lg:p-10">
               <blockquote class="text-2xl md:text-3xl font-bold text-trovara-dark leading-tight mb-6">
-                "We don't just farm land. We cultivate a promise."
+                "We farm land, and we keep the promises we make about how that food is grown."
               </blockquote>
               <p class="text-trovara-green font-semibold">- Trovara Farm</p>
               <div class="mt-8 pt-8 border-t border-gray-200">
@@ -210,8 +209,8 @@ const team: TeamMember[] = [
     <section class="py-20 md:py-28 bg-trovara-cream">
       <div class="container-trovara">
         <SectionHeader
-          eyebrow="Our Journey"
-          title="Every harvest marks a milestone."
+          eyebrow="How we got here"
+          title="Milestones on the farm plan"
           center
         />
         <div class="max-w-3xl mx-auto">
@@ -396,7 +395,7 @@ const team: TeamMember[] = [
     <section class="py-16 bg-trovara-dark text-white text-center">
       <div class="container-trovara max-w-2xl mx-auto">
         <h2 class="text-3xl md:text-4xl font-black mb-4">Ready to work with us?</h2>
-        <p class="text-white/60 mb-8">From waitlists and wholesale forecasts to distribution partnerships, we are building supply with buyers who plan ahead.</p>
+        <p class="text-white/60 mb-8">Share waitlist interest, wholesale forecasts, or a distribution brief and we will plan supply with you.</p>
         <RouterLink to="/contact" class="btn-gold text-base px-8 py-4">
           Contact Trovara Farm
         </RouterLink>

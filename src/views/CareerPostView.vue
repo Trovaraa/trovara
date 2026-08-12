@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
-import { RouterLink, useRoute } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { CONTACT_EMAILS, mailto } from '../lib/contact-emails'
+import { renderSafeMarkdown } from '../lib/markdown'
+import { applyPageMeta } from '../composables/usePageMeta'
 
 type CareerPost = {
   id: string
@@ -17,6 +19,7 @@ type CareerPost = {
 }
 
 const route = useRoute()
+const router = useRouter()
 const post = ref<CareerPost | null>(null)
 const loading = ref(true)
 const error = ref<string | null>(null)
@@ -35,21 +38,6 @@ const applyHref = computed(() => {
   return mailto(email, subject)
 })
 
-function renderMarkdown(source: string): string {
-  const escaped = source
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-  return escaped
-    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-    .replace(/^# (.+)$/gm, '<h2>$1</h2>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/^- (.+)$/gm, '<li>$1</li>')
-    .replace(/(<li>.*<\/li>\n?)+/g, (block: string) => `<ul>${block}</ul>`)
-    .replace(/^(?!<[hul]|<li)(.+)$/gm, '<p>$1</p>')
-}
-
 async function load() {
   loading.value = true
   error.value = null
@@ -60,6 +48,10 @@ async function load() {
     const data = (await response.json()) as { post?: CareerPost }
     post.value = data.post ?? null
     if (!post.value) throw new Error('Role not found')
+    applyPageMeta(router.currentRoute.value, {
+      title: `${post.value.title} - Careers - Trovara Farm`,
+      description: post.value.summary,
+    })
   } catch (e) {
     error.value = e instanceof Error ? e.message : 'Role not found'
     post.value = null
@@ -105,7 +97,7 @@ watch(() => route.params.slug, load)
             <span v-if="post.department"> · {{ post.department }}</span>
             <span v-if="post.location"> · {{ post.location }}</span>
           </p>
-          <div class="prose prose-trovara max-w-none career-body" v-html="renderMarkdown(post.bodyMarkdown)" />
+          <div class="prose prose-trovara max-w-none career-body" v-html="renderSafeMarkdown(post.bodyMarkdown)" />
           <a class="btn-primary mt-8 flex w-full sm:inline-flex sm:w-auto" :href="applyHref">Apply via email</a>
         </article>
       </div>

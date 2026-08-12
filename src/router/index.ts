@@ -50,6 +50,7 @@ const router = createRouter({
         title: 'Shop Account - Trovara Farm',
         description:
           'Create a Trovara Farm shop account to prepare for harvest checkout, connect WhatsApp or Telegram, and stay linked to waitlist updates as each supply window opens.',
+        robots: 'noindex, nofollow',
       },
     },
     {
@@ -59,6 +60,7 @@ const router = createRouter({
       meta: {
         title: 'Reset Password - Trovara Farm',
         description: 'Set a new password for your Trovara Farm shop account.',
+        robots: 'noindex, nofollow',
       },
     },
     {
@@ -68,6 +70,7 @@ const router = createRouter({
       meta: {
         title: 'Verify Email - Trovara Farm',
         description: 'Verify your email address for your Trovara Farm shop account.',
+        robots: 'noindex, nofollow',
       },
     },
     // Aliases for mistyped / truncated inbox links (keep query: token=...).
@@ -86,7 +89,7 @@ const router = createRouter({
       meta: {
         title: 'Harvest verification - Trovara Farm',
         description:
-          'Verify a Trovara Farm harvest lot from a QR code or share link — product, plot, and farm confirmation.',
+          'Verify a Trovara Farm harvest lot from a QR code or share link: product, plot, and farm confirmation.',
       },
     },
     {
@@ -106,7 +109,7 @@ const router = createRouter({
       meta: {
         title: 'The Farm - Trovara Farm',
         description:
-          'Discover how Trovara Farm uses regenerative practices to grow healthy food and restore the land in Ogun State.',
+          'How Trovara Farm uses regenerative practices to grow food and care for the land in Ogun State.',
       },
     },
     {
@@ -155,7 +158,7 @@ const router = createRouter({
       meta: {
         title: 'Moments - Trovara Farm',
         description:
-          'Photos and videos from our farm community — harvest days, happy moments, and the people behind Trovara.',
+          'Photos and videos from our farm community: harvest days, daily work, and the people behind Trovara.',
       },
     },
     {
@@ -214,6 +217,7 @@ const router = createRouter({
       meta: {
         title: 'Brand pack - Trovara Farm',
         description: 'View and download Trovara Farm brand assets from a shared press pack.',
+        robots: 'noindex, nofollow',
       },
     },
     {
@@ -223,6 +227,7 @@ const router = createRouter({
       meta: {
         title: 'Confirm Newsletter Subscription - Trovara Farm',
         description: 'Confirm your subscription to Trovara Farm email updates.',
+        robots: 'noindex, nofollow',
       },
     },
     {
@@ -232,6 +237,7 @@ const router = createRouter({
       meta: {
         title: 'Unsubscribe from Newsletter - Trovara Farm',
         description: 'Manage your Trovara Farm newsletter subscription.',
+        robots: 'noindex, nofollow',
       },
     },
     {
@@ -261,6 +267,7 @@ const router = createRouter({
       meta: {
         title: '404 - Trovara Farm',
         description: 'The requested page could not be found on Trovara Farm.',
+        robots: 'noindex, nofollow',
       },
     },
   ],

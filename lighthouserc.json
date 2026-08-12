@@ -2,7 +2,11 @@
   "ci": {
     "collect": {
       "url": [
-        "http://127.0.0.1:4173/"
+        "http://127.0.0.1:4173/",
+        "http://127.0.0.1:4173/products/",
+        "http://127.0.0.1:4173/moments/",
+        "http://127.0.0.1:4173/careers/",
+        "http://127.0.0.1:4173/contact/"
       ],
       "numberOfRuns": 1
     },

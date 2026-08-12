@@ -16,7 +16,7 @@ export default defineConfig({
     netlifyFunctionsDevPlugin(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['brand/trovara-monogram-tile-v1.svg', 'icons/trovara-monogram-icon-v1.svg'],
+      includeAssets: ['icons/icon-192.png', 'icons/icon-512.png'],
       manifest: false,
       workbox: {
         // Avoid Workbox terser early-exit under Node 22 (same as Trovara OS).
@@ -24,7 +24,12 @@ export default defineConfig({
         // Do not precache HTML or use navigateFallback. Netlify already SPA-fallbacks
         // to index.html; a precached shell is what made email deep links (e.g.
         // /shop/verify-email) render the branded 404 after a route shipped.
-        globPatterns: ['**/*.{js,css,svg,png,webp,woff2,ico,webmanifest}'],
+        globPatterns: [
+          'assets/index-*.{js,css}',
+          'icons/icon-*.png',
+          'manifest.webmanifest',
+          'theme-init.js',
+        ],
         navigateFallback: null,
         runtimeCaching: [
           {

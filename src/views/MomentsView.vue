@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { momentsMediaUrl } from '../lib/moments'
+import {
+  MOMENTS_CONSENT_VERSION,
+  MOMENTS_MAX_UPLOAD_BYTES,
+  momentsMediaUrl,
+} from '../lib/moments'
 
 type Moment = {
   id: string
@@ -10,6 +14,7 @@ type Moment = {
   posterUrl?: string | null
   durationSeconds?: number | null
   createdAt: string
+  description?: string | null
 }
 
 type MomentsResponse = {
@@ -27,6 +32,7 @@ const uploadError = ref('')
 const form = ref({
   name: '',
   email: '',
+  description: '',
   consent: false,
   file: null as File | null,
   honey: '',
@@ -76,9 +82,8 @@ function handleFileChange(event: Event) {
     return
   }
 
-  const maxSize = 50 * 1024 * 1024 // 50MB
-  if (file.size > maxSize) {
-    uploadError.value = 'File is too large (max 50MB).'
+  if (file.size > MOMENTS_MAX_UPLOAD_BYTES) {
+    uploadError.value = 'File is too large (max 12MB).'
     form.value.file = null
     target.value = ''
     return
@@ -94,6 +99,9 @@ function validateForm(): string | null {
   }
   if (!form.value.file) {
     return 'Please select a photo or video to share.'
+  }
+  if (!form.value.description.trim()) {
+    return 'Please describe the photo or video for visitors using assistive technology.'
   }
   return null
 }
@@ -125,7 +133,9 @@ async function handleSubmit() {
     if (form.value.email.trim()) {
       formData.append('email', form.value.email.trim().slice(0, 320))
     }
+    formData.append('description', form.value.description.trim().slice(0, 300))
     formData.append('consent', 'true')
+    formData.append('consentVersion', MOMENTS_CONSENT_VERSION)
     formData.append('honey', form.value.honey)
     formData.append('file', form.value.file!)
 
@@ -154,6 +164,7 @@ function resetForm() {
   form.value = {
     name: '',
     email: '',
+    description: '',
     consent: false,
     file: null,
     honey: '',
@@ -175,7 +186,7 @@ onMounted(() => {
         <p class="moments-eyebrow">Gallery</p>
         <h1 class="moments-title">Moments</h1>
         <p class="moments-subtitle">
-          Photos and videos from our farm community — harvest days, happy moments, and the people behind Trovara.
+          Photos and videos from our farm community: harvest days, daily work, and the people behind Trovara.
         </p>
       </div>
     </section>
@@ -228,6 +239,25 @@ onMounted(() => {
             </div>
 
             <div class="form-group">
+              <label for="description">
+                Media description <span class="required">*</span>
+              </label>
+              <textarea
+                id="description"
+                v-model="form.description"
+                rows="3"
+                maxlength="300"
+                required
+                class="form-control"
+                placeholder="Describe the people, activity, and setting shown."
+                aria-describedby="description-hint"
+              />
+              <p id="description-hint" class="form-hint">
+                Used as accessible alternative text. Do not include private information.
+              </p>
+            </div>
+
+            <div class="form-group">
               <label for="file">
                 Photo or video <span class="required">*</span>
               </label>
@@ -240,7 +270,7 @@ onMounted(() => {
                 class="form-control file-input"
                 required
               />
-              <p class="form-hint">JPEG, PNG, WebP images or MP4/MOV videos · Max 50MB</p>
+              <p class="form-hint">JPEG, PNG, WebP images or MP4/MOV videos · Max 12MB</p>
               <p v-if="form.file" class="selected-file" aria-live="polite">
                 Selected: {{ form.file.name }}
               </p>
@@ -266,7 +296,11 @@ onMounted(() => {
                   required
                 />
                 <span class="consent-text">
-                  I consent to Trovara Farm reviewing and potentially displaying this photo/video publicly in the Moments gallery. <span class="required">*</span>
+                  I confirm I have permission from identifiable people shown and consent to
+                  Trovara Farm storing, reviewing, and potentially publishing this media and
+                  description in the public Moments gallery. I can request removal by contacting
+                  Trovara. See the <RouterLink to="/privacy">Privacy Notice</RouterLink>.
+                  <span class="required">*</span>
                 </span>
               </label>
             </div>
@@ -310,7 +344,7 @@ onMounted(() => {
               <img
                 v-if="moment.mediaKind === 'image'"
                 :src="moment.mediaUrl"
-                alt="Trovara moment"
+                :alt="moment.description || 'A moment shared by the Trovara Farm community'"
                 class="moment-media"
                 loading="lazy"
               />
@@ -319,6 +353,7 @@ onMounted(() => {
                 :src="moment.mediaUrl"
                 :poster="moment.posterUrl || undefined"
                 controls
+                :aria-label="moment.description || 'Video shared by the Trovara Farm community'"
                 class="moment-media"
                 preload="metadata"
               />

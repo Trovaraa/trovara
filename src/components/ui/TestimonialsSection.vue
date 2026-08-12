@@ -47,10 +47,10 @@ defineProps<{
           Partner with us
         </p>
         <h3 class="text-2xl md:text-3xl font-black text-trovara-dark mb-3">
-          Be among our first featured wholesale success stories
+          Be among the first wholesale partners we feature
         </h3>
         <p class="text-sm text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed">
-          We are onboarding procurement teams and retail buyers who value consistent quality and
+          We are onboarding procurement teams and retail buyers who need consistent quality and
           clear supply coordination.
         </p>
         <RouterLink

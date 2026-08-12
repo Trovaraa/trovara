@@ -34,4 +34,3 @@ jobs:
 
       - name: Run Lighthouse CI
         run: npx --yes @lhci/cli@0.14.0 autorun --config=./lighthouserc.json
-        continue-on-error: true

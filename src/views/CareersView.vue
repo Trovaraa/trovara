@@ -57,7 +57,7 @@ onMounted(load)
         <p class="section-subheading text-trovara-gold-300 mb-4">Careers</p>
         <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-6">Grow with Trovara</h1>
         <p class="text-white/70 text-lg leading-relaxed">
-          Join the team building regenerative food systems from Abeokuta to tables across Nigeria.
+          Open roles on the team building regenerative food in Abeokuta for buyers across Nigeria.
         </p>
       </div>
     </section>
@@ -72,7 +72,7 @@ onMounted(load)
         <div v-else-if="!hasOpenRoles" class="rounded-2xl border border-trovara-border bg-trovara-cream/40 px-6 py-8 md:px-8">
           <h2 class="text-2xl font-black text-trovara-dark mb-3">No job postings yet</h2>
           <p class="text-trovara-muted leading-relaxed">
-            There are no open roles at the moment. We are always glad to hear from thoughtful people —
+            There are no open roles at the moment. If you want to work with us later,
             send a short note and CV to
             <a class="text-trovara-green font-semibold hover:underline" :href="mailto(CONTACT_EMAILS.hello, 'Careers interest')">
               {{ CONTACT_EMAILS.hello }}

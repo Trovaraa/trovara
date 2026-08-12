@@ -9,4 +9,8 @@
 /careers-api   https://os.trovara.farm/public/careers  200!
 /careers-api/  https://os.trovara.farm/public/careers  200!
 /careers-api/* https://os.trovara.farm/public/careers/:splat  200!
-/*             /index.html   200
+/verify-email   /shop/verify-email   301
+/reset-password /shop/reset-password 301
+/brand/*        /brand-shell.html    200
+/lot/*          /lot-shell.html      200
+/*              /404.html            404

@@ -67,7 +67,7 @@ const supplyTerms = [
   {
     label: 'Delivery Coverage',
     title: 'Nationwide across Nigeria',
-    detail: 'Dispatch timing and logistics are planned by destination, volume, product handling needs, and delivery cadence.',
+    detail: 'We plan dispatch timing and logistics around destination, volume, how the product needs to be handled, and how often you need deliveries.',
   },
   {
     label: 'Harvest Timeline',
@@ -77,7 +77,7 @@ const supplyTerms = [
   {
     label: 'Minimum Order',
     title: 'Product-specific MOQs',
-    detail: 'Minimums vary by product, packaging, destination, and frequency. Share target volumes for a practical supply plan.',
+    detail: 'Minimums depend on product, packaging, destination, and order frequency. Share target volumes and we will draft a workable supply plan.',
   },
   {
     label: 'Private Label',
@@ -86,13 +86,13 @@ const supplyTerms = [
   },
   {
     label: 'Packaging',
-    title: 'Buyer-fit formats',
+    title: 'Formats matched to your order',
     detail: 'Plantain ships in graded 15 kg or 25 kg cartons, with pre-cut options on request. Other formats are agreed by product and volume.',
   },
   {
     label: 'Quality & Traceability',
-    title: 'Supply against agreed specifications',
-    detail: 'Orders are graded to buyer requirements with lot identification, dispatch checks, and handling requirements agreed upfront.',
+    title: 'Graded to your specs',
+    detail: 'Orders are graded to buyer requirements. Lot IDs, dispatch checks, and handling rules are agreed before fulfilment.',
   },
 ]
 
@@ -105,12 +105,12 @@ const orderSteps = [
   {
     number: '02',
     title: 'Receive a supply plan',
-    detail: 'We confirm availability, MOQ, format, delivery schedule, logistics, and commercial quote.',
+    detail: 'We confirm availability, MOQ, format, delivery schedule, logistics, and a commercial quote.',
   },
   {
     number: '03',
     title: 'Confirm and dispatch',
-    detail: 'Final terms, payment, recurring cadence, and dispatch documentation are agreed before fulfilment.',
+    detail: 'We lock terms, payment, recurring cadence, and dispatch paperwork before fulfilment.',
   },
 ]
 </script>
@@ -143,11 +143,11 @@ const orderSteps = [
             <div>
               <p class="text-[10px] font-black uppercase tracking-[0.24em] text-[#B8C27A] mb-2">Trovara Fresh B2B</p>
               <h1 class="text-2xl sm:text-3xl font-black leading-tight mb-2">
-                Reliable wholesale supply, planned around your procurement cycle.
+                Wholesale supply planned around your volumes and delivery schedule.
               </h1>
               <p class="text-sm text-white/70 leading-relaxed max-w-2xl">
-                Farm-grown fresh and processed food lines for buyers who need consistent specifications,
-                transparent availability, and dependable nationwide fulfilment.
+                Fresh and processed lines from Trovara Farm for buyers who need clear specs,
+                known availability windows, and nationwide delivery.
               </p>
             </div>
             <div class="flex md:justify-end flex-wrap gap-2">
@@ -163,9 +163,9 @@ const orderSteps = [
             <div class="flex items-end justify-between gap-4 mb-4 print:mb-3">
               <div>
                 <p class="text-[10px] font-black uppercase tracking-[0.24em] text-trovara-green mb-1">Supply Portfolio</p>
-                <h2 class="text-xl font-black text-trovara-dark">Fresh and value-added product lines</h2>
+                <h2 class="text-xl font-black text-trovara-dark">Fresh produce and processed lines</h2>
               </div>
-              <p class="text-xs text-gray-400 text-right hidden sm:block">Availability is confirmed against order volume.</p>
+              <p class="text-xs text-gray-400 text-right hidden sm:block">We confirm availability against your order volume.</p>
             </div>
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 print:grid-cols-3">
               <article
@@ -183,7 +183,7 @@ const orderSteps = [
           <section class="mb-7 print:mb-5">
             <div class="mb-4 print:mb-3">
               <p class="text-[10px] font-black uppercase tracking-[0.24em] text-trovara-green mb-1">Fulfilment Details</p>
-              <h2 class="text-xl font-black text-trovara-dark">Commercial terms at a glance</h2>
+              <h2 class="text-xl font-black text-trovara-dark">Delivery, MOQs, packaging, and quality</h2>
             </div>
             <div class="grid sm:grid-cols-2 gap-3 print:grid-cols-2">
               <article
@@ -201,7 +201,7 @@ const orderSteps = [
           <section class="mb-7 print:mb-5 break-inside-avoid">
             <div class="mb-4 print:mb-3">
               <p class="text-[10px] font-black uppercase tracking-[0.24em] text-trovara-green mb-1">How to Order</p>
-              <h2 class="text-xl font-black text-trovara-dark">From requirement to recurring delivery</h2>
+              <h2 class="text-xl font-black text-trovara-dark">Three steps to a supply plan</h2>
             </div>
             <div class="grid md:grid-cols-3 gap-3 print:grid-cols-3">
               <div v-for="step in orderSteps" :key="step.number" class="rounded-xl bg-[#f3f5f1] p-4 print:p-3">

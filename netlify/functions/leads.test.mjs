@@ -6,10 +6,12 @@ import waitlistHandler from './waitlist.mjs'
 
 const originalFetch = globalThis.fetch
 const originalApiUrl = process.env.MARKETING_LEADS_API_URL
+const originalProxySecret = process.env.FORM_PROXY_SIGNING_SECRET
 let requestNumber = 0
 
 beforeEach(() => {
   process.env.MARKETING_LEADS_API_URL = 'https://os.example/public/leads/'
+  process.env.FORM_PROXY_SIGNING_SECRET = 'test-form-proxy-secret'
 })
 
 afterEach(() => {
@@ -19,6 +21,8 @@ afterEach(() => {
   } else {
     process.env.MARKETING_LEADS_API_URL = originalApiUrl
   }
+  if (originalProxySecret === undefined) delete process.env.FORM_PROXY_SIGNING_SECRET
+  else process.env.FORM_PROXY_SIGNING_SECRET = originalProxySecret
 })
 
 function request(body) {
@@ -69,6 +73,8 @@ test('contact proxies the validated OS contract and preserves browser success', 
     consentVersion: '1.0',
   })
   assert.ok(outbound.options.signal instanceof AbortSignal)
+  assert.match(outbound.options.headers['X-Trovara-Client-Id'], /^[A-Za-z0-9_-]+$/)
+  assert.match(outbound.options.headers['X-Trovara-Client-Signature'], /^[A-Za-z0-9_-]+$/)
 })
 
 test('all five product IDs retain their stable OS keys', async () => {

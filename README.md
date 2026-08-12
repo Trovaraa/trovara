@@ -40,7 +40,9 @@ Contact and product-waitlist submissions use the same-origin
 Those functions validate and rate-limit requests before sending purpose-specific
 lead records to Trovara OS through the server-only `MARKETING_LEADS_API_URL`
 (required; missing → HTTP 503). Production sets it in
-`netlify.toml` `[context.production.environment]`.
+`netlify.toml` `[context.production.environment]`. Configure the same
+server-only `FORM_PROXY_SIGNING_SECRET` in Netlify and Trovara OS so forwarded
+requests retain a signed per-visitor rate-limit identity.
 
 For local development, plain `npm run dev` serves
 `/.netlify/functions/contact|waitlist|newsletter` via Vite middleware (defaults

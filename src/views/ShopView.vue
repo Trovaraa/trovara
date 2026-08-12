@@ -505,7 +505,7 @@ onMounted(async () => {
                 Opening the chat alone is not enough.
               </template>
               <template v-else>
-                Telegram customer bot username is not configured on this site build yet — ask the farm for the bot link, then send
+                Telegram customer bot username is not configured on this site build yet. Ask the farm for the bot link, then send
                 <code class="rounded bg-trovara-light px-1.5 py-0.5 text-sm font-semibold text-trovara-dark">link YOURCODE</code>.
               </template>
             </p>
@@ -585,7 +585,7 @@ onMounted(async () => {
               <div class="mt-5 flex flex-wrap gap-3">
                 <a v-if="TELEGRAM_ORDER_URL" :href="TELEGRAM_ORDER_URL" target="_blank" rel="noopener" class="rounded-xl bg-[#229ED9] px-4 py-3 text-sm font-bold text-white">Open Telegram</a>
                 <button type="button" class="rounded-xl bg-white/10 px-4 py-3 text-sm font-bold hover:bg-white/20" :disabled="busy" @click="checkLinkStatus">
-                  {{ busy ? 'Checking…' : "I've sent it — check status" }}
+                  {{ busy ? 'Checking…' : "I've sent it. Check status" }}
                 </button>
                 <a :href="buildWhatsAppLink(products.length ? 'Hi Trovara Farm, I need help with my shop account.' : 'Hi Trovara Farm, I would like waitlist updates and help with my shop account.')" target="_blank" rel="noopener" class="rounded-xl bg-[#25D366] px-4 py-3 text-sm font-bold text-white">Message WhatsApp (human)</a>
               </div>

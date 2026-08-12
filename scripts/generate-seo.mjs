@@ -1,6 +1,7 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
+import { buildSitemapXml } from './seo-utils.mjs'
 
 const BASE_URL = 'https://trovara.farm'
 const POSTS_DIR = path.resolve(process.cwd(), 'src/content/posts')
@@ -8,6 +9,9 @@ const GENERATED_POSTS_DIR = path.resolve(process.cwd(), 'src/content/generated-p
 const PUBLIC_DIR = path.resolve(process.cwd(), 'public')
 const SITEMAP_PATH = path.resolve(PUBLIC_DIR, 'sitemap.xml')
 const FEED_PATH = path.resolve(PUBLIC_DIR, 'feed.xml')
+const SEO_PAGES_PATH = path.resolve(PUBLIC_DIR, 'seo-pages.json')
+const CAREERS_API_URL =
+  process.env.CAREERS_API_URL || 'https://os.trovara.farm/public/careers'
 
 const STATIC_ROUTES = [
   '/',
@@ -23,21 +27,14 @@ const STATIC_ROUTES = [
   '/services',
   '/faq',
   '/blog',
+  '/moments',
+  '/careers',
   '/contact',
   '/wholesale',
   '/wholesale/one-pager',
   '/privacy',
   '/terms',
 ]
-
-function xmlEscape(value) {
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;')
-}
 
 function unquote(value) {
   return value.trim().replace(/^["']|["']$/g, '')
@@ -165,23 +162,6 @@ async function readPublishedPosts() {
   )
 }
 
-function buildSitemapXml(posts) {
-  const routeEntries = STATIC_ROUTES.map((route) => `${BASE_URL}${route === '/' ? '' : route}`)
-  const postEntries = posts.map((post) => `${BASE_URL}/blog/${post.slug}`)
-
-  const urls = [...routeEntries, ...postEntries]
-
-  const body = urls
-    .map((url) => `  <url>\n    <loc>${xmlEscape(url)}</loc>\n  </url>`)
-    .join('\n')
-
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${body}
-</urlset>
-`
-}
-
 function buildFeedXml(posts) {
   const items = posts
     .map((post) => {
@@ -193,11 +173,11 @@ function buildFeedXml(posts) {
         : new Date().toUTCString()
 
       return `    <item>
-      <title>${xmlEscape(post.title)}</title>
-      <link>${xmlEscape(link)}</link>
-      <guid>${xmlEscape(link)}</guid>
-      <pubDate>${xmlEscape(pubDate)}</pubDate>
-      <description>${xmlEscape(post.excerpt)}</description>
+      <title>${escapeXml(post.title)}</title>
+      <link>${escapeXml(link)}</link>
+      <guid>${escapeXml(link)}</guid>
+      <pubDate>${escapeXml(pubDate)}</pubDate>
+      <description>${escapeXml(post.excerpt)}</description>
     </item>`
     })
     .join('\n')
@@ -215,18 +195,102 @@ ${items}
 `
 }
 
+function escapeXml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;')
+}
+
+async function readPublishedCareers() {
+  try {
+    const response = await fetch(CAREERS_API_URL, { signal: AbortSignal.timeout(8000) })
+    if (!response.ok) throw new Error(`HTTP ${response.status}`)
+    const data = await response.json()
+    return Array.isArray(data.posts)
+      ? data.posts.filter((post) => post && typeof post.slug === 'string' && typeof post.title === 'string')
+      : []
+  } catch (error) {
+    console.warn(`Career SEO sync skipped: ${error instanceof Error ? error.message : error}`)
+    return []
+  }
+}
+
+const STATIC_PAGE_META = {
+  '/': ['Trovara Farm - Food you can trust, from a farm built for tomorrow', 'Premium regenerative food from Ogun State, Nigeria for homes, chefs, and hospitality partners.'],
+  '/about': ['About Us - Trovara Farm', 'Learn about Trovara Farm, our mission, and the people building a regenerative food company in Nigeria.'],
+  '/products': ['Our Products - Trovara Farm', 'Explore Trovara Farm product lines, including coconut, plantain, palm oil, pasture-raised chicken, and eggs.'],
+  '/products/coconut': ['Coconut - Trovara Farm', 'Explore traceable coconuts grown at Trovara Farm in Ogun State.'],
+  '/products/plantain': ['Plantain - Trovara Farm', 'Explore plantain grown with regenerative practices at Trovara Farm.'],
+  '/products/poultry': ['Pasture-raised Chicken - Trovara Farm', 'Explore pasture-raised chicken from Trovara Farm.'],
+  '/products/eggs': ['Pasture-raised Eggs - Trovara Farm', 'Explore pasture-raised eggs from Trovara Farm.'],
+  '/products/palm-oil': ['Palm Oil - Trovara Farm', 'Explore traceable palm oil from Trovara Farm.'],
+  '/shop': ['Shop Account - Trovara Farm', 'Access your Trovara Farm shop account.', 'noindex, nofollow'],
+  '/farm': ['The Farm - Trovara Farm', 'Discover how Trovara Farm grows healthy food and restores land in Ogun State.'],
+  '/services': ['Farm OS & Farm Advisory Services - Trovara Farm', 'Explore Trovara Farm OS and hands-on Farm Advisory Services.'],
+  '/faq': ['FAQ - Trovara Farm', 'Common questions about Trovara Farm products, delivery, partnerships, and operations.'],
+  '/blog': ['Blog - Trovara Farm', 'Stories, field notes, and practical farming insights from Trovara Farm.'],
+  '/moments': ['Moments - Trovara Farm', 'Photos and videos from the Trovara Farm community.'],
+  '/careers': ['Careers - Trovara Farm', 'Open roles at Trovara Farm. Join the team growing regenerative food from Abeokuta.'],
+  '/contact': ['Contact - Trovara Farm', 'Contact Trovara Farm for products, partnerships, wholesale opportunities, and farm visits.'],
+  '/wholesale': ['B2B Wholesale - Trovara Farm', 'Wholesale offerings for restaurants, retailers, and food service partners.'],
+  '/wholesale/one-pager': ['Wholesale One-Pager - Trovara Farm', 'Trovara Farm wholesale supply and contact details.'],
+  '/privacy': ['Privacy Policy - Trovara Farm', 'How Trovara Farm collects, uses, and protects personal data.'],
+  '/terms': ['Terms of Service - Trovara Farm', 'Terms governing use of the Trovara Farm website and services.'],
+}
+
+const PRIVATE_PAGES = [
+  ['/shop/reset-password', 'Reset Password - Trovara Farm', 'Set a new shop account password.'],
+  ['/shop/verify-email', 'Verify Email - Trovara Farm', 'Verify a Trovara Farm shop account email address.'],
+  ['/newsletter/confirm', 'Confirm Newsletter Subscription - Trovara Farm', 'Confirm a newsletter subscription.'],
+  ['/newsletter/unsubscribe', 'Unsubscribe from Newsletter - Trovara Farm', 'Manage a newsletter subscription.'],
+].map(([path, title, description]) => ({
+  path,
+  title,
+  description,
+  robots: 'noindex, nofollow',
+}))
+
 async function main() {
   await fs.mkdir(PUBLIC_DIR, { recursive: true })
-  const posts = await readPublishedPosts()
-  const sitemap = buildSitemapXml(posts)
+  const [posts, careers] = await Promise.all([readPublishedPosts(), readPublishedCareers()])
+  const sitemapPaths = [
+    ...STATIC_ROUTES,
+    ...posts.map((post) => `/blog/${post.slug}`),
+    ...careers.map((post) => `/careers/${post.slug}`),
+  ]
+  const sitemap = buildSitemapXml(sitemapPaths)
   const feed = buildFeedXml(posts)
+  const seoPages = [
+    ...STATIC_ROUTES.map((route) => {
+      const meta = STATIC_PAGE_META[route] || [
+        'Trovara Farm',
+        'Food you can trust, from a farm built for tomorrow.',
+      ]
+      return { path: route, title: meta[0], description: meta[1], robots: meta[2] }
+    }),
+    ...posts.map((post) => ({
+      path: `/blog/${post.slug}`,
+      title: `${post.title} - Trovara Farm`,
+      description: post.excerpt || 'Read this story from Trovara Farm.',
+    })),
+    ...careers.map((post) => ({
+      path: `/careers/${post.slug}`,
+      title: `${post.title} - Careers - Trovara Farm`,
+      description: post.summary || 'Career opening at Trovara Farm.',
+    })),
+    ...PRIVATE_PAGES,
+  ]
 
   await Promise.all([
     fs.writeFile(SITEMAP_PATH, sitemap, 'utf8'),
     fs.writeFile(FEED_PATH, feed, 'utf8'),
+    fs.writeFile(SEO_PAGES_PATH, `${JSON.stringify(seoPages, null, 2)}\n`, 'utf8'),
   ])
 
-  console.log(`Generated sitemap.xml and feed.xml with ${posts.length} posts.`)
+  console.log(`Generated SEO files with ${posts.length} posts and ${careers.length} careers.`)
 }
 
 main().catch((error) => {

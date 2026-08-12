@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import TheNavbar from './components/TheNavbar.vue'
 import TheFooter from './components/TheFooter.vue'
@@ -18,6 +18,7 @@ usePageMeta(router)
 useTheme()
 
 const routeKey = computed(() => route.path)
+const mainContent = ref<HTMLElement | null>(null)
 
 function jumpToTop() {
   window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
@@ -34,17 +35,21 @@ router.beforeEach((to, from) => {
 
 router.afterEach((to) => {
   if (to.hash) return
-  void nextTick(() => jumpToTop())
+  void nextTick(() => {
+    jumpToTop()
+    mainContent.value?.focus({ preventScroll: true })
+  })
 })
 </script>
 
 <template>
   <div class="min-h-screen flex flex-col">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <StructuredData />
     <!-- Ahead of the page so the banner is the first thing keyboard focus reaches. -->
     <ConsentBanner />
     <TheNavbar />
-    <main class="flex-1">
+    <main id="main-content" ref="mainContent" class="flex-1" tabindex="-1">
       <RouterView v-slot="{ Component }">
         <!-- No mode="out-in": that emptied <main> during leave and parked the
              viewport on the footer (looked like a broken navigation). -->
@@ -68,5 +73,26 @@ router.afterEach((to) => {
 .page-enter-from,
 .page-leave-to {
   opacity: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 100;
+  transform: translateY(-200%);
+  border-radius: 0.5rem;
+  background: #fff;
+  color: #18311f;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+#main-content:focus {
+  outline: none;
 }
 </style>

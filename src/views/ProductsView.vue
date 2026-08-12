@@ -32,13 +32,12 @@ const productSchemas = computed(() =>
     <section class="pt-32 pb-20 bg-trovara-green relative overflow-hidden">
       <div class="absolute inset-0 bg-hero-pattern opacity-10 pointer-events-none" />
       <div class="container-trovara relative z-10 text-center max-w-3xl mx-auto">
-        <p class="section-subheading text-trovara-gold-300 mb-4">From Our Farm</p>
+        <p class="section-subheading text-trovara-gold-300 mb-4">From our farm</p>
         <h1 class="text-5xl md:text-6xl font-black text-white mb-6">
-          Products grown with purpose
+          What we grow and process
         </h1>
         <p class="text-white/70 text-lg leading-relaxed">
-          Every product at Trovara Farm carries a story - of rich soil, honest care,
-          and a commitment to delivering the earth's finest to you.
+          Coconut, plantain, palm oil, pasture-raised chicken, and eggs from one regenerative farm in Ogun State, with processed formats planned after first harvest.
         </p>
       </div>
     </section>
@@ -56,7 +55,7 @@ const productSchemas = computed(() =>
           <InfographicFigure
             src="/images/regen/system.webp"
             alt="Trovara integrated regenerative system: crops and pasture-raised poultry flow through a circular farm into Trovara Fresh and Trovara Harvest, with by-products reused as compost, fertilizer, biogas, and animal feed."
-            caption="From nature's inputs to trusted food solutions"
+            caption="One closed-loop farm behind Fresh and Harvest"
             summary="Fresh plantain, coconut, palm oil, pasture-raised chicken and eggs, plus value-added products, all come from one closed-loop farm."
           />
         </div>
@@ -308,8 +307,8 @@ const productSchemas = computed(() =>
                     icon: 'package',
                     name: 'Plantain Flour',
                     sku: 'flour',
-                    tagline: 'The ancient staple, reimagined.',
-                    body: 'Milled from sun-dried plantation plantains with no additives, bleaching agents, or preservatives - suited to baking, soups, porridges, and wholesale.',
+                    tagline: 'Milled for kitchens and bakeries.',
+                    body: 'Milled from sun-dried plantation plantains with no additives, bleaching agents, or preservatives. Suited to baking, soups, porridges, and wholesale.',
                     image: '/images/products/trovara-harvest-plantain-flour.jpg',
                   },
                 ]"

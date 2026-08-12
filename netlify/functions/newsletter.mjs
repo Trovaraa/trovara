@@ -14,6 +14,7 @@ import {
   json,
   parseJsonBody,
   rateLimit,
+  trustedClientHeaders,
 } from './_shared.mjs'
 
 const WINDOW_MS = 15 * 60 * 1000
@@ -85,7 +86,7 @@ function validateTokenAction(body) {
   return { payload: { token } }
 }
 
-async function proxyToNewsletterApi(action, payload) {
+async function proxyToNewsletterApi(action, payload, clientIp) {
   const apiUrl = cleanApiUrl()
   if (!apiUrl) {
     return json(503, {
@@ -101,6 +102,7 @@ async function proxyToNewsletterApi(action, payload) {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
+        ...trustedClientHeaders(clientIp),
       },
       body: JSON.stringify(payload),
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
@@ -171,5 +173,5 @@ export default async function handler(request) {
     return json(400, { ok: false, error: validated.error })
   }
 
-  return proxyToNewsletterApi(action, validated.payload)
+  return proxyToNewsletterApi(action, validated.payload, ip)
 }

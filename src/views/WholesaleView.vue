@@ -108,9 +108,9 @@ const productLines = [
     <section class="py-20 md:py-28 bg-white">
       <div class="container-trovara">
         <SectionHeader
-          eyebrow="Product Portfolio"
-          title="Built for modern wholesale operations"
-          subtitle="The wholesale portfolio matches our harvest calendar - palm oil and chicken first, then plantain, coconut, and eggs as each window opens."
+          eyebrow="Product portfolio"
+          title="Lines matched to our harvest calendar"
+          subtitle="Palm oil and chicken open first, then plantain, coconut, and eggs as each window is ready."
         />
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           <article

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import TrovaraLogo from './brand/TrovaraLogo.vue'
 import ThemeSwitcher from './ThemeSwitcher.vue'
@@ -8,6 +8,9 @@ import { useTheme } from '../lib/theme'
 const route = useRoute()
 const mobileMenuOpen = ref(false)
 const scrolled = ref(false)
+const menuButton = ref<HTMLButtonElement | null>(null)
+const mobileMenu = ref<HTMLElement | null>(null)
+let restoreFocusTo: HTMLElement | null = null
 const { isDark } = useTheme()
 
 const serviceLinks = [
@@ -60,7 +63,29 @@ function closeMobileMenu() {
 }
 
 function onKeydown(event: KeyboardEvent) {
-  if (event.key === 'Escape') closeMobileMenu()
+  if (!mobileMenuOpen.value) return
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    closeMobileMenu()
+    void nextTick(() => (restoreFocusTo ?? menuButton.value)?.focus())
+    return
+  }
+  if (event.key !== 'Tab' || !mobileMenu.value) return
+  const focusable = Array.from(
+    mobileMenu.value.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    ),
+  )
+  if (!focusable.length) return
+  const first = focusable[0]
+  const last = focusable[focusable.length - 1]
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault()
+    last.focus()
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault()
+    first.focus()
+  }
 }
 
 function onResize() {
@@ -102,6 +127,10 @@ watch(
 
 watch(mobileMenuOpen, (open) => {
   document.body.style.overflow = open ? 'hidden' : ''
+  if (open) {
+    restoreFocusTo = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    void nextTick(() => mobileMenu.value?.querySelector<HTMLElement>('a[href]')?.focus())
+  }
 })
 
 onMounted(() => {
@@ -203,6 +232,7 @@ onUnmounted(() => {
         <div class="xl:hidden flex items-center gap-1">
           <ThemeSwitcher :on-dark-chrome="overHero" />
           <button
+            ref="menuButton"
             class="grid min-h-11 min-w-11 place-items-center rounded-lg transition-colors"
             :class="overHero ? 'text-white hover:bg-white/10' : 'text-trovara-dark hover:bg-trovara-light'"
             @click="mobileMenuOpen = !mobileMenuOpen"
@@ -230,9 +260,13 @@ onUnmounted(() => {
         leave-to-class="transform scale-95 opacity-0"
       >
         <div
+          ref="mobileMenu"
           v-if="mobileMenuOpen"
           id="mobile-navigation"
           class="xl:hidden max-h-[calc(100dvh-4rem-env(safe-area-inset-bottom))] overscroll-contain overflow-y-auto bg-white border-t border-gray-100 shadow-lg rounded-b-2xl"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation"
         >
           <div class="px-2 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] space-y-1">
             <RouterLink

@@ -2,18 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <script>
-      (function () {
-        try {
-          var key = 'trovara-color-scheme'
-          var stored = localStorage.getItem(key)
-          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-          var dark = stored === 'dark' || ((stored === 'auto' || stored == null) && prefersDark)
-          if (dark) document.documentElement.classList.add('dark')
-          document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
-        } catch (e) {}
-      })()
-    </script>
+    <script src="/theme-init.js"></script>
     <link rel="icon" type="image/svg+xml" href="/brand/trovara-monogram-tile-v1.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content="Trovara Farm - Food you can trust, from a farm built for tomorrow. Traceable plantain, coconut, palm oil, pasture-raised chicken, and eggs from one regenerative farm in Nigeria." />
@@ -33,7 +22,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://trovara.farm/brand/trovara-social-card-v2.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="apple-touch-icon" href="/icons/trovara-monogram-icon-v1.svg" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
     <link rel="alternate" type="application/rss+xml" title="Trovara Farm Journal" href="/feed.xml" />
     <title>Trovara Farm - Food you can trust, from a farm built for tomorrow</title>
   </head>
