@@ -16,23 +16,25 @@ function onHomeClick() {
 
 const links = {
   company: [
-    { label: 'Shop',          to: '/shop' },
+    { label: 'Customer account', to: '/shop' },
     { label: 'Our Story',     to: '/about#story' },
     { label: 'The Farm',      to: '/farm' },
-    { label: 'Journal',       to: '/blog' },
-    { label: 'Farm OS',       to: '/services#farm-os' },
-    { label: 'Farm Advisory', to: '/services#farm-advisory' },
+    { label: 'Moments',       to: '/moments' },
+    { label: 'Careers',       to: '/careers' },
+    { label: 'Blog',          to: '/blog' },
+    { label: 'Farm OS',       to: '/farm-os' },
+    { label: 'Farm Advisory', to: '/farm-advisory' },
     { label: 'Wholesale',     to: '/wholesale' },
     { label: 'FAQ',           to: '/faq' },
     { label: 'Contact',       to: '/contact' },
   ],
   products: [
     { label: 'All products',           to: '/products' },
-    { label: 'Coconut',                to: '/products#coconut' },
-    { label: 'Plantain',               to: '/products#plantain' },
-    { label: 'Pasture-raised Chicken', to: '/products#poultry' },
-    { label: 'Eggs',                   to: '/products#eggs' },
-    { label: 'Palm Oil',               to: '/products#palm-oil' },
+    { label: 'Coconut',                to: '/products/coconut' },
+    { label: 'Plantain',               to: '/products/plantain' },
+    { label: 'Pasture-raised Chicken', to: '/products/poultry' },
+    { label: 'Eggs',                   to: '/products/eggs' },
+    { label: 'Palm Oil',               to: '/products/palm-oil' },
   ],
 }
 </script>
@@ -67,7 +69,7 @@ const links = {
               target="_blank"
               rel="noopener noreferrer"
               :aria-label="link.label"
-              class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white/70 hover:text-trovara-gold hover:border-trovara-gold/50 hover:bg-white/5 transition-colors"
+              class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white/70 hover:text-trovara-gold hover:border-trovara-gold/50 hover:bg-white/5 transition-colors"
             >
               <svg
                 v-if="link.id === 'facebook'"
@@ -112,7 +114,7 @@ const links = {
             <li v-for="link in links.company" :key="link.label">
               <RouterLink
                 :to="link.to"
-                class="text-white/60 hover:text-trovara-gold text-sm transition-colors"
+                class="inline-flex min-h-11 items-center text-white/60 hover:text-trovara-gold text-sm transition-colors"
               >
                 {{ link.label }}
               </RouterLink>
@@ -126,7 +128,7 @@ const links = {
             <li v-for="link in links.products" :key="link.label">
               <RouterLink
                 :to="link.to"
-                class="text-white/60 hover:text-trovara-gold text-sm transition-colors"
+                class="inline-flex min-h-11 items-center text-white/60 hover:text-trovara-gold text-sm transition-colors"
               >
                 {{ link.label }}
               </RouterLink>
@@ -144,19 +146,19 @@ const links = {
         <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
           <RouterLink
             to="/privacy"
-            class="text-white/40 hover:text-trovara-gold text-sm transition-colors"
+            class="inline-flex min-h-11 items-center text-white/40 hover:text-trovara-gold text-sm transition-colors"
           >
             Privacy Policy
           </RouterLink>
           <RouterLink
             to="/terms"
-            class="text-white/40 hover:text-trovara-gold text-sm transition-colors"
+            class="inline-flex min-h-11 items-center text-white/40 hover:text-trovara-gold text-sm transition-colors"
           >
             Terms of Service
           </RouterLink>
           <button
             type="button"
-            class="text-white/40 hover:text-trovara-gold text-sm transition-colors"
+            class="min-h-11 text-white/40 hover:text-trovara-gold text-sm transition-colors"
             @click="openConsentBanner"
           >
             Cookie Preferences

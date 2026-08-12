@@ -1,37 +1,5 @@
-import MarkdownIt from 'markdown-it'
 import type { BlogPost, BlogPostFrontmatter } from '../../types'
-
-const md = new MarkdownIt({
-  html: false,
-  linkify: true,
-  typographer: true,
-})
-
-const SITE_HOSTS = new Set(['trovara.farm', 'www.trovara.farm'])
-
-function isExternalHttpLink(href: string): boolean {
-  if (!/^https?:\/\//i.test(href)) return false
-
-  try {
-    const { hostname } = new URL(href)
-    return !SITE_HOSTS.has(hostname.toLowerCase())
-  } catch {
-    return false
-  }
-}
-
-const defaultLinkOpen =
-  md.renderer.rules.link_open ??
-  ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options))
-
-md.renderer.rules.link_open = (tokens, idx, options, _env, self) => {
-  const href = tokens[idx].attrGet('href')
-  if (href && isExternalHttpLink(href)) {
-    tokens[idx].attrSet('target', '_blank')
-    tokens[idx].attrSet('rel', 'noopener noreferrer')
-  }
-  return defaultLinkOpen(tokens, idx, options, _env, self)
-}
+import { renderSafeMarkdown } from '../../lib/markdown'
 
 const postFiles = import.meta.glob<string>('./*.md', {
   query: '?raw',
@@ -204,7 +172,7 @@ function parsePost(path: string, raw: string): BlogPost | null {
         ? data.readTimeMinutes
         : estimateReadTime(markdown),
     published: asBoolean(data.published, true),
-    html: md.render(markdown),
+    html: renderSafeMarkdown(markdown),
   }
 }
 
@@ -226,7 +194,7 @@ function parseGeneratedPost(raw: GeneratedJournalPost): BlogPost | null {
     coverImage: asString(raw.coverImage) || undefined,
     readTimeMinutes: estimateReadTime(markdown),
     published: asBoolean(raw.published, true),
-    html: md.render(markdown),
+    html: renderSafeMarkdown(markdown),
   }
 }
 

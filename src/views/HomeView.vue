@@ -1,302 +1,203 @@
 <script setup lang="ts">
 import { useProductsStore } from '../stores/products'
-import ProductCard from '../components/ui/ProductCard.vue'
-import StatCard from '../components/ui/StatCard.vue'
-import SectionHeader from '../components/ui/SectionHeader.vue'
-import TestimonialsSection from '../components/ui/TestimonialsSection.vue'
-import InfographicFigure from '../components/ui/InfographicFigure.vue'
 import BrandIcon from '../components/brand/BrandIcon.vue'
+import InfographicFigure from '../components/ui/InfographicFigure.vue'
 
-const store = useProductsStore()
-const featuredProducts = store.availableProducts
+const products = useProductsStore().availableProducts
 
-/** Compact labels for hero chips so long product names do not crowd the layout. */
-const heroProducts = featuredProducts.map((product) => ({
-  ...product,
-  shortName: product.id === 'poultry' ? 'Chicken' : product.name,
-}))
-
-const stats = [
-  { value: '24',    label: 'Acres in our farm plan', icon: 'land' },
-  { value: '5',     label: 'Planned product lines',  icon: 'harvest' },
-  { value: '0',     label: 'Artificial chemicals',   icon: 'natural' },
-  { value: '1',     label: 'Regenerative system',    icon: 'system' },
+const paths = [
+  {
+    eyebrow: 'For your home',
+    title: 'Follow the next harvest',
+    body: 'See what we are growing, check forecast dates, and join the waitlist for the products you want.',
+    label: 'Browse products',
+    to: '/products',
+    icon: 'harvest',
+  },
+  {
+    eyebrow: 'For your business',
+    title: 'Plan supply early',
+    body: 'Talk to us about SKUs, pack sizes, minimum orders, delivery, and recurring supply across Nigeria.',
+    label: 'Explore wholesale',
+    to: '/wholesale',
+    icon: 'quality',
+  },
+  {
+    eyebrow: 'For your farm',
+    title: 'Run better operations',
+    body: 'Use Trovara Farm OS for daily work, or get practical help to plan and improve your farm.',
+    label: 'See farm services',
+    to: '/services',
+    icon: 'os',
+  },
 ]
-
-const principles = [
-  { icon: 'trust', title: 'Trust' },
-  { icon: 'quality', title: 'Quality' },
-  { icon: 'cycle', title: 'Consistency' },
-  { icon: 'regeneration', title: 'Regeneration' },
-  { icon: 'innovation', title: 'Innovation' },
-  { icon: 'community', title: 'Community' },
-]</script>
+</script>
 
 <template>
   <div>
-
-    <!-- ===== HERO ===== -->
-    <section class="relative min-h-[46rem] lg:min-h-screen flex items-center bg-[#0b3a25] overflow-hidden">
-      <!-- Background Pattern -->
+    <section class="relative flex min-h-[43rem] items-center overflow-hidden bg-[#0b3a25] lg:min-h-[47rem]">
       <div class="absolute inset-0 bg-hero-pattern opacity-20 pointer-events-none" />
       <div class="absolute inset-0 hero-grid opacity-40 pointer-events-none" />
+      <div class="absolute -right-32 -top-32 h-[32rem] w-[32rem] rounded-full bg-trovara-green-400/20 blur-3xl pointer-events-none" />
+      <div class="absolute -bottom-32 -left-32 h-[30rem] w-[30rem] rounded-full bg-trovara-gold/15 blur-3xl pointer-events-none" />
 
-      <!-- Decorative Circles -->
-      <div class="absolute -top-32 -right-32 w-[32rem] h-[32rem] rounded-full bg-trovara-green-400/20 blur-3xl pointer-events-none" />
-      <div class="absolute -bottom-32 -left-32 w-[30rem] h-[30rem] rounded-full bg-trovara-gold/15 blur-3xl pointer-events-none" />
-
-      <div class="container-trovara relative z-10 pt-28 pb-20 lg:pt-32">
-        <div class="grid lg:grid-cols-[minmax(0,1.1fr)_minmax(22rem,0.9fr)] gap-12 xl:gap-20 items-center">
+      <div class="container-trovara relative z-10 pb-16 pt-28 lg:pb-20 lg:pt-32">
+        <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(22rem,0.9fr)] xl:gap-20">
           <div class="min-w-0">
-            <!-- Eyebrow -->
-            <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.08] border border-white/10 backdrop-blur-sm mb-7 max-w-full">
-              <span class="w-2 h-2 rounded-full bg-trovara-gold flex-shrink-0" />
-              <span class="text-trovara-gold-200 text-xs font-bold tracking-[0.16em] uppercase leading-snug">
+            <div class="mb-7 inline-flex max-w-full items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2 backdrop-blur-sm">
+              <span class="h-2 w-2 flex-shrink-0 rounded-full bg-trovara-gold" />
+              <span class="text-xs font-bold uppercase leading-snug tracking-[0.16em] text-trovara-gold-200">
                 Food you can trust · from a farm built for tomorrow
               </span>
             </div>
 
-            <!-- Main Headline -->
-            <h1 class="text-5xl sm:text-6xl md:text-7xl xl:text-[4.9rem] font-black text-white leading-[0.98] mb-7 text-balance tracking-[-0.045em]">
-              Better food starts with better
-              <span class="text-trovara-gold">Soil.</span>
+            <h1 class="mb-7 text-balance text-5xl font-black leading-[0.98] tracking-[-0.045em] text-white sm:text-6xl md:text-7xl xl:text-[4.9rem]">
+              Better food starts with better <span class="text-trovara-gold">soil.</span>
             </h1>
-
-            <p class="text-white/70 text-base md:text-lg leading-relaxed max-w-xl mb-9">
-              Traceable plantain, coconut, palm oil, pasture-raised chicken, and eggs from one regenerative farm - planned for homes, chefs, and food businesses across Nigeria.
+            <p class="mb-9 max-w-xl text-base leading-relaxed text-white/75 md:text-lg">
+              Plantain, coconut, palm oil, pasture-raised chicken, and eggs from one regenerative farm in Ogun State. Every harvest date shown here is a forecast until supply opens.
             </p>
-
-            <div class="flex flex-wrap gap-4">
-              <RouterLink to="/products" class="btn-gold text-base px-7 py-4 rounded-full">
-                Explore products & waitlists
-              </RouterLink>
-              <RouterLink
-                to="/shop"
-                class="inline-flex items-center gap-2 px-7 py-4 rounded-full border border-white/25 text-white font-semibold hover:bg-white/10 transition-all duration-200 text-base"
-              >
-                Create a shop account
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                </svg>
+            <div class="flex flex-wrap gap-3">
+              <RouterLink to="/products" class="btn-gold rounded-full px-7 py-4 text-base">See products &amp; forecasts</RouterLink>
+              <RouterLink to="/wholesale" class="inline-flex items-center rounded-full border border-white/25 px-7 py-4 text-base font-semibold text-white transition hover:bg-white/10">
+                Wholesale enquiries
               </RouterLink>
             </div>
-
-            <div class="mt-10 flex gap-2 overflow-x-auto pb-2 lg:hidden mobile-product-rail" aria-label="Featured products">
-              <RouterLink
-                v-for="product in heroProducts"
-                :key="`mobile-${product.id}`"
-                :to="`/products/${product.id}`"
-                class="flex min-w-[8.5rem] items-center gap-2.5 rounded-2xl border border-white/10 bg-white/[0.07] px-3 py-3 backdrop-blur-sm"
-              >
-                <BrandIcon :name="product.icon" class="h-9 w-9 shrink-0 rounded-lg bg-[#f2ead8] p-1" />
-                <span class="text-xs font-bold leading-tight text-white">{{ product.shortName }}</span>
-              </RouterLink>
-            </div>
+            <p class="mt-6 text-sm text-white/55">
+              Already following a harvest?
+              <RouterLink to="/shop" class="font-bold text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">Open your account</RouterLink>
+            </p>
           </div>
 
-          <!-- A product-led farm card gives the hero a tactile, shoppable second half. -->
-          <div class="hidden lg:block w-full max-w-md justify-self-end">
-            <div class="relative rounded-[2rem] border border-white/15 bg-white/[0.07] backdrop-blur-md p-5 shadow-2xl shadow-black/20">
-              <div class="rounded-[1.4rem] bg-[#f2ead8] p-6 text-trovara-dark overflow-hidden relative min-h-[25rem] flex flex-col">
+          <div class="hidden w-full max-w-md justify-self-end lg:block">
+            <div class="rounded-[2rem] border border-white/15 bg-white/[0.07] p-5 shadow-2xl shadow-black/20 backdrop-blur-md">
+              <div class="relative flex min-h-[24rem] flex-col overflow-hidden rounded-[1.4rem] bg-[#f2ead8] p-6 text-trovara-dark">
                 <div class="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-trovara-gold/25" />
-                <div class="relative z-10 flex items-start justify-between gap-6">
+                <div class="relative z-10 flex items-start justify-between gap-5">
                   <div>
-                    <p class="text-[11px] font-black uppercase tracking-[0.18em] text-trovara-green">Product roadmap</p>
-                    <h2 class="mt-2 text-3xl font-black tracking-tight">Growing at Trovara</h2>
+                    <p class="text-[11px] font-black uppercase tracking-[0.18em] text-trovara-green">Farm forecast</p>
+                    <h2 class="mt-2 text-3xl font-black tracking-tight">What is growing</h2>
                   </div>
-                  <span class="rounded-full bg-trovara-green px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-white">Farm forecast</span>
+                  <span class="rounded-full bg-trovara-green px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-white">5 lines</span>
                 </div>
-
-                <div class="relative z-10 grid grid-cols-2 gap-3 mt-8 flex-1">
+                <div class="relative z-10 mt-7 grid flex-1 grid-cols-2 gap-3">
                   <RouterLink
-                    v-for="product in heroProducts"
+                    v-for="product in products"
                     :key="product.id"
                     :to="`/products/${product.id}`"
-                    class="group rounded-2xl bg-white/75 border border-white p-4 flex flex-col justify-between hover:-translate-y-1 hover:shadow-lg transition-all"
+                    class="group flex flex-col justify-between rounded-2xl border border-white bg-white/75 p-4 transition hover:-translate-y-1 hover:shadow-lg"
                   >
-                    <BrandIcon :name="product.icon" class="w-12 h-12 group-hover:scale-105 transition-transform origin-left" />
-                    <span class="mt-5 text-sm font-black leading-tight">{{ product.shortName }}</span>
-                    <span class="mt-1 text-[11px] font-semibold text-trovara-green">View product ↗</span>
+                    <BrandIcon :name="product.icon" class="h-11 w-11 origin-left transition-transform group-hover:scale-105" />
+                    <span class="mt-4 text-sm font-black leading-tight">{{ product.id === 'poultry' ? 'Chicken' : product.name }}</span>
+                    <span class="mt-1 text-[11px] font-semibold text-trovara-green">View forecast →</span>
                   </RouterLink>
                 </div>
-
-                <div class="hero-farm-card__footer relative z-10 mt-5 flex items-center justify-between border-t border-trovara-dark/10 pt-4 text-xs font-semibold text-trovara-dark/70">
-                  <span>Farm-direct</span><span>Traceable</span><span>Naturally grown</span>
-                </div>
+                <p class="relative z-10 mt-4 border-t border-trovara-dark/10 pt-4 text-xs font-semibold text-trovara-dark/65">
+                  Dates may move as crops and livestock develop.
+                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <div class="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
     </section>
 
-    <!-- ===== STATS ===== -->
-    <section class="py-16 bg-trovara-light border-b border-gray-100">
+    <section class="border-b border-gray-100 bg-trovara-light py-16 md:py-20">
       <div class="container-trovara">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          <StatCard
-            v-for="stat in stats"
-            :key="stat.label"
-            :value="stat.value"
-            :label="stat.label"
-            :icon="stat.icon"
-          />
+        <div class="mb-9 max-w-2xl">
+          <p class="section-subheading">Start here</p>
+          <h2 class="mt-3 text-3xl font-black text-trovara-dark md:text-4xl">What brings you to Trovara?</h2>
         </div>
-      </div>
-    </section>
-
-    <!-- ===== PRODUCTS PREVIEW ===== -->
-    <section class="py-20 md:py-28 bg-white">
-      <div class="container-trovara">
-        <SectionHeader
-          eyebrow="What We Grow"
-          title="Nature's finest, carefully cultivated"
-          subtitle="From tropical crops and palm oil to pasture-raised chicken and eggs, every Trovara product has a clear forecast window. Join waitlists now; checkout opens as each harvest arrives."
-          center
-        />
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
-          <ProductCard v-for="product in featuredProducts" :key="product.id" :product="product" />
-        </div>
-        <div class="mt-12 flex flex-wrap justify-center gap-4">
-          <RouterLink to="/products" class="btn-primary text-base px-8 py-4">
-            View products & waitlists
-          </RouterLink>
-          <RouterLink to="/shop" class="btn-secondary text-base px-8 py-4">
-            Create a shop account
+        <div class="grid gap-5 md:grid-cols-3">
+          <RouterLink
+            v-for="path in paths"
+            :key="path.title"
+            :to="path.to"
+            class="group rounded-3xl border border-gray-200 bg-white p-6 transition hover:-translate-y-1 hover:border-trovara-green/30 hover:shadow-lg md:p-7"
+          >
+            <BrandIcon :name="path.icon" class="h-12 w-12" />
+            <p class="mt-6 text-[11px] font-black uppercase tracking-[0.18em] text-trovara-green">{{ path.eyebrow }}</p>
+            <h3 class="mt-2 text-xl font-black text-trovara-dark">{{ path.title }}</h3>
+            <p class="mt-3 text-sm leading-6 text-gray-500">{{ path.body }}</p>
+            <span class="mt-6 inline-flex font-bold text-trovara-green group-hover:underline">{{ path.label }} →</span>
           </RouterLink>
         </div>
       </div>
     </section>
 
-    <!-- ===== BRAND STORY STRIP ===== -->
-    <section class="bg-trovara-green py-20 md:py-28 overflow-hidden relative">
+    <section class="bg-white py-20 md:py-24">
+      <div class="container-trovara">
+        <div class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div class="max-w-2xl">
+            <p class="section-subheading">Harvest forecast</p>
+            <h2 class="mt-3 text-3xl font-black text-trovara-dark md:text-5xl">Five product lines. One clear place to follow them.</h2>
+            <p class="mt-4 leading-7 text-gray-500">Forecasts are updated as the farm develops. Join a waitlist and we will contact you when that product is ready.</p>
+          </div>
+          <RouterLink to="/products" class="btn-secondary shrink-0">See the full catalogue</RouterLink>
+        </div>
+        <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          <RouterLink
+            v-for="product in products"
+            :key="product.id"
+            :to="`/products/${product.id}`"
+            class="rounded-3xl border border-gray-200 bg-trovara-light p-5 transition hover:border-trovara-green/30 hover:bg-white hover:shadow-md"
+          >
+            <BrandIcon :name="product.icon" class="h-12 w-12" />
+            <h3 class="mt-5 font-black text-trovara-dark">{{ product.name }}</h3>
+            <p class="mt-2 text-xs leading-5 text-gray-500">{{ product.availabilityNote }}</p>
+          </RouterLink>
+        </div>
+      </div>
+    </section>
+
+    <section class="relative overflow-hidden bg-trovara-green py-20 md:py-24">
       <div class="absolute inset-0 bg-hero-pattern opacity-10 pointer-events-none" />
-      <div class="container-trovara relative z-10">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <SectionHeader
-              eyebrow="Our Promise"
-              title="From our roots, to your world."
-              subtitle="Trovara Farm was built on a single belief: that the best food comes from honest farming. No shortcuts. No chemicals. Just the earth, the sun, and the care of human hands."
-              light
-            />
-            <RouterLink to="/about" class="btn-gold text-base px-8 py-4 inline-flex">
-              Read Our Story
-            </RouterLink>
-          </div>
-
-          <!-- Regenerative system visual -->
-          <InfographicFigure
-            src="/images/regen/system.webp"
-            alt="Trovara integrated regenerative system: plantain, coconut, oil palm, and pasture-raised poultry flow through a circular farm into Trovara Fresh and Trovara Harvest."
-            caption="One regenerative system behind every product"
-            summary="Fresh produce and shelf-stable Harvest products - all from one closed-loop farm on 24 acres. Tap to explore the full system."
-            dark
-          />
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== CORE PRINCIPLES ===== -->
-    <section class="py-20 md:py-28 bg-trovara-cream">
-      <div class="container-trovara">
-        <SectionHeader
-          eyebrow="What We Stand For"
-          title="Core principles"
-          center
-        />
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto">
-          <div
-            v-for="principle in principles"
-            :key="principle.title"
-            class="bg-white rounded-2xl p-6 hover:shadow-md transition-shadow duration-300 text-center group"
-          >
-            <BrandIcon :name="principle.icon" class="w-10 h-10 mx-auto mb-3 group-hover:scale-105 transition-transform duration-300" />
-            <h3 class="font-bold text-trovara-dark text-sm sm:text-base">{{ principle.title }}</h3>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== SERVICES TEASER ===== -->
-    <section class="py-20 md:py-28 bg-white">
-      <div class="container-trovara">
-        <SectionHeader
-          eyebrow="Farm Technology & Advisory"
-          title="Two ways we help other farms grow."
-          subtitle="Choose the Operations System built to run daily farm work, or hands-on advisory from people applying the same lessons on our own land."
-          center
-        />
-        <div class="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
-          <div class="rounded-3xl border border-trovara-green/20 bg-gradient-to-br from-white to-trovara-green/[0.04] p-8 lg:p-10 dark:border-trovara-green/35 dark:to-trovara-green/20">
-            <BrandIcon name="os" class="w-14 h-14 mb-6" />
-            <p class="text-xs font-black uppercase tracking-[0.18em] text-trovara-green mb-2">Farm Technology</p>
-            <h3 class="text-2xl font-black text-trovara-dark mb-4">Trovara Farm OS</h3>
-            <p class="text-gray-500 text-sm leading-relaxed mb-6">
-              One place for tasks, field teams, inventory, harvest records, sales, and customer coordination.
-            </p>
-            <RouterLink to="/services#farm-os" class="btn-primary inline-flex px-6 py-3">
-              Explore Farm OS
-            </RouterLink>
-          </div>
-
-          <div class="bg-trovara-light rounded-3xl p-8 lg:p-10">
-            <BrandIcon name="land" class="w-14 h-14 mb-6" />
-            <p class="text-xs font-black uppercase tracking-[0.18em] text-trovara-green mb-2">Hands-on Expertise</p>
-            <h3 class="text-2xl font-black text-trovara-dark mb-4">Farm Advisory Services</h3>
-            <p class="text-gray-500 text-sm leading-relaxed mb-6">
-              Practical support for setup, soil health, crop planning, irrigation, training, post-harvest systems, and market access.
-            </p>
-            <RouterLink to="/services#farm-advisory" class="btn-primary inline-flex px-6 py-3">
-              View Farm Advisory
-            </RouterLink>
-          </div>
-        </div>
-
-        <div class="mt-8 text-center">
-          <p class="text-sm text-gray-500">
-            “We don't advise what we haven't done ourselves.”
-            <RouterLink to="/contact?subject=farm-advisory" class="ml-1 font-semibold text-trovara-green hover:underline">
-              Book a free consultation →
-            </RouterLink>
+      <div class="container-trovara relative z-10 grid items-center gap-12 md:grid-cols-2">
+        <div>
+          <p class="section-subheading text-trovara-gold-300">How the farm fits together</p>
+          <h2 class="mt-3 text-3xl font-black text-white md:text-5xl">One farm. Clear records. Less waste.</h2>
+          <p class="mt-5 max-w-xl leading-7 text-white/70">
+            Our 24-acre plan brings crops, poultry, processing, water, and soil care into one system. We are building traceability into the work from the start.
           </p>
+          <div class="mt-7 flex flex-wrap gap-3 text-sm font-bold">
+            <span class="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-white">24-acre farm plan</span>
+            <span class="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-white">Harvest-lot records</span>
+            <span class="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-white">Nationwide delivery planned</span>
+          </div>
+          <RouterLink to="/farm" class="btn-gold mt-8 inline-flex">See the farm plan</RouterLink>
         </div>
+        <InfographicFigure
+          src="/images/regen/system.webp"
+          alt="Trovara's integrated farm plan connecting crops, pasture-raised poultry, processing, and the reuse of farm by-products."
+          caption="The planned Trovara farm system"
+          summary="Crops, poultry, and processing designed to work together on one farm."
+          dark
+        />
       </div>
     </section>
 
-    <TestimonialsSection context="home" />
-
-    <!-- ===== CTA ===== -->
-    <section class="py-20 bg-trovara-dark text-white">
-      <div class="container-trovara text-center">
-        <p class="section-subheading text-trovara-gold mb-4">Ready to Partner?</p>
-        <h2 class="text-4xl md:text-5xl font-black text-white mb-6 max-w-2xl mx-auto">
-          Let's grow something great together
-        </h2>
-        <p class="text-white/60 text-lg mb-10 max-w-lg mx-auto">
-          Join waitlists for upcoming harvests, create a shop account for when checkout opens, or talk with us about wholesale supply.
-        </p>
-        <div class="flex flex-wrap gap-4 justify-center">
-          <RouterLink to="/contact" class="btn-gold text-base px-8 py-4">
-            Get in Touch
+    <section class="bg-trovara-cream py-20 md:py-24">
+      <div class="container-trovara">
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="section-subheading">Farm technology &amp; advisory</p>
+          <h2 class="mt-3 text-3xl font-black text-trovara-dark md:text-5xl">Built from the work of running a farm.</h2>
+          <p class="mt-4 leading-7 text-gray-500">Choose software for everyday farm operations or practical support for planning and improving your farm.</p>
+        </div>
+        <div class="mx-auto mt-10 grid max-w-5xl gap-6 md:grid-cols-2">
+          <RouterLink to="/farm-os" class="group rounded-3xl bg-trovara-dark p-8 text-white transition hover:-translate-y-1 hover:shadow-xl md:p-10">
+            <BrandIcon name="os" class="h-14 w-14 rounded-2xl bg-white p-2" />
+            <p class="mt-7 text-xs font-black uppercase tracking-[0.18em] text-trovara-gold">Trovara Farm OS</p>
+            <h3 class="mt-2 text-2xl font-black">Daily work, records, stock, and sales in one place.</h3>
+            <span class="mt-7 inline-flex font-bold text-trovara-gold group-hover:underline">Explore Farm OS →</span>
           </RouterLink>
-          <RouterLink
-            to="/products"
-            class="inline-flex items-center gap-2 px-8 py-4 rounded-lg border-2 border-white/30 text-white font-semibold hover:bg-white/10 transition-all duration-200 text-base"
-          >
-            Join waitlists
-          </RouterLink>
-          <RouterLink
-            to="/shop"
-            class="inline-flex items-center gap-2 px-8 py-4 rounded-lg border-2 border-white/30 text-white font-semibold hover:bg-white/10 transition-all duration-200 text-base"
-          >
-            Shop account
+          <RouterLink to="/farm-advisory" class="group rounded-3xl border border-gray-200 bg-white p-8 transition hover:-translate-y-1 hover:shadow-xl md:p-10">
+            <BrandIcon name="land" class="h-14 w-14" />
+            <p class="mt-7 text-xs font-black uppercase tracking-[0.18em] text-trovara-green">Farm advisory</p>
+            <h3 class="mt-2 text-2xl font-black text-trovara-dark">Practical help to plan, build, and improve farm operations.</h3>
+            <span class="mt-7 inline-flex font-bold text-trovara-green group-hover:underline">Explore advisory →</span>
           </RouterLink>
         </div>
       </div>
     </section>
-
   </div>
 </template>

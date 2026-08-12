@@ -4,6 +4,7 @@ import { RouterLink, useRoute } from 'vue-router'
 import SectionHeader from '../components/ui/SectionHeader.vue'
 import { submitContactForm } from '../lib/contact'
 import { MARKETING_LEAD_CONSENT_VERSION } from '../lib/marketing-lead-consent'
+import { CONTACT_EMAILS } from '../lib/contact-emails'
 import { buildWhatsAppLink } from '../lib/whatsapp'
 import { TELEGRAM_CUSTOMER_BOT, TELEGRAM_ORDER_URL } from '../lib/telegram'
 import BrandIcon from '../components/brand/BrandIcon.vue'
@@ -152,10 +153,11 @@ async function handleSubmit() {
 }
 
 const contactInfo = [
-  { icon: 'pin', label: 'Location',  value: 'Trovara Farm, Abeokuta.' },
-  { icon: 'phone', label: 'Phone',     value: '+234 810 369 3426' },
-  { icon: 'mail', label: 'Email',     value: 'info@trovara.farm' },
-  { icon: 'clock', label: 'Response',  value: 'Within 24 business hours' },
+  { icon: 'pin', label: 'Location', value: 'Trovara Farm, Abeokuta.' },
+  { icon: 'phone', label: 'Phone', value: '+234 810 369 3426', href: 'tel:+2348103693426' },
+  { icon: 'mail', label: 'General', value: CONTACT_EMAILS.hello, href: `mailto:${CONTACT_EMAILS.hello}` },
+  { icon: 'mail', label: 'Finance', value: CONTACT_EMAILS.finance, href: `mailto:${CONTACT_EMAILS.finance}` },
+  { icon: 'clock', label: 'Response', value: 'Within 24 business hours' },
 ]
 </script>
 
@@ -163,22 +165,21 @@ const contactInfo = [
   <div>
 
     <!-- Hero -->
-    <section class="pt-32 pb-20 bg-trovara-green relative overflow-hidden">
+    <section class="pt-28 pb-14 sm:pt-32 sm:pb-20 bg-trovara-green relative overflow-hidden">
       <div class="absolute inset-0 bg-hero-pattern opacity-10 pointer-events-none" />
       <div class="container-trovara relative z-10 text-center max-w-3xl mx-auto">
-        <p class="section-subheading text-trovara-gold-300 mb-4">Let's Connect</p>
-        <h1 class="text-5xl md:text-6xl font-black text-white mb-6">
-          We'd love to hear from you.
+        <p class="section-subheading text-trovara-gold-300 mb-4">Contact</p>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-6">
+          Talk to the farm team.
         </h1>
         <p class="text-white/70 text-lg leading-relaxed">
-          Whether you're a buyer, distributor, investor, or simply curious -
-          Trovara Farm is always open.
+          Buyers, distributors, investors, and curious visitors are all welcome. Send a note and we will reply within one business day.
         </p>
       </div>
     </section>
 
     <!-- Contact Section -->
-    <section class="py-20 md:py-28 bg-trovara-cream">
+    <section class="py-14 sm:py-20 md:py-28 bg-trovara-cream">
       <div class="container-trovara">
         <div class="grid md:grid-cols-5 gap-12 lg:gap-16">
 
@@ -201,7 +202,12 @@ const contactInfo = [
                   <div class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-0.5">
                     {{ info.label }}
                   </div>
-                  <div class="text-trovara-dark font-medium">{{ info.value }}</div>
+                  <a
+                    v-if="'href' in info"
+                    class="text-trovara-dark font-medium hover:text-trovara-green hover:underline"
+                    :href="info.href"
+                  >{{ info.value }}</a>
+                  <div v-else class="text-trovara-dark font-medium">{{ info.value }}</div>
                 </div>
               </div>
             </div>
@@ -239,7 +245,7 @@ const contactInfo = [
 
           <!-- Form -->
           <div class="md:col-span-3">
-            <div class="bg-white rounded-3xl p-8 lg:p-10 shadow-sm">
+            <div class="bg-white rounded-3xl p-5 sm:p-8 lg:p-10 shadow-sm">
 
               <!-- Success State -->
               <div v-if="submitted" class="text-center py-12">
@@ -269,12 +275,14 @@ const contactInfo = [
                 />
                 <div class="grid sm:grid-cols-2 gap-6">
                   <div>
-                    <label class="block text-sm font-semibold text-trovara-dark mb-2">
+                    <label for="contact-name" class="block text-sm font-semibold text-trovara-dark mb-2">
                       Full Name <span class="text-trovara-green">*</span>
                     </label>
                     <input
+                      id="contact-name"
                       v-model="form.name"
                       type="text"
+                      autocomplete="name"
                       required
                       :maxlength="FIELD_LIMITS.name"
                       placeholder="Ada Okonkwo"
@@ -282,12 +290,15 @@ const contactInfo = [
                     />
                   </div>
                   <div>
-                    <label class="block text-sm font-semibold text-trovara-dark mb-2">
+                    <label for="contact-email" class="block text-sm font-semibold text-trovara-dark mb-2">
                       Email Address <span class="text-trovara-green">*</span>
                     </label>
                     <input
+                      id="contact-email"
                       v-model="form.email"
                       type="email"
+                      autocomplete="email"
+                      inputmode="email"
                       required
                       :maxlength="FIELD_LIMITS.email"
                       placeholder="you@example.com"
@@ -298,22 +309,26 @@ const contactInfo = [
 
                 <div class="grid sm:grid-cols-2 gap-6">
                   <div>
-                    <label class="block text-sm font-semibold text-trovara-dark mb-2">
+                    <label for="contact-phone" class="block text-sm font-semibold text-trovara-dark mb-2">
                       Phone Number
                     </label>
                     <input
+                      id="contact-phone"
                       v-model="form.phone"
                       type="tel"
+                      autocomplete="tel"
+                      inputmode="tel"
                       :maxlength="FIELD_LIMITS.phone"
                       placeholder="+234 810 000 0000"
                       class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-trovara-cream focus:outline-none focus:ring-2 focus:ring-trovara-green/30 focus:border-trovara-green transition text-trovara-dark placeholder-gray-400 text-sm"
                     />
                   </div>
                   <div>
-                    <label class="block text-sm font-semibold text-trovara-dark mb-2">
+                    <label for="contact-subject" class="block text-sm font-semibold text-trovara-dark mb-2">
                       Subject <span class="text-trovara-green">*</span>
                     </label>
                     <select
+                      id="contact-subject"
                       v-model="form.subject"
                       required
                       class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-trovara-cream focus:outline-none focus:ring-2 focus:ring-trovara-green/30 focus:border-trovara-green transition text-trovara-dark text-sm"
@@ -326,10 +341,11 @@ const contactInfo = [
                 </div>
 
                 <div>
-                  <label class="block text-sm font-semibold text-trovara-dark mb-2">
+                  <label for="contact-message" class="block text-sm font-semibold text-trovara-dark mb-2">
                     Message <span class="text-trovara-green">*</span>
                   </label>
                   <textarea
+                    id="contact-message"
                     v-model="form.message"
                     required
                     rows="5"
@@ -347,7 +363,7 @@ const contactInfo = [
                     v-model="form.consent"
                     type="checkbox"
                     required
-                    class="mt-0.5 h-4 w-4 rounded border-gray-300 text-trovara-green focus:ring-trovara-gold"
+                    class="mt-0.5 h-6 w-6 flex-shrink-0 rounded border-gray-300 text-trovara-green focus:ring-trovara-gold"
                     :disabled="submitting"
                   />
                   <span>
@@ -373,7 +389,7 @@ const contactInfo = [
                   </span>
                   <span v-else>Send Message →</span>
                 </button>
-                <p v-if="submitError" class="text-sm text-red-600">
+                <p v-if="submitError" class="text-sm text-red-600" role="alert">
                   {{ submitError }}
                 </p>
               </form>

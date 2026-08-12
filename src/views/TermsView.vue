@@ -112,7 +112,7 @@ const toc: Section[] = [
                 <div class="bg-white rounded-2xl shadow-sm p-6 grid sm:grid-cols-2 gap-4 text-sm">
                   <div>
                     <span class="block font-bold text-trovara-dark">Email</span>
-                    <a href="mailto:info@trovara.farm" class="text-trovara-green hover:underline">info@trovara.farm</a>
+                    <a href="mailto:hello@trovara.farm" class="text-trovara-green hover:underline">hello@trovara.farm</a>
                   </div>
                   <div>
                     <span class="block font-bold text-trovara-dark">Phone</span>
@@ -300,7 +300,7 @@ const toc: Section[] = [
               <div class="space-y-4 text-gray-700 leading-relaxed">
                 <p>If you have any questions about these Terms, please reach out:</p>
                 <ul class="space-y-1.5">
-                  <li>Email: <a href="mailto:info@trovara.farm" class="text-trovara-green font-semibold hover:underline">info@trovara.farm</a></li>
+                  <li>Email: <a href="mailto:hello@trovara.farm" class="text-trovara-green font-semibold hover:underline">hello@trovara.farm</a></li>
                   <li>Phone: <span class="font-semibold text-trovara-dark">+234 810 369 3426</span></li>
                   <li>Address: <span class="font-semibold text-trovara-dark">Trovara Farm, Abeokuta, Ogun State, Nigeria</span></li>
                 </ul>

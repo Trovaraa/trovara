@@ -7,7 +7,7 @@ const operations = [
   {
     icon: 'coconut',
     title: 'Coconut Plantation',
-    desc: 'Our coconut trees are cultivated across fertile, well-draining tropical soil. We practice intercropping and organic soil enrichment to build yield and quality with zero synthetic chemicals. First harvest is forecast for June 2027.',
+    desc: 'Our coconut trees grow in well-draining tropical soil. We intercrop and enrich soil organically to build yield and quality with no synthetic chemicals. First harvest is forecast for June 2027.',
     highlights: ['Organic soil management', 'No synthetic pesticides', 'Grown for peak-maturity harvest', 'Multi-use processing planned'],
   },
   {
@@ -26,15 +26,15 @@ const operations = [
     icon: 'poultry',
     title: 'Pasture-raised Poultry',
     desc: 'Our poultry plan puts animal welfare first: open pasture, grass-and-grain feeding, clean water, and no growth hormones. Chicken and eggs will open for sale only after production readiness is confirmed.',
-    highlights: ['Grass-fed and pasture-raised', 'Rotational open pasture', 'No growth hormones', 'Waitlist before first supply'],
+    highlights: ['Grass-fed and pasture-raised', 'Rotational open pasture', 'No growth hormones in the planned standard', 'Waitlist before first supply'],
   },
 ]
 
 const practices = [
-  { icon: 'cycle', title: 'Zero Waste Policy', desc: 'Every byproduct is repurposed. Husks become mulch. Droppings become fertilizer. Nothing is wasted on a Trovara farm.' },
-  { icon: 'water', title: 'Smart Water Use', desc: 'We irrigate efficiently using rain-fed and natural water systems, minimizing our water footprint on the land.' },
-  { icon: 'sprout', title: 'Soil Health First', desc: 'Healthy soil grows healthy food. We invest heavily in organic soil management and never strip the land.' },
-  { icon: 'community', title: 'Community Farming', desc: 'We employ and empower local farmers, creating livelihoods and building shared prosperity from the ground up.' },
+  { icon: 'cycle', title: 'Zero Waste Policy', desc: 'Every byproduct is reused. Husks become mulch. Droppings become fertilizer. Nothing is wasted on a Trovara farm.' },
+  { icon: 'water', title: 'Smart Water Use', desc: 'We irrigate with rain-fed and natural water systems where we can, and we keep water use as low as the crops allow.' },
+  { icon: 'sprout', title: 'Soil Health First', desc: 'Healthy soil grows healthy food. We put time into organic soil management and do not strip the land.' },
+  { icon: 'community', title: 'Community Farming', desc: 'We hire local farm workers and share skills so nearby households earn from the same land we farm.' },
 ]
 </script>
 
@@ -46,13 +46,13 @@ const practices = [
       <div class="absolute inset-0 bg-hero-pattern opacity-10 pointer-events-none" />
       <div class="container-trovara relative z-10">
         <div class="max-w-3xl">
-          <p class="section-subheading text-trovara-gold-300 mb-4">Behind the Brand</p>
+          <p class="section-subheading text-trovara-gold-300 mb-4">Behind the brand</p>
           <h1 class="text-5xl md:text-6xl font-black text-white mb-6">
-            The farm that<br/>feeds the world.
+            How we farm<br /> in Ogun State.
           </h1>
           <p class="text-white/70 text-lg leading-relaxed max-w-xl">
-            Trovara Farm is more than a production facility - it is a living ecosystem where
-            every practice is chosen for the long-term health of the land, the animals, and the people.
+            Trovara Farm is a regenerative production site where crop, poultry, and soil practices
+            are chosen for lasting land health, animal welfare, and reliable food for people.
           </p>
         </div>
       </div>
@@ -62,9 +62,9 @@ const practices = [
     <section class="py-20 md:py-28 bg-white">
       <div class="container-trovara">
         <SectionHeader
-          eyebrow="Farm Operations"
+          eyebrow="Farm operations"
           title="How we grow what we grow"
-          subtitle="Each product line at Trovara Farm has its own dedicated operation, purpose-built for quality and sustainability."
+          subtitle="Each product line has its own plot and process, set up for quality and soil care."
           center
         />
         <div class="space-y-16">
@@ -107,8 +107,8 @@ const practices = [
       <div class="container-trovara relative z-10">
         <SectionHeader
           eyebrow="Sustainability"
-          title="Farming for tomorrow, not just today."
-          subtitle="We are committed to practices that protect the land for future generations while delivering exceptional quality today."
+          title="Farming that keeps the land usable."
+          subtitle="We choose practices that protect soil and water while still producing food people want to buy."
           light
           center
         />
@@ -151,16 +151,16 @@ const practices = [
       <div class="container-trovara">
         <div class="max-w-3xl mx-auto text-center">
           <SectionHeader
-            eyebrow="What's Next"
+            eyebrow="What's next"
             title="The farm keeps growing."
-            subtitle="Trovara Farm has an ambitious expansion roadmap. From new crop varieties to processing facilities and export logistics - we are building something that will endure."
+            subtitle="Next steps on our roadmap include more crop varieties, on-farm processing, and export logistics once local supply is steady."
             center
           />
           <div class="grid grid-cols-3 gap-4 mb-10">
             <div class="bg-white rounded-2xl p-6 shadow-sm text-center">
               <BrandIcon name="land" class="w-10 h-10 mx-auto mb-3" />
-              <div class="font-bold text-trovara-dark text-sm">New Crops</div>
-              <div class="text-gray-400 text-xs mt-1">Expanding varieties</div>
+              <div class="font-bold text-trovara-dark text-sm">New crops</div>
+              <div class="text-gray-400 text-xs mt-1">More varieties</div>
             </div>
             <div class="bg-white rounded-2xl p-6 shadow-sm text-center">
               <BrandIcon name="factory" class="w-10 h-10 mx-auto mb-3" />
@@ -170,11 +170,11 @@ const practices = [
             <div class="bg-white rounded-2xl p-6 shadow-sm text-center">
               <BrandIcon name="plane" class="w-10 h-10 mx-auto mb-3" />
               <div class="font-bold text-trovara-dark text-sm">Export</div>
-              <div class="text-gray-400 text-xs mt-1">Global distribution</div>
+              <div class="text-gray-400 text-xs mt-1">Regional and overseas buyers</div>
             </div>
           </div>
           <RouterLink to="/contact" class="btn-primary px-8 py-4 text-base">
-            Partner With Us
+            Partner with us
           </RouterLink>
         </div>
 

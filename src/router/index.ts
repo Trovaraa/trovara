@@ -50,6 +50,7 @@ const router = createRouter({
         title: 'Shop Account - Trovara Farm',
         description:
           'Create a Trovara Farm shop account to prepare for harvest checkout, connect WhatsApp or Telegram, and stay linked to waitlist updates as each supply window opens.',
+        robots: 'noindex, nofollow',
       },
     },
     {
@@ -59,6 +60,7 @@ const router = createRouter({
       meta: {
         title: 'Reset Password - Trovara Farm',
         description: 'Set a new password for your Trovara Farm shop account.',
+        robots: 'noindex, nofollow',
       },
     },
     {
@@ -68,6 +70,7 @@ const router = createRouter({
       meta: {
         title: 'Verify Email - Trovara Farm',
         description: 'Verify your email address for your Trovara Farm shop account.',
+        robots: 'noindex, nofollow',
       },
     },
     // Aliases for mistyped / truncated inbox links (keep query: token=...).
@@ -86,7 +89,7 @@ const router = createRouter({
       meta: {
         title: 'Harvest verification - Trovara Farm',
         description:
-          'Verify a Trovara Farm harvest lot from a QR code or share link — product, plot, and farm confirmation.',
+          'Verify a Trovara Farm harvest lot from a QR code or share link: product, plot, and farm confirmation.',
       },
     },
     {
@@ -106,7 +109,7 @@ const router = createRouter({
       meta: {
         title: 'The Farm - Trovara Farm',
         description:
-          'Discover how Trovara Farm uses regenerative practices to grow healthy food and restore the land in Ogun State.',
+          'How Trovara Farm uses regenerative practices to grow food and care for the land in Ogun State.',
       },
     },
     {
@@ -117,6 +120,26 @@ const router = createRouter({
         title: 'Farm OS & Farm Advisory Services - Trovara Farm',
         description:
           'Explore Trovara Farm OS for daily operations and separate hands-on Farm Advisory Services covering setup, soil, crops, irrigation, training, and market linkage.',
+      },
+    },
+    {
+      path: '/farm-os',
+      name: 'farm-os',
+      component: () => import('../views/FarmOsView.vue'),
+      meta: {
+        title: 'Trovara Farm OS - Farm Operations Software',
+        description:
+          'Run tasks, field reports, products, inventory, traceability, sales, and customer support in one role-aware farm operations system.',
+      },
+    },
+    {
+      path: '/farm-advisory',
+      name: 'farm-advisory',
+      component: () => import('../views/FarmAdvisoryView.vue'),
+      meta: {
+        title: 'Farm Advisory Services - Trovara Farm',
+        description:
+          'Practical farm advisory for setup, crops, soil, irrigation, post-harvest work, team training, and market readiness.',
       },
     },
     {
@@ -134,7 +157,7 @@ const router = createRouter({
       name: 'blog',
       component: () => import('../views/BlogView.vue'),
       meta: {
-        title: 'Journal - Trovara Farm',
+        title: 'Blog - Trovara Farm',
         description:
           'Read stories, field notes, and insights from Trovara Farm on food, farming, and the future of agriculture.',
       },
@@ -144,8 +167,37 @@ const router = createRouter({
       name: 'blog-post',
       component: () => import('../views/BlogPostView.vue'),
       meta: {
-        title: 'Journal - Trovara Farm',
-        description: 'Read a Trovara Farm journal post with field updates, lessons, and practical farming insights.',
+        title: 'Blog - Trovara Farm',
+        description: 'Read a Trovara Farm blog post with field updates, lessons, and practical farming insights.',
+      },
+    },
+    {
+      path: '/moments',
+      name: 'moments',
+      component: () => import('../views/MomentsView.vue'),
+      meta: {
+        title: 'Moments - Trovara Farm',
+        description:
+          'Photos and videos from our farm community: harvest days, daily work, and the people behind Trovara.',
+      },
+    },
+    {
+      path: '/careers',
+      name: 'careers',
+      component: () => import('../views/CareersView.vue'),
+      meta: {
+        title: 'Careers - Trovara Farm',
+        description:
+          'Open roles at Trovara Farm. Join the team growing regenerative food from Abeokuta.',
+      },
+    },
+    {
+      path: '/careers/:slug',
+      name: 'career-post',
+      component: () => import('../views/CareerPostView.vue'),
+      meta: {
+        title: 'Role - Trovara Farm',
+        description: 'Career opening at Trovara Farm.',
       },
     },
     {
@@ -179,12 +231,23 @@ const router = createRouter({
       },
     },
     {
+      path: '/brand/:token',
+      name: 'brand-pack',
+      component: () => import('../views/BrandPackView.vue'),
+      meta: {
+        title: 'Brand pack - Trovara Farm',
+        description: 'View and download Trovara Farm brand assets from a shared press pack.',
+        robots: 'noindex, nofollow',
+      },
+    },
+    {
       path: '/newsletter/confirm',
       name: 'newsletter-confirm',
       component: () => import('../views/NewsletterConfirmView.vue'),
       meta: {
         title: 'Confirm Newsletter Subscription - Trovara Farm',
         description: 'Confirm your subscription to Trovara Farm email updates.',
+        robots: 'noindex, nofollow',
       },
     },
     {
@@ -194,6 +257,7 @@ const router = createRouter({
       meta: {
         title: 'Unsubscribe from Newsletter - Trovara Farm',
         description: 'Manage your Trovara Farm newsletter subscription.',
+        robots: 'noindex, nofollow',
       },
     },
     {
@@ -223,6 +287,7 @@ const router = createRouter({
       meta: {
         title: '404 - Trovara Farm',
         description: 'The requested page could not be found on Trovara Farm.',
+        robots: 'noindex, nofollow',
       },
     },
   ],

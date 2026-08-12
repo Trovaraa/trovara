@@ -11,7 +11,7 @@ const { isDark, setDark } = useTheme()
 
 <template>
   <div
-    class="inline-flex shrink-0 rounded-full border p-0.5"
+    class="inline-flex shrink-0 rounded-full border"
     :class="
       onDarkChrome
         ? 'border-white/25 bg-white/10'
@@ -22,7 +22,7 @@ const { isDark, setDark } = useTheme()
   >
     <button
       type="button"
-      class="grid h-8 w-8 place-items-center rounded-full transition-colors"
+      class="grid h-11 w-11 place-items-center rounded-full transition-colors"
       :class="
         isDark
           ? onDarkChrome
@@ -47,7 +47,7 @@ const { isDark, setDark } = useTheme()
     </button>
     <button
       type="button"
-      class="grid h-8 w-8 place-items-center rounded-full transition-colors"
+      class="grid h-11 w-11 place-items-center rounded-full transition-colors"
       :class="
         !isDark
           ? onDarkChrome

@@ -1,38 +1,51 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import TrovaraLogo from './brand/TrovaraLogo.vue'
 import ThemeSwitcher from './ThemeSwitcher.vue'
 import { useTheme } from '../lib/theme'
+import { buildWhatsAppLink } from '../lib/whatsapp'
 
 const route = useRoute()
 const mobileMenuOpen = ref(false)
 const scrolled = ref(false)
+const menuButton = ref<HTMLButtonElement | null>(null)
+const mobileMenu = ref<HTMLElement | null>(null)
+let restoreFocusTo: HTMLElement | null = null
 const { isDark } = useTheme()
+const mobileWhatsAppLink = buildWhatsAppLink("Hi Trovara Farm, I'd like help finding the right product or service.")
 
 const serviceLinks = [
-  { label: 'Farm OS', to: '/services#farm-os' },
-  { label: 'Farm Advisory', to: '/services#farm-advisory' },
+  { label: 'Farm OS', to: '/farm-os' },
+  { label: 'Farm Advisory', to: '/farm-advisory' },
+]
+
+/** Secondary destinations — kept off the primary rail so the bar stays short. */
+const moreLinks = [
+  { label: 'Blog', to: '/blog' },
+  { label: 'Moments', to: '/moments' },
+  { label: 'Careers', to: '/careers' },
+  { label: 'FAQ', to: '/faq' },
 ]
 
 const desktopNavItems = [
-  { label: 'Shop', to: '/shop' },
   { label: 'Products', to: '/products' },
-  { label: 'The Farm', to: '/farm' },
-  { label: 'Our Story', to: '/about' },
-  { label: 'Services', children: serviceLinks },
   { label: 'Wholesale', to: '/wholesale' },
-  { label: 'Journal', to: '/blog' },
+  { label: 'The Farm', to: '/farm' },
+  { label: 'Services', children: serviceLinks },
+  { label: 'Our Story', to: '/about' },
+  { label: 'More', children: moreLinks },
+  { label: 'Account', to: '/shop' },
 ]
 
 const mobileNavLinks = [
-  { label: 'Shop', to: '/shop' },
   { label: 'Products', to: '/products' },
-  { label: 'The Farm', to: '/farm' },
-  { label: 'Our Story', to: '/about' },
-  ...serviceLinks,
   { label: 'Wholesale', to: '/wholesale' },
-  { label: 'Journal', to: '/blog' },
+  { label: 'Account', to: '/shop' },
+  { label: 'The Farm', to: '/farm' },
+  ...serviceLinks,
+  { label: 'Our Story', to: '/about' },
+  ...moreLinks,
 ]
 
 const isHome = computed(() => route.name === 'home')
@@ -48,11 +61,61 @@ function handleScroll() {
   scrolled.value = window.scrollY > 20
 }
 
+function closeMobileMenu() {
+  mobileMenuOpen.value = false
+}
+
+function onKeydown(event: KeyboardEvent) {
+  if (!mobileMenuOpen.value) return
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    closeMobileMenu()
+    void nextTick(() => (restoreFocusTo ?? menuButton.value)?.focus())
+    return
+  }
+  if (event.key !== 'Tab' || !mobileMenu.value) return
+  const focusable = Array.from(
+    mobileMenu.value.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    ),
+  )
+  if (!focusable.length) return
+  const first = focusable[0]
+  const last = focusable[focusable.length - 1]
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault()
+    last.focus()
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault()
+    first.focus()
+  }
+}
+
+function onResize() {
+  if (window.innerWidth >= 1280) closeMobileMenu()
+}
+
+function childPath(to: string) {
+  return to.split('#')[0] || '/'
+}
+
+function childLinkActive(to: string) {
+  const path = childPath(to)
+  if (route.path !== path) return false
+  if (!to.includes('#')) return true
+  return route.hash === to.slice(to.indexOf('#'))
+}
+
+function dropdownActive(item: { label: string; children?: { to: string }[] }) {
+  if (item.label === 'Services') return route.path === '/services' || route.path === '/farm-os' || route.path === '/farm-advisory'
+  return item.children?.some((link) => route.path === childPath(link.to)) ?? false
+}
+
 /** Same-route clicks (e.g. Home while already on /) skip the router - still jump up. */
 function onNavClick(to: string) {
   mobileMenuOpen.value = false
   const current = route.path
-  const target = to.split('#')[0] || '/'
+  const target = childPath(to)
   if (current === target && !to.includes('#')) {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
     document.documentElement.scrollTop = 0
@@ -60,8 +123,31 @@ function onNavClick(to: string) {
   }
 }
 
-onMounted(() => window.addEventListener('scroll', handleScroll))
-onUnmounted(() => window.removeEventListener('scroll', handleScroll))
+watch(
+  () => route.fullPath,
+  () => closeMobileMenu(),
+)
+
+watch(mobileMenuOpen, (open) => {
+  document.body.style.overflow = open ? 'hidden' : ''
+  if (open) {
+    restoreFocusTo = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    void nextTick(() => mobileMenu.value?.querySelector<HTMLElement>('a[href]')?.focus())
+  }
+})
+
+onMounted(() => {
+  handleScroll()
+  window.addEventListener('scroll', handleScroll, { passive: true })
+  window.addEventListener('keydown', onKeydown)
+  window.addEventListener('resize', onResize)
+})
+onUnmounted(() => {
+  document.body.style.overflow = ''
+  window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('keydown', onKeydown)
+  window.removeEventListener('resize', onResize)
+})
 </script>
 
 <template>
@@ -73,7 +159,7 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
         : 'bg-white/95 backdrop-blur-sm shadow-sm dark:border-b dark:border-white/5',
     ]"
   >
-    <nav class="container-trovara">
+    <nav class="container-trovara" aria-label="Primary navigation">
       <div class="flex items-center justify-between h-16 md:h-[4.5rem]">
 
         <!-- Logo -->
@@ -89,11 +175,11 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
                 type="button"
                 aria-haspopup="true"
                 :class="[
-                  'inline-flex items-center gap-1 px-3.5 py-2 rounded-full text-sm font-semibold transition-all duration-200',
+                  'inline-flex items-center gap-1 px-3 py-2 rounded-full text-sm font-semibold transition-all duration-200',
                   overHero
                     ? 'text-white/90 hover:text-white hover:bg-white/10'
                     : 'text-trovara-dark hover:!text-white hover:!bg-trovara-green',
-                  route.path === '/services'
+                  dropdownActive(item)
                     ? overHero
                       ? '!text-white !bg-white/20'
                       : '!text-white !bg-trovara-green'
@@ -112,7 +198,7 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
                     :key="link.to"
                     :to="link.to"
                     class="block rounded-xl px-4 py-3 text-sm font-semibold text-trovara-dark transition-colors hover:!bg-trovara-green hover:!text-white"
-                    :class="route.path === '/services' && route.hash === link.to.slice(link.to.indexOf('#')) ? '!bg-trovara-green/10 !text-trovara-green' : ''"
+                    :class="childLinkActive(link.to) ? '!bg-trovara-green/10 !text-trovara-green' : ''"
                     @click="onNavClick(link.to)"
                   >
                     {{ link.label }}
@@ -124,7 +210,7 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
               v-else
               :to="item.to"
               :class="[
-                'px-3.5 py-2 rounded-full text-sm font-semibold transition-all duration-200',
+                'px-3 py-2 rounded-full text-sm font-semibold transition-all duration-200',
                 overHero
                   ? 'text-white/90 hover:text-white hover:bg-white/10'
                   : 'text-trovara-dark hover:!text-white hover:!bg-trovara-green',
@@ -146,13 +232,16 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
         </div>
 
         <!-- Mobile controls -->
-        <div class="xl:hidden flex items-center gap-1.5">
+        <div class="xl:hidden flex items-center gap-1">
           <ThemeSwitcher :on-dark-chrome="overHero" />
           <button
-            class="p-2 rounded-lg transition-colors"
+            ref="menuButton"
+            class="grid min-h-11 min-w-11 place-items-center rounded-lg transition-colors"
             :class="overHero ? 'text-white hover:bg-white/10' : 'text-trovara-dark hover:bg-trovara-light'"
             @click="mobileMenuOpen = !mobileMenuOpen"
-            aria-label="Toggle menu"
+            :aria-label="mobileMenuOpen ? 'Close menu' : 'Open menu'"
+            :aria-expanded="mobileMenuOpen"
+            aria-controls="mobile-navigation"
           >
             <svg v-if="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -174,10 +263,15 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
         leave-to-class="transform scale-95 opacity-0"
       >
         <div
+          ref="mobileMenu"
           v-if="mobileMenuOpen"
-          class="xl:hidden max-h-[calc(100vh-4rem)] overflow-y-auto bg-white border-t border-gray-100 shadow-lg rounded-b-2xl"
+          id="mobile-navigation"
+          class="xl:hidden max-h-[calc(100dvh-4rem-env(safe-area-inset-bottom))] overscroll-contain overflow-y-auto bg-white border-t border-gray-100 shadow-lg rounded-b-2xl"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation"
         >
-          <div class="px-4 py-3 space-y-1">
+          <div class="px-2 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] space-y-1">
             <RouterLink
               v-for="link in mobileNavLinks"
               :key="link.to"
@@ -192,6 +286,14 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
               <RouterLink to="/contact" class="btn-primary w-full text-sm" @click="onNavClick('/contact')">
                 Get in Touch
               </RouterLink>
+              <a
+                :href="mobileWhatsAppLink"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-2 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[#25D366] px-5 py-3 text-sm font-bold text-white"
+              >
+                Ask us on WhatsApp
+              </a>
             </div>
           </div>
         </div>

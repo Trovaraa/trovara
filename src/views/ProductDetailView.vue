@@ -113,7 +113,7 @@ watch(
                 v-if="product.image"
                 :src="product.image"
                 :alt="product.imageAlt ?? product.name"
-                class="w-full aspect-[3/2] object-cover object-left"
+                class="w-full aspect-[3/2] object-cover object-right"
               />
               <template v-else>
                 <div class="absolute inset-0 opacity-5" :class="productColorClasses(product.id).overlayBg" />
@@ -213,7 +213,7 @@ watch(
             <div
               v-for="step in [
                 { icon: 'land', title: 'Open pasture, every day', body: 'Our hens live outdoors on rotating paddocks of fresh grass. Moving them daily keeps the pasture healthy and the hens curious.' },
-                { icon: 'natural', title: 'Nothing they wouldn\'t choose', body: 'Natural feed, foraged greens and clean water. No antibiotics, no hormones, no shortcuts - nothing we wouldn\'t put on our own table.' },
+                { icon: 'natural', title: 'A clear production standard', body: 'The planned standard uses natural feed, foraged greens, clean water, and no routine antibiotics or hormones.' },
                 { icon: 'sun', title: 'Collected at dawn', body: 'Eggs are hand-collected every morning and graded before they leave the farm. Freshness isn\'t a promise - it\'s the schedule.' },
               ]"
               :key="step.title"
@@ -339,7 +339,7 @@ watch(
               <img
                 :src="format.image"
                 :alt="format.name"
-                class="w-full aspect-[3/2] object-cover object-left"
+                class="w-full aspect-[3/2] object-cover object-right"
                 loading="lazy"
               />
               <div class="p-6 flex flex-col flex-1">
@@ -394,8 +394,8 @@ watch(
                   icon: 'package',
                   name: 'Plantain Flour',
                   sku: 'flour',
-                  tagline: 'The ancient staple, reimagined.',
-                  body: 'Milled from sun-dried plantation plantains with no additives, bleaching agents, or preservatives - suited to baking, soups, porridges, and wholesale.',
+                  tagline: 'Milled for kitchens and bakeries.',
+                  body: 'Milled from sun-dried plantation plantains with no additives, bleaching agents, or preservatives. Suited to baking, soups, porridges, and wholesale.',
                   image: '/images/products/trovara-harvest-plantain-flour.jpg',
                 },
               ]"
@@ -405,7 +405,7 @@ watch(
               <img
                 :src="format.image"
                 :alt="format.name"
-                class="w-full aspect-[3/2] object-cover object-left"
+                class="w-full aspect-[3/2] object-cover object-right"
                 loading="lazy"
               />
               <div class="p-6 flex flex-col flex-1">

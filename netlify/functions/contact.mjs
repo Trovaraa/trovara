@@ -127,7 +127,7 @@ export default async function handler(request) {
     subject,
     consent: true,
     consentVersion,
-  })
+  }, ip)
 
   if (!result.ok) {
     return json(result.status, { ok: false, error: result.error })

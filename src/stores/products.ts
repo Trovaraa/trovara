@@ -8,12 +8,12 @@ export const useProductsStore = defineStore('products', {
         id: 'coconut',
         name: 'Coconut',
         category: 'coconut' as const,
-        tagline: 'The Fruit of a Thousand Uses',
+        tagline: 'Whole fruit, then milk, chips, and oil',
         description:
-          'Our coconuts are grown in rich tropical soil and harvested at peak maturity for retail and processing. Whole mature fruit ships first; after harvest we plan farm-direct coconut milk, toasted coconut chips, and cold-pressed coconut oil for homes, chefs, and food manufacturers.',
+          'Our coconuts grow in tropical soil and are harvested at peak maturity for retail and processing. Whole mature fruit ships first; after harvest we plan farm-direct coconut milk, toasted coconut chips, and cold-pressed coconut oil for homes, chefs, and food manufacturers.',
         benefits: [
           'Harvested at full maturity for retail and processing',
-          'Naturally grown, chemical-free',
+          'Regenerative soil and input plan',
           'Whole fruit SKU for trade and kitchens',
           'Milk, chips, and oil planned after first harvest',
         ],
@@ -24,7 +24,7 @@ export const useProductsStore = defineStore('products', {
         waitlist: true,
         availabilityNote: 'First harvest forecast for June 2027',
         image: '/images/products/trovara-fresh-coconut.jpg',
-        imageAlt: 'Trovara Fresh Coconut — naturally grown, responsibly farmed',
+        imageAlt: 'Trovara Fresh Coconut, naturally grown and responsibly farmed',
         specs: [
           { label: 'Fresh SKU', value: 'TRV-COC-PIECE · whole mature coconut' },
           { label: 'Processed SKUs', value: 'TRV-COC-MILK · TRV-COC-CHIPS · TRV-COC-OIL (planned)' },
@@ -39,15 +39,15 @@ export const useProductsStore = defineStore('products', {
         id: 'plantain',
         name: 'Plantain',
         category: 'plantain' as const,
-        tagline: 'The World\'s Most Versatile Staple',
+        tagline: 'Green or ripe plantain for kitchens',
         description:
-          'Our plantains are grown across rich tropical soil and harvested at the perfect stage - green for cooking, ripe for sweeter preparations. Starchier and heartier than regular bananas, plantains are a dietary staple across Africa, the Caribbean, and Latin America. After first harvest we plan dried plantain chips and milled plantain flour from the same plantation fruit.',
+          'Our plantains grow in tropical soil and are harvested green for cooking or ripe for sweeter dishes. Starchier and heartier than regular bananas, plantains are a dietary staple across Africa, the Caribbean, and Latin America. After first harvest we plan dried plantain chips and milled plantain flour from the same plantation fruit.',
         benefits: [
           'High in resistant starch and complex carbohydrates',
           'Rich in potassium, vitamin C, and fiber',
           'Versatile: boiled, fried, dried into chips, or milled into flour',
           'Lower glycemic index than regular bananas',
-          'No artificial ripening - grown and harvested naturally',
+          'No artificial ripening planned',
           'Chips and flour planned after first harvest',
         ],
         icon: 'plantain',
@@ -57,7 +57,7 @@ export const useProductsStore = defineStore('products', {
         waitlist: true,
         availabilityNote: 'First harvest forecast for March 2027',
         image: '/images/products/trovara-fresh-plantain.jpg',
-        imageAlt: 'Trovara Fresh Plantain — naturally grown, responsibly farmed',
+        imageAlt: 'Trovara Fresh Plantain, naturally grown and responsibly farmed',
         specs: [
           { label: 'Fresh SKU', value: 'TRV-PLT-BUNCH · green or ripe whole fruit' },
           { label: 'Processed SKUs', value: 'TRV-DRP-PACK · dried chips · TRV-PLF-PACK · flour (planned)' },
@@ -72,13 +72,13 @@ export const useProductsStore = defineStore('products', {
         id: 'poultry',
         name: 'Pasture-raised Chicken',
         category: 'poultry' as const,
-        tagline: 'Grass-fed. Pasture-raised. Grown with care.',
+        tagline: 'Grass-fed and pasture-raised',
         description:
-          'Our chickens are pasture-raised on open grass and fed a natural grass-and-grain diet with clean water. They are never caged and receive no growth hormones. Join the waitlist to be contacted when our first dressed birds are ready.',
+          'Our chickens are pasture-raised on open grass and fed a natural grass-and-grain diet with clean water. They are not kept in cages and receive no growth hormones. Join the waitlist to be contacted when our first dressed birds are ready.',
         benefits: [
           'Grass-fed and pasture-raised',
           'Natural grass-and-grain diet',
-          'No growth hormones',
+          'No growth hormones in the planned production standard',
           'Whole dressed birds and pre-cut options',
         ],
         icon: 'poultry',
@@ -102,13 +102,13 @@ export const useProductsStore = defineStore('products', {
         id: 'eggs',
         name: 'Eggs',
         category: 'eggs' as const,
-        tagline: 'Taste what an egg is supposed to be.',
+        tagline: 'Pasture-raised eggs, graded on the farm',
         description:
-          'Our hens live outdoors on open pasture every day - rotated across fresh grass, never caged, never crammed into a shed. They forage on natural feed and clean water, with no antibiotics and no hormones. Eggs are hand-collected at dawn and graded before they leave the farm, so every deep-golden yolk carries the taste of the open pasture.',
+          'Our hens stay outdoors on pasture every day and move across fresh grass. They are not kept in cages. They forage on natural feed and clean water, with no antibiotics and no hormones. Eggs are hand-collected at dawn and graded before they leave the farm. Yolks are typically deep golden.',
         benefits: [
-          'Genuinely pasture-raised - hens on grass every day',
-          'Deep-golden, richer-tasting yolks',
-          'No antibiotics, no hormones, ever',
+          'Pasture-raised: hens on grass every day',
+          'Deep-golden yolks',
+          'No routine antibiotics or hormones in the planned production standard',
           'Hand-collected at dawn and date-stamped',
         ],
         icon: 'eggs',
@@ -118,7 +118,7 @@ export const useProductsStore = defineStore('products', {
         waitlist: true,
         availabilityNote: 'Join the waitlist for first availability',
         image: '/images/products/trovara-fresh-eggs.jpg',
-        imageAlt: 'Trovara Fresh Eggs — pasture-raised eggs you can trust',
+        imageAlt: 'Trovara Fresh Eggs, pasture-raised and graded on the farm',
         specs: [
           { label: 'SKUs', value: 'TRV-EGG-CRATE · crate of 30 pasture-raised eggs' },
           { label: 'Packaging', value: 'Crates of 30; half-crates on request' },
@@ -131,7 +131,7 @@ export const useProductsStore = defineStore('products', {
         id: 'palm-oil',
         name: 'Palm Oil',
         category: 'palm-oil' as const,
-        tagline: 'A Nigerian staple, grown with care.',
+        tagline: 'Palm oil from our farm fruit',
         description:
           'Trovara palm oil is planned from fruit grown within our regenerative farm system. Our first harvest is forecast for December 2026. Join the waitlist for harvest updates, pack sizes, and first access when supply opens.',
         benefits: [
@@ -147,7 +147,7 @@ export const useProductsStore = defineStore('products', {
         waitlist: true,
         availabilityNote: 'First harvest forecast for December 2026',
         image: '/images/products/trovara-fresh-palm-oil.jpg',
-        imageAlt: 'Trovara Fresh Palm Oil — naturally grown, responsibly farmed',
+        imageAlt: 'Trovara Fresh Palm Oil, naturally grown and responsibly farmed',
         specs: [
           { label: 'SKUs', value: 'TRV-POL-1L · TRV-POL-BULK (planned)' },
           { label: 'Packaging', value: 'Retail bottles and food-service bulk formats to be confirmed' },
@@ -160,9 +160,9 @@ export const useProductsStore = defineStore('products', {
         id: 'coming-soon',
         name: 'More Coming Soon',
         category: 'coming-soon' as const,
-        tagline: 'The harvest never stops growing',
+        tagline: 'More crop lines after first harvest',
         description:
-          'Trovara Farm is expanding carefully. We are developing new crop lines and formats to follow our first harvest windows. Stay close - more will open as each line is ready.',
+          'Trovara Farm is expanding carefully. New crop lines and formats will follow our first harvest windows. Stay close; more will open as each line is ready.',
         benefits: [
           'New crop varieties in development',
           'Expanding into processing and packaging',

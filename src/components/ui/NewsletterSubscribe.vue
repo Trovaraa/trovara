@@ -204,7 +204,7 @@ function reset() {
             v-model="newsletter.consent"
             type="checkbox"
             required
-            class="mt-0.5 h-4 w-4 rounded border-gray-300 text-trovara-green focus:ring-trovara-gold"
+            class="mt-0.5 h-6 w-6 flex-shrink-0 rounded border-gray-300 text-trovara-green focus:ring-trovara-gold"
             :disabled="newsletter.status === 'loading'"
             @change="newsletter.error = ''"
           />
@@ -221,7 +221,7 @@ function reset() {
             v-model="newsletter.phoneConsent"
             type="checkbox"
             required
-            class="mt-0.5 h-4 w-4 rounded border-gray-300 text-trovara-green focus:ring-trovara-gold"
+            class="mt-0.5 h-6 w-6 flex-shrink-0 rounded border-gray-300 text-trovara-green focus:ring-trovara-gold"
             :disabled="newsletter.status === 'loading'"
             @change="newsletter.error = ''"
           />

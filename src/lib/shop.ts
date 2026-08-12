@@ -54,11 +54,19 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const headers = new Headers(init.headers)
   if (init.body) headers.set('Content-Type', 'application/json')
   if (!['GET', 'HEAD'].includes(method) && csrfToken) headers.set('X-CSRF-Token', csrfToken)
-  const response = await fetch(`${SHOP_API_BASE}${path}`, {
-    ...init,
-    headers,
-    credentials: 'include',
-  })
+  let response: Response
+  try {
+    response = await fetch(`${SHOP_API_BASE}${path}`, {
+      ...init,
+      headers,
+      credentials: 'include',
+    })
+  } catch {
+    throw new ShopApiError(
+      'The farm shop is temporarily offline. Your account and basket were not changed. Please try again.',
+      0,
+    )
+  }
   const data = (await response.json().catch(() => ({}))) as T & {
     error?: string
     csrfToken?: string

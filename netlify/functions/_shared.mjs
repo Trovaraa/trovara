@@ -4,6 +4,7 @@
  * Local Vite (`npm run dev`) loads these via `scripts/vite-netlify-functions-dev.mjs`;
  * production / `npm run dev:netlify` use Netlify Functions.
  */
+import { createHash, createHmac, randomUUID } from 'node:crypto'
 
 const RATE_BUCKETS = new Map()
 
@@ -21,15 +22,34 @@ export function json(status, body) {
 }
 
 export function getClientIp(request) {
+  // Netlify supplies the socket-derived connection IP. Prefer it over
+  // X-Forwarded-For, which a direct caller can spoof to evade rate limits.
+  const platformIp =
+    request.headers.get('x-nf-client-connection-ip') ??
+    request.headers.get('client-ip')
+  if (platformIp?.trim()) return platformIp.trim()
+
   const forwarded = request.headers.get('x-forwarded-for')
   if (forwarded) {
     return forwarded.split(',')[0].trim()
   }
-  return (
-    request.headers.get('client-ip') ??
-    request.headers.get('x-nf-client-connection-ip') ??
-    'unknown'
-  )
+  return 'unknown'
+}
+
+export function trustedClientHeaders(ip) {
+  const secret = process.env.FORM_PROXY_SIGNING_SECRET?.trim()
+  if (!secret) return { 'X-Request-ID': randomUUID() }
+  const timestamp = String(Date.now())
+  const clientId = createHash('sha256').update(ip).digest('base64url')
+  const signature = createHmac('sha256', secret)
+    .update(`${timestamp}.${clientId}`)
+    .digest('base64url')
+  return {
+    'X-Request-ID': randomUUID(),
+    'X-Trovara-Client-Id': clientId,
+    'X-Trovara-Client-Timestamp': timestamp,
+    'X-Trovara-Client-Signature': signature,
+  }
 }
 
 /**
@@ -102,7 +122,7 @@ function safeClientError(result) {
  * @param {'contact' | 'waitlist'} resource
  * @param {Record<string, string>} payload
  */
-export async function forwardToMarketingLeads(resource, payload) {
+export async function forwardToMarketingLeads(resource, payload, clientIp = 'unknown') {
   const baseUrl = marketingLeadsApiUrl()
   if (!baseUrl) {
     return {
@@ -118,6 +138,7 @@ export async function forwardToMarketingLeads(resource, payload) {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
+        ...trustedClientHeaders(clientIp),
       },
       body: JSON.stringify(payload),
       signal: AbortSignal.timeout(MARKETING_LEADS_TIMEOUT_MS),

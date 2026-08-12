@@ -1,0 +1,137 @@
+[
+  {
+    "path": "/",
+    "title": "Trovara Farm - Food you can trust, from a farm built for tomorrow",
+    "description": "Premium regenerative food from Ogun State, Nigeria for homes, chefs, and hospitality partners."
+  },
+  {
+    "path": "/about",
+    "title": "About Us - Trovara Farm",
+    "description": "Learn about Trovara Farm, our mission, and the people building a regenerative food company in Nigeria."
+  },
+  {
+    "path": "/products",
+    "title": "Our Products - Trovara Farm",
+    "description": "Explore Trovara Farm product lines, including coconut, plantain, palm oil, pasture-raised chicken, and eggs."
+  },
+  {
+    "path": "/shop",
+    "title": "Shop Account - Trovara Farm",
+    "description": "Access your Trovara Farm shop account.",
+    "robots": "noindex, nofollow"
+  },
+  {
+    "path": "/products/coconut",
+    "title": "Coconut - Trovara Farm",
+    "description": "Explore traceable coconuts grown at Trovara Farm in Ogun State."
+  },
+  {
+    "path": "/products/plantain",
+    "title": "Plantain - Trovara Farm",
+    "description": "Explore plantain grown with regenerative practices at Trovara Farm."
+  },
+  {
+    "path": "/products/poultry",
+    "title": "Pasture-raised Chicken - Trovara Farm",
+    "description": "Explore pasture-raised chicken from Trovara Farm."
+  },
+  {
+    "path": "/products/eggs",
+    "title": "Pasture-raised Eggs - Trovara Farm",
+    "description": "Explore pasture-raised eggs from Trovara Farm."
+  },
+  {
+    "path": "/products/palm-oil",
+    "title": "Palm Oil - Trovara Farm",
+    "description": "Explore traceable palm oil from Trovara Farm."
+  },
+  {
+    "path": "/farm",
+    "title": "The Farm - Trovara Farm",
+    "description": "Discover how Trovara Farm grows healthy food and restores land in Ogun State."
+  },
+  {
+    "path": "/services",
+    "title": "Farm OS & Farm Advisory Services - Trovara Farm",
+    "description": "Explore Trovara Farm OS and hands-on Farm Advisory Services."
+  },
+  {
+    "path": "/faq",
+    "title": "FAQ - Trovara Farm",
+    "description": "Common questions about Trovara Farm products, delivery, partnerships, and operations."
+  },
+  {
+    "path": "/blog",
+    "title": "Blog - Trovara Farm",
+    "description": "Stories, field notes, and practical farming insights from Trovara Farm."
+  },
+  {
+    "path": "/moments",
+    "title": "Moments - Trovara Farm",
+    "description": "Photos and videos from the Trovara Farm community."
+  },
+  {
+    "path": "/careers",
+    "title": "Careers - Trovara Farm",
+    "description": "Open roles at Trovara Farm. Join the team growing regenerative food from Abeokuta."
+  },
+  {
+    "path": "/contact",
+    "title": "Contact - Trovara Farm",
+    "description": "Contact Trovara Farm for products, partnerships, wholesale opportunities, and farm visits."
+  },
+  {
+    "path": "/wholesale",
+    "title": "B2B Wholesale - Trovara Farm",
+    "description": "Wholesale offerings for restaurants, retailers, and food service partners."
+  },
+  {
+    "path": "/wholesale/one-pager",
+    "title": "Wholesale One-Pager - Trovara Farm",
+    "description": "Trovara Farm wholesale supply and contact details."
+  },
+  {
+    "path": "/privacy",
+    "title": "Privacy Policy - Trovara Farm",
+    "description": "How Trovara Farm collects, uses, and protects personal data."
+  },
+  {
+    "path": "/terms",
+    "title": "Terms of Service - Trovara Farm",
+    "description": "Terms governing use of the Trovara Farm website and services."
+  },
+  {
+    "path": "/blog/why-trovara-exists",
+    "title": "Why Trovara Exists - Trovara Farm",
+    "description": "Why does Trovara exist? Because we believe a food system cannot be considered successful when consumers pay more, farmers earn unpredictably and too much food never reaches the table. This article explores the challenges shaping Nigeria's food system and the vision behind building a trusted, regenerative food company designed for tomorrow."
+  },
+  {
+    "path": "/blog/what-if-agriculture-was-more-than-food",
+    "title": "What if agriculture was more than food production? - Trovara Farm",
+    "description": "Trovara is building a regenerative food company in Ogun State, Nigeria to reconnect people with the land through better food, better livelihoods, and stronger communities."
+  },
+  {
+    "path": "/shop/reset-password",
+    "title": "Reset Password - Trovara Farm",
+    "description": "Set a new shop account password.",
+    "robots": "noindex, nofollow"
+  },
+  {
+    "path": "/shop/verify-email",
+    "title": "Verify Email - Trovara Farm",
+    "description": "Verify a Trovara Farm shop account email address.",
+    "robots": "noindex, nofollow"
+  },
+  {
+    "path": "/newsletter/confirm",
+    "title": "Confirm Newsletter Subscription - Trovara Farm",
+    "description": "Confirm a newsletter subscription.",
+    "robots": "noindex, nofollow"
+  },
+  {
+    "path": "/newsletter/unsubscribe",
+    "title": "Unsubscribe from Newsletter - Trovara Farm",
+    "description": "Manage a newsletter subscription.",
+    "robots": "noindex, nofollow"
+  }
+]

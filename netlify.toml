@@ -6,6 +6,7 @@
 [build.environment]
   NODE_VERSION = "22"
   JOURNAL_API_URL = "https://os.trovara.farm/public/journal"
+  CAREERS_API_URL = "https://os.trovara.farm/public/careers"
 
 [context.production.environment]
   NEWSLETTER_API_URL = "https://os.trovara.farm/public/newsletter"
@@ -18,9 +19,19 @@
 # For Vite-only local: npm run dev (vite.config.ts proxies /shop-api and /lot-api).
 
 [[redirects]]
-  from   = "/*"
-  to     = "/index.html"
+  from   = "/brand/*"
+  to     = "/brand-shell.html"
   status = 200
+
+[[redirects]]
+  from   = "/lot/*"
+  to     = "/lot-shell.html"
+  status = 200
+
+[[redirects]]
+  from   = "/*"
+  to     = "/404.html"
+  status = 404
 
 # Canonical security headers for Netlify. Do not reintroduce public/_headers —
 # that file duplicated these values and caused dual-source drift. (SPA redirects

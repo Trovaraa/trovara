@@ -54,7 +54,7 @@ const filteredPosts = computed(() =>
       <div class="container-trovara">
         <SectionHeader
           eyebrow="Latest Posts"
-          title="The Trovara journal"
+          title="The Trovara blog"
           subtitle="New posts appear here as we share from the farm. Subscribe below so you never miss one."
         />
 
@@ -104,7 +104,7 @@ const filteredPosts = computed(() =>
           <p class="text-gray-500 text-sm max-w-md mx-auto">
             {{
               posts.length
-                ? 'Try another category or tag, or clear filters to see all journal posts.'
+                ? 'Try another category or tag, or clear filters to see all blog posts.'
                 : 'We are preparing stories from the field. Subscribe to be notified when they go live.'
             }}
           </p>
@@ -126,7 +126,7 @@ const filteredPosts = computed(() =>
           <NewsletterSubscribe
             variant="inline"
             title="Never miss a post"
-            description="Get farm updates, new journal posts, and harvest news delivered to your inbox."
+            description="Get farm updates, new blog posts, and harvest news delivered to your inbox."
           />
         </div>
       </div>

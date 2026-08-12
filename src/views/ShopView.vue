@@ -23,6 +23,9 @@ const notice = ref('')
 /** Auth form messages — always shown next to #shop-account. */
 const authError = ref('')
 const authNotice = ref('')
+/** Read-only service warnings should never make the whole page look broken. */
+const catalogWarning = ref('')
+const sessionWarning = ref('')
 const activeTab = ref<Tab>('shop')
 const authMode = ref<AuthMode>('register')
 const account = ref<ShopAccount | null>(null)
@@ -329,7 +332,11 @@ watch(activeTab, (tab) => {
 
 onUnmounted(stopLinkPoll)
 
-onMounted(async () => {
+async function loadShop() {
+  loading.value = true
+  error.value = ''
+  catalogWarning.value = ''
+  sessionWarning.value = ''
   // Load independently so a session glitch cannot wipe an otherwise-good catalog.
   const [sessionResult, catalogResult] = await Promise.allSettled([
     shopApi.session(),
@@ -338,10 +345,8 @@ onMounted(async () => {
   if (catalogResult.status === 'fulfilled') {
     products.value = catalogResult.value.products ?? []
   } else {
-    error.value =
-      catalogResult.reason instanceof Error
-        ? catalogResult.reason.message
-        : 'The shop catalogue is temporarily unavailable.'
+    products.value = []
+    catalogWarning.value = 'Live checkout is unavailable right now. Product forecasts and waitlists are still available.'
   }
   if (sessionResult.status === 'fulfilled') {
     account.value = sessionResult.value.account
@@ -349,18 +354,17 @@ onMounted(async () => {
     if (account.value) {
       try {
         await loadAccountData()
-      } catch (err) {
-        error.value = err instanceof Error ? err.message : 'Unable to load your account.'
+      } catch {
+        sessionWarning.value = 'We could not refresh your orders or chat links. Your signed-in account is still available.'
       }
     }
-  } else if (!error.value) {
-    error.value =
-      sessionResult.reason instanceof Error
-        ? sessionResult.reason.message
-        : 'Unable to start a shop session.'
+  } else {
+    sessionWarning.value = 'Account services are temporarily unavailable. You can still browse product forecasts and try again shortly.'
   }
   loading.value = false
-})
+}
+
+onMounted(loadShop)
 </script>
 
 <template>
@@ -369,9 +373,9 @@ onMounted(async () => {
       <div class="container-trovara py-12 md:py-16">
         <div class="max-w-3xl">
           <p class="text-xs font-black uppercase tracking-[0.24em] text-trovara-gold">Trovara shop</p>
-          <h1 class="mt-4 text-4xl font-black leading-tight md:text-6xl">Your farm account. Ready when harvest opens.</h1>
+          <h1 class="mt-4 text-3xl font-black leading-tight sm:text-4xl md:text-6xl">One account for every Trovara order.</h1>
           <p class="mt-5 max-w-2xl text-base leading-7 text-white/70 md:text-lg">
-            Create an account now to prepare for harvest checkout, connect WhatsApp or Telegram, and stay linked to waitlist updates. Products appear in the shop by SKU as each supply window opens - nothing is sold here until then.
+            Create an account before harvest opens. It will keep website orders, chat updates, and traceability links together when products become available.
           </p>
           <div class="mt-8 flex flex-wrap gap-3">
             <a href="#shop-account" class="btn-gold px-6 py-3 text-sm" @click.prevent="goCreateAccount">Create account</a>
@@ -384,8 +388,33 @@ onMounted(async () => {
     </section>
 
     <div class="container-trovara flex flex-col py-8 md:py-12">
-      <div v-if="error || notice" class="order-1 mb-6 rounded-2xl border px-5 py-4 text-sm font-semibold" :class="error ? 'border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-300' : 'border-trovara-green/30 bg-trovara-green/10 text-trovara-green-700 dark:text-trovara-green-300'">
-        {{ error || notice }}
+      <div
+        v-if="catalogWarning || sessionWarning"
+        class="order-1 mb-6 rounded-2xl border border-trovara-gold/35 bg-trovara-gold/10 px-5 py-4 text-sm text-trovara-dark"
+        role="status"
+      >
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p class="font-black">Some live shop services are taking a break.</p>
+            <p class="mt-1 leading-6 text-gray-600">{{ [catalogWarning, sessionWarning].filter(Boolean).join(' ') }}</p>
+          </div>
+          <button type="button" class="min-h-11 shrink-0 rounded-xl border border-trovara-dark/20 px-4 py-2 font-bold" :disabled="loading" @click="loadShop">
+            {{ loading ? 'Checking…' : 'Check again' }}
+          </button>
+        </div>
+      </div>
+
+      <div v-if="error || notice" class="order-1 mb-6 flex flex-col gap-3 rounded-2xl border px-5 py-4 text-sm font-semibold sm:flex-row sm:items-center sm:justify-between" :class="error ? 'border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-300' : 'border-trovara-green/30 bg-trovara-green/10 text-trovara-green-700 dark:text-trovara-green-300'" role="status">
+        <span>{{ error || notice }}</span>
+        <button
+          v-if="error"
+          type="button"
+          class="min-h-11 shrink-0 rounded-xl border border-current px-4 py-2 font-bold transition hover:bg-white/40 dark:hover:bg-white/10"
+          :disabled="loading"
+          @click="loadShop"
+        >
+          {{ loading ? 'Checking…' : 'Try again' }}
+        </button>
       </div>
 
       <div class="order-2 mb-8 flex gap-2 overflow-x-auto rounded-2xl border border-gray-200 bg-white p-2" aria-label="Shop sections">
@@ -406,11 +435,14 @@ onMounted(async () => {
 
       <div
         v-else-if="activeTab === 'shop'"
-        class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_23rem]"
-        :class="account ? 'order-3' : 'order-4 mt-8'"
+        class="grid gap-8"
+        :class="[
+          products.length ? 'lg:grid-cols-[minmax(0,1fr)_23rem]' : 'grid-cols-1',
+          account ? 'order-3' : 'order-4 mt-8',
+        ]"
       >
         <section>
-          <div class="mb-6 flex items-end justify-between gap-4">
+          <div class="mb-6 flex flex-col items-start gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
             <div>
               <p class="text-xs font-black uppercase tracking-[0.2em] text-trovara-green">{{ products.length ? 'Open SKUs' : 'Harvest catalogue' }}</p>
               <h2 class="mt-2 text-3xl font-black text-trovara-dark">Farm shop</h2>
@@ -426,12 +458,12 @@ onMounted(async () => {
                 </div>
                 <span class="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-trovara-green">{{ product.sku }}</span>
               </div>
-              <div class="p-5">
-                <div class="flex items-start justify-between gap-3">
+              <div class="p-4 sm:p-5">
+                <div class="flex flex-wrap items-start justify-between gap-3">
                   <div><h3 class="text-xl font-black text-trovara-dark">{{ product.name }}</h3><p class="mt-1 text-xs text-gray-500">Sold per {{ product.unit }}</p></div>
                   <p class="shrink-0 font-black text-trovara-green">{{ formatShopPrice(product.priceKobo, product.currency) }}</p>
                 </div>
-                <div class="mt-5 flex items-center justify-between gap-3">
+                <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
                   <div class="inline-flex items-center rounded-xl border border-gray-200">
                     <button type="button" class="h-11 w-11 text-xl" :aria-label="`Remove one ${product.name}`" @click="setQuantity(product.id, (cart[product.id] ?? 0) - 1)">−</button>
                     <span class="min-w-9 text-center font-black">{{ cart[product.id] ?? 0 }}</span>
@@ -451,7 +483,7 @@ onMounted(async () => {
           </div>
         </section>
 
-        <aside class="h-fit rounded-3xl border border-gray-200 bg-white p-6 shadow-sm lg:sticky lg:top-24">
+        <aside v-if="products.length" class="h-fit rounded-3xl border border-gray-200 bg-white p-6 shadow-sm lg:sticky lg:top-24">
           <div class="flex items-center justify-between"><h2 class="text-xl font-black text-trovara-dark">Your basket</h2><span class="rounded-full bg-trovara-light px-3 py-1 text-xs font-black text-trovara-green">{{ cartCount }} items</span></div>
           <div v-if="cartLines.length" class="mt-5 divide-y divide-gray-100">
             <div v-for="line in cartLines" :key="line.product.id" class="flex justify-between gap-4 py-4 text-sm"><div><p class="font-bold text-trovara-dark">{{ line.product.name }}</p><p class="text-gray-500">{{ line.quantity }} × {{ line.product.unit }}</p></div><p class="font-bold">{{ formatShopPrice(line.product.priceKobo * line.quantity, line.product.currency) }}</p></div>
@@ -505,7 +537,7 @@ onMounted(async () => {
                 Opening the chat alone is not enough.
               </template>
               <template v-else>
-                Telegram customer bot username is not configured on this site build yet — ask the farm for the bot link, then send
+                Telegram customer bot username is not configured on this site build yet. Ask the farm for the bot link, then send
                 <code class="rounded bg-trovara-light px-1.5 py-0.5 text-sm font-semibold text-trovara-dark">link YOURCODE</code>.
               </template>
             </p>
@@ -585,7 +617,7 @@ onMounted(async () => {
               <div class="mt-5 flex flex-wrap gap-3">
                 <a v-if="TELEGRAM_ORDER_URL" :href="TELEGRAM_ORDER_URL" target="_blank" rel="noopener" class="rounded-xl bg-[#229ED9] px-4 py-3 text-sm font-bold text-white">Open Telegram</a>
                 <button type="button" class="rounded-xl bg-white/10 px-4 py-3 text-sm font-bold hover:bg-white/20" :disabled="busy" @click="checkLinkStatus">
-                  {{ busy ? 'Checking…' : "I've sent it — check status" }}
+                  {{ busy ? 'Checking…' : "I've sent it. Check status" }}
                 </button>
                 <a :href="buildWhatsAppLink(products.length ? 'Hi Trovara Farm, I need help with my shop account.' : 'Hi Trovara Farm, I would like waitlist updates and help with my shop account.')" target="_blank" rel="noopener" class="rounded-xl bg-[#25D366] px-4 py-3 text-sm font-bold text-white">Message WhatsApp (human)</a>
               </div>
@@ -666,9 +698,9 @@ onMounted(async () => {
       </section>
     </div>
 
-    <div v-if="showCheckout" class="fixed inset-0 z-[80] grid place-items-center bg-black/70 p-4" @click.self="showCheckout = false">
-      <form class="w-full max-w-lg rounded-3xl bg-white p-6 shadow-2xl md:p-8" @submit.prevent="placeOrder">
-        <div class="flex items-start justify-between gap-4"><div><p class="text-xs font-black uppercase tracking-wider text-trovara-green">Delivery details</p><h2 class="mt-1 text-2xl font-black text-trovara-dark">Complete your order</h2></div><button type="button" class="grid h-10 w-10 place-items-center rounded-xl border border-gray-200" aria-label="Close checkout" @click="showCheckout = false">×</button></div>
+    <div v-if="showCheckout" class="fixed inset-0 z-[80] grid place-items-center overflow-y-auto bg-black/70 p-4" @click.self="showCheckout = false">
+      <form class="my-auto max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-3xl bg-white p-5 shadow-2xl sm:p-6 md:p-8" @submit.prevent="placeOrder">
+        <div class="flex items-start justify-between gap-4"><div class="min-w-0"><p class="text-xs font-black uppercase tracking-wider text-trovara-green">Delivery details</p><h2 class="mt-1 text-2xl font-black text-trovara-dark">Complete your order</h2></div><button type="button" class="grid h-11 w-11 flex-shrink-0 place-items-center rounded-xl border border-gray-200" aria-label="Close checkout" @click="showCheckout = false">×</button></div>
         <label class="mt-6 block text-sm font-bold text-trovara-dark">Delivery address<textarea v-model="checkoutForm.address" required minlength="5" rows="4" class="mt-2 w-full rounded-xl border border-gray-200 px-4 py-3 font-normal outline-none focus:border-trovara-green" /></label>
         <label class="mt-4 block text-sm font-bold text-trovara-dark">Delivery phone<input v-model="checkoutForm.phone" type="tel" class="mt-2 min-h-12 w-full rounded-xl border border-gray-200 px-4 font-normal outline-none focus:border-trovara-green" /></label>
         <div class="mt-6 flex items-center justify-between border-t border-gray-200 pt-5"><span class="font-bold">Estimated total</span><strong class="text-xl text-trovara-green">{{ formatShopPrice(cartTotalKobo) }}</strong></div>

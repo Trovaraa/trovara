@@ -3,13 +3,16 @@ import { afterEach, beforeEach, test } from 'node:test'
 
 import contactHandler from './contact.mjs'
 import waitlistHandler from './waitlist.mjs'
+import { getClientIp } from './_shared.mjs'
 
 const originalFetch = globalThis.fetch
 const originalApiUrl = process.env.MARKETING_LEADS_API_URL
+const originalProxySecret = process.env.FORM_PROXY_SIGNING_SECRET
 let requestNumber = 0
 
 beforeEach(() => {
   process.env.MARKETING_LEADS_API_URL = 'https://os.example/public/leads/'
+  process.env.FORM_PROXY_SIGNING_SECRET = 'test-form-proxy-secret'
 })
 
 afterEach(() => {
@@ -19,6 +22,8 @@ afterEach(() => {
   } else {
     process.env.MARKETING_LEADS_API_URL = originalApiUrl
   }
+  if (originalProxySecret === undefined) delete process.env.FORM_PROXY_SIGNING_SECRET
+  else process.env.FORM_PROXY_SIGNING_SECRET = originalProxySecret
 })
 
 function request(body) {
@@ -36,6 +41,17 @@ function request(body) {
 async function responseBody(response) {
   return response.json()
 }
+
+test('rate-limit identity prefers Netlify connection IP over spoofable forwarding headers', () => {
+  const inbound = new Request('https://trovara.farm/.netlify/functions/contact', {
+    headers: {
+      'x-nf-client-connection-ip': '198.51.100.7',
+      'x-forwarded-for': '203.0.113.99, 198.51.100.7',
+    },
+  })
+
+  assert.equal(getClientIp(inbound), '198.51.100.7')
+})
 
 test('contact proxies the validated OS contract and preserves browser success', async () => {
   let outbound
@@ -69,6 +85,8 @@ test('contact proxies the validated OS contract and preserves browser success', 
     consentVersion: '1.0',
   })
   assert.ok(outbound.options.signal instanceof AbortSignal)
+  assert.match(outbound.options.headers['X-Trovara-Client-Id'], /^[A-Za-z0-9_-]+$/)
+  assert.match(outbound.options.headers['X-Trovara-Client-Signature'], /^[A-Za-z0-9_-]+$/)
 })
 
 test('all five product IDs retain their stable OS keys', async () => {

@@ -227,7 +227,7 @@ const thirdParties = [
                   </div>
                   <div>
                     <span class="block font-bold text-trovara-dark">Email</span>
-                    <a href="mailto:info@trovara.farm" class="text-trovara-green hover:underline">info@trovara.farm</a>
+                    <a href="mailto:hello@trovara.farm" class="text-trovara-green hover:underline">hello@trovara.farm</a>
                   </div>
                   <div>
                     <span class="block font-bold text-trovara-dark">Phone</span>
@@ -370,7 +370,7 @@ const thirdParties = [
                   When you withdraw consent we clear the two WebMetrix cookies listed above and reload
                   the page so the script stops running - but we cannot recall measurements that were
                   already sent while analytics was on. To have those earlier records deleted, email
-                  <a href="mailto:info@trovara.farm" class="text-trovara-green font-semibold hover:underline">info@trovara.farm</a>
+                  <a href="mailto:hello@trovara.farm" class="text-trovara-green font-semibold hover:underline">hello@trovara.farm</a>
                   and we will pass the request on. You can also clear or block cookies for
                   trovara.farm in your browser at any time.
                 </p>
@@ -497,7 +497,7 @@ const thirdParties = [
               </div>
               <p class="text-gray-700 leading-relaxed mt-6">
                 To exercise any of these rights, contact us at
-                <a href="mailto:info@trovara.farm" class="text-trovara-green font-semibold hover:underline">info@trovara.farm</a>.
+                <a href="mailto:hello@trovara.farm" class="text-trovara-green font-semibold hover:underline">hello@trovara.farm</a>.
                 We will respond within the timeframe required by the NDPA. Exercising your rights is
                 free of charge in most cases.
               </p>
@@ -545,7 +545,7 @@ const thirdParties = [
                 <p class="leading-relaxed mt-5 text-white/90">
                   For any data-protection query, or to raise a concern about how we handle your data,
                   contact our team at
-                  <a href="mailto:info@trovara.farm" class="text-trovara-gold-300 font-semibold hover:underline">info@trovara.farm</a>.
+                  <a href="mailto:hello@trovara.farm" class="text-trovara-gold-300 font-semibold hover:underline">hello@trovara.farm</a>.
                 </p>
               </div>
             </div>
@@ -576,7 +576,7 @@ const thirdParties = [
                   your personal data, please reach out:
                 </p>
                 <ul class="space-y-1.5">
-                  <li>Email: <a href="mailto:info@trovara.farm" class="text-trovara-green font-semibold hover:underline">info@trovara.farm</a></li>
+                  <li>Email: <a href="mailto:hello@trovara.farm" class="text-trovara-green font-semibold hover:underline">hello@trovara.farm</a></li>
                   <li>Phone: <span class="font-semibold text-trovara-dark">+234 810 369 3426</span></li>
                   <li>Address: <span class="font-semibold text-trovara-dark">Trovara Farm, Abeokuta, Ogun State, Nigeria</span></li>
                 </ul>

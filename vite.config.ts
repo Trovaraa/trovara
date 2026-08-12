@@ -16,7 +16,7 @@ export default defineConfig({
     netlifyFunctionsDevPlugin(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['brand/trovara-monogram-tile-v1.svg', 'icons/trovara-monogram-icon-v1.svg'],
+      includeAssets: ['icons/icon-192.png', 'icons/icon-512.png'],
       manifest: false,
       workbox: {
         // Avoid Workbox terser early-exit under Node 22 (same as Trovara OS).
@@ -24,7 +24,12 @@ export default defineConfig({
         // Do not precache HTML or use navigateFallback. Netlify already SPA-fallbacks
         // to index.html; a precached shell is what made email deep links (e.g.
         // /shop/verify-email) render the branded 404 after a route shipped.
-        globPatterns: ['**/*.{js,css,svg,png,webp,woff2,ico,webmanifest}'],
+        globPatterns: [
+          'assets/index-*.{js,css}',
+          'icons/icon-*.png',
+          'manifest.webmanifest',
+          'theme-init.js',
+        ],
         navigateFallback: null,
         runtimeCaching: [
           {
@@ -59,6 +64,11 @@ export default defineConfig({
     }),
   ],
   server: {
+    // Trovara OS owns 5173. Keep the marketing site on its documented local
+    // origin so both products can run together and /shop-api can reach OS.
+    host: '127.0.0.1',
+    port: 4173,
+    strictPort: true,
     proxy: {
       // Customer shop API (Trovara OS). Keeps cookies same-origin so
       // SameSite=Strict sessions work from http://localhost:5173.
@@ -72,6 +82,21 @@ export default defineConfig({
         target: 'http://127.0.0.1:3000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/lot-api/, '/public/lots'),
+      },
+      '/brand-api': {
+        target: 'http://127.0.0.1:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/brand-api/, '/public/brand'),
+      },
+      '/moments-api': {
+        target: 'http://127.0.0.1:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/moments-api/, '/public/moments'),
+      },
+      '/careers-api': {
+        target: 'http://127.0.0.1:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/careers-api/, '/public/careers'),
       },
     },
   },
