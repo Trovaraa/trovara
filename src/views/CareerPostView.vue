@@ -211,7 +211,6 @@ watch(() => route.params.slug, load)
 .career-body :deep(a) {
   overflow-wrap: anywhere;
 }
-
 .career-body :deep(li::marker) {
   color: #b6872e;
 }
