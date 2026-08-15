@@ -26,6 +26,7 @@ const moreLinks = [
   { label: 'Moments', to: '/moments' },
   { label: 'Careers', to: '/careers' },
   { label: 'FAQ', to: '/faq' },
+  { label: 'Food survey', to: '/survey' },
 ]
 
 const desktopNavItems = [

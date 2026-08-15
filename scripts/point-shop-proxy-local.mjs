@@ -37,6 +37,9 @@ const next = `/shop-api/*     ${osOrigin}/shop/:splat  200!
 /careers-api    ${osOrigin}/public/careers  200!
 /careers-api/   ${osOrigin}/public/careers  200!
 /careers-api/*  ${osOrigin}/public/careers/:splat  200!
+/journal-api    ${osOrigin}/public/journal  200!
+/journal-api/   ${osOrigin}/public/journal  200!
+/journal-api/*  ${osOrigin}/public/journal/:splat  200!
 /*              /index.html   200
 `
 

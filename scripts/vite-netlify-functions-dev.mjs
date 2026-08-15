@@ -1,5 +1,5 @@
 /**
- * Vite middleware that serves contact / waitlist / newsletter Netlify Functions
+ * Vite middleware that serves contact / waitlist / newsletter / survey Netlify Functions
  * under `/.netlify/functions/*` during plain `npm run dev`.
  *
  * Defaults lead/newsletter API bases to local Trovara OS when unset.
@@ -12,10 +12,12 @@ const HANDLERS = {
   contact: resolve(root, 'netlify/functions/contact.mjs'),
   waitlist: resolve(root, 'netlify/functions/waitlist.mjs'),
   newsletter: resolve(root, 'netlify/functions/newsletter.mjs'),
+  survey: resolve(root, 'netlify/functions/survey.mjs'),
 }
 
 function ensureLocalOsEnv() {
   process.env.MARKETING_LEADS_API_URL ||= 'http://127.0.0.1:3000/public/leads'
+  process.env.SURVEY_API_URL ||= 'http://127.0.0.1:3000/public/surveys'
   process.env.NEWSLETTER_API_URL ||= 'http://127.0.0.1:3000/public/newsletter'
 }
 
@@ -33,7 +35,7 @@ export function netlifyFunctionsDevPlugin() {
       ensureLocalOsEnv()
       server.middlewares.use(async (req, res, next) => {
         const url = req.url?.split('?')[0] ?? ''
-        const match = url.match(/^\/\.netlify\/functions\/(contact|waitlist|newsletter)\/?$/)
+        const match = url.match(/^\/\.netlify\/functions\/(contact|waitlist|newsletter|survey)\/?$/)
         if (!match) return next()
 
         try {

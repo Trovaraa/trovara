@@ -11,6 +11,7 @@
 [context.production.environment]
   NEWSLETTER_API_URL = "https://os.trovara.farm/public/newsletter"
   MARKETING_LEADS_API_URL = "https://os.trovara.farm/public/leads"
+  SURVEY_API_URL = "https://os.trovara.farm/public/surveys"
 
 # Proxy customer shop API to Trovara OS (same-origin cookies + CSP connect-src 'self').
 # Production URLs live in public/_redirects (copied into dist). Do not hardcode
@@ -42,6 +43,18 @@
   from   = "/images/blog/*"
   to     = "/images/journal/:splat"
   status = 301
+
+[[redirects]]
+  from   = "/journal-api"
+  to     = "https://os.trovara.farm/public/journal"
+  status = 200
+  force  = true
+
+[[redirects]]
+  from   = "/journal-api/*"
+  to     = "https://os.trovara.farm/public/journal/:splat"
+  status = 200
+  force  = true
 
 [[redirects]]
   from   = "/*"

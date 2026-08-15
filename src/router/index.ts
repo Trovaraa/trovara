@@ -209,6 +209,16 @@ const router = createRouter({
       },
     },
     {
+      path: '/survey',
+      name: 'survey',
+      component: () => import('../views/SurveyView.vue'),
+      meta: {
+        title: 'Customer Food Survey - Trovara Farm',
+        description:
+          'Tell Trovara Farm how you buy fresh food in Nigeria. A 3-minute survey to help us design a better farm-to-table service.',
+      },
+    },
+    {
       path: '/contact',
       name: 'contact',
       component: () => import('../views/ContactView.vue'),

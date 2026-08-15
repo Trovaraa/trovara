@@ -5,6 +5,7 @@ import { useJournalStore } from '../stores/journal'
 import JournalCard from '../components/ui/JournalCard.vue'
 import NewsletterSubscribe from '../components/ui/NewsletterSubscribe.vue'
 import StructuredData from '../components/StructuredData.vue'
+import JournalEngagement from '../components/journal/JournalEngagement.vue'
 import { applyPageMeta } from '../composables/usePageMeta'
 import { formatPublishedDate } from '../lib/date'
 
@@ -126,6 +127,12 @@ watch(
         </div>
       </div>
     </article>
+
+    <section class="bg-trovara-cream py-12 md:py-16">
+      <div class="container-trovara max-w-3xl">
+        <JournalEngagement :slug="post.slug" />
+      </div>
+    </section>
 
     <section v-if="relatedPosts.length" class="py-16 md:py-20 bg-white border-t border-gray-100">
       <div class="container-trovara">

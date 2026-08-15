@@ -26,6 +26,7 @@ const links = {
     { label: 'Farm Advisory', to: '/farm-advisory' },
     { label: 'Wholesale',     to: '/wholesale' },
     { label: 'FAQ',           to: '/faq' },
+    { label: 'Food survey',   to: '/survey' },
     { label: 'Contact',       to: '/contact' },
   ],
   products: [

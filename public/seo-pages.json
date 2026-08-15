@@ -81,6 +81,11 @@
     "description": "Contact Trovara Farm for products, partnerships, wholesale opportunities, and farm visits."
   },
   {
+    "path": "/survey",
+    "title": "Customer Food Survey - Trovara Farm",
+    "description": "Tell Trovara Farm how you buy fresh food in Nigeria. A 3-minute survey to help us design a better farm-to-table service."
+  },
+  {
     "path": "/wholesale",
     "title": "B2B Wholesale - Trovara Farm",
     "description": "Wholesale offerings for restaurants, retailers, and food service partners."
@@ -114,26 +119,6 @@
     "path": "/journal/what-if-agriculture-was-more-than-food",
     "title": "What if agriculture was more than food production? - Trovara Farm",
     "description": "Trovara is building a regenerative food company in Ogun State, Nigeria to reconnect people with the land through better food, better livelihoods, and stronger communities."
-  },
-  {
-    "path": "/careers/farm-analyst",
-    "title": "Farm Analyst - Careers - Trovara Farm",
-    "description": "Support the records, inventory and quality systems behind Trovara’s growing farm operations. This NYSC placement offers hands-on exposure to agricultural production, inventory management, food processing, quality control, traceability and farm technology."
-  },
-  {
-    "path": "/careers/farm-operations-supervisor",
-    "title": "Farm Operations Supervisor - Careers - Trovara Farm",
-    "description": "Lead day-to-day farm operations across crop, livestock and processing activities while helping build the systems, team and standards behind Trovara’s next-generation food business."
-  },
-  {
-    "path": "/careers/nysc-placement-poultry-operations-supervisor",
-    "title": "NYSC Placement – Poultry Operations Supervisor - Careers - Trovara Farm",
-    "description": "Join Project Feather, Trovara’s pasture-based poultry programme, and support daily poultry operations while gaining hands-on experience in a modern, data-driven commercial farm."
-  },
-  {
-    "path": "/careers/project-canopy-agricultural-agroforestry-consultant",
-    "title": "Project Canopy – Agricultural & Agroforestry Consultant - Careers - Trovara Farm",
-    "description": "Lead the technical design and establishment of Project Canopy – Phase 1, including agroforestry planning, nursery establishment, tree planting, staff training and an oil palm estate rehabilitation assessment."
   },
   {
     "path": "/shop/reset-password",

@@ -9,6 +9,9 @@
 /careers-api   https://os.trovara.farm/public/careers  200!
 /careers-api/  https://os.trovara.farm/public/careers  200!
 /careers-api/* https://os.trovara.farm/public/careers/:splat  200!
+/journal-api   https://os.trovara.farm/public/journal  200!
+/journal-api/  https://os.trovara.farm/public/journal  200!
+/journal-api/* https://os.trovara.farm/public/journal/:splat  200!
 /verify-email   /shop/verify-email   301
 /reset-password /shop/reset-password 301
 /blog           /journal             301
