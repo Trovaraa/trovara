@@ -1,21 +1,22 @@
-# Trovara Marketing Site (Vue 3 + TypeScript + Vite)
+# Trovara Marketing Site
 
-Marketing site for [Trovara Farm](https://trovara.farm). Brand assets (logo, icons, photography, infographics) live under `public/` - e.g. `public/images/trovara-brand.png` and `public/trovara-github-icon.png`.
+Vue 3 + TypeScript + Vite site for [Trovara Farm](https://trovara.farm).
 
-## Recommended IDE Setup
+Brand assets live under `public/brand/` (marks, lockups, social cards) and
+`public/icons/`. Product photography is under `public/images/products/`; team
+and farm photos under `public/images/team/` and related folders.
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Setup
 
-## Type Support For `.vue` Imports in TS
+```bash
+nvm use   # Node 22
+npm ci
+npm run dev
+```
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+Use [VS Code](https://code.visualstudio.com/) with
+[Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+(disable Vetur). Type-check with `vue-tsc` / the Volar TypeScript Vue plugin.
 
 ## Journal publishing
 
@@ -64,10 +65,11 @@ For local development, `npm run dev` is enough (see Contact section). Do not add
 marketing site: Trovara OS owns subscriber records and email delivery
 credentials.
 
-## Local shop / lot API proxy
+## Local shop / lot / careers / moments proxies
 
-Production `public/_redirects` sends `/shop-api` and `/lot-api` to
-`https://os.trovara.farm`. That is correct for Netlify deploys.
+Production `public/_redirects` sends same-origin API proxies to
+`https://os.trovara.farm` (`/shop-api`, `/lot-api`, `/careers-api`,
+`/moments-api`, `/brand-api`). That is correct for Netlify deploys.
 
 For local testing against Trovara OS on `:3000`:
 
