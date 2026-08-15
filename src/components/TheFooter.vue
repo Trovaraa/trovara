@@ -21,7 +21,7 @@ const links = {
     { label: 'The Farm',      to: '/farm' },
     { label: 'Moments',       to: '/moments' },
     { label: 'Careers',       to: '/careers' },
-    { label: 'Blog',          to: '/blog' },
+    { label: 'Journal',       to: '/journal' },
     { label: 'Farm OS',       to: '/farm-os' },
     { label: 'Farm Advisory', to: '/farm-advisory' },
     { label: 'Wholesale',     to: '/wholesale' },

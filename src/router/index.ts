@@ -153,23 +153,31 @@ const router = createRouter({
       },
     },
     {
-      path: '/blog',
-      name: 'blog',
-      component: () => import('../views/BlogView.vue'),
+      path: '/journal',
+      name: 'journal',
+      component: () => import('../views/JournalView.vue'),
       meta: {
-        title: 'Blog - Trovara Farm',
+        title: 'Journal - Trovara Farm',
         description:
           'Read stories, field notes, and insights from Trovara Farm on food, farming, and the future of agriculture.',
       },
     },
     {
-      path: '/blog/:slug',
-      name: 'blog-post',
-      component: () => import('../views/BlogPostView.vue'),
+      path: '/journal/:slug',
+      name: 'journal-post',
+      component: () => import('../views/JournalPostView.vue'),
       meta: {
-        title: 'Blog - Trovara Farm',
-        description: 'Read a Trovara Farm blog post with field updates, lessons, and practical farming insights.',
+        title: 'Journal - Trovara Farm',
+        description: 'Read a Trovara Farm journal post with field updates, lessons, and practical farming insights.',
       },
+    },
+    {
+      path: '/blog',
+      redirect: '/journal',
+    },
+    {
+      path: '/blog/:slug',
+      redirect: (to) => `/journal/${to.params.slug}`,
     },
     {
       path: '/moments',

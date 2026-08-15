@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { BlogPost } from '../../types'
+import type { JournalPost } from '../../types'
 import { formatPublishedDate } from '../../lib/date'
 import BrandIcon from '../brand/BrandIcon.vue'
 
-defineProps<{ post: BlogPost }>()
+defineProps<{ post: JournalPost }>()
 </script>
 
 <template>
   <article class="card group h-full flex flex-col overflow-hidden">
-    <RouterLink :to="`/blog/${post.slug}`" class="flex flex-col h-full">
+    <RouterLink :to="`/journal/${post.slug}`" class="flex flex-col h-full">
       <div class="relative aspect-[16/10] overflow-hidden bg-trovara-light">
         <img
           v-if="post.coverImage"

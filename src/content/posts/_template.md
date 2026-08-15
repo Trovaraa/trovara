@@ -1,17 +1,17 @@
 ---
 # Copy this file, rename it (e.g. my-new-post.md), and fill in the fields below.
-# The filename becomes the URL: my-new-post.md → /blog/my-new-post
+# The filename becomes the URL: my-new-post.md → /journal/my-new-post
 # Set published: false to keep a draft hidden until you are ready.
 
 title: Your post title here
-excerpt: A short summary for the blog listing and search results (1-2 sentences).
+excerpt: A short summary for the journal listing and search results (1-2 sentences).
 author: Trovara Farm
 publishedAt: 2026-06-21
 category: Farm Stories
 tags:
   - trovara
   - farming
-coverImage: /images/blog/your-post-cover.jpg
+coverImage: /images/journal/your-post-cover.jpg
 published: false
 ---
 

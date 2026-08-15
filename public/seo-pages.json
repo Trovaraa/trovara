@@ -61,8 +61,8 @@
     "description": "Common questions about Trovara Farm products, delivery, partnerships, and operations."
   },
   {
-    "path": "/blog",
-    "title": "Blog - Trovara Farm",
+    "path": "/journal",
+    "title": "Journal - Trovara Farm",
     "description": "Stories, field notes, and practical farming insights from Trovara Farm."
   },
   {
@@ -101,12 +101,17 @@
     "description": "Terms governing use of the Trovara Farm website and services."
   },
   {
-    "path": "/blog/why-trovara-exists",
+    "path": "/journal/farm-to-table-more-than-a-trend",
+    "title": "Farm to Table: More Than a Trend - Trovara Farm",
+    "description": "Farm to Table is more than a promise of fresher food. Drawing from a personal experience and the realities of Nigeria’s food system, we explore how shorter supply chains can improve traceability, reduce waste, create better value for farmers and consumers, and why this principle sits at the heart of how we are building Trovara."
+  },
+  {
+    "path": "/journal/why-trovara-exists",
     "title": "Why Trovara Exists - Trovara Farm",
     "description": "Why does Trovara exist? Because we believe a food system cannot be considered successful when consumers pay more, farmers earn unpredictably and too much food never reaches the table. This article explores the challenges shaping Nigeria's food system and the vision behind building a trusted, regenerative food company designed for tomorrow."
   },
   {
-    "path": "/blog/what-if-agriculture-was-more-than-food",
+    "path": "/journal/what-if-agriculture-was-more-than-food",
     "title": "What if agriculture was more than food production? - Trovara Farm",
     "description": "Trovara is building a regenerative food company in Ogun State, Nigeria to reconnect people with the land through better food, better livelihoods, and stronger communities."
   },
