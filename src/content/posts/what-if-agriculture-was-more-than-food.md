@@ -13,7 +13,7 @@ tags:
   - made-in-nigeria
   - agritourism
   - sustainable-food
-coverImage: /images/blog/what-if-agriculture-cover.jpg
+coverImage: /images/journal/what-if-agriculture-cover.jpg
 published: true
 ---
 

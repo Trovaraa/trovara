@@ -22,7 +22,7 @@ const serviceLinks = [
 
 /** Secondary destinations — kept off the primary rail so the bar stays short. */
 const moreLinks = [
-  { label: 'Blog', to: '/blog' },
+  { label: 'Journal', to: '/journal' },
   { label: 'Moments', to: '/moments' },
   { label: 'Careers', to: '/careers' },
   { label: 'FAQ', to: '/faq' },

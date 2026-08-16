@@ -29,6 +29,21 @@
   status = 200
 
 [[redirects]]
+  from   = "/blog"
+  to     = "/journal"
+  status = 301
+
+[[redirects]]
+  from   = "/blog/*"
+  to     = "/journal/:splat"
+  status = 301
+
+[[redirects]]
+  from   = "/images/blog/*"
+  to     = "/images/journal/:splat"
+  status = 301
+
+[[redirects]]
   from   = "/*"
   to     = "/404.html"
   status = 404

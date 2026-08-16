@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { getAllTags, getCategories, getPostBySlug, getPublishedPosts } from '../content/posts'
 
-export const useBlogStore = defineStore('blog', {
+export const useJournalStore = defineStore('journal', {
   getters: {
     publishedPosts: () => getPublishedPosts(),
     categories: () => getCategories(),

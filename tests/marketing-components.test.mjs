@@ -59,7 +59,7 @@ test('contact details expose phone and email actions', async () => {
 })
 
 test('careers use the shared HTML-disabled markdown renderer', async () => {
-  const [renderer, career, blog] = await Promise.all([
+  const [renderer, career, journal] = await Promise.all([
     read('src/lib/markdown.ts'),
     read('src/views/CareerPostView.vue'),
     read('src/content/posts/loadPosts.ts'),
@@ -67,7 +67,7 @@ test('careers use the shared HTML-disabled markdown renderer', async () => {
   assert.match(renderer, /html: false/)
   assert.match(renderer, /noopener noreferrer/)
   assert.match(career, /renderSafeMarkdown\(post\.bodyMarkdown\)/)
-  assert.match(blog, /renderSafeMarkdown\(markdown\)/)
+  assert.match(journal, /renderSafeMarkdown\(markdown\)/)
 })
 
 test('Netlify fallback returns a real 404', async () => {
@@ -75,6 +75,8 @@ test('Netlify fallback returns a real 404', async () => {
     read('public/_redirects'),
     read('netlify.toml'),
   ])
+  assert.match(redirects, /\/blog\s+\/journal\s+301/)
+  assert.match(redirects, /\/blog\/\*\s+\/journal\/:splat\s+301/)
   assert.match(redirects, /\/\*\s+\/404\.html\s+404/)
   assert.doesNotMatch(redirects, /\/\*\s+\/index\.html\s+200/)
   assert.match(config, /to\s*=\s*"\/404\.html"[\s\S]*status\s*=\s*404/)

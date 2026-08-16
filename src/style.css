@@ -108,48 +108,48 @@ html.dark {
     min-width: 0;
   }
 
-  .blog-content {
+  .journal-content {
     @apply space-y-6 leading-relaxed text-lg;
     color: var(--tv-muted-text);
   }
 
-  .blog-content h2 {
+  .journal-content h2 {
     @apply text-2xl md:text-3xl font-bold pt-4;
     color: var(--tv-ink);
   }
 
-  .blog-content h3 {
+  .journal-content h3 {
     @apply text-xl md:text-2xl font-bold pt-2;
     color: var(--tv-ink);
   }
 
-  .blog-content p {
+  .journal-content p {
     @apply leading-relaxed;
   }
 
-  .blog-content ul {
+  .journal-content ul {
     @apply space-y-3 pl-1 list-none;
   }
 
-  .blog-content ul li {
+  .journal-content ul li {
     @apply flex items-start gap-3;
   }
 
-  .blog-content ul li::before {
+  .journal-content ul li::before {
     content: '';
     @apply mt-2.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-trovara-green;
   }
 
-  .blog-content blockquote {
+  .journal-content blockquote {
     @apply border-l-4 border-trovara-gold pl-6 py-2 my-8;
   }
 
-  .blog-content blockquote p {
+  .journal-content blockquote p {
     @apply text-xl font-medium italic leading-relaxed;
     color: var(--tv-ink);
   }
 
-  .blog-content a {
+  .journal-content a {
     @apply text-trovara-green font-medium hover:underline;
   }
 }

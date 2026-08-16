@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useBlogStore } from '../stores/blog'
+import { useJournalStore } from '../stores/journal'
 import SectionHeader from '../components/ui/SectionHeader.vue'
-import BlogCard from '../components/ui/BlogCard.vue'
+import JournalCard from '../components/ui/JournalCard.vue'
 import NewsletterSubscribe from '../components/ui/NewsletterSubscribe.vue'
 import BrandIcon from '../components/brand/BrandIcon.vue'
 
-const blogStore = useBlogStore()
-const posts = computed(() => blogStore.publishedPosts)
+const journalStore = useJournalStore()
+const posts = computed(() => journalStore.publishedPosts)
 const selectedCategory = ref('All')
 const selectedTag = ref('All')
-const categories = computed(() => ['All', ...blogStore.categories])
-const tags = computed(() => ['All', ...blogStore.allTags])
+const categories = computed(() => ['All', ...journalStore.categories])
+const tags = computed(() => ['All', ...journalStore.allTags])
 
 const filteredPosts = computed(() =>
   posts.value.filter((post) => {
@@ -54,7 +54,7 @@ const filteredPosts = computed(() =>
       <div class="container-trovara">
         <SectionHeader
           eyebrow="Latest Posts"
-          title="The Trovara blog"
+          title="The Trovara journal"
           subtitle="New posts appear here as we share from the farm. Subscribe below so you never miss one."
         />
 
@@ -90,7 +90,7 @@ const filteredPosts = computed(() =>
         </div>
 
         <div v-if="filteredPosts.length" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <BlogCard v-for="post in filteredPosts" :key="post.slug" :post="post" />
+          <JournalCard v-for="post in filteredPosts" :key="post.slug" :post="post" />
         </div>
 
         <div
@@ -104,7 +104,7 @@ const filteredPosts = computed(() =>
           <p class="text-gray-500 text-sm max-w-md mx-auto">
             {{
               posts.length
-                ? 'Try another category or tag, or clear filters to see all blog posts.'
+                ? 'Try another category or tag, or clear filters to see all journal posts.'
                 : 'We are preparing stories from the field. Subscribe to be notified when they go live.'
             }}
           </p>
@@ -126,7 +126,7 @@ const filteredPosts = computed(() =>
           <NewsletterSubscribe
             variant="inline"
             title="Never miss a post"
-            description="Get farm updates, new blog posts, and harvest news delivered to your inbox."
+            description="Get farm updates, new journal posts, and harvest news delivered to your inbox."
           />
         </div>
       </div>
