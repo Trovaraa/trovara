@@ -81,6 +81,11 @@
     "description": "Contact Trovara Farm for products, partnerships, wholesale opportunities, and farm visits."
   },
   {
+    "path": "/survey",
+    "title": "Customer Food Survey - Trovara Farm",
+    "description": "Tell Trovara Farm how you buy fresh food in Nigeria. A 3-minute survey to help us design a better farm-to-table service."
+  },
+  {
     "path": "/wholesale",
     "title": "B2B Wholesale - Trovara Farm",
     "description": "Wholesale offerings for restaurants, retailers, and food service partners."

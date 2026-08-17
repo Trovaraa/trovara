@@ -154,6 +154,54 @@ html.dark {
   }
 }
 
+/* The Journal story reel uses fixed light surfaces in light mode. Give it a
+   deliberate dark surface instead of allowing global light-text overrides to
+   create white-on-cream contrast failures. */
+html.dark .story-reel {
+  background: #0c2017 !important;
+}
+
+html.dark .story-reel__card {
+  border-color: rgb(148 163 184 / 18%) !important;
+  background: #10281e !important;
+}
+
+html.dark .story-reel__buttons button {
+  border-color: rgb(148 163 184 / 28%) !important;
+  background: #10281e !important;
+  color: #f8fafc !important;
+}
+
+html.dark .story-reel__progress button {
+  background: rgb(255 255 255 / 20%) !important;
+}
+
+html.dark .story-reel__progress button.is-active {
+  background: #d9b85f !important;
+}
+
+html.dark .journal-conversation {
+  border-color: rgb(148 163 184 / 18%) !important;
+  background: #10281e !important;
+}
+
+html.dark .journal-conversation__header {
+  border-color: rgb(148 163 184 / 18%) !important;
+}
+
+html.dark .journal-like,
+html.dark .journal-comment,
+html.dark .journal-comment-form input,
+html.dark .journal-comment-form textarea {
+  border-color: rgb(148 163 184 / 24%) !important;
+  background: #0c2017 !important;
+}
+
+html.dark .journal-comment-form input,
+html.dark .journal-comment-form textarea {
+  color: #eef2ee !important;
+}
+
 @media (max-width: 639px) {
   input,
   textarea,

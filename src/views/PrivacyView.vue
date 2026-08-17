@@ -36,7 +36,7 @@ const dataWeCollect = [
   {
     label: 'Information you provide',
     detail:
-      'Your name, email address, phone number, company/organisation, delivery location, product interest, and the contents of any message when you use our contact form, join a product waitlist, request a quote, subscribe to our newsletter, message us on WhatsApp, or place an order through our Telegram customer bot.',
+      'Your name, email address, phone number, company/organisation, delivery location, product interest, and the contents of any message when you use our contact form, join a product waitlist, complete the customer food survey, request a quote, subscribe to our newsletter, message us on WhatsApp, or place an order through our Telegram customer bot. Survey answers about how you buy food are stored even if you do not share a name or contact.',
   },
   {
     label: 'Transaction & enquiry details',
@@ -52,6 +52,7 @@ const dataWeCollect = [
 
 const dataUses = [
   'Respond to your enquiries, quotes, and support requests.',
+  'Understand how households buy fresh food when you complete the customer food survey, and follow up only if you ask us to.',
   'Process and fulfil orders, deliveries, and wholesale or partnership arrangements.',
   'Send you newsletters and updates - only where you have subscribed, and always with an option to unsubscribe.',
   'Improve our website, products, and customer experience using aggregated analytics.',
@@ -98,12 +99,12 @@ const thirdParties = [
   {
     name: 'Trovara OS',
     purpose:
-      'Stores contact enquiries and product-waitlist requests for those specific purposes. Separately, it stores newsletter subscriber details, consent choices, confirmation status, and unsubscribe status as our source of truth.',
+      'Stores contact enquiries, product-waitlist requests, and customer food-survey answers for those specific purposes. Separately, it stores newsletter subscriber details, consent choices, confirmation status, and unsubscribe status as our source of truth.',
   },
   {
     name: 'Resend',
     purpose:
-      'Sends internal notifications about contact enquiries and product-waitlist requests, and delivers newsletter confirmation messages and broadcasts. An enquiry or waitlist request is not treated as a newsletter subscription.',
+      'Sends internal notifications about contact enquiries, product-waitlist requests, and food-survey responses, and delivers newsletter confirmation messages and broadcasts. An enquiry, waitlist request, or survey response is not treated as a newsletter subscription.',
   },
   {
     name: 'WebMetrix Analytics',
@@ -460,10 +461,11 @@ const thirdParties = [
                   obligations. We do not use suppression records to send marketing.
                 </p>
                 <p>
-                  Trovara OS keeps contact enquiries and product-waitlist requests only as long as
-                  needed to respond, manage the requested availability update, maintain appropriate
-                  business records, and meet legal obligations. These records remain purpose-specific
-                  and are not added to the newsletter subscriber list unless you subscribe separately.
+                  Trovara OS keeps contact enquiries, product-waitlist requests, and food-survey
+                  answers only as long as needed to respond, understand shopping needs, manage a
+                  requested follow-up, maintain appropriate business records, and meet legal
+                  obligations. These records remain purpose-specific and are not added to the
+                  newsletter subscriber list unless you subscribe separately.
                 </p>
               </div>
             </div>

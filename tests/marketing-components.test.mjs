@@ -42,6 +42,16 @@ test('shop pages keep the floating chat button off account forms', async () => {
   assert.match(app, /!route\.path\.startsWith\('\/shop'\)/)
 })
 
+test('floating WhatsApp shortcut opens one blank chat without inserting a repeated draft', async () => {
+  const [button, helper] = await Promise.all([
+    read('src/components/WhatsAppButton.vue'),
+    read('src/lib/whatsapp.ts'),
+  ])
+  assert.match(button, /const waLink = buildWhatsAppLink\(\)/)
+  assert.match(button, /Open WhatsApp/)
+  assert.match(helper, /: `https:\/\/wa\.me\/\$\{PHONE\}`/)
+})
+
 test('Moments upload contract includes accessible description and versioned consent', async () => {
   const moments = await read('src/views/MomentsView.vue')
   assert.match(moments, /MOMENTS_MAX_UPLOAD_BYTES/)

@@ -66,6 +66,8 @@ const paths = [
             <p class="mt-6 text-sm text-white/55">
               Already following a harvest?
               <RouterLink to="/shop" class="font-bold text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">Open your account</RouterLink>
+              <span class="text-white/35"> · </span>
+              <RouterLink to="/survey" class="font-bold text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">Take the 3-minute food survey</RouterLink>
             </p>
           </div>
 
