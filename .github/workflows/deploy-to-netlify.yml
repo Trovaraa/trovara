@@ -11,7 +11,6 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write
 
 concurrency:
   group: deploy-netlify-${{ github.event.pull_request.number || github.ref }}
@@ -49,21 +48,43 @@ jobs:
         env:
           JOURNAL_API_URL: https://os.trovara.farm/public/journal
 
-      - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@d22a32a27c918fe470bbc562e984f80ec48c2668 # v4.0.0
-        with:
-          publish-dir: ./dist
-          # CLI/API deploys skip netlify.toml `functions = …` unless passed here.
-          # Without this, /.netlify/functions/* 404 and forms show a generic failure.
-          functions-dir: ./netlify/deploy-functions
-          netlify-config-path: ./netlify.toml
-          production-branch: main
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: "Deploy from GitHub Actions (${{ github.sha }})"
-          enable-pull-request-comment: true
-          enable-commit-comment: true
-          overwrites-pull-request-comment: true
+      # Netlify's CLI follows local imports and adds the runtime bootstrap.
+      # The previous raw uploader omitted both and every form function crashed.
+      - name: Deploy production to Netlify
+        if: github.event_name != 'pull_request'
+        run: >-
+          npx --yes netlify-cli@27.1.1 deploy
+          --prod
+          --skip-functions-cache
+          --context production
+          --dir dist
+          --functions netlify/deploy-functions
+          --site "$NETLIFY_SITE_ID"
+          --auth "$NETLIFY_AUTH_TOKEN"
+          --message "Deploy from GitHub Actions ($GITHUB_SHA)"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         timeout-minutes: 5
+
+      - name: Deploy preview to Netlify
+        if: github.event_name == 'pull_request'
+        run: >-
+          npx --yes netlify-cli@27.1.1 deploy
+          --skip-functions-cache
+          --context deploy-preview
+          --alias "deploy-preview-${{ github.event.number }}"
+          --dir dist
+          --functions netlify/deploy-functions
+          --site "$NETLIFY_SITE_ID"
+          --auth "$NETLIFY_AUTH_TOKEN"
+          --message "Preview from GitHub Actions ($GITHUB_SHA)"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 5
+
+      - name: Smoke test deployed form functions
+        env:
+          FUNCTION_BASE_URL: ${{ github.event_name == 'pull_request' && format('https://deploy-preview-{0}--trovara.netlify.app', github.event.number) || 'https://www.trovara.farm' }}
+        run: node scripts/smoke-netlify-functions.mjs
