@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import NewsletterSubscribe from './ui/NewsletterSubscribe.vue'
 import TrovaraLogo from './brand/TrovaraLogo.vue'
@@ -7,6 +8,7 @@ import { openConsentBanner } from '../lib/consent'
 
 const route = useRoute()
 const currentYear = new Date().getFullYear()
+const showNewsletterSignup = computed(() => !route.path.startsWith('/journal'))
 
 function onHomeClick() {
   if (route.path === '/') {
@@ -43,7 +45,7 @@ const links = {
 <template>
   <footer class="bg-trovara-dark text-white">
 
-    <section class="border-b border-white/10">
+    <section v-if="showNewsletterSignup" class="border-b border-white/10">
       <div class="container-trovara py-14 lg:py-16">
         <NewsletterSubscribe variant="footer" />
       </div>
