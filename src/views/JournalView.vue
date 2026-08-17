@@ -1,17 +1,22 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useBlogStore } from '../stores/blog'
+import { useJournalStore } from '../stores/journal'
 import SectionHeader from '../components/ui/SectionHeader.vue'
-import BlogCard from '../components/ui/BlogCard.vue'
+import JournalCard from '../components/ui/JournalCard.vue'
 import NewsletterSubscribe from '../components/ui/NewsletterSubscribe.vue'
 import BrandIcon from '../components/brand/BrandIcon.vue'
+import JournalStoryRail from '../components/journal/JournalStoryRail.vue'
 
-const blogStore = useBlogStore()
-const posts = computed(() => blogStore.publishedPosts)
+const journalStore = useJournalStore()
+const posts = computed(() => journalStore.publishedPosts)
 const selectedCategory = ref('All')
 const selectedTag = ref('All')
-const categories = computed(() => ['All', ...blogStore.categories])
-const tags = computed(() => ['All', ...blogStore.allTags])
+const categories = computed(() => ['All', ...journalStore.categories])
+const tags = computed(() => ['All', ...journalStore.allTags])
+const featuredPosts = computed(() => posts.value.slice(0, 4))
+const filtersAreClear = computed(
+  () => selectedCategory.value === 'All' && selectedTag.value === 'All',
+)
 
 const filteredPosts = computed(() =>
   posts.value.filter((post) => {
@@ -20,6 +25,9 @@ const filteredPosts = computed(() =>
     const matchesTag = selectedTag.value === 'All' || post.tags.includes(selectedTag.value)
     return matchesCategory && matchesTag
   }),
+)
+const gridPosts = computed(() =>
+  filtersAreClear.value ? filteredPosts.value.slice(featuredPosts.value.length) : filteredPosts.value,
 )
 </script>
 
@@ -50,12 +58,18 @@ const filteredPosts = computed(() =>
       </div>
     </section>
 
-    <section class="py-20 md:py-28 bg-white">
+    <section v-if="featuredPosts.length && filtersAreClear" class="py-14 md:py-20 bg-white">
+      <div class="container-trovara">
+        <JournalStoryRail :posts="featuredPosts" />
+      </div>
+    </section>
+
+    <section class="py-16 md:py-24 bg-white" :class="featuredPosts.length && filtersAreClear ? 'border-t border-gray-100' : ''">
       <div class="container-trovara">
         <SectionHeader
-          eyebrow="Latest Posts"
-          title="The Trovara blog"
-          subtitle="New posts appear here as we share from the farm. Subscribe below so you never miss one."
+          eyebrow="The archive"
+          :title="filtersAreClear ? 'More from the Trovara journal' : 'Stories that match'"
+          subtitle="Browse by subject, or use a tag when you are looking for something specific."
         />
 
         <div class="mb-10 space-y-4">
@@ -89,12 +103,20 @@ const filteredPosts = computed(() =>
           </label>
         </div>
 
-        <div v-if="filteredPosts.length" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <BlogCard v-for="post in filteredPosts" :key="post.slug" :post="post" />
+        <div v-if="gridPosts.length" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <JournalCard v-for="post in gridPosts" :key="post.slug" :post="post" />
         </div>
 
         <div
-          v-else
+          v-else-if="filteredPosts.length && filtersAreClear"
+          class="rounded-2xl border border-trovara-green/10 bg-trovara-light px-6 py-8 text-center"
+        >
+          <p class="font-bold text-trovara-dark">You are caught up.</p>
+          <p class="mt-2 text-sm text-gray-500">The latest stories are in the reel above.</p>
+        </div>
+
+        <div
+          v-else-if="!filteredPosts.length"
           class="text-center py-16 px-8 bg-trovara-light rounded-2xl border border-trovara-green/10"
         >
           <BrandIcon name="sprout" class="w-12 h-12 mx-auto mb-4" />
@@ -104,7 +126,7 @@ const filteredPosts = computed(() =>
           <p class="text-gray-500 text-sm max-w-md mx-auto">
             {{
               posts.length
-                ? 'Try another category or tag, or clear filters to see all blog posts.'
+                ? 'Try another category or tag, or clear filters to see all journal posts.'
                 : 'We are preparing stories from the field. Subscribe to be notified when they go live.'
             }}
           </p>
@@ -126,7 +148,7 @@ const filteredPosts = computed(() =>
           <NewsletterSubscribe
             variant="inline"
             title="Never miss a post"
-            description="Get farm updates, new blog posts, and harvest news delivered to your inbox."
+            description="Get farm updates, new journal posts, and harvest news delivered to your inbox."
           />
         </div>
       </div>

@@ -153,23 +153,31 @@ const router = createRouter({
       },
     },
     {
-      path: '/blog',
-      name: 'blog',
-      component: () => import('../views/BlogView.vue'),
+      path: '/journal',
+      name: 'journal',
+      component: () => import('../views/JournalView.vue'),
       meta: {
-        title: 'Blog - Trovara Farm',
+        title: 'Journal - Trovara Farm',
         description:
           'Read stories, field notes, and insights from Trovara Farm on food, farming, and the future of agriculture.',
       },
     },
     {
-      path: '/blog/:slug',
-      name: 'blog-post',
-      component: () => import('../views/BlogPostView.vue'),
+      path: '/journal/:slug',
+      name: 'journal-post',
+      component: () => import('../views/JournalPostView.vue'),
       meta: {
-        title: 'Blog - Trovara Farm',
-        description: 'Read a Trovara Farm blog post with field updates, lessons, and practical farming insights.',
+        title: 'Journal - Trovara Farm',
+        description: 'Read a Trovara Farm journal post with field updates, lessons, and practical farming insights.',
       },
+    },
+    {
+      path: '/blog',
+      redirect: '/journal',
+    },
+    {
+      path: '/blog/:slug',
+      redirect: (to) => `/journal/${to.params.slug}`,
     },
     {
       path: '/moments',
@@ -198,6 +206,16 @@ const router = createRouter({
       meta: {
         title: 'Role - Trovara Farm',
         description: 'Career opening at Trovara Farm.',
+      },
+    },
+    {
+      path: '/survey',
+      name: 'survey',
+      component: () => import('../views/SurveyView.vue'),
+      meta: {
+        title: 'Customer Food Survey - Trovara Farm',
+        description:
+          'Tell Trovara Farm how you buy fresh food in Nigeria. A 3-minute survey to help us design a better farm-to-table service.',
       },
     },
     {

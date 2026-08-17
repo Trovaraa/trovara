@@ -2,17 +2,21 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import { buildSitemapXml, injectPageMetadata } from '../scripts/seo-utils.mjs'
 
-test('sitemap includes moments, careers, and dynamic career slugs once', () => {
+test('sitemap includes moments, careers, journal, and dynamic career slugs once', () => {
   const sitemap = buildSitemapXml([
     '/',
     '/moments',
     '/careers',
     '/careers/farm-manager',
     '/careers/farm-manager',
+    '/journal',
+    '/journal/why-trovara-exists',
   ])
   assert.match(sitemap, /<loc>https:\/\/trovara\.farm\/moments<\/loc>/)
   assert.match(sitemap, /<loc>https:\/\/trovara\.farm\/careers<\/loc>/)
   assert.match(sitemap, /<loc>https:\/\/trovara\.farm\/careers\/farm-manager<\/loc>/)
+  assert.match(sitemap, /<loc>https:\/\/trovara\.farm\/journal<\/loc>/)
+  assert.match(sitemap, /<loc>https:\/\/trovara\.farm\/journal\/why-trovara-exists<\/loc>/)
   assert.equal(sitemap.match(/careers\/farm-manager/g)?.length, 1)
 })
 

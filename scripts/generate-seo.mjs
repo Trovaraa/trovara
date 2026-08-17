@@ -26,10 +26,11 @@ const STATIC_ROUTES = [
   '/farm',
   '/services',
   '/faq',
-  '/blog',
+  '/journal',
   '/moments',
   '/careers',
   '/contact',
+  '/survey',
   '/wholesale',
   '/wholesale/one-pager',
   '/privacy',
@@ -165,7 +166,7 @@ async function readPublishedPosts() {
 function buildFeedXml(posts) {
   const items = posts
     .map((post) => {
-      const link = `${BASE_URL}/blog/${post.slug}`
+      const link = `${BASE_URL}/journal/${post.slug}`
       const pubDate = post.publishedAt
         ? new Date(
             post.publishedAt.includes('T') ? post.publishedAt : `${post.publishedAt}T00:00:00Z`,
@@ -185,8 +186,8 @@ function buildFeedXml(posts) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>Trovara Farm Blog</title>
-    <link>${BASE_URL}/blog</link>
+    <title>Trovara Farm Journal</title>
+    <link>${BASE_URL}/journal</link>
     <description>Stories, harvests, and lessons from Trovara Farm.</description>
     <language>en-us</language>
 ${items}
@@ -231,10 +232,11 @@ const STATIC_PAGE_META = {
   '/farm': ['The Farm - Trovara Farm', 'Discover how Trovara Farm grows healthy food and restores land in Ogun State.'],
   '/services': ['Farm OS & Farm Advisory Services - Trovara Farm', 'Explore Trovara Farm OS and hands-on Farm Advisory Services.'],
   '/faq': ['FAQ - Trovara Farm', 'Common questions about Trovara Farm products, delivery, partnerships, and operations.'],
-  '/blog': ['Blog - Trovara Farm', 'Stories, field notes, and practical farming insights from Trovara Farm.'],
+  '/journal': ['Journal - Trovara Farm', 'Stories, field notes, and practical farming insights from Trovara Farm.'],
   '/moments': ['Moments - Trovara Farm', 'Photos and videos from the Trovara Farm community.'],
   '/careers': ['Careers - Trovara Farm', 'Open roles at Trovara Farm. Join the team growing regenerative food from Abeokuta.'],
   '/contact': ['Contact - Trovara Farm', 'Contact Trovara Farm for products, partnerships, wholesale opportunities, and farm visits.'],
+  '/survey': ['Customer Food Survey - Trovara Farm', 'Tell Trovara Farm how you buy fresh food in Nigeria. A 3-minute survey to help us design a better farm-to-table service.'],
   '/wholesale': ['B2B Wholesale - Trovara Farm', 'Wholesale offerings for restaurants, retailers, and food service partners.'],
   '/wholesale/one-pager': ['Wholesale One-Pager - Trovara Farm', 'Trovara Farm wholesale supply and contact details.'],
   '/privacy': ['Privacy Policy - Trovara Farm', 'How Trovara Farm collects, uses, and protects personal data.'],
@@ -258,7 +260,7 @@ async function main() {
   const [posts, careers] = await Promise.all([readPublishedPosts(), readPublishedCareers()])
   const sitemapPaths = [
     ...STATIC_ROUTES,
-    ...posts.map((post) => `/blog/${post.slug}`),
+    ...posts.map((post) => `/journal/${post.slug}`),
     ...careers.map((post) => `/careers/${post.slug}`),
   ]
   const sitemap = buildSitemapXml(sitemapPaths)
@@ -272,7 +274,7 @@ async function main() {
       return { path: route, title: meta[0], description: meta[1], robots: meta[2] }
     }),
     ...posts.map((post) => ({
-      path: `/blog/${post.slug}`,
+      path: `/journal/${post.slug}`,
       title: `${post.title} - Trovara Farm`,
       description: post.excerpt || 'Read this story from Trovara Farm.',
     })),

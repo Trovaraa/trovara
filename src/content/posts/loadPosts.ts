@@ -1,4 +1,4 @@
-import type { BlogPost, BlogPostFrontmatter } from '../../types'
+import type { JournalPost, JournalPostFrontmatter } from '../../types'
 import { renderSafeMarkdown } from '../../lib/markdown'
 
 const postFiles = import.meta.glob<string>('./*.md', {
@@ -34,8 +34,8 @@ function unquote(value: string): string {
   return value.trim().replace(/^["']|["']$/g, '')
 }
 
-function parseFrontmatterYaml(yamlBlock: string): BlogPostFrontmatter {
-  const data: BlogPostFrontmatter = {}
+function parseFrontmatterYaml(yamlBlock: string): JournalPostFrontmatter {
+  const data: JournalPostFrontmatter = {}
   let tags: string[] = []
   let inTags = false
 
@@ -106,7 +106,7 @@ function parseFrontmatterYaml(yamlBlock: string): BlogPostFrontmatter {
   return data
 }
 
-function splitFrontmatter(raw: string): { data: BlogPostFrontmatter; content: string } {
+function splitFrontmatter(raw: string): { data: JournalPostFrontmatter; content: string } {
   if (!raw.startsWith('---')) {
     return { data: {}, content: raw }
   }
@@ -147,7 +147,7 @@ function estimateReadTime(text: string): number {
   return Math.max(1, Math.ceil(words / 200))
 }
 
-function parsePost(path: string, raw: string): BlogPost | null {
+function parsePost(path: string, raw: string): JournalPost | null {
   const slug = slugFromPath(path)
   if (slug.startsWith('_')) return null
 
@@ -176,7 +176,7 @@ function parsePost(path: string, raw: string): BlogPost | null {
   }
 }
 
-function parseGeneratedPost(raw: GeneratedJournalPost): BlogPost | null {
+function parseGeneratedPost(raw: GeneratedJournalPost): JournalPost | null {
   const slug = asString(raw.slug)
   const title = asString(raw.title)
   const markdown = asString(raw.bodyMarkdown).trim()
@@ -200,24 +200,24 @@ function parseGeneratedPost(raw: GeneratedJournalPost): BlogPost | null {
 
 const repositoryPosts = Object.entries(postFiles)
   .map(([path, raw]) => parsePost(path, raw))
-  .filter((post): post is BlogPost => post !== null)
+  .filter((post): post is JournalPost => post !== null)
 
 const osPosts = Object.values(generatedPostFiles)
   .map((raw) => parseGeneratedPost(raw))
-  .filter((post): post is BlogPost => post !== null)
+  .filter((post): post is JournalPost => post !== null)
 
 // OS-managed posts replace a repository post with the same slug during migration.
 const postsBySlug = new Map(repositoryPosts.map((post) => [post.slug, post]))
 for (const post of osPosts) postsBySlug.set(post.slug, post)
 
-const allPosts: BlogPost[] = Array.from(postsBySlug.values())
+const allPosts: JournalPost[] = Array.from(postsBySlug.values())
   .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
 
-export function getPostBySlug(slug: string): BlogPost | undefined {
+export function getPostBySlug(slug: string): JournalPost | undefined {
   return allPosts.find((p) => p.slug === slug && p.published)
 }
 
-export function getPublishedPosts(): BlogPost[] {
+export function getPublishedPosts(): JournalPost[] {
   return allPosts.filter((p) => p.published)
 }
 

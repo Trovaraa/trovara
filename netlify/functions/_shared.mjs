@@ -117,6 +117,29 @@ function safeClientError(result) {
   return message
 }
 
+function surveyApiUrl() {
+  const configured = process.env.SURVEY_API_URL?.trim()
+  if (configured) {
+    try {
+      const url = new URL(configured)
+      if (
+        !['http:', 'https:'].includes(url.protocol) ||
+        url.username ||
+        url.password ||
+        url.search ||
+        url.hash
+      ) {
+        return null
+      }
+      return url.toString().replace(/\/+$/, '')
+    } catch {
+      return null
+    }
+  }
+  const leads = marketingLeadsApiUrl()
+  return leads ? leads.replace(/\/leads\/?$/, '/surveys') : null
+}
+
 /**
  * POST a validated lead to Trovara OS.
  * @param {'contact' | 'waitlist'} resource
@@ -132,8 +155,28 @@ export async function forwardToMarketingLeads(resource, payload, clientIp = 'unk
     }
   }
 
+  return forwardToOsForm(`${baseUrl}/${resource}`, payload, clientIp)
+}
+
+/**
+ * POST a validated food survey to Trovara OS.
+ * @param {Record<string, unknown>} payload
+ */
+export async function forwardToSurvey(payload, clientIp = 'unknown') {
+  const baseUrl = surveyApiUrl()
+  if (!baseUrl) {
+    return {
+      ok: false,
+      status: 503,
+      error: 'Form service is not configured.',
+    }
+  }
+  return forwardToOsForm(baseUrl, payload, clientIp)
+}
+
+async function forwardToOsForm(url, payload, clientIp = 'unknown') {
   try {
-    const response = await fetch(`${baseUrl}/${resource}`, {
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

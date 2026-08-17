@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useBlogStore } from '../stores/blog'
-import BlogCard from '../components/ui/BlogCard.vue'
+import { useJournalStore } from '../stores/journal'
+import JournalCard from '../components/ui/JournalCard.vue'
 import NewsletterSubscribe from '../components/ui/NewsletterSubscribe.vue'
 import StructuredData from '../components/StructuredData.vue'
+import JournalEngagement from '../components/journal/JournalEngagement.vue'
 import { applyPageMeta } from '../composables/usePageMeta'
 import { formatPublishedDate } from '../lib/date'
 
@@ -12,12 +13,12 @@ const BASE_URL = 'https://trovara.farm'
 
 const route = useRoute()
 const router = useRouter()
-const blogStore = useBlogStore()
+const journalStore = useJournalStore()
 
-const post = computed(() => blogStore.getPostBySlug(route.params.slug as string))
+const post = computed(() => journalStore.getPostBySlug(route.params.slug as string))
 const relatedPosts = computed(() => {
   if (!post.value) return []
-  return blogStore.publishedPosts
+  return journalStore.publishedPosts
     .filter(
       (candidate) =>
         candidate.slug !== post.value?.slug && candidate.category === post.value?.category,
@@ -40,7 +41,7 @@ const articleSchema = computed(() => {
       name: 'Trovara Farm',
       logo: { '@type': 'ImageObject', url: `${BASE_URL}/brand/trovara-monogram-tile-v1.svg` },
     },
-    mainEntityOfPage: `${BASE_URL}/blog/${p.slug}`,
+    mainEntityOfPage: `${BASE_URL}/journal/${p.slug}`,
   }
 })
 
@@ -48,14 +49,14 @@ watch(
   post,
   (p) => {
     if (route.params.slug && !p) {
-      router.replace({ name: 'blog' })
+      router.replace({ name: 'journal' })
       return
     }
     if (p) {
       applyPageMeta(route, {
         title: `${p.title} - Trovara Farm`,
         description: p.excerpt,
-        canonicalPath: `/blog/${p.slug}`,
+        canonicalPath: `/journal/${p.slug}`,
         ogImage: p.coverImage ? `${BASE_URL}${p.coverImage}` : `${BASE_URL}/brand/trovara-social-card-v2.png`,
       })
     }
@@ -71,13 +72,13 @@ watch(
       <div class="absolute inset-0 bg-hero-pattern opacity-10 pointer-events-none" />
       <div class="container-trovara relative z-10 max-w-3xl">
         <RouterLink
-          to="/blog"
+          to="/journal"
           class="inline-flex items-center gap-2 text-trovara-gold-300 hover:text-trovara-gold text-sm font-medium mb-8 transition-colors"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
           </svg>
-          Back to blog
+          Back to journal
         </RouterLink>
 
         <div class="flex flex-wrap items-center gap-3 mb-6">
@@ -113,7 +114,7 @@ watch(
 
     <article class="py-12 md:py-16 bg-white">
       <div class="container-trovara max-w-3xl">
-        <div class="blog-content" v-html="post.html" />
+        <div class="journal-content" v-html="post.html" />
 
         <div v-if="post.tags.length" class="flex flex-wrap gap-2 mt-12 pt-8 border-t border-gray-100">
           <span
@@ -127,11 +128,17 @@ watch(
       </div>
     </article>
 
+    <section class="bg-trovara-cream py-12 md:py-16">
+      <div class="container-trovara max-w-3xl">
+        <JournalEngagement :slug="post.slug" />
+      </div>
+    </section>
+
     <section v-if="relatedPosts.length" class="py-16 md:py-20 bg-white border-t border-gray-100">
       <div class="container-trovara">
         <h2 class="text-2xl md:text-3xl font-black text-trovara-dark mb-8">Related posts</h2>
         <div class="grid md:grid-cols-2 gap-8">
-          <BlogCard v-for="relatedPost in relatedPosts" :key="relatedPost.slug" :post="relatedPost" />
+          <JournalCard v-for="relatedPost in relatedPosts" :key="relatedPost.slug" :post="relatedPost" />
         </div>
       </div>
     </section>

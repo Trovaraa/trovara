@@ -108,50 +108,98 @@ html.dark {
     min-width: 0;
   }
 
-  .blog-content {
+  .journal-content {
     @apply space-y-6 leading-relaxed text-lg;
     color: var(--tv-muted-text);
   }
 
-  .blog-content h2 {
+  .journal-content h2 {
     @apply text-2xl md:text-3xl font-bold pt-4;
     color: var(--tv-ink);
   }
 
-  .blog-content h3 {
+  .journal-content h3 {
     @apply text-xl md:text-2xl font-bold pt-2;
     color: var(--tv-ink);
   }
 
-  .blog-content p {
+  .journal-content p {
     @apply leading-relaxed;
   }
 
-  .blog-content ul {
+  .journal-content ul {
     @apply space-y-3 pl-1 list-none;
   }
 
-  .blog-content ul li {
+  .journal-content ul li {
     @apply flex items-start gap-3;
   }
 
-  .blog-content ul li::before {
+  .journal-content ul li::before {
     content: '';
     @apply mt-2.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-trovara-green;
   }
 
-  .blog-content blockquote {
+  .journal-content blockquote {
     @apply border-l-4 border-trovara-gold pl-6 py-2 my-8;
   }
 
-  .blog-content blockquote p {
+  .journal-content blockquote p {
     @apply text-xl font-medium italic leading-relaxed;
     color: var(--tv-ink);
   }
 
-  .blog-content a {
+.journal-content a {
     @apply text-trovara-green font-medium hover:underline;
   }
+}
+
+/* The Journal story reel uses fixed light surfaces in light mode. Give it a
+   deliberate dark surface instead of allowing global light-text overrides to
+   create white-on-cream contrast failures. */
+html.dark .story-reel {
+  background: #0c2017 !important;
+}
+
+html.dark .story-reel__card {
+  border-color: rgb(148 163 184 / 18%) !important;
+  background: #10281e !important;
+}
+
+html.dark .story-reel__buttons button {
+  border-color: rgb(148 163 184 / 28%) !important;
+  background: #10281e !important;
+  color: #f8fafc !important;
+}
+
+html.dark .story-reel__progress button {
+  background: rgb(255 255 255 / 20%) !important;
+}
+
+html.dark .story-reel__progress button.is-active {
+  background: #d9b85f !important;
+}
+
+html.dark .journal-conversation {
+  border-color: rgb(148 163 184 / 18%) !important;
+  background: #10281e !important;
+}
+
+html.dark .journal-conversation__header {
+  border-color: rgb(148 163 184 / 18%) !important;
+}
+
+html.dark .journal-like,
+html.dark .journal-comment,
+html.dark .journal-comment-form input,
+html.dark .journal-comment-form textarea {
+  border-color: rgb(148 163 184 / 24%) !important;
+  background: #0c2017 !important;
+}
+
+html.dark .journal-comment-form input,
+html.dark .journal-comment-form textarea {
+  color: #eef2ee !important;
 }
 
 @media (max-width: 639px) {

@@ -65,7 +65,7 @@ export interface NavLink {
   to: string
 }
 
-export interface BlogPostFrontmatter {
+export interface JournalPostFrontmatter {
   title?: string
   excerpt?: string
   author?: string
@@ -78,7 +78,7 @@ export interface BlogPostFrontmatter {
   published?: boolean | string
 }
 
-export interface BlogPost {
+export interface JournalPost {
   slug: string
   title: string
   excerpt: string

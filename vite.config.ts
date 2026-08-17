@@ -98,6 +98,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/careers-api/, '/public/careers'),
       },
+      '/journal-api': {
+        target: 'http://127.0.0.1:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/journal-api/, '/public/journal'),
+      },
     },
   },
 })
