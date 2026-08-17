@@ -69,10 +69,10 @@ export async function submitSurvey(form: SurveyForm): Promise<SubmitResult> {
       }
     }
     return { ok: true }
-  } catch (error) {
+  } catch {
     return {
       ok: false,
-      error: error instanceof Error ? error.message : 'We could not save your answers.',
+      error: 'We could not send your answers. Check your connection and try again.',
     }
   }
 }

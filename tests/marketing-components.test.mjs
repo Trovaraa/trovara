@@ -37,6 +37,24 @@ test('shop network failures are actionable and recoverable', async () => {
   assert.match(view, /Try again/)
 })
 
+test('survey network failures show a useful retry message instead of browser error text', async () => {
+  const survey = await read('src/lib/survey.ts')
+  assert.match(survey, /We could not send your answers\. Check your connection and try again\./)
+  assert.doesNotMatch(survey, /error instanceof Error/)
+})
+
+test('Netlify form functions use the official packager and a live startup check', async () => {
+  const [workflow, smokeScript] = await Promise.all([
+    read('.github/workflows/deploy-to-netlify.yml'),
+    read('scripts/smoke-netlify-functions.mjs'),
+  ])
+  assert.match(workflow, /netlify-cli@27\.1\.1 deploy/)
+  assert.match(workflow, /--functions netlify\/deploy-functions/)
+  assert.match(workflow, /Smoke test deployed form functions/)
+  assert.match(smokeScript, /contact.*newsletter.*survey.*waitlist/)
+  assert.match(smokeScript, /response\.status === 405/)
+})
+
 test('shop pages keep the floating chat button off account forms', async () => {
   const app = await read('src/App.vue')
   assert.match(app, /!route\.path\.startsWith\('\/shop'\)/)
