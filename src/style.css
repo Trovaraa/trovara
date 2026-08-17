@@ -149,7 +149,7 @@ html.dark {
     color: var(--tv-ink);
   }
 
-.journal-content a {
+  .journal-content a {
     @apply text-trovara-green font-medium hover:underline;
   }
 }
