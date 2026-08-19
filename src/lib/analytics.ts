@@ -94,6 +94,7 @@ export function initAnalytics() {
 
 // The SDK only reports its one page_view at load time, so every in-app route
 // change has to be reported by hand or the site looks like a single page.
+// Send the path only — query strings can carry newsletter/lot/brand tokens.
 export function trackPageViews(router: Router) {
   if (typeof document === 'undefined') return
 
@@ -103,7 +104,7 @@ export function trackPageViews(router: Router) {
     send({
       event_type: 'page_view',
       ts: new Date().toISOString(),
-      page_path: window.location.href,
+      page_path: to.path,
       props: { page_title: document.title, referrer: document.referrer },
     })
   })

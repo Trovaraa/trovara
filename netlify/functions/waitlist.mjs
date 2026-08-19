@@ -9,6 +9,7 @@ import {
   isValidEmail,
   json,
   MARKETING_LEAD_CONSENT_VERSION,
+  missingFormProxySecretResponse,
   parseJsonBody,
   rateLimit,
 } from './_shared.mjs'
@@ -18,7 +19,7 @@ const MAX_REQUESTS = 10
 
 const VALID_PRODUCTS = new Set(['coconut', 'plantain', 'poultry', 'eggs', 'palm-oil'])
 
-const PHONE_RE = /^[+()\d][+()\d\s-]{6,39}$/
+const PHONE_RE = /^[+()0-9][+()0-9 -]{6,39}$/
 const ALLOWED_KEYS = new Set(['name', 'contact', 'product', 'consent', 'consentVersion', 'honey'])
 
 function trimString(value) {
@@ -70,6 +71,9 @@ export default async function handler(request) {
   if (request.method !== 'POST') {
     return json(405, { ok: false, error: 'Method not allowed' })
   }
+
+  const missingSecret = missingFormProxySecretResponse()
+  if (missingSecret) return missingSecret
 
   const parsed = await parseJsonBody(request)
   if (parsed.error) return parsed.error

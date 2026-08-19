@@ -8,6 +8,7 @@ import {
   honeypotResponse,
   json,
   MARKETING_LEAD_CONSENT_VERSION,
+  missingFormProxySecretResponse,
   parseJsonBody,
   rateLimit,
 } from './_shared.mjs'
@@ -138,7 +139,11 @@ function validateSurvey(body) {
   ]
   for (const key of optional) {
     const value = trimString(body[key])
-    if (value) payload[key] = value
+    if (!value) continue
+    if (value.length > 320) {
+      return { error: 'Please shorten the extra details.' }
+    }
+    payload[key] = value
   }
   if (referralCode) payload.referralCode = referralCode
 
@@ -149,6 +154,9 @@ export default async function handler(request) {
   if (request.method !== 'POST') {
     return json(405, { ok: false, error: 'Method not allowed' })
   }
+
+  const missingSecret = missingFormProxySecretResponse()
+  if (missingSecret) return missingSecret
 
   const parsed = await parseJsonBody(request)
   if (parsed.error) return parsed.error

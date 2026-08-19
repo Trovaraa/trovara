@@ -65,19 +65,20 @@ For local development, `npm run dev` is enough (see Contact section). Do not add
 marketing site: Trovara OS owns subscriber records and email delivery
 credentials.
 
-## Local shop / lot / careers / moments proxies
+## Local lot / careers / moments proxies
 
-Production `public/_redirects` sends same-origin API proxies to
-`https://os.trovara.farm` (`/shop-api`, `/lot-api`, `/careers-api`,
-`/moments-api`, `/brand-api`). That is correct for Netlify deploys.
+Production `public/_redirects` sends same-origin public API proxies to
+`https://os.trovara.farm` (`/lot-api`, `/careers-api`, `/moments-api`,
+`/brand-api`, `/journal-api`). Customer accounts live on
+`https://shop.trovara.farm` — marketing no longer proxies `/shop-api`.
 
 For local testing against Trovara OS on `:3000`:
 
 ```bash
-# Option A — Vite (shop + contact/waitlist/newsletter functions)
+# Option A — Vite (lot + contact/waitlist/newsletter functions)
 npm run dev
-# → http://localhost:5173
-#    /shop-api → 127.0.0.1:3000/shop
+# → http://127.0.0.1:4173
+#    /lot-api → 127.0.0.1:3000/public/lots
 #    /.netlify/functions/* → local Netlify function handlers
 # If the SPA stays blank with "504 Outdated Optimize Dep" in the console:
 #   rm -rf node_modules/.vite && npm run dev
@@ -97,8 +98,8 @@ MARKETING_LEADS_API_URL=http://127.0.0.1:3000/public/leads \
 npx --yes netlify-cli@27 dev --dir dist --port 8888
 ```
 
-Without that rewrite step, `netlify dev` will still register shop accounts on
-**production**.
+Without that rewrite step, `netlify dev` will still send Journal / Moments /
+Brand Kit traffic to **production**.
 
 ## Security headers (CSP / HSTS)
 
