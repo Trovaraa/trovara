@@ -29,13 +29,13 @@ test('prerender metadata replaces home metadata and supports noindex', () => {
     <title>Home</title>
   </head><body></body></html>`
   const html = injectPageMetadata(shell, {
-    path: '/shop/reset-password',
-    title: 'Reset Password - Trovara Farm',
-    description: 'Set a new password.',
+    path: '/privacy',
+    title: 'Privacy Policy - Trovara Farm',
+    description: 'How Trovara Farm collects, uses, and protects personal data.',
     robots: 'noindex, nofollow',
   })
-  assert.match(html, /<title>Reset Password - Trovara Farm<\/title>/)
-  assert.match(html, /content="Set a new password\."/)
+  assert.match(html, /<title>Privacy Policy - Trovara Farm<\/title>/)
+  assert.match(html, /content="How Trovara Farm collects, uses, and protects personal data\."/)
   assert.match(html, /content="noindex, nofollow"/)
-  assert.match(html, /href="https:\/\/trovara\.farm\/shop\/reset-password"/)
+  assert.match(html, /href="https:\/\/trovara\.farm\/privacy"/)
 })

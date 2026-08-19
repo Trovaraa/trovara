@@ -17,7 +17,6 @@ const STATIC_ROUTES = [
   '/',
   '/about',
   '/products',
-  '/shop',
   '/products/coconut',
   '/products/plantain',
   '/products/poultry',
@@ -228,7 +227,6 @@ const STATIC_PAGE_META = {
   '/products/poultry': ['Pasture-raised Chicken - Trovara Farm', 'Explore pasture-raised chicken from Trovara Farm.'],
   '/products/eggs': ['Pasture-raised Eggs - Trovara Farm', 'Explore pasture-raised eggs from Trovara Farm.'],
   '/products/palm-oil': ['Palm Oil - Trovara Farm', 'Explore traceable palm oil from Trovara Farm.'],
-  '/shop': ['Shop Account - Trovara Farm', 'Access your Trovara Farm shop account.', 'noindex, nofollow'],
   '/farm': ['The Farm - Trovara Farm', 'Discover how Trovara Farm grows healthy food and restores land in Ogun State.'],
   '/services': ['Farm OS & Farm Advisory Services - Trovara Farm', 'Explore Trovara Farm OS and hands-on Farm Advisory Services.'],
   '/faq': ['FAQ - Trovara Farm', 'Common questions about Trovara Farm products, delivery, partnerships, and operations.'],
@@ -244,8 +242,6 @@ const STATIC_PAGE_META = {
 }
 
 const PRIVATE_PAGES = [
-  ['/shop/reset-password', 'Reset Password - Trovara Farm', 'Set a new shop account password.'],
-  ['/shop/verify-email', 'Verify Email - Trovara Farm', 'Verify a Trovara Farm shop account email address.'],
   ['/newsletter/confirm', 'Confirm Newsletter Subscription - Trovara Farm', 'Confirm a newsletter subscription.'],
   ['/newsletter/unsubscribe', 'Unsubscribe from Newsletter - Trovara Farm', 'Manage a newsletter subscription.'],
 ].map(([path, title, description]) => ({

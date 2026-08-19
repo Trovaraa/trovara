@@ -8,6 +8,7 @@ import {
   honeypotResponse,
   json,
   MARKETING_LEAD_CONSENT_VERSION,
+  missingFormProxySecretResponse,
   parseJsonBody,
   rateLimit,
 } from './_shared.mjs'
@@ -45,6 +46,7 @@ const ALLOWED_KEYS = new Set([
   'utmMedium',
   'utmCampaign',
   'referrer',
+  'referralCode',
 ])
 
 function trimString(value) {
@@ -91,6 +93,10 @@ function validateSurvey(body) {
   if (followUp !== 'no' && (contact.length < 5 || contact.length > 320)) {
     return { error: 'Enter a WhatsApp number or email so we can follow up.' }
   }
+  const referralCode = trimString(body.referralCode).toUpperCase()
+  if (referralCode && !/^TRV[A-Z0-9]{6,24}$/.test(referralCode)) {
+    return { error: 'Invalid referral link.' }
+  }
 
   const hardToGet = trimString(body.hardToGet)
   const oneChange = trimString(body.oneChange)
@@ -133,8 +139,13 @@ function validateSurvey(body) {
   ]
   for (const key of optional) {
     const value = trimString(body[key])
-    if (value) payload[key] = value
+    if (!value) continue
+    if (value.length > 320) {
+      return { error: 'Please shorten the extra details.' }
+    }
+    payload[key] = value
   }
+  if (referralCode) payload.referralCode = referralCode
 
   return { payload }
 }
@@ -143,6 +154,9 @@ export default async function handler(request) {
   if (request.method !== 'POST') {
     return json(405, { ok: false, error: 'Method not allowed' })
   }
+
+  const missingSecret = missingFormProxySecretResponse()
+  if (missingSecret) return missingSecret
 
   const parsed = await parseJsonBody(request)
   if (parsed.error) return parsed.error

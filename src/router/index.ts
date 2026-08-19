@@ -1,4 +1,26 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, type RouteLocationNormalized } from 'vue-router'
+import { SHOP_ACCOUNT_URL } from '../lib/shop-account'
+
+function leaveToShop(path: string) {
+  return (to: RouteLocationNormalized) => {
+    const url = new URL(path, `${SHOP_ACCOUNT_URL}/`)
+    const params = new URLSearchParams()
+    for (const [key, value] of Object.entries(to.query)) {
+      if (typeof value === 'string') params.set(key, value)
+      else if (Array.isArray(value)) {
+        for (const item of value) {
+          if (typeof item === 'string') params.append(key, item)
+        }
+      }
+    }
+    url.search = params.toString()
+    url.hash = to.hash
+    window.location.replace(url.toString())
+    return false
+  }
+}
+
+const shopExit = { template: '<div></div>' }
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,43 +66,28 @@ const router = createRouter({
     },
     {
       path: '/shop',
-      name: 'shop',
-      component: () => import('../views/ShopView.vue'),
-      meta: {
-        title: 'Shop Account - Trovara Farm',
-        description:
-          'Create a Trovara Farm shop account to prepare for harvest checkout, connect WhatsApp or Telegram, and stay linked to waitlist updates as each supply window opens.',
-        robots: 'noindex, nofollow',
-      },
+      component: shopExit,
+      beforeEnter: leaveToShop('/'),
     },
     {
       path: '/shop/reset-password',
-      name: 'shop-reset-password',
-      component: () => import('../views/ResetPasswordView.vue'),
-      meta: {
-        title: 'Reset Password - Trovara Farm',
-        description: 'Set a new password for your Trovara Farm shop account.',
-        robots: 'noindex, nofollow',
-      },
+      component: shopExit,
+      beforeEnter: leaveToShop('/reset-password'),
     },
     {
       path: '/shop/verify-email',
-      name: 'shop-verify-email',
-      component: () => import('../views/VerifyEmailView.vue'),
-      meta: {
-        title: 'Verify Email - Trovara Farm',
-        description: 'Verify your email address for your Trovara Farm shop account.',
-        robots: 'noindex, nofollow',
-      },
+      component: shopExit,
+      beforeEnter: leaveToShop('/verify-email'),
     },
-    // Aliases for mistyped / truncated inbox links (keep query: token=...).
     {
       path: '/verify-email',
-      redirect: (to) => ({ path: '/shop/verify-email', query: to.query, hash: to.hash }),
+      component: shopExit,
+      beforeEnter: leaveToShop('/verify-email'),
     },
     {
       path: '/reset-password',
-      redirect: (to) => ({ path: '/shop/reset-password', query: to.query, hash: to.hash }),
+      component: shopExit,
+      beforeEnter: leaveToShop('/reset-password'),
     },
     {
       path: '/lot/:farmSlug/:lotCode',

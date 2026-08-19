@@ -48,6 +48,10 @@ jobs:
         env:
           JOURNAL_API_URL: https://os.trovara.farm/public/journal
 
+      - name: Lock mutating proxies on preview deploys
+        if: github.event_name == 'pull_request'
+        run: node scripts/lockdown-preview-redirects.mjs
+
       # Netlify's CLI follows local imports and adds the runtime bootstrap.
       # The previous raw uploader omitted both and every form function crashed.
       - name: Deploy production to Netlify

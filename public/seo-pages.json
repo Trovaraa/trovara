@@ -15,12 +15,6 @@
     "description": "Explore Trovara Farm product lines, including coconut, plantain, palm oil, pasture-raised chicken, and eggs."
   },
   {
-    "path": "/shop",
-    "title": "Shop Account - Trovara Farm",
-    "description": "Access your Trovara Farm shop account.",
-    "robots": "noindex, nofollow"
-  },
-  {
     "path": "/products/coconut",
     "title": "Coconut - Trovara Farm",
     "description": "Explore traceable coconuts grown at Trovara Farm in Ogun State."
@@ -139,18 +133,6 @@
     "path": "/careers/project-canopy-agricultural-agroforestry-consultant",
     "title": "Project Canopy – Agricultural & Agroforestry Consultant - Careers - Trovara Farm",
     "description": "Lead the technical design and establishment of Project Canopy – Phase 1, including agroforestry planning, nursery establishment, tree planting, staff training and an oil palm estate rehabilitation assessment."
-  },
-  {
-    "path": "/shop/reset-password",
-    "title": "Reset Password - Trovara Farm",
-    "description": "Set a new shop account password.",
-    "robots": "noindex, nofollow"
-  },
-  {
-    "path": "/shop/verify-email",
-    "title": "Verify Email - Trovara Farm",
-    "description": "Verify a Trovara Farm shop account email address.",
-    "robots": "noindex, nofollow"
   },
   {
     "path": "/newsletter/confirm",

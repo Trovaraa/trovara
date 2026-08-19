@@ -20,21 +20,42 @@ test('mobile navigation traps focus and supports Escape', async () => {
   assert.match(navbar, /aria-modal="true"/)
 })
 
+test('Account links point at shop.trovara.farm', async () => {
+  const [navbar, footer, home, origin] = await Promise.all([
+    read('src/components/TheNavbar.vue'),
+    read('src/components/TheFooter.vue'),
+    read('src/views/HomeView.vue'),
+    read('src/lib/shop-account.ts'),
+  ])
+  assert.match(origin, /export const SHOP_ACCOUNT_URL = 'https:\/\/shop\.trovara\.farm'/)
+  assert.match(navbar, /SHOP_ACCOUNT_URL/)
+  assert.match(footer, /SHOP_ACCOUNT_URL/)
+  assert.match(home, /SHOP_ACCOUNT_URL/)
+  assert.doesNotMatch(navbar, /to: '\/shop'/)
+  assert.doesNotMatch(footer, /to: '\/shop'/)
+})
+
 test('local marketing and OS servers use separate fixed ports', async () => {
   const config = await read('vite.config.ts')
   assert.match(config, /port:\s*4173/)
   assert.match(config, /strictPort:\s*true/)
-  assert.match(config, /'\/shop-api'[\s\S]*target:\s*'http:\/\/127\.0\.0\.1:3000'/)
+  assert.match(config, /'\/lot-api'[\s\S]*target:\s*'http:\/\/127\.0\.0\.1:3000'/)
+  assert.doesNotMatch(config, /'\/shop-api'/)
 })
 
-test('shop network failures are actionable and recoverable', async () => {
-  const [client, view] = await Promise.all([
-    read('src/lib/shop.ts'),
-    read('src/views/ShopView.vue'),
+test('farm /shop aliases 301 to shop.trovara.farm and does not proxy the shop API', async () => {
+  const [redirects, netlify] = await Promise.all([
+    read('public/_redirects'),
+    read('netlify.toml'),
   ])
-  assert.match(client, /farm shop is temporarily offline/)
-  assert.match(view, /@click="loadShop"/)
-  assert.match(view, /Try again/)
+  assert.match(redirects, /\/shop\s+https:\/\/shop\.trovara\.farm\/\s+301/)
+  assert.doesNotMatch(redirects, /\/shop-api/)
+  assert.match(redirects, /\/shop\/verify-email\s+https:\/\/shop\.trovara\.farm\/verify-email\s+301/)
+  assert.match(redirects, /\/shop\/reset-password\s+https:\/\/shop\.trovara\.farm\/reset-password\s+301/)
+  assert.match(redirects, /\/verify-email\s+https:\/\/shop\.trovara\.farm\/verify-email\s+301/)
+  assert.match(redirects, /\/reset-password\s+https:\/\/shop\.trovara\.farm\/reset-password\s+301/)
+  assert.match(netlify, /from\s*=\s*"\/shop"/)
+  assert.match(netlify, /to\s*=\s*"https:\/\/shop\.trovara\.farm\/"/)
 })
 
 test('survey network failures show a useful retry message instead of browser error text', async () => {
@@ -51,13 +72,9 @@ test('Netlify form functions use the official packager and a live startup check'
   assert.match(workflow, /netlify-cli@27\.1\.1 deploy/)
   assert.match(workflow, /--functions netlify\/deploy-functions/)
   assert.match(workflow, /Smoke test deployed form functions/)
+  assert.match(workflow, /lockdown-preview-redirects/)
   assert.match(smokeScript, /contact.*newsletter.*survey.*waitlist/)
   assert.match(smokeScript, /response\.status === 405/)
-})
-
-test('shop pages keep the floating chat button off account forms', async () => {
-  const app = await read('src/App.vue')
-  assert.match(app, /!route\.path\.startsWith\('\/shop'\)/)
 })
 
 test('floating WhatsApp shortcut prepares one draft and leaves sending to the visitor', async () => {
@@ -108,6 +125,20 @@ test('careers use the shared HTML-disabled markdown renderer', async () => {
   assert.match(renderer, /noopener noreferrer/)
   assert.match(career, /renderSafeMarkdown\(post\.bodyMarkdown\)/)
   assert.match(journal, /renderSafeMarkdown\(markdown\)/)
+})
+
+test('preview deploys 404 mutating public API proxies', async () => {
+  const { lockdownPreviewRedirects } = await import('../scripts/lockdown-preview-redirects.mjs')
+  const locked = lockdownPreviewRedirects(`
+/shop-api/*    https://os.trovara.farm/shop/:splat  200!
+/lot-api/*     https://os.trovara.farm/public/lots/:splat  200!
+/moments-api/* https://os.trovara.farm/public/moments/:splat  200!
+/journal-api   https://os.trovara.farm/public/journal  200!
+`)
+  assert.match(locked, /\/shop-api\/\*\s+\/404\.html\s+404/)
+  assert.match(locked, /\/moments-api\/\*\s+\/404\.html\s+404/)
+  assert.match(locked, /\/journal-api\s+\/404\.html\s+404/)
+  assert.match(locked, /\/lot-api\/\*\s+https:\/\/os\.trovara\.farm\/public\/lots\/:splat\s+200!/)
 })
 
 test('Netlify fallback returns a real 404', async () => {

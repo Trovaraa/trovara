@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { useProductsStore } from '../stores/products'
 import StructuredData from '../components/StructuredData.vue'
 import BrandIcon from '../components/brand/BrandIcon.vue'
+import { SHOP_ACCOUNT_URL } from '../lib/shop-account'
 
 const products = useProductsStore().availableProducts
 
@@ -100,7 +101,7 @@ function forecastMonth(note?: string) {
           </div>
           <div class="flex flex-col gap-3 sm:flex-row md:flex-col">
             <RouterLink to="/wholesale" class="btn-primary whitespace-nowrap">Wholesale information</RouterLink>
-            <RouterLink to="/shop" class="btn-secondary whitespace-nowrap">Customer account</RouterLink>
+            <a :href="SHOP_ACCOUNT_URL" class="btn-secondary whitespace-nowrap">Customer account</a>
           </div>
         </div>
       </div>

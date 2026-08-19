@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { buildWhatsAppLink } from '../lib/whatsapp'
 
-const lastUpdated = '15 July 2026'
+const lastUpdated = '19 August 2026'
 
 const termsWhatsAppLink = buildWhatsAppLink(
   'Hi Trovara Farm, I have a question about your Terms of Service.',
@@ -19,6 +19,7 @@ const toc: Section[] = [
   { id: 'products', title: '4. Products & Information' },
   { id: 'orders', title: '5. Orders, Quotes & Pricing' },
   { id: 'payment', title: '6. Payment' },
+  { id: 'credits', title: '6A. Trovara Farm Credits' },
   { id: 'delivery', title: '7. Delivery & Logistics' },
   { id: 'returns', title: '8. Returns & Claims' },
   { id: 'ip', title: '9. Intellectual Property' },
@@ -182,6 +183,23 @@ const toc: Section[] = [
                 We may withhold dispatch of goods until payment or agreed deposit is received. Any
                 applicable taxes or duties are your responsibility unless stated otherwise.
               </p>
+            </div>
+
+            <div id="credits" class="scroll-mt-28">
+              <h2 class="text-2xl md:text-3xl font-black text-trovara-dark mb-4">6A. Trovara Farm Credits</h2>
+              <div class="space-y-4 text-gray-700 leading-relaxed">
+                <p>
+                  Trovara Farm Credits are promotional credits, not cash. They can only be used to
+                  buy eligible products sold by Trovara Farm and cannot be withdrawn, transferred,
+                  or exchanged for money.
+                </p>
+                <p>
+                  A referral reward remains pending until the referred customer makes their first
+                  eligible Trovara Farm purchase and that order passes the applicable refund period
+                  without a refund. Completing a survey alone does not release referral credits.
+                  Duplicate, self, fraudulent, cancelled, or refunded referrals do not qualify.
+                </p>
+              </div>
             </div>
 
             <div id="delivery" class="scroll-mt-28">

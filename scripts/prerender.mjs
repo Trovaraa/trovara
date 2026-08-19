@@ -22,13 +22,6 @@ async function main() {
 
   const noindexShells = [
     {
-      file: 'account-shell.html',
-      path: '/shop',
-      title: 'Shop Account - Trovara Farm',
-      description: 'Manage your Trovara Farm shop account.',
-      robots: 'noindex, nofollow',
-    },
-    {
       file: 'brand-shell.html',
       path: '/brand',
       title: 'Brand pack - Trovara Farm',
