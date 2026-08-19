@@ -148,8 +148,8 @@ watch(
         <div class="max-w-2xl mx-auto">
           <NewsletterSubscribe
             variant="inline"
-            title="Enjoyed this story?"
-            description="Subscribe for more field notes, recipes, and harvest updates from Trovara Farm."
+            title="Journal and harvest updates"
+            description="Get new Trovara Journal stories and harvest news in one email subscription."
           />
         </div>
       </div>

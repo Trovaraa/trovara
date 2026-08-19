@@ -2,10 +2,10 @@
 import { ref, onMounted } from 'vue'
 import { buildWhatsAppLink } from '../lib/whatsapp'
 
-// The floating shortcut opens the conversation without inserting another copy
-// of a message a returning customer may already have sent. Context-specific
-// calls to action elsewhere on the site still prefill their relevant enquiry.
-const waLink = buildWhatsAppLink()
+// WhatsApp deep links only prepare a draft; the visitor still chooses whether
+// to send it. Keeping one useful draft avoids both an empty composer and the
+// duplicate-message experience caused by sending and prefilling together.
+const waLink = buildWhatsAppLink("Hi Trovara Farm, I'd like to learn more about your products.")
 
 const expanded = ref(false)
 const showTooltip = ref(false)

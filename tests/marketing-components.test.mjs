@@ -77,14 +77,26 @@ test('Netlify form functions use the official packager and a live startup check'
   assert.match(smokeScript, /response\.status === 405/)
 })
 
-test('floating WhatsApp shortcut stays available on marketing pages', async () => {
+test('floating WhatsApp shortcut prepares one draft and leaves sending to the visitor', async () => {
   const [button, helper] = await Promise.all([
     read('src/components/WhatsAppButton.vue'),
     read('src/lib/whatsapp.ts'),
   ])
-  assert.match(button, /const waLink = buildWhatsAppLink\(\)/)
+  assert.match(button, /const waLink = buildWhatsAppLink\("Hi Trovara Farm, I'd like to learn more about your products\."\)/)
   assert.match(button, /Open WhatsApp/)
-  assert.match(helper, /: `https:\/\/wa\.me\/\$\{PHONE\}`/)
+  assert.match(helper, /\?text=\$\{encodeURIComponent\(trimmedMessage\)\}/)
+})
+
+test('journal routes show one contextual newsletter form instead of repeating the footer form', async () => {
+  const [footer, journal, post] = await Promise.all([
+    read('src/components/TheFooter.vue'),
+    read('src/views/JournalView.vue'),
+    read('src/views/JournalPostView.vue'),
+  ])
+  assert.match(footer, /!route\.path\.startsWith\('\/journal'\)/)
+  assert.match(footer, /v-if="showNewsletterSignup"/)
+  assert.match(journal, /title="Journal and harvest updates"/)
+  assert.match(post, /title="Journal and harvest updates"/)
 })
 
 test('Moments upload contract includes accessible description and versioned consent', async () => {
