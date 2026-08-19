@@ -17,6 +17,7 @@ export function surveyAttribution() {
     utmMedium: params.get('utm_medium')?.slice(0, 200) ?? '',
     utmCampaign: params.get('utm_campaign')?.slice(0, 200) ?? '',
     referrer,
+    referralCode: params.get('ref')?.trim().toUpperCase().slice(0, 27) ?? '',
   }
 }
 

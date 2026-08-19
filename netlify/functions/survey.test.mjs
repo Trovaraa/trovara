@@ -70,6 +70,7 @@ test('survey proxies the validated OS contract', async () => {
     followUp: 'yes',
     name: '  Ada  ',
     contact: ' ada@example.com ',
+    referralCode: ' trvabcdef123456 ',
   })))
 
   assert.equal(response.status, 200)
@@ -94,7 +95,19 @@ test('survey proxies the validated OS contract', async () => {
     consentVersion: '1.0',
     name: 'Ada',
     contact: 'ada@example.com',
+    referralCode: 'TRVABCDEF123456',
   })
+})
+
+test('rejects a malformed Trovara referral code before proxying', async () => {
+  let fetchCalls = 0
+  globalThis.fetch = async () => {
+    fetchCalls += 1
+    return Response.json({ ok: true, accepted: true }, { status: 202 })
+  }
+  const response = await surveyHandler(request(validBody({ referralCode: 'not-a-credit-code' })))
+  assert.equal(response.status, 400)
+  assert.equal(fetchCalls, 0)
 })
 
 test('rejects survey submissions without consent before proxying', async () => {

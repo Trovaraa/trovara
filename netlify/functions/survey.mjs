@@ -45,6 +45,7 @@ const ALLOWED_KEYS = new Set([
   'utmMedium',
   'utmCampaign',
   'referrer',
+  'referralCode',
 ])
 
 function trimString(value) {
@@ -91,6 +92,10 @@ function validateSurvey(body) {
   if (followUp !== 'no' && (contact.length < 5 || contact.length > 320)) {
     return { error: 'Enter a WhatsApp number or email so we can follow up.' }
   }
+  const referralCode = trimString(body.referralCode).toUpperCase()
+  if (referralCode && !/^TRV[A-Z0-9]{6,24}$/.test(referralCode)) {
+    return { error: 'Invalid referral link.' }
+  }
 
   const hardToGet = trimString(body.hardToGet)
   const oneChange = trimString(body.oneChange)
@@ -135,6 +140,7 @@ function validateSurvey(body) {
     const value = trimString(body[key])
     if (value) payload[key] = value
   }
+  if (referralCode) payload.referralCode = referralCode
 
   return { payload }
 }

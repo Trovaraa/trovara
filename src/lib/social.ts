@@ -3,12 +3,17 @@ export const SOCIAL_LINKS = [
   {
     id: 'facebook',
     label: 'Facebook',
-    href: 'https://www.facebook.com/profile.php?id=61592210064140',
+    href: 'https://www.facebook.com/trovarafarm',
   },
   {
     id: 'instagram',
     label: 'Instagram',
     href: 'https://www.instagram.com/trovara_farm/',
+  },
+  {
+    id: 'tiktok',
+    label: 'TikTok',
+    href: 'https://www.tiktok.com/@trovarafarm',
   },
   {
     id: 'linkedin',
