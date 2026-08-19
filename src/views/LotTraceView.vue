@@ -8,6 +8,7 @@ import {
   publicLotCertificateUrl,
   type PublicLot,
 } from '../lib/lot'
+import { SHOP_ACCOUNT_URL } from '../lib/shop-account'
 
 const route = useRoute()
 const farmSlug = computed(() => String(route.params.farmSlug ?? ''))
@@ -217,9 +218,9 @@ onMounted(async () => {
         </div>
 
         <div class="mt-10 text-center">
-          <RouterLink to="/shop" class="text-trovara-green font-semibold hover:underline">
+          <a :href="SHOP_ACCOUNT_URL" class="text-trovara-green font-semibold hover:underline">
             Visit the shop
-          </RouterLink>
+          </a>
         </div>
       </div>
     </section>

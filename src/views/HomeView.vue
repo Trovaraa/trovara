@@ -2,6 +2,7 @@
 import { useProductsStore } from '../stores/products'
 import BrandIcon from '../components/brand/BrandIcon.vue'
 import InfographicFigure from '../components/ui/InfographicFigure.vue'
+import { SHOP_ACCOUNT_URL } from '../lib/shop-account'
 
 const products = useProductsStore().availableProducts
 
@@ -65,7 +66,7 @@ const paths = [
             </div>
             <p class="mt-6 text-sm text-white/55">
               Already following a harvest?
-              <RouterLink to="/shop" class="font-bold text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">Open your account</RouterLink>
+              <a :href="SHOP_ACCOUNT_URL" class="font-bold text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">Open your account</a>
               <span class="text-white/35"> · </span>
               <RouterLink to="/survey" class="font-bold text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">Take the 3-minute food survey</RouterLink>
             </p>

@@ -20,6 +20,21 @@ test('mobile navigation traps focus and supports Escape', async () => {
   assert.match(navbar, /aria-modal="true"/)
 })
 
+test('Account links point at shop.trovara.farm', async () => {
+  const [navbar, footer, home, origin] = await Promise.all([
+    read('src/components/TheNavbar.vue'),
+    read('src/components/TheFooter.vue'),
+    read('src/views/HomeView.vue'),
+    read('src/lib/shop-account.ts'),
+  ])
+  assert.match(origin, /export const SHOP_ACCOUNT_URL = 'https:\/\/shop\.trovara\.farm'/)
+  assert.match(navbar, /SHOP_ACCOUNT_URL/)
+  assert.match(footer, /SHOP_ACCOUNT_URL/)
+  assert.match(home, /SHOP_ACCOUNT_URL/)
+  assert.doesNotMatch(navbar, /to: '\/shop'/)
+  assert.doesNotMatch(footer, /to: '\/shop'/)
+})
+
 test('local marketing and OS servers use separate fixed ports', async () => {
   const config = await read('vite.config.ts')
   assert.match(config, /port:\s*4173/)
@@ -27,14 +42,18 @@ test('local marketing and OS servers use separate fixed ports', async () => {
   assert.match(config, /'\/shop-api'[\s\S]*target:\s*'http:\/\/127\.0\.0\.1:3000'/)
 })
 
-test('shop network failures are actionable and recoverable', async () => {
-  const [client, view] = await Promise.all([
-    read('src/lib/shop.ts'),
-    read('src/views/ShopView.vue'),
+test('farm /shop aliases 301 to shop.trovara.farm', async () => {
+  const [redirects, netlify] = await Promise.all([
+    read('public/_redirects'),
+    read('netlify.toml'),
   ])
-  assert.match(client, /farm shop is temporarily offline/)
-  assert.match(view, /@click="loadShop"/)
-  assert.match(view, /Try again/)
+  assert.match(redirects, /\/shop\s+https:\/\/shop\.trovara\.farm\/\s+301/)
+  assert.match(redirects, /\/shop\/verify-email\s+https:\/\/shop\.trovara\.farm\/verify-email\s+301/)
+  assert.match(redirects, /\/shop\/reset-password\s+https:\/\/shop\.trovara\.farm\/reset-password\s+301/)
+  assert.match(redirects, /\/verify-email\s+https:\/\/shop\.trovara\.farm\/verify-email\s+301/)
+  assert.match(redirects, /\/reset-password\s+https:\/\/shop\.trovara\.farm\/reset-password\s+301/)
+  assert.match(netlify, /from\s*=\s*"\/shop"/)
+  assert.match(netlify, /to\s*=\s*"https:\/\/shop\.trovara\.farm\/"/)
 })
 
 test('survey network failures show a useful retry message instead of browser error text', async () => {
@@ -55,12 +74,7 @@ test('Netlify form functions use the official packager and a live startup check'
   assert.match(smokeScript, /response\.status === 405/)
 })
 
-test('shop pages keep the floating chat button off account forms', async () => {
-  const app = await read('src/App.vue')
-  assert.match(app, /!route\.path\.startsWith\('\/shop'\)/)
-})
-
-test('floating WhatsApp shortcut opens one blank chat without inserting a repeated draft', async () => {
+test('floating WhatsApp shortcut stays available on marketing pages', async () => {
   const [button, helper] = await Promise.all([
     read('src/components/WhatsAppButton.vue'),
     read('src/lib/whatsapp.ts'),

@@ -5,6 +5,7 @@ import TrovaraLogo from './brand/TrovaraLogo.vue'
 import ThemeSwitcher from './ThemeSwitcher.vue'
 import { useTheme } from '../lib/theme'
 import { buildWhatsAppLink } from '../lib/whatsapp'
+import { SHOP_ACCOUNT_URL } from '../lib/shop-account'
 
 const route = useRoute()
 const mobileMenuOpen = ref(false)
@@ -36,13 +37,13 @@ const desktopNavItems = [
   { label: 'Services', children: serviceLinks },
   { label: 'Our Story', to: '/about' },
   { label: 'More', children: moreLinks },
-  { label: 'Account', to: '/shop' },
+  { label: 'Account', href: SHOP_ACCOUNT_URL },
 ]
 
 const mobileNavLinks = [
   { label: 'Products', to: '/products' },
   { label: 'Wholesale', to: '/wholesale' },
-  { label: 'Account', to: '/shop' },
+  { label: 'Account', href: SHOP_ACCOUNT_URL },
   { label: 'The Farm', to: '/farm' },
   ...serviceLinks,
   { label: 'Our Story', to: '/about' },
@@ -110,6 +111,10 @@ function childLinkActive(to: string) {
 function dropdownActive(item: { label: string; children?: { to: string }[] }) {
   if (item.label === 'Services') return route.path === '/services' || route.path === '/farm-os' || route.path === '/farm-advisory'
   return item.children?.some((link) => route.path === childPath(link.to)) ?? false
+}
+
+function navPath(item: { to?: string; href?: string }): string {
+  return item.to ?? '/'
 }
 
 /** Same-route clicks (e.g. Home while already on /) skip the router - still jump up. */
@@ -207,21 +212,33 @@ onUnmounted(() => {
                 </div>
               </div>
             </div>
-            <RouterLink
-              v-else
-              :to="item.to"
+            <a
+              v-else-if="'href' in item && item.href"
+              :href="item.href"
               :class="[
                 'px-3 py-2 rounded-full text-sm font-semibold transition-all duration-200',
                 overHero
                   ? 'text-white/90 hover:text-white hover:bg-white/10'
                   : 'text-trovara-dark hover:!text-white hover:!bg-trovara-green',
-                route.path === item.to
+              ]"
+            >
+              {{ item.label }}
+            </a>
+            <RouterLink
+              v-else
+              :to="navPath(item)"
+              :class="[
+                'px-3 py-2 rounded-full text-sm font-semibold transition-all duration-200',
+                overHero
+                  ? 'text-white/90 hover:text-white hover:bg-white/10'
+                  : 'text-trovara-dark hover:!text-white hover:!bg-trovara-green',
+                route.path === navPath(item)
                   ? overHero
                     ? '!text-white !bg-white/20'
                     : '!text-white !bg-trovara-green'
                   : '',
               ]"
-              @click="onNavClick(item.to)"
+              @click="onNavClick(navPath(item))"
             >
               {{ item.label }}
             </RouterLink>
@@ -273,16 +290,24 @@ onUnmounted(() => {
           aria-label="Mobile navigation"
         >
           <div class="px-2 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] space-y-1">
-            <RouterLink
-              v-for="link in mobileNavLinks"
-              :key="link.to"
-              :to="link.to"
+            <template v-for="link in mobileNavLinks" :key="link.label">
+            <a
+              v-if="'href' in link && link.href"
+              :href="link.href"
               class="block px-4 py-3 rounded-xl text-trovara-dark font-medium hover:!text-white hover:!bg-trovara-green transition-colors"
-              :class="route.path === link.to.split('#')[0] && (!link.to.includes('#') || route.hash === link.to.slice(link.to.indexOf('#'))) ? '!text-white !bg-trovara-green' : ''"
-              @click="onNavClick(link.to)"
+            >
+              {{ link.label }}
+            </a>
+            <RouterLink
+              v-else
+              :to="navPath(link)"
+              class="block px-4 py-3 rounded-xl text-trovara-dark font-medium hover:!text-white hover:!bg-trovara-green transition-colors"
+              :class="route.path === navPath(link).split('#')[0] && (!navPath(link).includes('#') || route.hash === navPath(link).slice(navPath(link).indexOf('#'))) ? '!text-white !bg-trovara-green' : ''"
+              @click="onNavClick(navPath(link))"
             >
               {{ link.label }}
             </RouterLink>
+            </template>
             <div class="pt-2 pb-1">
               <RouterLink to="/contact" class="btn-primary w-full text-sm" @click="onNavClick('/contact')">
                 Get in Touch
