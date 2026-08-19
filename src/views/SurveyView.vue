@@ -184,12 +184,12 @@ async function handleSubmit() {
               Your answers help us design a farm-to-table service that fits how people actually shop.
             </p>
             <p v-if="wantsFollowUp && form.contact.includes('@')" class="mx-auto mb-6 max-w-xl rounded-2xl bg-trovara-cream p-4 text-sm leading-6 text-gray-600">
-              Because you asked us to stay in touch and provided an email, you are eligible for a Trovara Farm Credits invitation. Watch your inbox for the account claim link.
+              Because you asked us to stay in touch and provided an email, you are eligible for a Trovara Credits invitation. Watch your inbox for the account claim link.
             </p>
             <RouterLink to="/products" class="btn-primary">See what we are growing</RouterLink>
             <div class="mt-9 border-t border-gray-100 pt-7">
               <p class="text-sm font-bold text-trovara-dark">Follow what grows next</p>
-              <p class="mt-1 text-xs text-gray-500">Following is optional and does not affect your survey or Trovara Farm Credits eligibility.</p>
+              <p class="mt-1 text-xs text-gray-500">Following is optional and does not affect your survey or Trovara Credits eligibility.</p>
               <div class="mt-4 flex flex-wrap justify-center gap-2">
                 <a v-for="social in SOCIAL_LINKS" :key="social.id" :href="social.href" target="_blank" rel="noopener noreferrer" class="rounded-full border border-gray-200 px-4 py-2 text-sm font-semibold text-trovara-green hover:border-trovara-green hover:bg-trovara-green/5">
                   {{ social.label }}
