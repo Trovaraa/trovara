@@ -7,13 +7,16 @@
  *   NEWSLETTER_API_URL - base URL ending in /public/newsletter
  */
 import {
+  allowedUpstreamProtocol,
   getClientIp,
   hasOnlyKeys,
   honeypotResponse,
   isValidEmail,
   json,
+  missingFormProxySecretResponse,
   parseJsonBody,
   rateLimit,
+  safeClientError,
   trustedClientHeaders,
 } from './_shared.mjs'
 
@@ -28,7 +31,7 @@ function cleanApiUrl() {
   if (!configured) return null
   try {
     const url = new URL(configured)
-    if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) return null
+    if (!allowedUpstreamProtocol(url) || url.username || url.password) return null
     return url.toString().replace(/\/+$/, '')
   } catch {
     return null
@@ -112,10 +115,6 @@ async function proxyToNewsletterApi(action, payload, clientIp) {
       result && typeof result === 'object' && typeof result.message === 'string'
         ? result.message
         : undefined
-    const upstreamError =
-      result && typeof result === 'object' && typeof result.error === 'string'
-        ? result.error
-        : undefined
 
     if (!response.ok || !result || typeof result !== 'object' || result.ok !== true) {
       const status = response.ok
@@ -126,8 +125,8 @@ async function proxyToNewsletterApi(action, payload, clientIp) {
       return json(status, {
         ok: false,
         error:
-          status < 500 && upstreamError
-            ? upstreamError
+          status < 500
+            ? safeClientError(result) ?? 'The submitted information was not accepted.'
             : 'Newsletter service is temporarily unavailable. Please try again.',
       })
     }
@@ -145,6 +144,9 @@ export default async function handler(request) {
   if (request.method !== 'POST') {
     return json(405, { ok: false, error: 'Method not allowed' })
   }
+
+  const missingSecret = missingFormProxySecretResponse()
+  if (missingSecret) return missingSecret
 
   const parsed = await parseJsonBody(request)
   if (parsed.error) {

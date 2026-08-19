@@ -65,18 +65,11 @@ export default defineConfig({
   ],
   server: {
     // Trovara OS owns 5173. Keep the marketing site on its documented local
-    // origin so both products can run together and /shop-api can reach OS.
+    // origin so both products can run together and /lot-api can reach OS.
     host: '127.0.0.1',
     port: 4173,
     strictPort: true,
     proxy: {
-      // Customer shop API (Trovara OS). Keeps cookies same-origin so
-      // SameSite=Strict sessions work from http://localhost:5173.
-      '/shop-api': {
-        target: 'http://127.0.0.1:3000',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/shop-api/, '/shop'),
-      },
       // Public lot JSON (Trovara OS). Same-origin so CSP connect-src 'self' works.
       '/lot-api': {
         target: 'http://127.0.0.1:3000',

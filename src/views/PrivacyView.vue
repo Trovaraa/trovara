@@ -125,6 +125,10 @@ const thirdParties = [
     purpose: 'Hosts our company page when you choose to follow or message Trovara there.',
   },
   {
+    name: 'TikTok',
+    purpose: 'Hosts our public TikTok page when you choose to follow or interact with Trovara there.',
+  },
+  {
     name: 'Telegram',
     purpose: TELEGRAM_CUSTOMER_BOT
       ? `Hosts the @${TELEGRAM_CUSTOMER_BOT} customer order bot when you choose to order or track produce through Telegram.`

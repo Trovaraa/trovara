@@ -26,8 +26,7 @@ if (!existsSync(redirectsPath)) {
 }
 
 // Exact list endpoints must not keep a trailing slash (OS returns 404 for `/public/.../`).
-const next = `/shop-api/*     ${osOrigin}/shop/:splat  200!
-/lot-api/*      ${osOrigin}/public/lots/:splat  200!
+const next = `/lot-api/*      ${osOrigin}/public/lots/:splat  200!
 /brand-api      ${osOrigin}/public/brand  200!
 /brand-api/     ${osOrigin}/public/brand  200!
 /brand-api/*    ${osOrigin}/public/brand/:splat  200!

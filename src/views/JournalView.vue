@@ -147,8 +147,8 @@ const gridPosts = computed(() =>
         <div class="max-w-2xl mx-auto">
           <NewsletterSubscribe
             variant="inline"
-            title="Never miss a post"
-            description="Get farm updates, new journal posts, and harvest news delivered to your inbox."
+            title="Journal and harvest updates"
+            description="Get new Trovara Journal stories and harvest news in one email subscription."
           />
         </div>
       </div>

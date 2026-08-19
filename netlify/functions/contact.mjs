@@ -12,6 +12,7 @@ import {
   isValidEmail,
   json,
   MARKETING_LEAD_CONSENT_VERSION,
+  missingFormProxySecretResponse,
   parseJsonBody,
   rateLimit,
 } from './_shared.mjs'
@@ -95,6 +96,9 @@ export default async function handler(request) {
   if (request.method !== 'POST') {
     return json(405, { ok: false, error: 'Method not allowed' })
   }
+
+  const missingSecret = missingFormProxySecretResponse()
+  if (missingSecret) return missingSecret
 
   const parsed = await parseJsonBody(request)
   if (parsed.error) {

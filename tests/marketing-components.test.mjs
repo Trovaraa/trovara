@@ -39,15 +39,17 @@ test('local marketing and OS servers use separate fixed ports', async () => {
   const config = await read('vite.config.ts')
   assert.match(config, /port:\s*4173/)
   assert.match(config, /strictPort:\s*true/)
-  assert.match(config, /'\/shop-api'[\s\S]*target:\s*'http:\/\/127\.0\.0\.1:3000'/)
+  assert.match(config, /'\/lot-api'[\s\S]*target:\s*'http:\/\/127\.0\.0\.1:3000'/)
+  assert.doesNotMatch(config, /'\/shop-api'/)
 })
 
-test('farm /shop aliases 301 to shop.trovara.farm', async () => {
+test('farm /shop aliases 301 to shop.trovara.farm and does not proxy the shop API', async () => {
   const [redirects, netlify] = await Promise.all([
     read('public/_redirects'),
     read('netlify.toml'),
   ])
   assert.match(redirects, /\/shop\s+https:\/\/shop\.trovara\.farm\/\s+301/)
+  assert.doesNotMatch(redirects, /\/shop-api/)
   assert.match(redirects, /\/shop\/verify-email\s+https:\/\/shop\.trovara\.farm\/verify-email\s+301/)
   assert.match(redirects, /\/shop\/reset-password\s+https:\/\/shop\.trovara\.farm\/reset-password\s+301/)
   assert.match(redirects, /\/verify-email\s+https:\/\/shop\.trovara\.farm\/verify-email\s+301/)
@@ -70,18 +72,31 @@ test('Netlify form functions use the official packager and a live startup check'
   assert.match(workflow, /netlify-cli@27\.1\.1 deploy/)
   assert.match(workflow, /--functions netlify\/deploy-functions/)
   assert.match(workflow, /Smoke test deployed form functions/)
+  assert.match(workflow, /lockdown-preview-redirects/)
   assert.match(smokeScript, /contact.*newsletter.*survey.*waitlist/)
   assert.match(smokeScript, /response\.status === 405/)
 })
 
-test('floating WhatsApp shortcut stays available on marketing pages', async () => {
+test('floating WhatsApp shortcut prepares one draft and leaves sending to the visitor', async () => {
   const [button, helper] = await Promise.all([
     read('src/components/WhatsAppButton.vue'),
     read('src/lib/whatsapp.ts'),
   ])
-  assert.match(button, /const waLink = buildWhatsAppLink\(\)/)
+  assert.match(button, /const waLink = buildWhatsAppLink\("Hi Trovara Farm, I'd like to learn more about your products\."\)/)
   assert.match(button, /Open WhatsApp/)
-  assert.match(helper, /: `https:\/\/wa\.me\/\$\{PHONE\}`/)
+  assert.match(helper, /\?text=\$\{encodeURIComponent\(trimmedMessage\)\}/)
+})
+
+test('journal routes show one contextual newsletter form instead of repeating the footer form', async () => {
+  const [footer, journal, post] = await Promise.all([
+    read('src/components/TheFooter.vue'),
+    read('src/views/JournalView.vue'),
+    read('src/views/JournalPostView.vue'),
+  ])
+  assert.match(footer, /!route\.path\.startsWith\('\/journal'\)/)
+  assert.match(footer, /v-if="showNewsletterSignup"/)
+  assert.match(journal, /title="Journal and harvest updates"/)
+  assert.match(post, /title="Journal and harvest updates"/)
 })
 
 test('Moments upload contract includes accessible description and versioned consent', async () => {
@@ -110,6 +125,20 @@ test('careers use the shared HTML-disabled markdown renderer', async () => {
   assert.match(renderer, /noopener noreferrer/)
   assert.match(career, /renderSafeMarkdown\(post\.bodyMarkdown\)/)
   assert.match(journal, /renderSafeMarkdown\(markdown\)/)
+})
+
+test('preview deploys 404 mutating public API proxies', async () => {
+  const { lockdownPreviewRedirects } = await import('../scripts/lockdown-preview-redirects.mjs')
+  const locked = lockdownPreviewRedirects(`
+/shop-api/*    https://os.trovara.farm/shop/:splat  200!
+/lot-api/*     https://os.trovara.farm/public/lots/:splat  200!
+/moments-api/* https://os.trovara.farm/public/moments/:splat  200!
+/journal-api   https://os.trovara.farm/public/journal  200!
+`)
+  assert.match(locked, /\/shop-api\/\*\s+\/404\.html\s+404/)
+  assert.match(locked, /\/moments-api\/\*\s+\/404\.html\s+404/)
+  assert.match(locked, /\/journal-api\s+\/404\.html\s+404/)
+  assert.match(locked, /\/lot-api\/\*\s+https:\/\/os\.trovara\.farm\/public\/lots\/:splat\s+200!/)
 })
 
 test('Netlify fallback returns a real 404', async () => {

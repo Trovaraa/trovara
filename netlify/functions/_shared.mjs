@@ -11,6 +11,12 @@ const RATE_BUCKETS = new Map()
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const MARKETING_LEADS_TIMEOUT_MS = 10_000
 
+export function allowedUpstreamProtocol(url) {
+  // Local HTTP is useful during development, but production form data must
+  // never be sent over a clear-text upstream connection.
+  return url.protocol === 'https:' || (process.env.NODE_ENV !== 'production' && url.protocol === 'http:')
+}
+
 /** Keep in sync with `src/lib/marketing-lead-consent.ts`. */
 export const MARKETING_LEAD_CONSENT_VERSION = '1.0'
 
@@ -52,6 +58,13 @@ export function trustedClientHeaders(ip) {
   }
 }
 
+export function missingFormProxySecretResponse() {
+  if (process.env.NODE_ENV === 'production' && !process.env.FORM_PROXY_SIGNING_SECRET?.trim()) {
+    return json(503, { ok: false, error: 'Form service is temporarily unavailable.' })
+  }
+  return null
+}
+
 /**
  * @returns {Response | null} fake success when honeypot tripped, else null
  */
@@ -89,7 +102,7 @@ function marketingLeadsApiUrl() {
   try {
     const url = new URL(configured)
     if (
-      !['http:', 'https:'].includes(url.protocol) ||
+      !allowedUpstreamProtocol(url) ||
       url.username ||
       url.password ||
       url.search ||
@@ -103,7 +116,7 @@ function marketingLeadsApiUrl() {
   }
 }
 
-function safeClientError(result) {
+export function safeClientError(result) {
   if (!result || typeof result !== 'object' || typeof result.error !== 'string') {
     return null
   }
@@ -123,7 +136,7 @@ function surveyApiUrl() {
     try {
       const url = new URL(configured)
       if (
-        !['http:', 'https:'].includes(url.protocol) ||
+        !allowedUpstreamProtocol(url) ||
         url.username ||
         url.password ||
         url.search ||
