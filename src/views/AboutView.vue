@@ -308,7 +308,8 @@ const team: TeamMember[] = [
                       :style="{ objectPosition: member.imagePosition || 'center top' }"
                       width="112"
                       height="112"
-                      loading="lazy"
+                      loading="eager"
+                      decoding="async"
                     />
                     <div v-else class="team-avatar__initials">
                       <span>{{ member.initials }}</span>
@@ -407,16 +408,33 @@ const team: TeamMember[] = [
 
 <style scoped>
 .team-avatar {
+  position: relative;
   width: 7rem;
   height: 7rem;
+  border-radius: 9999px;
   perspective: 1200px;
+  isolation: isolate;
+}
+
+.team-avatar::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 30% 25%, rgb(232 164 39 / 0.22), transparent 55%),
+    #1a6b3c;
+  box-shadow: 0 0 0 4px rgb(26 107 60 / 0.1);
+  content: '';
 }
 
 .team-avatar__inner {
   position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
   transform-origin: center;
   will-change: transform;
 }
@@ -434,6 +452,7 @@ const team: TeamMember[] = [
 
 .team-avatar__front {
   background: #edf7f1;
+  transform: translateZ(1px);
 }
 
 .team-avatar__photo {
@@ -461,7 +480,7 @@ const team: TeamMember[] = [
   background:
     radial-gradient(circle at 30% 25%, rgb(232 164 39 / 0.28), transparent 55%),
     #1a6b3c;
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) translateZ(1px);
 }
 
 .team-avatar__logo {

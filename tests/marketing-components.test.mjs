@@ -99,6 +99,21 @@ test('journal routes show one contextual newsletter form instead of repeating th
   assert.match(post, /title="Journal and harvest updates"/)
 })
 
+test('footer balances the long company navigation across two columns', async () => {
+  const footer = await read('src/components/TheFooter.vue')
+  assert.match(footer, /const companyLinkColumns = \[links\.company\.slice\(0, 6\), links\.company\.slice\(6\)\]/)
+  assert.match(footer, /v-for="\(column, index\) in companyLinkColumns"/)
+  assert.match(footer, /grid grid-cols-2 gap-x-8/)
+})
+
+test('team avatar flip preloads portraits and keeps a visible backing through edge-on frames', async () => {
+  const about = await read('src/views/AboutView.vue')
+  assert.match(about, /class="team-avatar__photo"[\s\S]*loading="eager"/)
+  assert.match(about, /\.team-avatar::before\s*\{/)
+  assert.match(about, /\.team-avatar__front\s*\{[\s\S]*transform: translateZ\(1px\)/)
+  assert.match(about, /transform: rotateY\(180deg\) translateZ\(1px\)/)
+})
+
 test('Moments upload contract includes accessible description and versioned consent', async () => {
   const moments = await read('src/views/MomentsView.vue')
   assert.match(moments, /MOMENTS_MAX_UPLOAD_BYTES/)
@@ -110,7 +125,7 @@ test('Moments upload contract includes accessible description and versioned cons
 
 test('contact details expose phone and email actions', async () => {
   const contact = await read('src/views/ContactView.vue')
-  assert.match(contact, /tel:\+2348103693426/)
+  assert.match(contact, /tel:\+2348031350724/)
   assert.match(contact, /`mailto:\$\{CONTACT_EMAILS\.hello\}`/)
   assert.match(contact, /:href="info\.href"/)
 })
