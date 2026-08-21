@@ -41,6 +41,8 @@ const links = {
     { label: 'Palm Oil',               to: '/products/palm-oil' },
   ],
 }
+
+const companyLinkColumns = [links.company.slice(0, 6), links.company.slice(6)]
 </script>
 
 <template>
@@ -53,9 +55,9 @@ const links = {
     </section>
 
     <div class="container-trovara py-16 lg:py-20">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-5">
 
-        <div class="lg:col-span-2">
+        <div class="md:col-span-2 lg:col-span-2">
           <RouterLink to="/" class="flex items-center gap-2.5 mb-6 group w-fit" @click="onHomeClick">
             <TrovaraLogo tone="light" />
           </RouterLink>
@@ -123,26 +125,28 @@ const links = {
           </div>
         </div>
 
-        <div>
+        <div class="lg:col-span-2">
           <h4 class="text-white font-bold text-sm uppercase tracking-widest mb-5">Company</h4>
-          <ul class="space-y-3">
-            <li v-for="link in links.company" :key="link.label">
-              <a
-                v-if="'href' in link && link.href"
-                :href="link.href"
-                class="inline-flex min-h-11 items-center text-white/60 hover:text-trovara-gold text-sm transition-colors"
-              >
-                {{ link.label }}
-              </a>
-              <RouterLink
-                v-else
-                :to="link.to ?? '/'"
-                class="inline-flex min-h-11 items-center text-white/60 hover:text-trovara-gold text-sm transition-colors"
-              >
-                {{ link.label }}
-              </RouterLink>
-            </li>
-          </ul>
+          <div class="grid grid-cols-2 gap-x-8">
+            <ul v-for="(column, index) in companyLinkColumns" :key="index" class="space-y-3">
+              <li v-for="link in column" :key="link.label">
+                <a
+                  v-if="'href' in link && link.href"
+                  :href="link.href"
+                  class="inline-flex min-h-11 items-center text-white/60 hover:text-trovara-gold text-sm transition-colors"
+                >
+                  {{ link.label }}
+                </a>
+                <RouterLink
+                  v-else
+                  :to="link.to ?? '/'"
+                  class="inline-flex min-h-11 items-center text-white/60 hover:text-trovara-gold text-sm transition-colors"
+                >
+                  {{ link.label }}
+                </RouterLink>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div>

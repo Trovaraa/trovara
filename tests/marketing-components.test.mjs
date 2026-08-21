@@ -99,6 +99,13 @@ test('journal routes show one contextual newsletter form instead of repeating th
   assert.match(post, /title="Journal and harvest updates"/)
 })
 
+test('footer balances the long company navigation across two columns', async () => {
+  const footer = await read('src/components/TheFooter.vue')
+  assert.match(footer, /const companyLinkColumns = \[links\.company\.slice\(0, 6\), links\.company\.slice\(6\)\]/)
+  assert.match(footer, /v-for="\(column, index\) in companyLinkColumns"/)
+  assert.match(footer, /grid grid-cols-2 gap-x-8/)
+})
+
 test('Moments upload contract includes accessible description and versioned consent', async () => {
   const moments = await read('src/views/MomentsView.vue')
   assert.match(moments, /MOMENTS_MAX_UPLOAD_BYTES/)
