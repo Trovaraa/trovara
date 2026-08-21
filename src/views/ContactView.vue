@@ -154,7 +154,7 @@ async function handleSubmit() {
 
 const contactInfo = [
   { icon: 'pin', label: 'Location', value: 'Trovara Farm, Abeokuta.' },
-  { icon: 'phone', label: 'Phone', value: '+234 810 369 3426', href: 'tel:+2348103693426' },
+  { icon: 'phone', label: 'Phone', value: '+234 803 135 0724', href: 'tel:+2348031350724' },
   { icon: 'mail', label: 'General', value: CONTACT_EMAILS.hello, href: `mailto:${CONTACT_EMAILS.hello}` },
   { icon: 'mail', label: 'Finance', value: CONTACT_EMAILS.finance, href: `mailto:${CONTACT_EMAILS.finance}` },
   { icon: 'clock', label: 'Response', value: 'Within 24 business hours' },

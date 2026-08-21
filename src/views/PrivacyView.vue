@@ -236,7 +236,7 @@ const thirdParties = [
                   </div>
                   <div>
                     <span class="block font-bold text-trovara-dark">Phone</span>
-                    <span class="text-gray-600">+234 810 369 3426</span>
+                    <span class="text-gray-600">+234 803 135 0724</span>
                   </div>
                 </div>
               </div>
@@ -583,7 +583,7 @@ const thirdParties = [
                 </p>
                 <ul class="space-y-1.5">
                   <li>Email: <a href="mailto:hello@trovara.farm" class="text-trovara-green font-semibold hover:underline">hello@trovara.farm</a></li>
-                  <li>Phone: <span class="font-semibold text-trovara-dark">+234 810 369 3426</span></li>
+                  <li>Phone: <span class="font-semibold text-trovara-dark">+234 803 135 0724</span></li>
                   <li>Address: <span class="font-semibold text-trovara-dark">Trovara Farm, Abeokuta, Ogun State, Nigeria</span></li>
                 </ul>
                 <p>

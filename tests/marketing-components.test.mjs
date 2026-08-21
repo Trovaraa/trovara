@@ -110,7 +110,7 @@ test('Moments upload contract includes accessible description and versioned cons
 
 test('contact details expose phone and email actions', async () => {
   const contact = await read('src/views/ContactView.vue')
-  assert.match(contact, /tel:\+2348103693426/)
+  assert.match(contact, /tel:\+2348031350724/)
   assert.match(contact, /`mailto:\$\{CONTACT_EMAILS\.hello\}`/)
   assert.match(contact, /:href="info\.href"/)
 })
