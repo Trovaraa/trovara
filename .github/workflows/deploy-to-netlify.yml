@@ -72,7 +72,13 @@ jobs:
         timeout-minutes: 5
 
       - name: Deploy preview to Netlify
-        if: github.event_name == 'pull_request'
+        id: deploy-preview
+        # Dependabot and fork PRs cannot access deployment secrets. They still
+        # run lint, audit, tests, typecheck, and build above.
+        if: >-
+          github.event_name == 'pull_request' &&
+          github.event.pull_request.user.login != 'dependabot[bot]' &&
+          github.event.pull_request.head.repo.full_name == github.repository
         run: >-
           npx --yes netlify-cli@27.1.1 deploy
           --skip-functions-cache
@@ -89,6 +95,7 @@ jobs:
         timeout-minutes: 5
 
       - name: Smoke test deployed form functions
+        if: github.event_name != 'pull_request' || steps.deploy-preview.outcome == 'success'
         env:
           FUNCTION_BASE_URL: ${{ github.event_name == 'pull_request' && format('https://deploy-preview-{0}--trovara.netlify.app', github.event.number) || 'https://www.trovara.farm' }}
         run: node scripts/smoke-netlify-functions.mjs
