@@ -10,7 +10,10 @@ import { fileURLToPath } from 'node:url'
 const MUTATING_PREFIXES = ['/shop-api', '/moments-api', '/brand-api', '/journal-api']
 
 export function lockdownPreviewRedirects(source) {
-  return source
+  // Careers was formerly read-only. Deny intake and its enablement policy before
+  // the general careers proxy, while retaining read-only job previews.
+  const talentDenials = '/careers-api/applications  /404.html  404\n/careers-api/applications/*  /404.html  404\n/careers-api/application-policy  /404.html  404\n'
+  return talentDenials + source
     .split(/\r?\n/)
     .map((line) => {
       const trimmed = line.trim()

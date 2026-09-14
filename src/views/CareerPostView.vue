@@ -4,6 +4,7 @@ import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { CONTACT_EMAILS, mailto } from '../lib/contact-emails'
 import { renderSafeMarkdown } from '../lib/markdown'
 import { applyPageMeta } from '../composables/usePageMeta'
+import CareerApplicationForm from '../components/CareerApplicationForm.vue'
 
 type CareerPost = {
   id: string
@@ -42,7 +43,7 @@ const employmentLabel: Record<string, string> = {
 }
 
 const applyHref = computed(() => {
-  const email = post.value?.applyEmail || CONTACT_EMAILS.hello
+  const email = CONTACT_EMAILS.hello
   const subject = post.value?.applySubject || (post.value ? `Application: ${post.value.title}` : 'Career application')
   return mailto(email, subject)
 })
@@ -115,7 +116,8 @@ watch(() => route.params.slug, load)
           </dl>
           <div class="prose prose-trovara max-w-none career-body" v-html="renderSafeMarkdown(post.bodyMarkdown)" />
           <p v-if="post.applicationInstructions" class="career-application-instructions">{{ post.applicationInstructions }}</p>
-          <a class="btn-primary mt-8 flex w-full sm:inline-flex sm:w-auto" :href="applyHref">Apply via email</a>
+          <CareerApplicationForm :key="post.id" :career-post-id="post.id" :role-title="post.title" :deadline="post.applicationDeadline" />
+          <p class="career-application-instructions">Prefer email? Send your application and CV to <a class="underline" :href="applyHref">hello@trovara.farm</a>, including the role title.</p>
         </article>
       </div>
     </section>
