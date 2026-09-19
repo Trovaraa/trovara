@@ -8,6 +8,7 @@
     "dev:netlify": "node scripts/start-netlify-local.mjs",
     "prebuild": "node scripts/sync-journal.mjs && node scripts/generate-seo.mjs",
     "build": "vite build && node scripts/prerender.mjs",
+    "postbuild": "node scripts/lockdown-preview-redirects.mjs --if-preview",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint src netlify scripts",
     "test": "node --test tests/*.test.mjs netlify/functions/*.test.mjs",
@@ -18,7 +19,7 @@
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
     "@vueuse/core": "^14.4.0",
-    "markdown-it": "^14.3.1",
+    "markdown-it": "^14.3.2",
     "pinia": "^3.0.4",
     "vue": "^3.5.42",
     "vue-router": "^4.6.4"
