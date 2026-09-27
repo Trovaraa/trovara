@@ -191,6 +191,8 @@ async function forwardToOsForm(url, payload, clientIp = 'unknown') {
   try {
     const response = await fetch(url, {
       method: 'POST',
+      // Never replay personal data or proxy-signing headers to a redirect target.
+      redirect: 'error',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
