@@ -172,7 +172,7 @@ const thirdParties = [
 
           <!-- Table of contents -->
           <aside class="lg:sticky lg:top-28 self-start">
-            <div class="bg-white rounded-2xl shadow-sm p-6">
+            <div class="bg-white rounded-2xl shadow-xs p-6">
               <h2 class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-4">
                 On this page
               </h2>
@@ -221,7 +221,7 @@ const thirdParties = [
                   Trovara Farm is the <strong>data controller</strong> responsible for your personal
                   data. This means we determine how and why your personal data is processed.
                 </p>
-                <div class="bg-white rounded-2xl shadow-sm p-6 grid sm:grid-cols-2 gap-4 text-sm">
+                <div class="bg-white rounded-2xl shadow-xs p-6 grid sm:grid-cols-2 gap-4 text-sm">
                   <div>
                     <span class="block font-bold text-trovara-dark">Entity</span>
                     <span class="text-gray-600">Trovara Farm</span>
@@ -252,7 +252,7 @@ const thirdParties = [
                 <div
                   v-for="item in dataWeCollect"
                   :key="item.label"
-                  class="bg-white rounded-2xl shadow-sm p-6"
+                  class="bg-white rounded-2xl shadow-xs p-6"
                 >
                   <h3 class="font-bold text-trovara-dark mb-2">{{ item.label }}</h3>
                   <p class="text-gray-600 leading-relaxed text-sm">{{ item.detail }}</p>
@@ -328,11 +328,11 @@ const thirdParties = [
                 </p>
                 <ul class="space-y-3 text-gray-700">
                   <li class="leading-relaxed">
-                    <code class="text-sm bg-white px-1.5 py-0.5 rounded">webmetrix_analytics__visitor_id</code>
+                    <code class="text-sm bg-white px-1.5 py-0.5 rounded-sm">webmetrix_analytics__visitor_id</code>
                     - a randomly generated identifier that expires after 12 months.
                   </li>
                   <li class="leading-relaxed">
-                    <code class="text-sm bg-white px-1.5 py-0.5 rounded">webmetrix_analytics__session_id</code>
+                    <code class="text-sm bg-white px-1.5 py-0.5 rounded-sm">webmetrix_analytics__session_id</code>
                     - a randomly generated identifier for your current visit that expires after 30
                     minutes of inactivity.
                   </li>
@@ -347,7 +347,7 @@ const thirdParties = [
                 </p>
                 <p>
                   The WebMetrix script is loaded from
-                  <code class="text-sm bg-white px-1.5 py-0.5 rounded">https://analytics.webmetrix.ai</code>
+                  <code class="text-sm bg-white px-1.5 py-0.5 rounded-sm">https://analytics.webmetrix.ai</code>
                   under our Content Security Policy allowlist. We do not use Subresource Integrity
                   (SRI) for this script because it is served from a single, unversioned URL that
                   changes when the provider updates the service.
@@ -366,7 +366,7 @@ const thirdParties = [
                   click, exactly like accepting, and does not affect your ability to read the site,
                   contact us, or place an order. Your answer is remembered in your browser's local
                   storage under
-                  <code class="text-sm bg-white px-1.5 py-0.5 rounded">trovara-analytics-consent</code>
+                  <code class="text-sm bg-white px-1.5 py-0.5 rounded-sm">trovara-analytics-consent</code>
                   so we do not keep asking.
                 </p>
                 <p>
@@ -400,7 +400,7 @@ const thirdParties = [
                 <div
                   v-for="party in thirdParties"
                   :key="party.name"
-                  class="bg-white rounded-2xl shadow-sm p-5 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4"
+                  class="bg-white rounded-2xl shadow-xs p-5 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4"
                 >
                   <span class="font-bold text-trovara-dark sm:w-44 flex-shrink-0">{{ party.name }}</span>
                   <span class="text-gray-600 text-sm leading-relaxed">{{ party.purpose }}</span>
@@ -495,7 +495,7 @@ const thirdParties = [
                 <div
                   v-for="right in rights"
                   :key="right.title"
-                  class="bg-white rounded-2xl shadow-sm p-5"
+                  class="bg-white rounded-2xl shadow-xs p-5"
                 >
                   <h3 class="font-bold text-trovara-dark mb-1.5 text-sm">{{ right.title }}</h3>
                   <p class="text-gray-600 text-sm leading-relaxed">{{ right.detail }}</p>

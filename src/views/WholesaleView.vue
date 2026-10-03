@@ -116,7 +116,7 @@ const productLines = [
           <article
             v-for="line in productLines"
             :key="line.title"
-            class="rounded-2xl border border-gray-100 bg-trovara-cream p-6 shadow-sm"
+            class="rounded-2xl border border-gray-100 bg-trovara-cream p-6 shadow-xs"
           >
             <h3 class="text-xl font-black text-trovara-dark mb-3">{{ line.title }}</h3>
             <p class="text-sm text-gray-600 leading-relaxed mb-4">{{ line.detail }}</p>
@@ -145,7 +145,7 @@ const productLines = [
           subtitle="We coordinate capacity planning and dispatch with your procurement cycle to reduce stock-outs and simplify replenishment."
         />
         <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
-          <div class="rounded-2xl bg-white p-7 shadow-sm border border-gray-100">
+          <div class="rounded-2xl bg-white p-7 shadow-xs border border-gray-100">
             <p class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-2">Delivery Coverage</p>
             <p class="text-trovara-dark font-semibold mb-2">Nationwide across Nigeria</p>
             <p class="text-sm text-gray-600 leading-relaxed">
@@ -153,7 +153,7 @@ const productLines = [
               distributors, and multi-branch buyers once each SKU enters supply. Timing and logistics will be quoted by destination and volume.
             </p>
           </div>
-          <div class="rounded-2xl bg-white p-7 shadow-sm border border-gray-100">
+          <div class="rounded-2xl bg-white p-7 shadow-xs border border-gray-100">
             <p class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-2">Harvest Timeline</p>
             <p class="text-trovara-dark font-semibold mb-2">Clear first-harvest forecasts</p>
             <p class="text-sm text-gray-600 leading-relaxed">
@@ -161,7 +161,7 @@ const productLines = [
               and coconut for June 2027. Dates remain forecasts until harvest readiness is confirmed.
             </p>
           </div>
-          <div class="rounded-2xl bg-white p-7 shadow-sm border border-gray-100">
+          <div class="rounded-2xl bg-white p-7 shadow-xs border border-gray-100">
             <p class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-2">Private Label</p>
             <p class="text-trovara-dark font-semibold mb-2">Planned for select lines</p>
             <p class="text-sm text-gray-600 leading-relaxed">
@@ -169,7 +169,7 @@ const productLines = [
               plantain flour and chips, plus coconut milk, chips, and oil once processing opens after harvest.
             </p>
           </div>
-          <div class="rounded-2xl bg-white p-7 shadow-sm border border-gray-100">
+          <div class="rounded-2xl bg-white p-7 shadow-xs border border-gray-100">
             <p class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-2">MOQ</p>
             <p class="text-trovara-dark font-semibold mb-2">Contact us for product-specific minimums</p>
             <p class="text-sm text-gray-600 leading-relaxed">

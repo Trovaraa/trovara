@@ -25,7 +25,7 @@ import {
 
 const DRAFT_KEY = 'trovara-food-survey-v1'
 const fieldClass =
-  'w-full px-4 py-3 rounded-xl border border-gray-200 bg-trovara-cream focus:outline-none focus:ring-2 focus:ring-trovara-green/30 focus:border-trovara-green transition text-trovara-dark placeholder-gray-400 text-sm'
+  'w-full px-4 py-3 rounded-xl border border-gray-200 bg-trovara-cream focus:outline-hidden focus:ring-2 focus:ring-trovara-green/30 focus:border-trovara-green transition text-trovara-dark placeholder-gray-400 text-sm'
 const choiceClass = (active: boolean) =>
   [
     'w-full rounded-xl border px-4 py-3 text-left text-sm transition disabled:cursor-not-allowed disabled:opacity-45',
@@ -176,7 +176,7 @@ async function handleSubmit() {
 
     <section class="bg-trovara-cream py-14 sm:py-20">
       <div class="container-trovara max-w-3xl">
-        <div ref="formCard" class="scroll-mt-24 rounded-3xl bg-white p-5 shadow-sm sm:p-8 lg:p-10">
+        <div ref="formCard" class="scroll-mt-24 rounded-3xl bg-white p-5 shadow-xs sm:p-8 lg:p-10">
           <div v-if="submitted" class="py-12 text-center">
             <BrandIcon name="sprout" class="mx-auto mb-4 h-16 w-16" />
             <h2 class="mb-3 text-2xl font-black text-trovara-dark">Thank you.</h2>
@@ -225,7 +225,7 @@ async function handleSubmit() {
               >
                 <div class="h-full rounded-full bg-trovara-green transition-all" :style="{ width: `${progress}%` }" />
               </div>
-              <h2 ref="stepHeading" tabindex="-1" class="mt-3 text-lg font-black text-trovara-dark outline-none">
+              <h2 ref="stepHeading" tabindex="-1" class="mt-3 text-lg font-black text-trovara-dark outline-hidden">
                 {{ currentStep.title }}
               </h2>
               <p class="mt-1 text-sm text-gray-500">{{ currentStep.blurb }}</p>
@@ -563,7 +563,7 @@ async function handleSubmit() {
                   v-model="form.consent"
                   type="checkbox"
                   required
-                  class="mt-0.5 h-6 w-6 flex-shrink-0 rounded border-gray-300 text-trovara-green focus:ring-trovara-gold"
+                  class="mt-0.5 h-6 w-6 flex-shrink-0 rounded-sm border-gray-300 text-trovara-green focus:ring-trovara-gold"
                   :disabled="submitting"
                 />
                 <span>
@@ -581,7 +581,7 @@ async function handleSubmit() {
               v-if="stepError || submitError"
               ref="errorMessage"
               tabindex="-1"
-              class="text-sm text-red-600 outline-none"
+              class="text-sm text-red-600 outline-hidden"
               role="alert"
             >
               {{ stepError || submitError }}

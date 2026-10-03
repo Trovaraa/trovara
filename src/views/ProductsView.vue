@@ -41,7 +41,7 @@ function forecastMonth(note?: string) {
             Our first product lines are still growing. The dates below are farm forecasts, not promises of stock. Join a waitlist and we will update you as supply gets closer.
           </p>
         </div>
-        <div class="rounded-3xl border border-white/15 bg-white/10 p-5 text-sm text-white/75 backdrop-blur-sm">
+        <div class="rounded-3xl border border-white/15 bg-white/10 p-5 text-sm text-white/75 backdrop-blur-xs">
           <p class="font-black text-white">How this page works</p>
           <p class="mt-2 leading-6">Choose a product for full specifications, planned pack sizes, and its waitlist form.</p>
         </div>
@@ -80,7 +80,7 @@ function forecastMonth(note?: string) {
               </div>
               <div class="flex items-start justify-between gap-4">
                 <dt class="font-semibold text-gray-500">First SKU</dt>
-                <dd class="max-w-[12rem] text-right font-mono text-xs font-bold text-trovara-dark">{{ primarySku(product) }}</dd>
+                <dd class="max-w-48 text-right font-mono text-xs font-bold text-trovara-dark">{{ primarySku(product) }}</dd>
               </div>
             </dl>
             <RouterLink :to="`/products/${product.id}`" class="btn-primary mt-6 w-full">
@@ -93,7 +93,7 @@ function forecastMonth(note?: string) {
 
     <section class="bg-white py-16 md:py-20">
       <div class="container-trovara">
-        <div class="grid gap-8 rounded-[2rem] border border-gray-200 bg-trovara-cream p-7 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:p-10">
+        <div class="grid gap-8 rounded-4xl border border-gray-200 bg-trovara-cream p-7 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:p-10">
           <div>
             <p class="section-subheading">Buying for a business?</p>
             <h2 class="mt-3 text-3xl font-black text-trovara-dark">Get SKUs, pack sizes, MOQs, and supply forecasts in one brief.</h2>

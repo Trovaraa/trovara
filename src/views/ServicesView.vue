@@ -44,7 +44,7 @@ const choices = [
           <article
             v-for="choice in choices"
             :key="choice.title"
-            class="flex flex-col rounded-[2rem] p-7 md:p-10"
+            class="flex flex-col rounded-4xl p-7 md:p-10"
             :class="choice.dark ? 'bg-trovara-dark text-white' : 'border border-gray-200 bg-white text-trovara-dark'"
           >
             <BrandIcon :name="choice.icon" class="h-16 w-16 rounded-2xl" :class="choice.dark ? 'bg-white p-2' : ''" />

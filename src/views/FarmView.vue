@@ -116,7 +116,7 @@ const practices = [
           <div
             v-for="practice in practices"
             :key="practice.title"
-            class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-white hover:bg-white/20 transition-all duration-300"
+            class="bg-white/10 backdrop-blur-xs border border-white/10 rounded-2xl p-6 text-white hover:bg-white/20 transition-all duration-300"
           >
             <BrandIcon :name="practice.icon" class="w-12 h-12 mb-4 icon-on-dark" />
             <h4 class="font-bold text-lg mb-2">{{ practice.title }}</h4>
@@ -157,17 +157,17 @@ const practices = [
             center
           />
           <div class="grid grid-cols-3 gap-4 mb-10">
-            <div class="bg-white rounded-2xl p-6 shadow-sm text-center">
+            <div class="bg-white rounded-2xl p-6 shadow-xs text-center">
               <BrandIcon name="land" class="w-10 h-10 mx-auto mb-3" />
               <div class="font-bold text-trovara-dark text-sm">New crops</div>
               <div class="text-gray-400 text-xs mt-1">More varieties</div>
             </div>
-            <div class="bg-white rounded-2xl p-6 shadow-sm text-center">
+            <div class="bg-white rounded-2xl p-6 shadow-xs text-center">
               <BrandIcon name="factory" class="w-10 h-10 mx-auto mb-3" />
               <div class="font-bold text-trovara-dark text-sm">Processing</div>
               <div class="text-gray-400 text-xs mt-1">Value-added products</div>
             </div>
-            <div class="bg-white rounded-2xl p-6 shadow-sm text-center">
+            <div class="bg-white rounded-2xl p-6 shadow-xs text-center">
               <BrandIcon name="plane" class="w-10 h-10 mx-auto mb-3" />
               <div class="font-bold text-trovara-dark text-sm">Export</div>
               <div class="text-gray-400 text-xs mt-1">Regional and overseas buyers</div>

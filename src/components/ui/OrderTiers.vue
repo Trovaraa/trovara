@@ -23,12 +23,12 @@ function tierLink(tier: OrderTier): string {
       <div
         v-for="tier in tiers"
         :key="tier.id"
-        class="relative flex flex-col rounded-3xl bg-white p-7 shadow-sm border transition-all duration-200 hover:shadow-md"
+        class="relative flex flex-col rounded-3xl bg-white p-7 shadow-xs border transition-all duration-200 hover:shadow-md"
         :class="tier.popular ? ['border-transparent', 'ring-2', colors.ringAccent] : 'border-gray-100'"
       >
         <span
           v-if="tier.popular"
-          class="absolute -top-3 left-7 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest text-white shadow-sm"
+          class="absolute -top-3 left-7 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest text-white shadow-xs"
           :class="colors.bgAccent"
         >
           Popular

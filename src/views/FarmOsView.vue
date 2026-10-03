@@ -33,13 +33,13 @@ const roles = [
           </div>
         </div>
 
-        <div class="rounded-[2rem] border border-white/10 bg-[#0c281d] p-5 shadow-2xl">
+        <div class="rounded-4xl border border-white/10 bg-[#0c281d] p-5 shadow-2xl">
           <div class="flex items-center justify-between border-b border-white/10 pb-4">
             <div class="flex items-center gap-3"><BrandIcon name="os" class="h-10 w-10 rounded-xl bg-white p-1.5" /><div><p class="text-xs font-black text-trovara-gold">TROVARA OS</p><p class="text-sm font-bold">Today</p></div></div>
             <span class="rounded-full bg-trovara-green/30 px-3 py-1 text-[10px] font-black text-green-200">Farm online</span>
           </div>
           <div class="mt-5 grid grid-cols-2 gap-3">
-            <div v-for="item in [['12', 'Open tasks'], ['3', 'Needs review'], ['5', 'Stock alerts'], ['2', 'Customer tickets']]" :key="item[1]" class="rounded-2xl border border-white/10 bg-white/[0.05] p-4">
+            <div v-for="item in [['12', 'Open tasks'], ['3', 'Needs review'], ['5', 'Stock alerts'], ['2', 'Customer tickets']]" :key="item[1]" class="rounded-2xl border border-white/10 bg-white/5 p-4">
               <p class="text-2xl font-black text-white">{{ item[0] }}</p><p class="mt-1 text-xs text-white/55">{{ item[1] }}</p>
             </div>
           </div>

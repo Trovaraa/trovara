@@ -94,7 +94,7 @@ const gridPosts = computed(() =>
             <span>Filter by tag</span>
             <select
               v-model="selectedTag"
-              class="px-3 py-2 rounded-lg border border-trovara-green/30 text-trovara-dark bg-white focus:outline-none focus:ring-2 focus:ring-trovara-green/30"
+              class="px-3 py-2 rounded-lg border border-trovara-green/30 text-trovara-dark bg-white focus:outline-hidden focus:ring-2 focus:ring-trovara-green/30"
             >
               <option v-for="tag in tags" :key="tag" :value="tag">
                 {{ tag === 'All' ? 'All tags' : `#${tag}` }}

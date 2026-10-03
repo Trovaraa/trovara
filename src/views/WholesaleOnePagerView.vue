@@ -127,7 +127,7 @@ const orderSteps = [
         </button>
       </div>
 
-      <article class="one-pager-sheet bg-white border border-gray-200 shadow-sm rounded-3xl overflow-hidden print:shadow-none print:border-0 print:rounded-none">
+      <article class="one-pager-sheet bg-white border border-gray-200 shadow-xs rounded-3xl overflow-hidden print:shadow-none print:border-0 print:rounded-none">
         <header class="px-7 sm:px-10 pt-7 sm:pt-9 pb-6 border-b border-gray-100 print:px-0 print:pt-0 print:pb-4">
           <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-6">
             <TrovaraLogo descriptor="Fresh" />

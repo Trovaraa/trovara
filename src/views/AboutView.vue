@@ -163,7 +163,7 @@ const team: TeamMember[] = [
 
           <!-- Visual Story Box -->
           <div class="space-y-6">
-            <div class="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
+            <div class="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-xs">
               <img
                 src="/brand/trovara-social-card-v2.png"
                 alt="Trovara - Food you can trust from a farm built for tomorrow"
@@ -229,7 +229,7 @@ const team: TeamMember[] = [
               </div>
 
               <!-- Content -->
-              <div class="bg-white rounded-2xl p-6 flex-1 shadow-sm">
+              <div class="bg-white rounded-2xl p-6 flex-1 shadow-xs">
                 <span class="text-trovara-green text-xs font-bold uppercase tracking-widest">{{ milestone.year }}</span>
                 <h3 class="text-trovara-dark font-bold text-lg mt-1 mb-2">{{ milestone.title }}</h3>
                 <p class="text-gray-500 text-sm leading-relaxed">{{ milestone.desc }}</p>
@@ -289,11 +289,11 @@ const team: TeamMember[] = [
           <article
             v-for="member in team"
             :key="member.name"
-            class="team-card bg-white rounded-2xl p-8 text-center shadow-sm hover:shadow-md transition-shadow"
+            class="team-card bg-white rounded-2xl p-8 text-center shadow-xs hover:shadow-md transition-shadow"
           >
             <button
               type="button"
-              class="team-card__button w-full text-center outline-none focus-visible:ring-2 focus-visible:ring-trovara-green focus-visible:ring-offset-2 rounded-xl"
+              class="team-card__button w-full text-center outline-hidden focus-visible:ring-2 focus-visible:ring-trovara-green focus-visible:ring-offset-2 rounded-xl"
               :aria-label="`Read more about ${member.name}, ${member.role}`"
               @click="openBio(member)"
             >
@@ -341,7 +341,7 @@ const team: TeamMember[] = [
     <Teleport to="body">
       <div
         v-if="selectedMember"
-        class="fixed inset-0 z-[90] grid place-items-center bg-black/70 p-4"
+        class="fixed inset-0 z-90 grid place-items-center bg-black/70 p-4"
         role="dialog"
         aria-modal="true"
         :aria-labelledby="`team-bio-${selectedMember.name}`"

@@ -162,11 +162,11 @@ onUnmounted(() => {
       'fixed top-0 inset-x-0 z-50 transition-all duration-300',
       overHero
         ? 'bg-transparent'
-        : 'bg-white/95 backdrop-blur-sm shadow-sm dark:border-b dark:border-white/5',
+        : 'bg-white/95 backdrop-blur-xs shadow-xs dark:border-b dark:border-white/5',
     ]"
   >
     <nav class="container-trovara" aria-label="Primary navigation">
-      <div class="flex items-center justify-between h-16 md:h-[4.5rem]">
+      <div class="flex items-center justify-between h-16 md:h-18">
 
         <!-- Logo -->
         <RouterLink to="/" class="flex items-center gap-2.5 group" @click="onNavClick('/')">
@@ -184,11 +184,11 @@ onUnmounted(() => {
                   'inline-flex items-center gap-1 px-3 py-2 rounded-full text-sm font-semibold transition-all duration-200',
                   overHero
                     ? 'text-white/90 hover:text-white hover:bg-white/10'
-                    : 'text-trovara-dark hover:!text-white hover:!bg-trovara-green',
+                    : 'text-trovara-dark hover:text-white! hover:bg-trovara-green!',
                   dropdownActive(item)
                     ? overHero
-                      ? '!text-white !bg-white/20'
-                      : '!text-white !bg-trovara-green'
+                      ? 'text-white! bg-white/20!'
+                      : 'text-white! bg-trovara-green!'
                     : '',
                 ]"
               >
@@ -203,8 +203,8 @@ onUnmounted(() => {
                     v-for="link in item.children"
                     :key="link.to"
                     :to="link.to"
-                    class="block rounded-xl px-4 py-3 text-sm font-semibold text-trovara-dark transition-colors hover:!bg-trovara-green hover:!text-white"
-                    :class="childLinkActive(link.to) ? '!bg-trovara-green/10 !text-trovara-green' : ''"
+                    class="block rounded-xl px-4 py-3 text-sm font-semibold text-trovara-dark transition-colors hover:bg-trovara-green! hover:text-white!"
+                    :class="childLinkActive(link.to) ? 'bg-trovara-green/10! text-trovara-green!' : ''"
                     @click="onNavClick(link.to)"
                   >
                     {{ link.label }}
@@ -219,7 +219,7 @@ onUnmounted(() => {
                 'px-3 py-2 rounded-full text-sm font-semibold transition-all duration-200',
                 overHero
                   ? 'text-white/90 hover:text-white hover:bg-white/10'
-                  : 'text-trovara-dark hover:!text-white hover:!bg-trovara-green',
+                  : 'text-trovara-dark hover:text-white! hover:bg-trovara-green!',
               ]"
             >
               {{ item.label }}
@@ -231,11 +231,11 @@ onUnmounted(() => {
                 'px-3 py-2 rounded-full text-sm font-semibold transition-all duration-200',
                 overHero
                   ? 'text-white/90 hover:text-white hover:bg-white/10'
-                  : 'text-trovara-dark hover:!text-white hover:!bg-trovara-green',
+                  : 'text-trovara-dark hover:text-white! hover:bg-trovara-green!',
                 route.path === navPath(item)
                   ? overHero
-                    ? '!text-white !bg-white/20'
-                    : '!text-white !bg-trovara-green'
+                    ? 'text-white! bg-white/20!'
+                    : 'text-white! bg-trovara-green!'
                   : '',
               ]"
               @click="onNavClick(navPath(item))"
@@ -294,15 +294,15 @@ onUnmounted(() => {
             <a
               v-if="'href' in link && link.href"
               :href="link.href"
-              class="block px-4 py-3 rounded-xl text-trovara-dark font-medium hover:!text-white hover:!bg-trovara-green transition-colors"
+              class="block px-4 py-3 rounded-xl text-trovara-dark font-medium hover:text-white! hover:bg-trovara-green! transition-colors"
             >
               {{ link.label }}
             </a>
             <RouterLink
               v-else
               :to="navPath(link)"
-              class="block px-4 py-3 rounded-xl text-trovara-dark font-medium hover:!text-white hover:!bg-trovara-green transition-colors"
-              :class="route.path === navPath(link).split('#')[0] && (!navPath(link).includes('#') || route.hash === navPath(link).slice(navPath(link).indexOf('#'))) ? '!text-white !bg-trovara-green' : ''"
+              class="block px-4 py-3 rounded-xl text-trovara-dark font-medium hover:text-white! hover:bg-trovara-green! transition-colors"
+              :class="route.path === navPath(link).split('#')[0] && (!navPath(link).includes('#') || route.hash === navPath(link).slice(navPath(link).indexOf('#'))) ? 'text-white! bg-trovara-green!' : ''"
               @click="onNavClick(navPath(link))"
             >
               {{ link.label }}

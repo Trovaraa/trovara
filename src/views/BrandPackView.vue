@@ -88,7 +88,7 @@ onMounted(bootstrap)
 
         <form
           v-if="needsPassword"
-          class="max-w-md rounded-3xl bg-white shadow-sm border border-trovara-dark/10 p-6 sm:p-8 grid gap-4"
+          class="max-w-md rounded-3xl bg-white shadow-xs border border-trovara-dark/10 p-6 sm:p-8 grid gap-4"
           @submit.prevent="onUnlock"
         >
           <label class="grid gap-2 text-sm font-semibold text-trovara-dark">

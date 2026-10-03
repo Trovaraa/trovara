@@ -37,7 +37,7 @@ void props
   <figure class="w-full">
     <button
       type="button"
-      class="group relative block w-full overflow-hidden rounded-3xl border border-black/5 bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg focus:outline-none focus-visible:ring-4 focus-visible:ring-trovara-green/40"
+      class="group relative block w-full overflow-hidden rounded-3xl border border-black/5 bg-white shadow-xs transition-shadow duration-300 hover:shadow-lg focus:outline-hidden focus-visible:ring-4 focus-visible:ring-trovara-green/40"
       :aria-label="`Expand: ${alt}`"
       @click="open = true"
     >
@@ -52,7 +52,7 @@ void props
         />
       </picture>
       <span
-        class="absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full bg-trovara-dark/80 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        class="absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full bg-trovara-dark/80 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-xs opacity-0 transition-opacity duration-300 group-hover:opacity-100"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-3.5 w-3.5">
           <path d="M13.28 7.78 15.56 5.5H12.5a.75.75 0 0 1 0-1.5h5a.75.75 0 0 1 .75.75v5a.75.75 0 0 1-1.5 0V6.56l-2.28 2.28a.75.75 0 1 1-1.06-1.06ZM6.72 12.22 4.44 14.5H7.5a.75.75 0 0 1 0 1.5h-5a.75.75 0 0 1-.75-.75v-5a.75.75 0 0 1 1.5 0v3.19l2.28-2.28a.75.75 0 1 1 1.06 1.06Z" />
@@ -76,7 +76,7 @@ void props
       <Transition name="lightbox-fade">
         <div
           v-if="open"
-          class="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 p-4 md:p-8"
+          class="fixed inset-0 z-100 flex items-center justify-center bg-black/85 p-4 md:p-8"
           role="dialog"
           aria-modal="true"
           :aria-label="alt"
@@ -84,7 +84,7 @@ void props
         >
           <button
             type="button"
-            class="absolute right-4 top-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/40"
+            class="absolute right-4 top-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 focus:outline-hidden focus-visible:ring-4 focus-visible:ring-white/40"
             aria-label="Close"
             @click="open = false"
           >

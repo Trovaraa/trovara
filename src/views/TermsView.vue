@@ -61,7 +61,7 @@ const toc: Section[] = [
 
           <!-- Table of contents -->
           <aside class="lg:sticky lg:top-28 self-start">
-            <div class="bg-white rounded-2xl shadow-sm p-6">
+            <div class="bg-white rounded-2xl shadow-xs p-6">
               <h2 class="text-xs font-bold uppercase tracking-widest text-trovara-green mb-4">
                 On this page
               </h2>
@@ -110,7 +110,7 @@ const toc: Section[] = [
                   in Abeokuta, Ogun State, Nigeria, developing regenerative produce and pasture-raised poultry for homes,
                   chefs, retailers, and wholesale partners.
                 </p>
-                <div class="bg-white rounded-2xl shadow-sm p-6 grid sm:grid-cols-2 gap-4 text-sm">
+                <div class="bg-white rounded-2xl shadow-xs p-6 grid sm:grid-cols-2 gap-4 text-sm">
                   <div>
                     <span class="block font-bold text-trovara-dark">Email</span>
                     <a href="mailto:hello@trovara.farm" class="text-trovara-green hover:underline">hello@trovara.farm</a>
