@@ -11,8 +11,16 @@ The red OS and Shop Dependabot runs fail dependency audits, not application
 compilation. Their consolidated fixes are already green in
 [OS #67](https://github.com/Trovaraa/trovara-os/pull/67) at `9e184ba` and
 [Shop #22](https://github.com/Trovaraa/trovara-shop/pull/22) at `c851d37`.
-Older failed runs remain in history; neither those PRs nor the original bot PRs
-have been merged or closed by this repair.
+Older failed runs remain in history. Both consolidated PRs were merged externally
+during this review; the resulting main CI/security runs also passed (OS `ad61a86`,
+Shop `ca1b8d1`). This repair did not perform either merge or close any bot PRs.
+
+The first Marketing PR run also exposed a homepage Lighthouse performance failure
+(59 against the unchanged minimum of 85). Local diagnosis found a redundant
+document reload when the service worker first claimed a new visitor's page.
+Reloading is now limited to replacement of an existing controller; subsequent
+updates still refresh stale clients once, while first-time installs do not
+interrupt page rendering or form entry.
 
 ## Marketing changes
 
@@ -36,7 +44,8 @@ Safari 16.4+, Chrome 111+ and Firefox 128+, matching the OS/Shop migration.
 ## Verification
 
 - Clean `npm ci --ignore-scripts`: passed.
-- `npm test`: 38 passed, including three dependency regression tests.
+- `npm test`: 43 passed, including three dependency and five service-worker
+  lifecycle regression tests.
 - Lint, typecheck and production build: passed.
 - All-dependency and production npm audits: zero known vulnerabilities.
 - Registry verification: 499 verified signatures, 164 verified attestations.
@@ -45,6 +54,11 @@ Safari 16.4+, Chrome 111+ and Firefox 128+, matching the OS/Shop migration.
   no page errors or horizontal overflow. Journal input interaction checked;
   representative screenshots reviewed. Small typography/spacing differences
   follow v4 line-height and spacing behavior; no claim of pixel-identical output.
+- Three post-fix local homepage Lighthouse runs scored 94, 95 and 94 for
+  performance (accessibility 97, best practices/SEO 100), with no reload redirects.
+  An isolated browser with the actual built service worker confirmed first-time
+  and controlled return visits each make one document request. Genuine update,
+  duplicate event and transient missing-controller cases are covered by unit tests.
 - Browser requests used synthetic API fixtures; no forms submitted, records
   changed, emails sent or production application data accessed. Local builds
   used repository Journal content; generated SEO differences were not committed.
