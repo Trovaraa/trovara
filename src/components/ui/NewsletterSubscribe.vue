@@ -144,7 +144,7 @@ function reset() {
               autocomplete="name"
               placeholder="Full name"
               :class="[
-                'w-full px-4 py-3.5 rounded-xl border text-sm transition focus:outline-none focus:ring-2 focus:ring-trovara-gold focus:border-transparent',
+                'w-full px-4 py-3.5 rounded-xl border text-sm transition focus:outline-hidden focus:ring-2 focus:ring-trovara-gold focus:border-transparent',
                 variant === 'inline'
                   ? 'bg-white border-gray-200 text-trovara-dark placeholder-gray-400'
                   : 'bg-white/10 border-white/20 text-white placeholder-white/40',
@@ -163,7 +163,7 @@ function reset() {
               autocomplete="email"
               placeholder="you@example.com"
               :class="[
-                'w-full px-4 py-3.5 rounded-xl border text-sm transition focus:outline-none focus:ring-2 focus:ring-trovara-gold focus:border-transparent',
+                'w-full px-4 py-3.5 rounded-xl border text-sm transition focus:outline-hidden focus:ring-2 focus:ring-trovara-gold focus:border-transparent',
                 variant === 'inline'
                   ? 'bg-white border-gray-200 text-trovara-dark placeholder-gray-400'
                   : 'bg-white/10 border-white/20 text-white placeholder-white/40',
@@ -182,7 +182,7 @@ function reset() {
             autocomplete="tel"
             placeholder="Phone number (optional)"
             :class="[
-              'w-full px-4 py-3.5 rounded-xl border text-sm transition focus:outline-none focus:ring-2 focus:ring-trovara-gold focus:border-transparent',
+              'w-full px-4 py-3.5 rounded-xl border text-sm transition focus:outline-hidden focus:ring-2 focus:ring-trovara-gold focus:border-transparent',
               variant === 'inline'
                 ? 'bg-white border-gray-200 text-trovara-dark placeholder-gray-400'
                 : 'bg-white/10 border-white/20 text-white placeholder-white/40',
@@ -204,7 +204,7 @@ function reset() {
             v-model="newsletter.consent"
             type="checkbox"
             required
-            class="mt-0.5 h-6 w-6 flex-shrink-0 rounded border-gray-300 text-trovara-green focus:ring-trovara-gold"
+            class="mt-0.5 h-6 w-6 flex-shrink-0 rounded-sm border-gray-300 text-trovara-green focus:ring-trovara-gold"
             :disabled="newsletter.status === 'loading'"
             @change="newsletter.error = ''"
           />
@@ -221,7 +221,7 @@ function reset() {
             v-model="newsletter.phoneConsent"
             type="checkbox"
             required
-            class="mt-0.5 h-6 w-6 flex-shrink-0 rounded border-gray-300 text-trovara-green focus:ring-trovara-gold"
+            class="mt-0.5 h-6 w-6 flex-shrink-0 rounded-sm border-gray-300 text-trovara-green focus:ring-trovara-gold"
             :disabled="newsletter.status === 'loading'"
             @change="newsletter.error = ''"
           />

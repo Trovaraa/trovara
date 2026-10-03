@@ -28,7 +28,7 @@ async function confirm() {
 <template>
   <section class="min-h-[70vh] bg-trovara-cream pt-32 pb-20 flex items-center">
     <div class="container-trovara">
-      <div class="max-w-xl mx-auto bg-white rounded-3xl shadow-sm p-7 sm:p-10 text-center">
+      <div class="max-w-xl mx-auto bg-white rounded-3xl shadow-xs p-7 sm:p-10 text-center">
         <p class="section-subheading text-trovara-green mb-3">Newsletter</p>
 
         <template v-if="status === 'success'">

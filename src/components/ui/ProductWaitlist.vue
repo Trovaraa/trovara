@@ -64,7 +64,7 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <div class="rounded-3xl bg-trovara-dark text-white p-5 sm:p-9 shadow-sm">
+  <div class="rounded-3xl bg-trovara-dark text-white p-5 sm:p-9 shadow-xs">
     <div v-if="submitted" class="text-center py-4" role="status">
       <BrandIcon name="sprout" class="icon-on-dark w-14 h-14 mx-auto mb-4" />
       <h3 class="text-2xl font-black mb-2">You’re on the list.</h3>
@@ -98,7 +98,7 @@ async function handleSubmit() {
               autocomplete="name"
               maxlength="120"
               required
-              class="w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-trovara-gold-300"
+              class="w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder:text-white/35 focus:outline-hidden focus:ring-2 focus:ring-trovara-gold-300"
               placeholder="Full name"
             />
           </div>
@@ -111,7 +111,7 @@ async function handleSubmit() {
               autocomplete="email"
               maxlength="254"
               required
-              class="w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-trovara-gold-300"
+              class="w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder:text-white/35 focus:outline-hidden focus:ring-2 focus:ring-trovara-gold-300"
               placeholder="you@email.com or +234…"
             />
           </div>
@@ -125,7 +125,7 @@ async function handleSubmit() {
             v-model="form.consent"
             type="checkbox"
             required
-            class="mt-0.5 h-6 w-6 flex-shrink-0 rounded border-white/30 bg-white/10 text-trovara-gold-300 focus:ring-trovara-gold-300"
+            class="mt-0.5 h-6 w-6 flex-shrink-0 rounded-sm border-white/30 bg-white/10 text-trovara-gold-300 focus:ring-trovara-gold-300"
             :disabled="submitting"
           />
           <span>

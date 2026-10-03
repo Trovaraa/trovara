@@ -27,10 +27,10 @@ const whatsappLink = computed(() => {
         v-if="product.image"
         :src="product.image"
         :alt="product.imageAlt ?? product.name"
-        class="w-full aspect-[3/2] object-cover object-right"
+        class="w-full aspect-3/2 object-cover object-right"
       />
       <template v-else>
-        <div class="w-20 h-20 mb-4 rounded-2xl bg-white/80 p-2 shadow-sm group-hover:scale-105 transition-transform duration-300 dark:bg-trovara-dark/70">
+        <div class="w-20 h-20 mb-4 rounded-2xl bg-white/80 p-2 shadow-xs group-hover:scale-105 transition-transform duration-300 dark:bg-trovara-dark/70">
           <BrandIcon :name="product.icon" :title="product.name" class="w-full h-full" />
         </div>
         <h3 class="relative text-xl font-bold text-trovara-dark mb-1">{{ product.name }}</h3>
@@ -40,13 +40,13 @@ const whatsappLink = computed(() => {
       </template>
       <span
         v-if="!product.available"
-        class="absolute top-4 right-4 z-10 px-2.5 py-1 bg-white/95 text-trovara-green text-xs font-semibold rounded-full shadow-sm"
+        class="absolute top-4 right-4 z-10 px-2.5 py-1 bg-white/95 text-trovara-green text-xs font-semibold rounded-full shadow-xs"
       >
         Coming Soon
       </span>
       <span
         v-else-if="product.waitlist"
-        class="absolute top-4 right-4 z-10 px-2.5 py-1 bg-white/95 text-trovara-green text-xs font-semibold rounded-full shadow-sm"
+        class="absolute top-4 right-4 z-10 px-2.5 py-1 bg-white/95 text-trovara-green text-xs font-semibold rounded-full shadow-xs"
       >
         Waitlist
       </span>

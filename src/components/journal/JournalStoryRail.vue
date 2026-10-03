@@ -98,16 +98,17 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-.story-reel { @apply overflow-hidden rounded-[2rem] bg-trovara-cream p-4 sm:p-7 md:p-10; }
+@reference '../../style.css';
+.story-reel { @apply overflow-hidden rounded-4xl bg-trovara-cream p-4 sm:p-7 md:p-10; }
 .story-reel__heading { @apply mb-7 flex flex-col gap-5 md:flex-row md:items-end md:justify-between; }
 .story-reel__buttons { @apply flex gap-2; }
 .story-reel__buttons button { @apply grid h-12 w-12 place-items-center rounded-full border border-trovara-green/20 bg-white text-xl font-bold text-trovara-green transition hover:border-trovara-green hover:bg-trovara-light disabled:cursor-not-allowed disabled:opacity-30; }
-.story-reel__track { @apply flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain rounded-3xl outline-none focus-visible:ring-4 focus-visible:ring-trovara-green/20; scrollbar-width: none; }
+.story-reel__track { @apply flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain rounded-3xl outline-hidden focus-visible:ring-4 focus-visible:ring-trovara-green/20; scrollbar-width: none; }
 .story-reel__track::-webkit-scrollbar { display: none; }
-.story-reel__card { @apply grid min-w-full snap-start overflow-hidden rounded-3xl border border-trovara-green/10 bg-white shadow-sm md:grid-cols-[1.05fr_0.95fr]; }
+.story-reel__card { @apply grid min-w-full snap-start overflow-hidden rounded-3xl border border-trovara-green/10 bg-white shadow-xs md:grid-cols-[1.05fr_0.95fr]; }
 .story-reel__visual { @apply min-h-64 bg-trovara-green md:min-h-[28rem]; }
 .story-reel__visual img { @apply h-full w-full object-cover; }
-.story-reel__fallback { @apply flex h-full min-h-64 items-end bg-gradient-to-br from-trovara-green to-trovara-dark p-8 text-white/20 md:min-h-[28rem]; }
+.story-reel__fallback { @apply flex h-full min-h-64 items-end bg-linear-to-br from-trovara-green to-trovara-dark p-8 text-white/20 md:min-h-[28rem]; }
 .story-reel__fallback span { @apply text-8xl font-black; }
 .story-reel__copy { @apply flex flex-col items-start justify-center p-6 sm:p-9 md:p-12; }
 .story-reel__progress { @apply mt-5 flex items-center justify-center gap-2; }

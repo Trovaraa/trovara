@@ -168,7 +168,7 @@ function itemKey(category: string, i: number) {
       <div class="container-trovara max-w-4xl">
         <div v-for="group in faqs" :key="group.category" class="mb-12 last:mb-0">
           <div class="flex items-center gap-3 mb-6">
-            <div class="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center p-2">
+            <div class="w-12 h-12 rounded-2xl bg-white shadow-xs flex items-center justify-center p-2">
               <BrandIcon :name="group.icon" class="w-full h-full" />
             </div>
             <h2 class="text-2xl md:text-3xl font-black text-trovara-dark">{{ group.category }}</h2>
@@ -178,7 +178,7 @@ function itemKey(category: string, i: number) {
             <div
               v-for="(item, i) in group.items"
               :key="itemKey(group.category, i)"
-              class="bg-white rounded-2xl shadow-sm overflow-hidden transition-all duration-200"
+              class="bg-white rounded-2xl shadow-xs overflow-hidden transition-all duration-200"
               :class="openItems.has(itemKey(group.category, i)) ? 'shadow-md' : ''"
             >
               <button

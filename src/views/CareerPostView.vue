@@ -79,7 +79,7 @@ watch(() => route.params.slug, load)
       <div class="absolute inset-0 bg-hero-pattern opacity-10 pointer-events-none" />
       <div class="container-trovara relative z-10 mx-auto max-w-4xl text-center">
         <p class="section-subheading text-trovara-gold-300 mb-4">Careers</p>
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 break-words">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 wrap-break-word">
           {{ post?.title || 'Open role' }}
         </h1>
         <p class="text-white/70 text-lg leading-relaxed">

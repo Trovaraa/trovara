@@ -113,7 +113,7 @@ watch(
                 v-if="product.image"
                 :src="product.image"
                 :alt="product.imageAlt ?? product.name"
-                class="w-full aspect-[3/2] object-cover object-right"
+                class="w-full aspect-3/2 object-cover object-right"
               />
               <template v-else>
                 <div class="absolute inset-0 opacity-5" :class="productColorClasses(product.id).overlayBg" />
@@ -121,7 +121,7 @@ watch(
               </template>
               <span
                 v-if="product.availabilityNote"
-                class="absolute bottom-4 left-4 right-4 sm:right-auto rounded-full bg-white/95 px-4 py-2 text-center text-xs font-black text-trovara-dark shadow-sm"
+                class="absolute bottom-4 left-4 right-4 sm:right-auto rounded-full bg-white/95 px-4 py-2 text-center text-xs font-black text-trovara-dark shadow-xs"
               >
                 {{ product.availabilityNote }}
               </span>
@@ -135,7 +135,7 @@ watch(
             <div class="space-y-3 mb-10">
               <div v-for="benefit in product.benefits" :key="benefit" class="flex items-center gap-3">
                 <div
-                  class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-black shadow-sm"
+                  class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-black shadow-xs"
                   :class="productColorClasses(product.id).bgAccent"
                 >
                   ✓
@@ -217,7 +217,7 @@ watch(
                 { icon: 'sun', title: 'Collected at dawn', body: 'Eggs are hand-collected every morning and graded before they leave the farm. Freshness isn\'t a promise - it\'s the schedule.' },
               ]"
               :key="step.title"
-              class="bg-white rounded-3xl p-7 shadow-sm"
+              class="bg-white rounded-3xl p-7 shadow-xs"
             >
               <BrandIcon :name="step.icon" class="w-12 h-12 mb-4" />
               <h3 class="font-black text-trovara-dark text-lg mb-2">{{ step.title }}</h3>
@@ -234,7 +234,7 @@ watch(
                 { value: '100%', label: 'collected at dawn' },
               ]"
               :key="stat.label"
-              class="bg-white rounded-2xl p-5 text-center shadow-sm"
+              class="bg-white rounded-2xl p-5 text-center shadow-xs"
             >
               <div class="text-2xl md:text-3xl font-black" :class="productColorClasses(product.id).text">{{ stat.value }}</div>
               <div class="text-xs text-gray-400 font-medium mt-1 uppercase tracking-wide">{{ stat.label }}</div>
@@ -280,7 +280,7 @@ watch(
                 { q: 'What happens after I join?', a: 'We will use the contact you provide to share the first availability date and buying details when supply opens.' },
               ]"
               :key="item.q"
-              class="bg-white rounded-2xl shadow-sm p-6"
+              class="bg-white rounded-2xl shadow-xs p-6"
             >
               <h3 class="font-bold text-trovara-dark mb-2">{{ item.q }}</h3>
               <p class="text-gray-600 text-sm leading-relaxed">{{ item.a }}</p>
@@ -295,7 +295,7 @@ watch(
       >
         <div class="container-trovara">
           <div class="mb-10 max-w-2xl">
-            <p class="text-xs font-bold uppercase tracking-widest text-[#7B4F2E] mb-3">
+            <p class="text-xs font-bold uppercase tracking-widest text-trovara-earth mb-3">
               Trovara Coconut - Processed
             </p>
             <h2 class="text-3xl md:text-4xl font-black text-trovara-dark mb-3">
@@ -334,20 +334,20 @@ watch(
                 },
               ]"
               :key="format.sku"
-              class="rounded-3xl border border-[#7B4F2E]/10 bg-white overflow-hidden flex flex-col shadow-sm"
+              class="rounded-3xl border border-trovara-earth/10 bg-white overflow-hidden flex flex-col shadow-xs"
             >
               <img
                 :src="format.image"
                 :alt="format.name"
-                class="w-full aspect-[3/2] object-cover object-right"
+                class="w-full aspect-3/2 object-cover object-right"
                 loading="lazy"
               />
               <div class="p-6 flex flex-col flex-1">
-                <span class="mb-3 self-center rounded-full bg-[#7B4F2E]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[#7B4F2E]">
+                <span class="mb-3 self-center rounded-full bg-trovara-earth/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-trovara-earth">
                   Planned after harvest
                 </span>
                 <h3 class="text-xl font-black text-trovara-dark text-center">{{ format.name }}</h3>
-                <p class="mt-1 text-center text-sm font-medium italic text-[#7B4F2E]/80">{{ format.tagline }}</p>
+                <p class="mt-1 text-center text-sm font-medium italic text-trovara-earth/80">{{ format.tagline }}</p>
                 <p class="mt-3 flex-1 text-sm leading-relaxed text-gray-600 text-center">{{ format.body }}</p>
               </div>
             </div>
@@ -356,7 +356,7 @@ watch(
             <RouterLink to="/contact?subject=waitlist" class="btn-gold">
               Ask about milk, chips &amp; oil
             </RouterLink>
-            <RouterLink to="/wholesale" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 border-[#7B4F2E]/25 text-[#7B4F2E] font-semibold text-sm hover:bg-white transition-all duration-200">
+            <RouterLink to="/wholesale" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 border-trovara-earth/25 text-trovara-earth font-semibold text-sm hover:bg-white transition-all duration-200">
               Request wholesale forecast
             </RouterLink>
           </div>
@@ -400,12 +400,12 @@ watch(
                 },
               ]"
               :key="format.sku"
-              class="rounded-3xl border border-amber-100 bg-white overflow-hidden flex flex-col shadow-sm"
+              class="rounded-3xl border border-amber-100 bg-white overflow-hidden flex flex-col shadow-xs"
             >
               <img
                 :src="format.image"
                 :alt="format.name"
-                class="w-full aspect-[3/2] object-cover object-right"
+                class="w-full aspect-3/2 object-cover object-right"
                 loading="lazy"
               />
               <div class="p-6 flex flex-col flex-1">

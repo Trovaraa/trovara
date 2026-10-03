@@ -109,7 +109,7 @@ onMounted(async () => {
 
         <div
           v-else-if="pendingVerification"
-          class="bg-white border border-trovara-gold/40 rounded-2xl p-6 sm:p-8 text-center space-y-3 shadow-sm"
+          class="bg-white border border-trovara-gold/40 rounded-2xl p-6 sm:p-8 text-center space-y-3 shadow-xs"
         >
           <p class="text-trovara-gold font-bold">Being prepared</p>
           <p class="text-sm text-gray-600 leading-relaxed">
@@ -121,7 +121,7 @@ onMounted(async () => {
 
         <div
           v-else-if="error"
-          class="bg-white border border-red-200 rounded-2xl p-6 sm:p-8 text-center shadow-sm"
+          class="bg-white border border-red-200 rounded-2xl p-6 sm:p-8 text-center shadow-xs"
         >
           <p class="text-red-700">{{ error }}</p>
           <p class="text-xs text-gray-400 mt-3 font-mono break-all">{{ publicToken }}</p>
@@ -144,7 +144,7 @@ onMounted(async () => {
           </div>
 
           <article
-            class="public-lot-card bg-white border border-trovara-green/15 rounded-2xl p-6 sm:p-8 space-y-5 shadow-sm"
+            class="public-lot-card bg-white border border-trovara-green/15 rounded-2xl p-6 sm:p-8 space-y-5 shadow-xs"
           >
             <div class="text-center">
               <p class="text-xs text-gray-500 uppercase tracking-wide">Lot code</p>

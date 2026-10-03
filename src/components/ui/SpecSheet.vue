@@ -8,7 +8,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="rounded-2xl border border-gray-100 bg-white overflow-hidden shadow-sm">
+  <div class="rounded-2xl border border-gray-100 bg-white overflow-hidden shadow-xs">
     <div v-if="title" class="px-5 py-4 bg-trovara-cream/60 border-b border-gray-100">
       <h4 class="text-sm font-bold uppercase tracking-widest text-trovara-green">{{ title }}</h4>
     </div>

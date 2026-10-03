@@ -9,7 +9,7 @@ defineProps<{ post: JournalPost }>()
 <template>
   <article class="card group h-full flex flex-col overflow-hidden">
     <RouterLink :to="`/journal/${post.slug}`" class="flex flex-col h-full">
-      <div class="relative aspect-[16/10] overflow-hidden bg-trovara-light">
+      <div class="relative aspect-16/10 overflow-hidden bg-trovara-light">
         <img
           v-if="post.coverImage"
           :src="post.coverImage"
@@ -18,12 +18,12 @@ defineProps<{ post: JournalPost }>()
         />
         <div
           v-else
-          class="w-full h-full flex items-center justify-center bg-gradient-to-br from-trovara-light to-trovara-green/10"
+          class="w-full h-full flex items-center justify-center bg-linear-to-br from-trovara-light to-trovara-green/10"
           aria-hidden="true"
         >
           <BrandIcon name="sprout" class="w-20 h-20" />
         </div>
-        <span class="absolute top-4 left-4 px-2.5 py-1 bg-white/95 backdrop-blur-sm text-trovara-green text-xs font-semibold rounded-full shadow-sm">
+        <span class="absolute top-4 left-4 px-2.5 py-1 bg-white/95 backdrop-blur-xs text-trovara-green text-xs font-semibold rounded-full shadow-xs">
           {{ post.category }}
         </span>
       </div>

@@ -27,7 +27,7 @@ defineProps<{
         <article
           v-for="item in testimonials"
           :key="`${item.author}-${item.role}`"
-          class="rounded-2xl border border-gray-100 bg-trovara-cream p-7 shadow-sm"
+          class="rounded-2xl border border-gray-100 bg-trovara-cream p-7 shadow-xs"
         >
           <p class="text-trovara-dark text-base leading-relaxed mb-4">"{{ item.quote }}"</p>
           <div>

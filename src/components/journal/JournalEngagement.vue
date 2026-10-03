@@ -156,7 +156,8 @@ onMounted(loadEngagement)
 </template>
 
 <style scoped>
-.journal-conversation { @apply rounded-3xl border border-trovara-green/10 bg-white p-5 shadow-sm sm:p-8; }
+@reference '../../style.css';
+.journal-conversation { @apply rounded-3xl border border-trovara-green/10 bg-white p-5 shadow-xs sm:p-8; }
 .journal-conversation__header { @apply flex flex-col gap-5 border-b border-gray-100 pb-6 sm:flex-row sm:items-center sm:justify-between; }
 .journal-like { @apply inline-flex min-h-12 items-center justify-center gap-2 self-start rounded-full border border-trovara-green/20 bg-white px-5 py-2.5 text-sm font-bold text-trovara-green transition hover:border-trovara-green hover:bg-trovara-light disabled:cursor-not-allowed disabled:opacity-50; }
 .journal-like svg { @apply h-5 w-5; }
@@ -166,7 +167,7 @@ onMounted(loadEngagement)
 .journal-comment-form { @apply mt-8 space-y-5; }
 .journal-comment-form label:not(.sr-only) { @apply block text-sm font-bold text-trovara-dark; }
 .journal-comment-form input,
-.journal-comment-form textarea { @apply mt-2 w-full rounded-xl border border-trovara-green/20 bg-white px-4 py-3 font-normal text-trovara-dark outline-none transition focus:border-trovara-green focus:ring-4 focus:ring-trovara-green/10; }
+.journal-comment-form textarea { @apply mt-2 w-full rounded-xl border border-trovara-green/20 bg-white px-4 py-3 font-normal text-trovara-dark outline-hidden transition focus:border-trovara-green focus:ring-4 focus:ring-trovara-green/10; }
 .journal-comment-form textarea { @apply resize-y; }
 .journal-comment-form small { @apply mt-1 block text-right text-xs font-normal text-gray-400; }
 .journal-message { @apply mt-5 rounded-xl px-4 py-3 text-sm; }
@@ -177,4 +178,3 @@ onMounted(loadEngagement)
   .journal-like { transition: none; }
 }
 </style>
-

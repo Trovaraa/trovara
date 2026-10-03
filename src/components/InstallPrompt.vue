@@ -8,7 +8,7 @@ const { visible, canPrompt, iosHint, install, dismiss } = useInstallPrompt()
   <Transition name="a2hs">
     <div
       v-if="visible"
-      class="fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] left-4 right-4 md:left-auto md:right-6 md:bottom-6 md:max-w-sm z-[60] rounded-2xl bg-trovara-dark text-white shadow-2xl border border-white/10 p-4"
+      class="fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] left-4 right-4 md:left-auto md:right-6 md:bottom-6 md:max-w-sm z-60 rounded-2xl bg-trovara-dark text-white shadow-2xl border border-white/10 p-4"
       role="dialog"
       aria-label="Add Trovara to your home screen"
     >

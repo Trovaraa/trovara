@@ -102,7 +102,7 @@ watch(
 
     <div v-if="post.coverImage" class="bg-white pb-2 md:pb-0">
       <div class="container-trovara max-w-4xl">
-        <div class="relative -mt-8 md:-mt-12 rounded-2xl overflow-hidden shadow-lg aspect-[16/9]">
+        <div class="relative -mt-8 md:-mt-12 rounded-2xl overflow-hidden shadow-lg aspect-video">
           <img
             :src="post.coverImage"
             :alt="post.title"

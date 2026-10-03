@@ -36,16 +36,16 @@ const paths = [
 
 <template>
   <div>
-    <section class="relative flex min-h-[43rem] items-center overflow-hidden bg-[#0b3a25] lg:min-h-[47rem]">
+    <section class="relative flex min-h-172 items-center overflow-hidden bg-[#0b3a25] lg:min-h-188">
       <div class="absolute inset-0 bg-hero-pattern opacity-20 pointer-events-none" />
       <div class="absolute inset-0 hero-grid opacity-40 pointer-events-none" />
-      <div class="absolute -right-32 -top-32 h-[32rem] w-[32rem] rounded-full bg-trovara-green-400/20 blur-3xl pointer-events-none" />
-      <div class="absolute -bottom-32 -left-32 h-[30rem] w-[30rem] rounded-full bg-trovara-gold/15 blur-3xl pointer-events-none" />
+      <div class="absolute -right-32 -top-32 h-128 w-lg rounded-full bg-trovara-green-400/20 blur-3xl pointer-events-none" />
+      <div class="absolute -bottom-32 -left-32 h-120 w-120 rounded-full bg-trovara-gold/15 blur-3xl pointer-events-none" />
 
       <div class="container-trovara relative z-10 pb-16 pt-28 lg:pb-20 lg:pt-32">
         <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(22rem,0.9fr)] xl:gap-20">
           <div class="min-w-0">
-            <div class="mb-7 inline-flex max-w-full items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2 backdrop-blur-sm">
+            <div class="mb-7 inline-flex max-w-full items-center gap-2.5 rounded-full border border-white/10 bg-white/8 px-4 py-2 backdrop-blur-xs">
               <span class="h-2 w-2 flex-shrink-0 rounded-full bg-trovara-gold" />
               <span class="text-xs font-bold uppercase leading-snug tracking-[0.16em] text-trovara-gold-200">
                 Food you can trust · from a farm built for tomorrow
@@ -73,8 +73,8 @@ const paths = [
           </div>
 
           <div class="hidden w-full max-w-md justify-self-end lg:block">
-            <div class="rounded-[2rem] border border-white/15 bg-white/[0.07] p-5 shadow-2xl shadow-black/20 backdrop-blur-md">
-              <div class="relative flex min-h-[24rem] flex-col overflow-hidden rounded-[1.4rem] bg-[#f2ead8] p-6 text-trovara-dark">
+            <div class="rounded-4xl border border-white/15 bg-white/[0.07] p-5 shadow-2xl shadow-black/20 backdrop-blur-md">
+              <div class="relative flex min-h-96 flex-col overflow-hidden rounded-[1.4rem] bg-[#f2ead8] p-6 text-trovara-dark">
                 <div class="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-trovara-gold/25" />
                 <div class="relative z-10 flex items-start justify-between gap-5">
                   <div>

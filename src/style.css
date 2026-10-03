@@ -1,31 +1,227 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss' source(none);
+@source '../index.html';
+@source './';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-trovara-green-50: #edf7f1;
+  --color-trovara-green-100: #d2ede0;
+  --color-trovara-green-200: #a5dbc1;
+  --color-trovara-green-300: #78c8a2;
+  --color-trovara-green-400: #4bb583;
+  --color-trovara-green-500: #2d9960;
+  --color-trovara-green-600: #1a6b3c;
+  --color-trovara-green-700: #145330;
+  --color-trovara-green-800: #0d3b22;
+  --color-trovara-green-900: #072213;
+  --color-trovara-green: #1a6b3c;
+
+  --color-trovara-gold-50: #fef9ed;
+  --color-trovara-gold-100: #fcedc8;
+  --color-trovara-gold-200: #f9d88f;
+  --color-trovara-gold-300: #f5c357;
+  --color-trovara-gold-400: #e8a427;
+  --color-trovara-gold-500: #c8841a;
+  --color-trovara-gold-600: #a8650f;
+  --color-trovara-gold-700: #854c08;
+  --color-trovara-gold-800: #623404;
+  --color-trovara-gold-900: #3f1e01;
+  --color-trovara-gold: #e8a427;
+
+  --color-trovara-earth: #7b4f2e;
+  --color-trovara-cream: #fafaf5;
+  --color-trovara-dark: #1a1a0f;
+  --color-trovara-light: #f2f5ee;
+
+  --font-sans: Inter, system-ui, sans-serif;
+  --font-heading: Inter, system-ui, sans-serif;
+
+  --background-image-hero-pattern: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+
+  --animate-fade-up: fadeUp 0.6s ease-out forwards;
+  --animate-fade-in: fadeIn 0.4s ease-out forwards;
+  --animate-slide-in: slideIn 0.5s ease-out forwards;
+
+  @keyframes fadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      transform: translateX(-24px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}
 
 /*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-gray-400);
+    opacity: 1;
+  }
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+  dialog {
+    margin: auto;
+  }
+}
+
+@utility btn-primary {
+  @apply inline-flex items-center justify-center px-6 py-3 bg-trovara-green text-white font-semibold rounded-lg
+           hover:bg-trovara-green-700 active:bg-trovara-green-800
+           transition-all duration-200 ease-in-out
+           focus:outline-hidden focus:ring-2 focus:ring-trovara-green focus:ring-offset-2
+           shadow-xs hover:shadow-md;
+}
+
+@utility btn-secondary {
+  @apply inline-flex items-center justify-center px-6 py-3 border-2 border-trovara-green text-trovara-green font-semibold rounded-lg
+           hover:bg-trovara-green hover:text-white
+           transition-all duration-200 ease-in-out
+           focus:outline-hidden focus:ring-2 focus:ring-trovara-green focus:ring-offset-2;
+}
+
+@utility btn-gold {
+  @apply inline-flex items-center justify-center px-6 py-3 bg-trovara-gold font-semibold rounded-lg
+           hover:bg-trovara-gold-500 active:bg-trovara-gold-600
+           transition-all duration-200 ease-in-out
+           focus:outline-hidden focus:ring-2 focus:ring-trovara-gold focus:ring-offset-2
+           shadow-xs hover:shadow-md;
+  color: #1a1a0f;
+}
+
+@utility section-heading {
+  @apply text-3xl md:text-4xl lg:text-5xl font-bold;
+  color: var(--tv-ink);
+}
+
+@utility section-subheading {
+  @apply text-lg md:text-xl text-trovara-green-600 font-medium uppercase tracking-widest;
+}
+
+@utility card {
+  @apply rounded-2xl shadow-xs hover:shadow-lg transition-shadow duration-300 overflow-hidden;
+  background-color: var(--tv-surface);
+}
+
+@utility container-trovara {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  width: 100%;
+  min-width: 0;
+}
+
+@utility journal-content {
+  @apply space-y-6 leading-relaxed text-lg;
+  color: var(--tv-muted-text);
+
+  & h2 {
+    @apply text-2xl md:text-3xl font-bold pt-4;
+    color: var(--tv-ink);
+  }
+
+  & h3 {
+    @apply text-xl md:text-2xl font-bold pt-2;
+    color: var(--tv-ink);
+  }
+
+  & p {
+    @apply leading-relaxed;
+  }
+
+  & ul {
+    @apply space-y-3 pl-1 list-none;
+  }
+
+  & ul li {
+    @apply flex items-start gap-3;
+  }
+
+  & ul li::before {
+    content: '';
+    @apply mt-2.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-trovara-green;
+  }
+
+  & blockquote {
+    @apply border-l-4 border-trovara-gold pl-6 py-2 my-8;
+  }
+
+  & blockquote p {
+    @apply text-xl font-medium italic leading-relaxed;
+    color: var(--tv-ink);
+  }
+
+  & a {
+    @apply text-trovara-green font-medium hover:underline;
+  }
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@layer utilities {
+  /*
   Light = default marketing look.
   Dark = opt-in via html.dark (ThemeSwitcher). Brand green/gold/earth stay fixed;
   cream surfaces and ink text remap. Intentional dark chrome (footer, heroes)
   keeps bg-trovara-dark / green as painted.
 */
-:root {
-  color-scheme: light;
-  --tv-canvas: #fafaf5;
-  --tv-ink: #1a1a0f;
-  --tv-surface: #ffffff;
-  --tv-muted: #f2f5ee;
-  --tv-border: rgba(26, 26, 15, 0.1);
-  --tv-muted-text: #6b7280;
-}
+  :root {
+    color-scheme: light;
+    --tv-canvas: #fafaf5;
+    --tv-ink: #1a1a0f;
+    --tv-surface: #ffffff;
+    --tv-muted: #f2f5ee;
+    --tv-border: rgba(26, 26, 15, 0.1);
+    --tv-muted-text: #6b7280;
+  }
 
-html.dark {
-  color-scheme: dark;
-  --tv-canvas: #0f1612;
-  --tv-ink: #eef2ee;
-  --tv-surface: #15201b;
-  --tv-muted: #1a2820;
-  --tv-border: rgba(238, 242, 238, 0.12);
-  --tv-muted-text: #9ca3af;
+  html.dark {
+    color-scheme: dark;
+    --tv-canvas: #0f1612;
+    --tv-ink: #eef2ee;
+    --tv-surface: #15201b;
+    --tv-muted: #1a2820;
+    --tv-border: rgba(238, 242, 238, 0.12);
+    --tv-muted-text: #9ca3af;
+  }
 }
 
 @layer base {
@@ -63,403 +259,309 @@ html.dark {
   }
 }
 
-@layer components {
-  .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 bg-trovara-green text-white font-semibold rounded-lg
-           hover:bg-trovara-green-700 active:bg-trovara-green-800
-           transition-all duration-200 ease-in-out
-           focus:outline-none focus:ring-2 focus:ring-trovara-green focus:ring-offset-2
-           shadow-sm hover:shadow-md;
-  }
-
-  .btn-secondary {
-    @apply inline-flex items-center justify-center px-6 py-3 border-2 border-trovara-green text-trovara-green font-semibold rounded-lg
-           hover:bg-trovara-green hover:text-white
-           transition-all duration-200 ease-in-out
-           focus:outline-none focus:ring-2 focus:ring-trovara-green focus:ring-offset-2;
-  }
-
-  .btn-gold {
-    @apply inline-flex items-center justify-center px-6 py-3 bg-trovara-gold font-semibold rounded-lg
-           hover:bg-trovara-gold-500 active:bg-trovara-gold-600
-           transition-all duration-200 ease-in-out
-           focus:outline-none focus:ring-2 focus:ring-trovara-gold focus:ring-offset-2
-           shadow-sm hover:shadow-md;
-    color: #1a1a0f;
-  }
-
-  .section-heading {
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold;
-    color: var(--tv-ink);
-  }
-
-  .section-subheading {
-    @apply text-lg md:text-xl text-trovara-green-600 font-medium uppercase tracking-widest;
-  }
-
-  .card {
-    @apply rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden;
-    background-color: var(--tv-surface);
-  }
-
-  .container-trovara {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
-    width: 100%;
-    min-width: 0;
-  }
-
-  .journal-content {
-    @apply space-y-6 leading-relaxed text-lg;
-    color: var(--tv-muted-text);
-  }
-
-  .journal-content h2 {
-    @apply text-2xl md:text-3xl font-bold pt-4;
-    color: var(--tv-ink);
-  }
-
-  .journal-content h3 {
-    @apply text-xl md:text-2xl font-bold pt-2;
-    color: var(--tv-ink);
-  }
-
-  .journal-content p {
-    @apply leading-relaxed;
-  }
-
-  .journal-content ul {
-    @apply space-y-3 pl-1 list-none;
-  }
-
-  .journal-content ul li {
-    @apply flex items-start gap-3;
-  }
-
-  .journal-content ul li::before {
-    content: '';
-    @apply mt-2.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-trovara-green;
-  }
-
-  .journal-content blockquote {
-    @apply border-l-4 border-trovara-gold pl-6 py-2 my-8;
-  }
-
-  .journal-content blockquote p {
-    @apply text-xl font-medium italic leading-relaxed;
-    color: var(--tv-ink);
-  }
-
-  .journal-content a {
-    @apply text-trovara-green font-medium hover:underline;
-  }
-}
-
-/* The Journal story reel uses fixed light surfaces in light mode. Give it a
+@layer utilities {
+  /* The Journal story reel uses fixed light surfaces in light mode. Give it a
    deliberate dark surface instead of allowing global light-text overrides to
    create white-on-cream contrast failures. */
-html.dark .story-reel {
-  background: #0c2017 !important;
-}
-
-html.dark .story-reel__card {
-  border-color: rgb(148 163 184 / 18%) !important;
-  background: #10281e !important;
-}
-
-html.dark .story-reel__buttons button {
-  border-color: rgb(148 163 184 / 28%) !important;
-  background: #10281e !important;
-  color: #f8fafc !important;
-}
-
-html.dark .story-reel__progress button {
-  background: rgb(255 255 255 / 20%) !important;
-}
-
-html.dark .story-reel__progress button.is-active {
-  background: #d9b85f !important;
-}
-
-html.dark .journal-conversation {
-  border-color: rgb(148 163 184 / 18%) !important;
-  background: #10281e !important;
-}
-
-html.dark .journal-conversation__header {
-  border-color: rgb(148 163 184 / 18%) !important;
-}
-
-html.dark .journal-like,
-html.dark .journal-comment,
-html.dark .journal-comment-form input,
-html.dark .journal-comment-form textarea {
-  border-color: rgb(148 163 184 / 24%) !important;
-  background: #0c2017 !important;
-}
-
-html.dark .journal-comment-form input,
-html.dark .journal-comment-form textarea {
-  color: #eef2ee !important;
-}
-
-@media (max-width: 639px) {
-  input,
-  textarea,
-  select {
-    /* Prevent iOS from zooming the viewport when a field receives focus. */
-    font-size: 16px !important;
+  html.dark .story-reel {
+    background: #0c2017 !important;
   }
 
-  button,
-  a,
-  input,
-  select,
-  textarea {
-    touch-action: manipulation;
+  html.dark .story-reel__card {
+    border-color: rgb(148 163 184 / 18%) !important;
+    background: #10281e !important;
   }
-}
 
-/* ── Dark mode: remap light-only utility classes used across views ───────── */
-
-html.dark .bg-white {
-  background-color: var(--tv-surface) !important;
-}
-html.dark .bg-white\/95 {
-  background-color: rgb(15 22 18 / 0.95) !important;
-}
-html.dark .bg-white\/90 {
-  background-color: rgb(21 32 27 / 0.9) !important;
-}
-html.dark .bg-white\/80 {
-  background-color: rgb(21 32 27 / 0.8) !important;
-}
-html.dark .bg-white\/10 {
-  background-color: rgb(255 255 255 / 0.1) !important;
-}
-html.dark .bg-white\/20 {
-  background-color: rgb(255 255 255 / 0.2) !important;
-}
-html.dark .bg-white\/75 {
-  background-color: rgb(21 32 27 / 0.75) !important;
-}
-
-html.dark .bg-trovara-cream {
-  background-color: var(--tv-canvas) !important;
-}
-html.dark .bg-trovara-light {
-  background-color: var(--tv-muted) !important;
-}
-
-/* Ink text flips; leave gold CTAs and dark chrome backgrounds alone */
-html.dark .text-trovara-dark:not(.btn-gold) {
-  color: var(--tv-ink) !important;
-}
-/* Opacity variants use a different class name and need their own remap */
-html.dark .text-trovara-dark\/50,
-html.dark .text-trovara-dark\/60,
-html.dark .text-trovara-dark\/70,
-html.dark .text-trovara-dark\/75,
-html.dark .text-trovara-dark\/80 {
-  color: rgb(238 242 238 / 0.78) !important;
-}
-html.dark .border-trovara-dark\/10,
-html.dark .border-trovara-dark\/15 {
-  border-color: rgb(238 242 238 / 0.18) !important;
-}
-html.dark .btn-gold,
-html.dark .btn-gold.text-trovara-dark {
-  color: #1a1a0f !important;
-}
-
-html.dark .text-gray-900,
-html.dark .text-gray-800 {
-  color: #eef2ee !important;
-}
-html.dark .text-gray-700 {
-  color: #d1d5db !important;
-}
-html.dark .text-gray-600,
-html.dark .text-gray-500 {
-  color: var(--tv-muted-text) !important;
-}
-html.dark .text-gray-400 {
-  color: #9ca3af !important;
-}
-html.dark .text-gray-300 {
-  color: #d1d5db !important;
-}
-
-/* Brand green needs a lighter value when it is used as text on dark surfaces. */
-html.dark .text-trovara-green,
-html.dark .text-trovara-green-600,
-html.dark .text-trovara-green-700,
-html.dark .text-trovara-green-300 {
-  color: #78c8a2 !important;
-}
-html.dark .btn-secondary {
-  border-color: #78c8a2 !important;
-  color: #78c8a2 !important;
-}
-html.dark .btn-secondary:hover {
-  background-color: #1a6b3c !important;
-  color: #ffffff !important;
-}
-
-html.dark .border-gray-100,
-html.dark .border-gray-200,
-html.dark .border-gray-300 {
-  border-color: var(--tv-border) !important;
-}
-
-html.dark .divide-gray-100 > :not([hidden]) ~ :not([hidden]),
-html.dark .divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
-  border-color: var(--tv-border) !important;
-}
-
-html.dark .shadow-sm,
-html.dark .shadow,
-html.dark .shadow-md,
-html.dark .shadow-lg,
-html.dark .shadow-xl,
-html.dark .shadow-2xl {
-  --tw-shadow-color: rgb(0 0 0 / 0.45);
-}
-
-html.dark .focus\:ring-offset-2:focus {
-  --tw-ring-offset-color: var(--tv-canvas);
-}
-
-html.dark .placeholder\:text-gray-400::placeholder,
-html.dark .placeholder\:text-gray-500::placeholder,
-html.dark .placeholder-gray-400::placeholder,
-html.dark .placeholder-gray-500::placeholder {
-  color: #6b7280 !important;
-}
-
-html.dark .text-red-600 {
-  color: #fca5a5 !important;
-}
-html.dark .text-red-700 {
-  color: #fca5a5 !important;
-}
-
-/* Gradient starts that stay white break dark-mode ink remaps */
-html.dark .from-white {
-  --tw-gradient-from: var(--tv-surface) var(--tw-gradient-from-position) !important;
-  --tw-gradient-to: rgb(21 32 27 / 0) var(--tw-gradient-to-position) !important;
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
-}
-
-/* Soften pale green washes used as section backgrounds */
-html.dark .bg-trovara-green-50 {
-  background-color: rgb(26 107 60 / 0.12) !important;
-}
-html.dark .bg-trovara-green-100 {
-  background-color: rgb(26 107 60 / 0.18) !important;
-}
-html.dark .bg-trovara-gold-50 {
-  background-color: rgb(232 164 39 / 0.12) !important;
-}
-html.dark .bg-amber-50 {
-  background-color: rgb(232 164 39 / 0.12) !important;
-}
-html.dark .bg-amber-200\/60 {
-  background-color: rgb(232 164 39 / 0.28) !important;
-}
-html.dark .bg-amber-500 {
-  background-color: #c8841a !important;
-}
-html.dark .border-amber-100,
-html.dark .border-amber-200,
-html.dark .border-amber-300 {
-  border-color: rgb(232 164 39 / 0.28) !important;
-}
-html.dark .text-amber-700,
-html.dark .text-amber-800,
-html.dark .text-amber-800\/80 {
-  color: #f5c357 !important;
-}
-
-/* Earth / coconut accents on remapped cream cards */
-html.dark .text-trovara-earth,
-html.dark .text-\[\#7B4F2E\],
-html.dark .text-\[\#7B4F2E\]\/80,
-html.dark .text-\[\#9A4D1A\] {
-  color: #e8c4a0 !important;
-}
-html.dark .border-\[\#7B4F2E\]\/10,
-html.dark .border-\[\#7B4F2E\]\/25 {
-  border-color: rgb(232 196 160 / 0.28) !important;
-}
-html.dark .bg-\[\#7B4F2E\]\/10 {
-  background-color: rgb(232 196 160 / 0.14) !important;
-}
-html.dark .hover\:bg-amber-50:hover {
-  background-color: rgb(232 164 39 / 0.16) !important;
-}
-html.dark .bg-violet-50 {
-  background-color: rgb(139 92 246 / 0.14) !important;
-}
-html.dark .border-violet-200 {
-  border-color: rgb(139 92 246 / 0.3) !important;
-}
-html.dark .text-violet-800 {
-  color: #c4b5fd !important;
-}
-
-html.dark .bg-\[\#f2ead8\] {
-  background-color: #2a3328 !important;
-}
-html.dark .bg-\[\#f3f5f1\] {
-  background-color: var(--tv-muted) !important;
-}
-html.dark .bg-\[\#FDF5EE\],
-html.dark .bg-\[\#fdf5ee\],
-html.dark .bg-\[\#FEF6E7\],
-html.dark .bg-\[\#fef6e7\],
-html.dark .bg-\[\#FFF4E8\],
-html.dark .bg-\[\#fff4e8\] {
-  background-color: #202b24 !important;
-}
-
-html.dark .section-subheading {
-  color: #4bb583;
-}
-
-.hero-grid {
-  background-image:
-    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: linear-gradient(to bottom, black, transparent 88%);
-}
-
-.icon-on-dark {
-  border-radius: 0.9rem;
-  background: rgba(247, 243, 232, 0.94);
-  padding: 0.45rem;
-}
-
-.mobile-product-rail {
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-.mobile-product-rail::-webkit-scrollbar {
-  display: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
+  html.dark .story-reel__buttons button {
+    border-color: rgb(148 163 184 / 28%) !important;
+    background: #10281e !important;
+    color: #f8fafc !important;
   }
-}
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  html.dark .story-reel__progress button {
+    background: rgb(255 255 255 / 20%) !important;
+  }
+
+  html.dark .story-reel__progress button.is-active {
+    background: #d9b85f !important;
+  }
+
+  html.dark .journal-conversation {
+    border-color: rgb(148 163 184 / 18%) !important;
+    background: #10281e !important;
+  }
+
+  html.dark .journal-conversation__header {
+    border-color: rgb(148 163 184 / 18%) !important;
+  }
+
+  html.dark .journal-like,
+  html.dark .journal-comment,
+  html.dark .journal-comment-form input,
+  html.dark .journal-comment-form textarea {
+    border-color: rgb(148 163 184 / 24%) !important;
+    background: #0c2017 !important;
+  }
+
+  html.dark .journal-comment-form input,
+  html.dark .journal-comment-form textarea {
+    color: #eef2ee !important;
+  }
+
+  @media (max-width: 639px) {
+    input,
+    textarea,
+    select {
+      /* Prevent iOS from zooming the viewport when a field receives focus. */
+      font-size: 16px !important;
+    }
+
+    button,
+    a,
+    input,
+    select,
+    textarea {
+      touch-action: manipulation;
+    }
+  }
+
+  /* ── Dark mode: remap light-only utility classes used across views ───────── */
+
+  html.dark .bg-white {
+    background-color: var(--tv-surface) !important;
+  }
+  html.dark .bg-white\/95 {
+    background-color: rgb(15 22 18 / 0.95) !important;
+  }
+  html.dark .bg-white\/90 {
+    background-color: rgb(21 32 27 / 0.9) !important;
+  }
+  html.dark .bg-white\/80 {
+    background-color: rgb(21 32 27 / 0.8) !important;
+  }
+  html.dark .bg-white\/10 {
+    background-color: rgb(255 255 255 / 0.1) !important;
+  }
+  html.dark .bg-white\/20 {
+    background-color: rgb(255 255 255 / 0.2) !important;
+  }
+  html.dark .bg-white\/75 {
+    background-color: rgb(21 32 27 / 0.75) !important;
+  }
+
+  html.dark .bg-trovara-cream {
+    background-color: var(--tv-canvas) !important;
+  }
+  html.dark .bg-trovara-light {
+    background-color: var(--tv-muted) !important;
+  }
+
+  /* Ink text flips; leave gold CTAs and dark chrome backgrounds alone */
+  html.dark .text-trovara-dark:not(.btn-gold) {
+    color: var(--tv-ink) !important;
+  }
+  /* Opacity variants use a different class name and need their own remap */
+  html.dark .text-trovara-dark\/50,
+  html.dark .text-trovara-dark\/60,
+  html.dark .text-trovara-dark\/70,
+  html.dark .text-trovara-dark\/75,
+  html.dark .text-trovara-dark\/80 {
+    color: rgb(238 242 238 / 0.78) !important;
+  }
+  html.dark .border-trovara-dark\/10,
+  html.dark .border-trovara-dark\/15 {
+    border-color: rgb(238 242 238 / 0.18) !important;
+  }
+  html.dark .btn-gold,
+  html.dark .btn-gold.text-trovara-dark {
+    color: #1a1a0f !important;
+  }
+
+  html.dark .text-gray-900,
+  html.dark .text-gray-800 {
+    color: #eef2ee !important;
+  }
+  html.dark .text-gray-700 {
+    color: #d1d5db !important;
+  }
+  html.dark .text-gray-600,
+  html.dark .text-gray-500 {
+    color: var(--tv-muted-text) !important;
+  }
+  html.dark .text-gray-400 {
+    color: #9ca3af !important;
+  }
+  html.dark .text-gray-300 {
+    color: #d1d5db !important;
+  }
+
+  /* Brand green needs a lighter value when it is used as text on dark surfaces. */
+  html.dark .text-trovara-green,
+  html.dark .text-trovara-green-600,
+  html.dark .text-trovara-green-700,
+  html.dark .text-trovara-green-300 {
+    color: #78c8a2 !important;
+  }
+  html.dark .btn-secondary {
+    border-color: #78c8a2 !important;
+    color: #78c8a2 !important;
+  }
+  html.dark .btn-secondary:hover {
+    background-color: #1a6b3c !important;
+    color: #ffffff !important;
+  }
+
+  html.dark .border-gray-100,
+  html.dark .border-gray-200,
+  html.dark .border-gray-300 {
+    border-color: var(--tv-border) !important;
+  }
+
+  html.dark .divide-gray-100 > :not([hidden]) ~ :not([hidden]),
+  html.dark .divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
+    border-color: var(--tv-border) !important;
+  }
+
+  html.dark .shadow-xs,
+  html.dark .shadow-sm,
+  html.dark .shadow-md,
+  html.dark .shadow-lg,
+  html.dark .shadow-xl,
+  html.dark .shadow-2xl {
+    --tw-shadow-color: rgb(0 0 0 / 0.45);
+  }
+
+  html.dark .focus\:ring-offset-2:focus {
+    --tw-ring-offset-color: var(--tv-canvas);
+  }
+
+  html.dark .placeholder\:text-gray-400::placeholder,
+  html.dark .placeholder\:text-gray-500::placeholder,
+  html.dark .placeholder-gray-400::placeholder,
+  html.dark .placeholder-gray-500::placeholder {
+    color: #6b7280 !important;
+  }
+
+  html.dark .text-red-600 {
+    color: #fca5a5 !important;
+  }
+  html.dark .text-red-700 {
+    color: #fca5a5 !important;
+  }
+
+  /* Gradient starts that stay white break dark-mode ink remaps */
+  html.dark .from-white {
+    --tw-gradient-from: var(--tv-surface) !important;
+    --tw-gradient-to: rgb(21 32 27 / 0) !important;
+  }
+
+  /* Soften pale green washes used as section backgrounds */
+  html.dark .bg-trovara-green-50 {
+    background-color: rgb(26 107 60 / 0.12) !important;
+  }
+  html.dark .bg-trovara-green-100 {
+    background-color: rgb(26 107 60 / 0.18) !important;
+  }
+  html.dark .bg-trovara-gold-50 {
+    background-color: rgb(232 164 39 / 0.12) !important;
+  }
+  html.dark .bg-amber-50 {
+    background-color: rgb(232 164 39 / 0.12) !important;
+  }
+  html.dark .bg-amber-200\/60 {
+    background-color: rgb(232 164 39 / 0.28) !important;
+  }
+  html.dark .bg-amber-500 {
+    background-color: #c8841a !important;
+  }
+  html.dark .border-amber-100,
+  html.dark .border-amber-200,
+  html.dark .border-amber-300 {
+    border-color: rgb(232 164 39 / 0.28) !important;
+  }
+  html.dark .text-amber-700,
+  html.dark .text-amber-800,
+  html.dark .text-amber-800\/80 {
+    color: #f5c357 !important;
+  }
+
+  /* Earth / coconut accents on remapped cream cards */
+  html.dark .text-trovara-earth,
+  html.dark .text-\[\#7B4F2E\],
+  html.dark .text-\[\#7B4F2E\]\/80,
+  html.dark .text-\[\#9A4D1A\] {
+    color: #e8c4a0 !important;
+  }
+  html.dark .border-\[\#7B4F2E\]\/10,
+  html.dark .border-\[\#7B4F2E\]\/25 {
+    border-color: rgb(232 196 160 / 0.28) !important;
+  }
+  html.dark .bg-\[\#7B4F2E\]\/10 {
+    background-color: rgb(232 196 160 / 0.14) !important;
+  }
+  html.dark .hover\:bg-amber-50:hover {
+    background-color: rgb(232 164 39 / 0.16) !important;
+  }
+  html.dark .bg-violet-50 {
+    background-color: rgb(139 92 246 / 0.14) !important;
+  }
+  html.dark .border-violet-200 {
+    border-color: rgb(139 92 246 / 0.3) !important;
+  }
+  html.dark .text-violet-800 {
+    color: #c4b5fd !important;
+  }
+
+  html.dark .bg-\[\#f2ead8\] {
+    background-color: #2a3328 !important;
+  }
+  html.dark .bg-\[\#f3f5f1\] {
+    background-color: var(--tv-muted) !important;
+  }
+  html.dark .bg-\[\#FDF5EE\],
+  html.dark .bg-\[\#fdf5ee\],
+  html.dark .bg-\[\#FEF6E7\],
+  html.dark .bg-\[\#fef6e7\],
+  html.dark .bg-\[\#FFF4E8\],
+  html.dark .bg-\[\#fff4e8\] {
+    background-color: #202b24 !important;
+  }
+
+  html.dark .section-subheading {
+    color: #4bb583;
+  }
+
+  .hero-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: linear-gradient(to bottom, black, transparent 88%);
+  }
+
+  .icon-on-dark {
+    border-radius: 0.9rem;
+    background: rgba(247, 243, 232, 0.94);
+    padding: 0.45rem;
+  }
+
+  .mobile-product-rail {
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-product-rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
   }
 }

@@ -26,7 +26,7 @@ const statusLabels: Record<HarvestWindow['status'], string> = {
 </script>
 
 <template>
-  <div class="overflow-x-auto rounded-2xl border border-gray-100 bg-white shadow-sm">
+  <div class="overflow-x-auto rounded-2xl border border-gray-100 bg-white shadow-xs">
     <table class="w-full min-w-[640px] text-left text-sm">
       <thead>
         <tr class="border-b border-gray-100 bg-trovara-cream/60">

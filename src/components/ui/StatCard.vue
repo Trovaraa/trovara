@@ -13,8 +13,8 @@ defineProps<{
     :class="[
       'rounded-2xl p-6 text-center',
       dark
-        ? 'bg-white/10 backdrop-blur-sm'
-        : 'bg-white shadow-sm border border-gray-100',
+        ? 'bg-white/10 backdrop-blur-xs'
+        : 'bg-white shadow-xs border border-gray-100',
     ]"
   >
     <BrandIcon :name="icon" class="w-9 h-9 mx-auto mb-3" />

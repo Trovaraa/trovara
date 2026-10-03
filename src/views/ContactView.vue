@@ -245,7 +245,7 @@ const contactInfo = [
 
           <!-- Form -->
           <div class="md:col-span-3">
-            <div class="bg-white rounded-3xl p-5 sm:p-8 lg:p-10 shadow-sm">
+            <div class="bg-white rounded-3xl p-5 sm:p-8 lg:p-10 shadow-xs">
 
               <!-- Success State -->
               <div v-if="submitted" class="text-center py-12">
@@ -286,7 +286,7 @@ const contactInfo = [
                       required
                       :maxlength="FIELD_LIMITS.name"
                       placeholder="Ada Okonkwo"
-                      class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-trovara-cream focus:outline-none focus:ring-2 focus:ring-trovara-green/30 focus:border-trovara-green transition text-trovara-dark placeholder-gray-400 text-sm"
+                      class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-trovara-cream focus:outline-hidden focus:ring-2 focus:ring-trovara-green/30 focus:border-trovara-green transition text-trovara-dark placeholder-gray-400 text-sm"
                     />
                   </div>
                   <div>
@@ -302,7 +302,7 @@ const contactInfo = [
                       required
                       :maxlength="FIELD_LIMITS.email"
                       placeholder="you@example.com"
-                      class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-trovara-cream focus:outline-none focus:ring-2 focus:ring-trovara-green/30 focus:border-trovara-green transition text-trovara-dark placeholder-gray-400 text-sm"
+                      class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-trovara-cream focus:outline-hidden focus:ring-2 focus:ring-trovara-green/30 focus:border-trovara-green transition text-trovara-dark placeholder-gray-400 text-sm"
                     />
                   </div>
                 </div>
@@ -320,7 +320,7 @@ const contactInfo = [
                       inputmode="tel"
                       :maxlength="FIELD_LIMITS.phone"
                       placeholder="+234 810 000 0000"
-                      class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-trovara-cream focus:outline-none focus:ring-2 focus:ring-trovara-green/30 focus:border-trovara-green transition text-trovara-dark placeholder-gray-400 text-sm"
+                      class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-trovara-cream focus:outline-hidden focus:ring-2 focus:ring-trovara-green/30 focus:border-trovara-green transition text-trovara-dark placeholder-gray-400 text-sm"
                     />
                   </div>
                   <div>
@@ -331,7 +331,7 @@ const contactInfo = [
                       id="contact-subject"
                       v-model="form.subject"
                       required
-                      class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-trovara-cream focus:outline-none focus:ring-2 focus:ring-trovara-green/30 focus:border-trovara-green transition text-trovara-dark text-sm"
+                      class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-trovara-cream focus:outline-hidden focus:ring-2 focus:ring-trovara-green/30 focus:border-trovara-green transition text-trovara-dark text-sm"
                     >
                       <option v-for="s in subjects" :key="s.value" :value="s.value">
                         {{ s.label }}
@@ -351,7 +351,7 @@ const contactInfo = [
                     rows="5"
                     :maxlength="FIELD_LIMITS.message"
                     placeholder="Tell us how we can help you..."
-                    class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-trovara-cream focus:outline-none focus:ring-2 focus:ring-trovara-green/30 focus:border-trovara-green transition text-trovara-dark placeholder-gray-400 text-sm resize-none"
+                    class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-trovara-cream focus:outline-hidden focus:ring-2 focus:ring-trovara-green/30 focus:border-trovara-green transition text-trovara-dark placeholder-gray-400 text-sm resize-none"
                   />
                   <p class="mt-1.5 text-xs text-gray-400 text-right">
                     {{ form.message.length }} / {{ FIELD_LIMITS.message }}
@@ -363,7 +363,7 @@ const contactInfo = [
                     v-model="form.consent"
                     type="checkbox"
                     required
-                    class="mt-0.5 h-6 w-6 flex-shrink-0 rounded border-gray-300 text-trovara-green focus:ring-trovara-gold"
+                    class="mt-0.5 h-6 w-6 flex-shrink-0 rounded-sm border-gray-300 text-trovara-green focus:ring-trovara-gold"
                     :disabled="submitting"
                   />
                   <span>
