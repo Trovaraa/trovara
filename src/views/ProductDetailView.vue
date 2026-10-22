@@ -12,7 +12,7 @@ import { TELEGRAM_CTA_CLASS, TELEGRAM_CUSTOMER_BOT, TELEGRAM_ORDER_URL } from '.
 import { useProductsStore } from '../stores/products'
 import BrandIcon from '../components/brand/BrandIcon.vue'
 
-const BASE_URL = 'https://trovara.farm'
+const BASE_URL = 'https://www.trovara.farm'
 
 const route = useRoute()
 const router = useRouter()
