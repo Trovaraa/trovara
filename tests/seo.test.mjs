@@ -47,8 +47,10 @@ test('SEO host agrees across browser metadata, schema, shell and robots', async 
     'index.html', 'public/robots.txt']
   for (const file of files) {
     const source = await readFile(new URL(`../${file}`, import.meta.url), 'utf8')
-    assert.ok(source.includes('https://www.trovara.farm'), file)
-    assert.ok(!source.includes('https://trovara.farm'), `${file} must not point to the redirecting host`)
+    const urls = [...source.matchAll(/https?:\/\/[^\s"'<>]+/g)].map((m) => m[0])
+    const hosts = urls.map((u) => new URL(u).host)
+    assert.ok(hosts.includes('www.trovara.farm'), file)
+    assert.ok(!hosts.includes('trovara.farm'), `${file} must not point to the redirecting host`)
   }
   const robots = await readFile(new URL('../public/robots.txt', import.meta.url), 'utf8')
   assert.match(robots, /^Sitemap: https:\/\/www\.trovara\.farm\/sitemap.xml$/m)
