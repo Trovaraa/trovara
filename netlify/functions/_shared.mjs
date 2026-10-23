@@ -5,7 +5,9 @@
  * production / `npm run dev:netlify` use Netlify Functions.
  */
 import { createHash, createHmac, randomUUID } from 'node:crypto'
-import { hasBrotliSecurityFix } from './_runtime-security.mjs'
+import { createPreviewRuntimeReporter, hasBrotliSecurityFix } from './_runtime-security.mjs'
+
+export const reportPreviewRuntime = createPreviewRuntimeReporter()
 
 const RATE_BUCKETS = new Map()
 

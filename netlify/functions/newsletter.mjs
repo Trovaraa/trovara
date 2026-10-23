@@ -16,6 +16,7 @@ import {
   missingFormProxySecretResponse,
   parseJsonBody,
   rateLimit,
+  reportPreviewRuntime,
   safeClientError,
   trustedClientHeaders,
 } from './_shared.mjs'
@@ -142,6 +143,7 @@ async function proxyToNewsletterApi(action, payload, clientIp) {
 }
 
 export default async function handler(request) {
+  reportPreviewRuntime(request)
   if (request.method !== 'POST') {
     return json(405, { ok: false, error: 'Method not allowed' })
   }
