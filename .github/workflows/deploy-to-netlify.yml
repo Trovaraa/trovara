@@ -47,22 +47,24 @@ jobs:
         run: npm run typecheck
 
       - name: Build
+        # Trusted deploys build once through Netlify below. Bot/fork PRs have
+        # no deploy credentials but must still verify the production build.
+        if: >-
+          github.event_name == 'pull_request' &&
+          (github.event.pull_request.user.login == 'dependabot[bot]' ||
+          github.event.pull_request.head.repo.full_name != github.repository)
         run: npm run build
         env:
           JOURNAL_API_URL: https://os.trovara.farm/public/journal
 
-      - name: Lock mutating proxies on preview deploys
-        if: github.event_name == 'pull_request'
-        run: node scripts/lockdown-preview-redirects.mjs
-
       # Netlify's CLI follows local imports and adds the runtime bootstrap.
       # The previous raw uploader omitted both and every form function crashed.
+      # Its build runs npm postbuild, which locks all mutating preview proxies.
       - name: Deploy production to Netlify
         if: github.event_name != 'pull_request'
         run: >-
           npx --yes netlify-cli@27.1.1 deploy
           --prod
-          --no-build
           --skip-functions-cache
           --context production
           --dir dist
@@ -85,7 +87,6 @@ jobs:
           github.event.pull_request.head.repo.full_name == github.repository
         run: >-
           npx --yes netlify-cli@27.1.1 deploy
-          --no-build
           --skip-functions-cache
           --context deploy-preview
           --alias "deploy-preview-${{ github.event.number }}"
