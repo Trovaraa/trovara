@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://trovara.farm'
+export const BASE_URL = 'https://www.trovara.farm'
 
 export function xmlEscape(value) {
   return String(value)

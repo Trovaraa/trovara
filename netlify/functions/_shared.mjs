@@ -5,6 +5,9 @@
  * production / `npm run dev:netlify` use Netlify Functions.
  */
 import { createHash, createHmac, randomUUID } from 'node:crypto'
+import { createPreviewRuntimeReporter, hasBrotliSecurityFix } from './_runtime-security.mjs'
+
+export const reportPreviewRuntime = createPreviewRuntimeReporter()
 
 const RATE_BUCKETS = new Map()
 
@@ -23,7 +26,12 @@ export const MARKETING_LEAD_CONSENT_VERSION = '1.0'
 export function json(status, body) {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      // Boolean only: deployment smoke tests must verify the actual function
+      // runtime, without exposing versions, environment variables or secrets.
+      'X-Trovara-Runtime-Secure': String(hasBrotliSecurityFix(process.versions.node)),
+    },
   })
 }
 
@@ -59,6 +67,9 @@ export function trustedClientHeaders(ip) {
 }
 
 export function missingFormProxySecretResponse() {
+  if (!hasBrotliSecurityFix(process.versions.node)) {
+    return json(503, { ok: false, error: 'Form service is temporarily unavailable.' })
+  }
   if (process.env.NODE_ENV === 'production' && !process.env.FORM_PROXY_SIGNING_SECRET?.trim()) {
     return json(503, { ok: false, error: 'Form service is temporarily unavailable.' })
   }
