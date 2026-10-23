@@ -62,6 +62,7 @@ jobs:
         run: >-
           npx --yes netlify-cli@27.1.1 deploy
           --prod
+          --no-build
           --skip-functions-cache
           --context production
           --dir dist
@@ -84,6 +85,7 @@ jobs:
           github.event.pull_request.head.repo.full_name == github.repository
         run: >-
           npx --yes netlify-cli@27.1.1 deploy
+          --no-build
           --skip-functions-cache
           --context deploy-preview
           --alias "deploy-preview-${{ github.event.number }}"
