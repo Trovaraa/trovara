@@ -102,6 +102,7 @@ async function proxyToNewsletterApi(action, payload, clientIp) {
   try {
     const response = await fetch(`${apiUrl}/${action}`, {
       method: 'POST',
+      redirect: 'error',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
