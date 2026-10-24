@@ -45,9 +45,8 @@
   `X-Trovara-Runtime-Secure: false` on 24 October. Production must not be
   published from this branch until all four runtime smoke checks pass.
   The runtime guard is unchanged; no claim that this SEO fix is live yet.
-- A fresh dependency audit also reports two newly affected build dependencies:
-  fast-uri (moderate) and serialize-javascript (low). They are not changed in
-  this SEO-only patch and need rechecking/remediation before the release.
+- Follow-up: fast-uri is patched to 3.1.9 and serialize-javascript to 7.1.4,
+  with regression floors added. Full dependency audit now reports zero findings.
 
 ## Follow-up after a safe deployment
 
