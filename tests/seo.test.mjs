@@ -42,7 +42,7 @@ test('prerender metadata replaces home metadata and supports noindex', () => {
 })
 
 test('SEO host agrees across browser metadata, schema, shell and robots', async () => {
-  const files = ['src/composables/usePageMeta.ts', 'src/views/ProductDetailView.vue',
+  const files = ['src/composables/usePageMeta.ts', 'src/lib/catalogue-schema.ts',
     'src/views/JournalPostView.vue', 'src/components/StructuredData.vue',
     'index.html', 'public/robots.txt']
   for (const file of files) {

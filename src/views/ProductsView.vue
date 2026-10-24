@@ -4,18 +4,11 @@ import { useProductsStore } from '../stores/products'
 import StructuredData from '../components/StructuredData.vue'
 import BrandIcon from '../components/brand/BrandIcon.vue'
 import { SHOP_ACCOUNT_URL } from '../lib/shop-account'
+import { buildCataloguePageSchema } from '../lib/catalogue-schema'
 
 const products = useProductsStore().availableProducts
 
-const productSchemas = computed(() =>
-  products.map((product) => ({
-    '@type': 'Product',
-    name: `Trovara ${product.name}`,
-    description: product.description,
-    brand: { '@type': 'Brand', name: 'Trovara Farm' },
-    category: product.category,
-  })),
-)
+const catalogueSchema = computed(() => buildCataloguePageSchema(products))
 
 function primarySku(product: (typeof products)[number]) {
   return product.specs?.find((spec) => spec.label.includes('SKU'))?.value.split('·')[0]?.trim() ?? 'SKU announced before supply opens'
@@ -29,7 +22,7 @@ function forecastMonth(note?: string) {
 
 <template>
   <div>
-    <StructuredData :additional-schema="productSchemas" />
+    <StructuredData :additional-schema="catalogueSchema" />
 
     <section class="relative overflow-hidden bg-trovara-green pb-16 pt-32 md:pb-20">
       <div class="absolute inset-0 bg-hero-pattern opacity-10 pointer-events-none" />
