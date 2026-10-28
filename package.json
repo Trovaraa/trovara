@@ -46,6 +46,9 @@
     "vue-tsc": "^3.3.13"
   },
   "overrides": {
+    "@rollup/plugin-node-resolve@16.0.3": {
+      "deepmerge": "npm:lodash.merge@4.6.2"
+    },
     "glob": "$glob",
     "source-map": "0.8.0"
   }
