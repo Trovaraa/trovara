@@ -11,8 +11,7 @@ import { buildWhatsAppLink, PRODUCT_MESSAGES } from '../lib/whatsapp'
 import { TELEGRAM_CTA_CLASS, TELEGRAM_CUSTOMER_BOT, TELEGRAM_ORDER_URL } from '../lib/telegram'
 import { useProductsStore } from '../stores/products'
 import BrandIcon from '../components/brand/BrandIcon.vue'
-
-const BASE_URL = 'https://trovara.farm'
+import { buildProductInformationSchema } from '../lib/catalogue-schema'
 
 const route = useRoute()
 const router = useRouter()
@@ -31,31 +30,7 @@ const whatsappLink = computed(() => {
   return buildWhatsAppLink(productMessage.value)
 })
 
-const productSchema = computed(() => {
-  if (!product.value || !product.value.available || product.value.id === 'coming-soon') return undefined
-  return {
-    '@type': 'Product',
-    name: `Trovara ${product.value.name}`,
-    description: product.value.description,
-    category: product.value.category,
-    url: `${BASE_URL}/products/${product.value.id}`,
-    brand: {
-      '@type': 'Brand',
-      name: 'Trovara Farm',
-    },
-    offers: {
-      '@type': 'Offer',
-      url: `${BASE_URL}/products/${product.value.id}`,
-      availability: product.value.waitlist
-        ? 'https://schema.org/PreOrder'
-        : 'https://schema.org/InStock',
-      priceCurrency: 'NGN',
-      description: product.value.waitlist
-        ? product.value.availabilityNote ?? 'Join the waitlist for first supply updates.'
-        : undefined,
-    },
-  }
-})
+const productSchema = computed(() => buildProductInformationSchema(product.value))
 
 watch(
   product,
