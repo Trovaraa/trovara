@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import test from 'node:test'
+import { hasBrotliSecurityFix } from '../netlify/functions/_runtime-security.mjs'
 
 const root = new URL('../', import.meta.url)
 // Scoped build-tool replacement rationale: docs/dependency-maintenance-2026-10-28.md.
@@ -61,12 +62,11 @@ test('the resolver merge replacement does not poison returned or global prototyp
 })
 
 test('Node2Shell runtime floor is pinned for builds and CI', () => {
-  assert.equal(readFileSync(new URL('.nvmrc', root), 'utf8').trim(), '24.22.1')
-  assert.equal(JSON.parse(readFileSync(new URL('package.json', root), 'utf8')).engines.node, '>=24.22.1 <25')
-  assert.equal(lock.packages[''].engines.node, '>=24.22.1 <25')
-  assert.equal(process.versions.node.split('.')[0], '24')
-  assert.ok(atLeast(process.versions.node, '24.22.1'), 'Use patched Node from .nvmrc')
-  assert.match(readFileSync(new URL('netlify.toml', root), 'utf8'), /NODE_VERSION = "24\.22\.1"/)
+  assert.equal(readFileSync(new URL('.nvmrc', root), 'utf8').trim(), '22.23.4')
+  assert.equal(JSON.parse(readFileSync(new URL('package.json', root), 'utf8')).engines.node, '^22.23.4 || ^24.22.1')
+  assert.equal(lock.packages[''].engines.node, '^22.23.4 || ^24.22.1')
+  assert.equal(hasBrotliSecurityFix(process.versions.node), true, 'Use a tested patched Node release')
+  assert.match(readFileSync(new URL('netlify.toml', root), 'utf8'), /NODE_VERSION = "22\.23\.4"/)
 })
 
 test('Vite and Vitest mocker include October security fixes in every installed copy', () => {

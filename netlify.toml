@@ -4,7 +4,7 @@
   functions = "netlify/deploy-functions"
 
 [build.environment]
-  NODE_VERSION = "24.22.1"
+  NODE_VERSION = "22.23.4"
   JOURNAL_API_URL = "https://os.trovara.farm/public/journal"
   CAREERS_API_URL = "https://os.trovara.farm/public/careers"
 
