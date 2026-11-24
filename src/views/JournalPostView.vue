@@ -9,7 +9,7 @@ import JournalEngagement from '../components/journal/JournalEngagement.vue'
 import { applyPageMeta } from '../composables/usePageMeta'
 import { formatPublishedDate } from '../lib/date'
 
-const BASE_URL = 'https://trovara.farm'
+const BASE_URL = 'https://www.trovara.farm'
 
 const route = useRoute()
 const router = useRouter()

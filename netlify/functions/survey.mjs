@@ -11,6 +11,7 @@ import {
   missingFormProxySecretResponse,
   parseJsonBody,
   rateLimit,
+  reportPreviewRuntime,
 } from './_shared.mjs'
 
 const WINDOW_MS = 15 * 60 * 1000
@@ -151,6 +152,7 @@ function validateSurvey(body) {
 }
 
 export default async function handler(request) {
+  reportPreviewRuntime(request)
   if (request.method !== 'POST') {
     return json(405, { ok: false, error: 'Method not allowed' })
   }

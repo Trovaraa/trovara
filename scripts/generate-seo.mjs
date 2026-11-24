@@ -1,9 +1,8 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
-import { buildSitemapXml } from './seo-utils.mjs'
+import { BASE_URL, buildSitemapXml } from './seo-utils.mjs'
 
-const BASE_URL = 'https://trovara.farm'
 const POSTS_DIR = path.resolve(process.cwd(), 'src/content/posts')
 const GENERATED_POSTS_DIR = path.resolve(process.cwd(), 'src/content/generated-posts')
 const PUBLIC_DIR = path.resolve(process.cwd(), 'public')

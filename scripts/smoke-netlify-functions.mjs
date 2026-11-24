@@ -17,7 +17,10 @@ for (const functionName of functionNames) {
       })
       lastStatus = response.status
       lastError = null
-      if (response.status === 405) break
+      if (response.headers.get('x-trovara-runtime-secure') !== 'true') {
+        lastStatus = 0
+        lastError = new Error('Function runtime security patches are missing or unverified (Node 22.23.5 / 24.22.3 minimum)')
+      } else if (response.status === 405) break
     } catch (error) {
       lastError = error
     }
