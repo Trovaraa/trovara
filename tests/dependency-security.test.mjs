@@ -61,12 +61,21 @@ test('the resolver merge replacement does not poison returned or global prototyp
   }
 })
 
-test('Node2Shell runtime floor is pinned for builds and CI', () => {
-  assert.equal(readFileSync(new URL('.nvmrc', root), 'utf8').trim(), '22.23.4')
-  assert.equal(JSON.parse(readFileSync(new URL('package.json', root), 'utf8')).engines.node, '^22.23.4 || ^24.22.1')
-  assert.equal(lock.packages[''].engines.node, '^22.23.4 || ^24.22.1')
+test('November runtime security floor is pinned for builds and CI', () => {
+  assert.equal(readFileSync(new URL('.nvmrc', root), 'utf8').trim(), '22.23.5')
+  assert.equal(JSON.parse(readFileSync(new URL('package.json', root), 'utf8')).engines.node, '^22.23.5 || ^24.22.3')
+  assert.equal(lock.packages[''].engines.node, '^22.23.5 || ^24.22.3')
   assert.equal(hasBrotliSecurityFix(process.versions.node), true, 'Use a tested patched Node release')
-  assert.match(readFileSync(new URL('netlify.toml', root), 'utf8'), /NODE_VERSION = "22\.23\.4"/)
+  assert.match(readFileSync(new URL('netlify.toml', root), 'utf8'), /NODE_VERSION = "22\.23\.5"/)
+})
+
+test('glob cancellation and minimatch amplification fixes are present in every affected copy', () => {
+  assert.ok(versions('glob').length > 0)
+  for (const version of versions('glob')) assert.ok(atLeast(version, '14.0.2'), version)
+  for (const version of versions('minimatch')) {
+    const major = Number(version.split('.')[0])
+    if (major >= 7) assert.ok(atLeast(version, '11.0.1'), version)
+  }
 })
 
 test('Vite and Vitest mocker include October security fixes in every installed copy', () => {

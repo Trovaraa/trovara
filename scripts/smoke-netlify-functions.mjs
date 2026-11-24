@@ -19,7 +19,7 @@ for (const functionName of functionNames) {
       lastError = null
       if (response.headers.get('x-trovara-runtime-secure') !== 'true') {
         lastStatus = 0
-        lastError = new Error('Function runtime patch is missing or unverified (CVE-2026-111497)')
+        lastError = new Error('Function runtime security patches are missing or unverified (Node 22.23.5 / 24.22.3 minimum)')
       } else if (response.status === 405) break
     } catch (error) {
       lastError = error

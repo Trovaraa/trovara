@@ -1,11 +1,11 @@
 // Managed function runtime patches are independent of the build's NODE_VERSION.
 export function hasBrotliSecurityFix(version) {
   // Netlify's managed Node 22 patch is verified independently of its Node 24
-  // rollout. Both tested LTS lines must meet their exact security floor.
+  // rollout. Both tested LTS lines must include the November 11 security release.
   const match = /^(22|24)\.(\d+)\.(\d+)$/.exec(version)
   if (!match) return false
   const [major, minor, patch] = match.slice(1).map(Number)
-  const [minimumMinor, minimumPatch] = major === 22 ? [23, 4] : [22, 1]
+  const [minimumMinor, minimumPatch] = major === 22 ? [23, 5] : [22, 3]
   return minor > minimumMinor || (minor === minimumMinor && patch >= minimumPatch)
 }
 
