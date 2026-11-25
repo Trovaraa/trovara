@@ -1,9 +1,8 @@
 import type { Product } from '../types'
-
-const BASE_URL = 'https://www.trovara.farm'
+import { BASE_URL, canonicalUrl } from './canonical.ts'
 
 const isPublished = (product: Product) => product.available && product.id !== 'coming-soon'
-const productUrl = (product: Product) => `${BASE_URL}/products/${product.id}`
+const productUrl = (product: Product) => canonicalUrl(`/products/${product.id}`)
 
 // The marketing catalogue describes planned supply and enquiries, not priced
 // offers. A waitlist is not a preorder. Only add Product/Offer markup when an
@@ -12,7 +11,7 @@ export function buildCataloguePageSchema(products: Product[]) {
   return {
     '@type': 'CollectionPage',
     name: 'Trovara Farm products',
-    url: `${BASE_URL}/products`,
+    url: canonicalUrl('/products'),
     mainEntity: {
       '@type': 'ItemList',
       itemListElement: products.filter(isPublished).map((product, index) => ({

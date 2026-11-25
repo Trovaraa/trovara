@@ -13,11 +13,11 @@ test('sitemap includes moments, careers, journal, and dynamic career slugs once'
     '/journal',
     '/journal/why-trovara-exists',
   ])
-  assert.match(sitemap, /<loc>https:\/\/www\.trovara\.farm\/moments<\/loc>/)
-  assert.match(sitemap, /<loc>https:\/\/www\.trovara\.farm\/careers<\/loc>/)
-  assert.match(sitemap, /<loc>https:\/\/www\.trovara\.farm\/careers\/farm-manager<\/loc>/)
-  assert.match(sitemap, /<loc>https:\/\/www\.trovara\.farm\/journal<\/loc>/)
-  assert.match(sitemap, /<loc>https:\/\/www\.trovara\.farm\/journal\/why-trovara-exists<\/loc>/)
+  assert.match(sitemap, /<loc>https:\/\/www\.trovara\.farm\/moments\/<\/loc>/)
+  assert.match(sitemap, /<loc>https:\/\/www\.trovara\.farm\/careers\/<\/loc>/)
+  assert.match(sitemap, /<loc>https:\/\/www\.trovara\.farm\/careers\/farm-manager\/<\/loc>/)
+  assert.match(sitemap, /<loc>https:\/\/www\.trovara\.farm\/journal\/<\/loc>/)
+  assert.match(sitemap, /<loc>https:\/\/www\.trovara\.farm\/journal\/why-trovara-exists\/<\/loc>/)
   assert.equal(sitemap.match(/careers\/farm-manager/g)?.length, 1)
 })
 
@@ -38,11 +38,11 @@ test('prerender metadata replaces home metadata and supports noindex', () => {
   assert.match(html, /<title>Privacy Policy - Trovara Farm<\/title>/)
   assert.match(html, /content="How Trovara Farm collects, uses, and protects personal data\."/)
   assert.match(html, /content="noindex, nofollow"/)
-  assert.match(html, /href="https:\/\/www\.trovara\.farm\/privacy"/)
+  assert.match(html, /href="https:\/\/www\.trovara\.farm\/privacy\/"/)
 })
 
 test('SEO host agrees across browser metadata, schema, shell and robots', async () => {
-  const files = ['src/composables/usePageMeta.ts', 'src/lib/catalogue-schema.ts',
+  const files = ['src/lib/canonical.ts',
     'src/views/JournalPostView.vue', 'src/components/StructuredData.vue',
     'index.html', 'public/robots.txt']
   for (const file of files) {

@@ -13,12 +13,12 @@ const root = new URL('../', import.meta.url)
 test('catalogue describes the five published information pages, not incomplete products', () => {
   const schema = buildCataloguePageSchema(products)
   assert.equal(schema['@type'], 'CollectionPage')
-  assert.equal(schema.url, 'https://www.trovara.farm/products')
+  assert.equal(schema.url, 'https://www.trovara.farm/products/')
   assert.equal(schema.mainEntity['@type'], 'ItemList')
   assert.equal(schema.mainEntity.itemListElement.length, 5)
   assert.deepEqual(schema.mainEntity.itemListElement.map((item) => item.position), [1, 2, 3, 4, 5])
   assert.deepEqual(schema.mainEntity.itemListElement.map((item) => item.url),
-    published.map((product) => `https://www.trovara.farm/products/${product.id}`))
+    published.map((product) => `https://www.trovara.farm/products/${product.id}/`))
 })
 
 test('every information page has its real description, canonical URL and existing image', async () => {
@@ -27,7 +27,7 @@ test('every information page has its real description, canonical URL and existin
     assert.equal(schema['@type'], 'WebPage')
     assert.equal(schema.name, `Trovara ${product.name}`)
     assert.equal(schema.description, product.description)
-    assert.equal(schema.url, `https://www.trovara.farm/products/${product.id}`)
+    assert.equal(schema.url, `https://www.trovara.farm/products/${product.id}/`)
     assert.equal(schema.primaryImageOfPage.contentUrl, `https://www.trovara.farm${product.image}`)
     await access(new URL(`public${product.image}`, root))
   }

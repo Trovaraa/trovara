@@ -1,6 +1,6 @@
-import type { RouteLocationNormalizedLoaded, Router } from 'vue-router'
+import { START_LOCATION, type RouteLocationNormalizedLoaded, type Router } from 'vue-router'
+import { BASE_URL, canonicalUrl } from '../lib/canonical.ts'
 
-const BASE_URL = 'https://www.trovara.farm'
 const DEFAULT_TITLE = 'Trovara Farm'
 const DEFAULT_DESCRIPTION =
   'Food you can trust, from a farm built for tomorrow. Trovara Farm grows premium regenerative food for homes and businesses in Nigeria.'
@@ -40,18 +40,13 @@ function upsertCanonical(href: string) {
   element.setAttribute('href', href)
 }
 
-function resolveCanonical(pathname: string): string {
-  if (!pathname || pathname === '/') return BASE_URL
-  return `${BASE_URL}${pathname}`
-}
-
 export function applyPageMeta(route: RouteLocationNormalizedLoaded, overrides: PageMetaOverrides = {}) {
   const routeMeta = (route.meta ?? {}) as RouteMetaLike
   const title = overrides.title ?? (typeof routeMeta.title === 'string' ? routeMeta.title : DEFAULT_TITLE)
   const description =
     overrides.description ??
     (typeof routeMeta.description === 'string' ? routeMeta.description : DEFAULT_DESCRIPTION)
-  const canonical = resolveCanonical(overrides.canonicalPath ?? route.path)
+  const canonical = canonicalUrl(overrides.canonicalPath ?? route.path)
 
   document.title = title
   upsertMeta('name', 'description', description)
@@ -74,8 +69,9 @@ export function applyPageMeta(route: RouteLocationNormalizedLoaded, overrides: P
 }
 
 export function usePageMeta(router: Router) {
-  applyPageMeta(router.currentRoute.value)
-  router.afterEach((to) => {
-    applyPageMeta(to)
+  // Preserve prerendered deep-link metadata while the initial route loads.
+  if (router.currentRoute.value !== START_LOCATION) applyPageMeta(router.currentRoute.value)
+  router.afterEach((to, _from, failure) => {
+    if (!failure) applyPageMeta(to)
   })
 }
