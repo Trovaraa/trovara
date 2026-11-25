@@ -133,8 +133,7 @@ const team: TeamMember[] = [
             Better farming for better food.
           </h1>
           <p class="text-white/70 text-lg leading-relaxed max-w-xl">
-            Trovara Farm grows premium food with ethical practices on the same land.
-            Quality and care for soil are not a trade-off here; they are how we farm.
+            Better food should not come at the expense of the land. At Trovara, we care for food and soil.
           </p>
         </div>
       </div>
@@ -159,31 +158,20 @@ const team: TeamMember[] = [
               inside one regenerative plan. We are adding crops and formats as harvest windows open,
               and building a brand buyers can trust.
             </p>
+            <blockquote class="mt-6 font-semibold leading-7 text-trovara-dark">
+              Trust cannot be bought. It cannot be advertised into existence. It has to be earned, harvest after harvest, delivery after delivery.
+            </blockquote>
           </div>
 
-          <!-- Visual Story Box -->
-          <div class="space-y-6">
-            <div class="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-xs">
-              <img
-                src="/brand/trovara-social-card-v2.png"
-                alt="Trovara - Food you can trust from a farm built for tomorrow"
-                class="w-full h-auto object-cover"
-                width="1200"
-                height="630"
-                loading="lazy"
-              />
-            </div>
-            <div class="bg-trovara-light rounded-3xl p-8 lg:p-10">
-              <blockquote class="text-2xl md:text-3xl font-bold text-trovara-dark leading-tight mb-6">
-                "We farm land, and we keep the promises we make about how that food is grown."
-              </blockquote>
-              <p class="text-trovara-green font-semibold">- Trovara Farm</p>
-              <div class="mt-8 pt-8 border-t border-gray-200">
-                <p class="text-sm text-gray-500 italic font-medium">
-                  Food you can trust, from a farm built for tomorrow.
-                </p>
-              </div>
-            </div>
+          <div class="self-start overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-xs">
+            <img
+              src="/brand/trovara-social-card-v2.png"
+              alt="Trovara - Food you can trust from a farm built for tomorrow"
+              class="w-full h-auto object-cover"
+              width="1200"
+              height="630"
+              loading="lazy"
+            />
           </div>
         </div>
       </div>

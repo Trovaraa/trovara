@@ -20,7 +20,7 @@ test('mobile navigation traps focus and supports Escape', async () => {
   assert.match(navbar, /aria-modal="true"/)
 })
 
-test('Account links point at shop.trovara.farm', async () => {
+test('Shop entry points link directly to shop.trovara.farm', async () => {
   const [navbar, footer, home, origin] = await Promise.all([
     read('src/components/TheNavbar.vue'),
     read('src/components/TheFooter.vue'),

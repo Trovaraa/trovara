@@ -5,7 +5,7 @@ withDefaults(defineProps<{
   compact?: boolean
 }>(), {
   tone: 'dark',
-  descriptor: 'Farm',
+  descriptor: '',
   compact: false,
 })
 </script>
@@ -28,6 +28,7 @@ withDefaults(defineProps<{
         class="font-black tracking-[0.035em]"
       >TROVARA</span>
       <span
+        v-if="descriptor"
         :class="tone === 'light' ? 'text-trovara-gold-300' : 'text-trovara-green'"
         class="mt-1 text-[9px] font-black uppercase tracking-[0.3em]"
       >{{ descriptor }}</span>

@@ -12,42 +12,28 @@ const mobileMenuOpen = ref(false)
 const scrolled = ref(false)
 const menuButton = ref<HTMLButtonElement | null>(null)
 const mobileMenu = ref<HTMLElement | null>(null)
+const moreMenu = ref<HTMLDetailsElement | null>(null)
 let restoreFocusTo: HTMLElement | null = null
 const { isDark } = useTheme()
-const mobileWhatsAppLink = buildWhatsAppLink("Hi Trovara Farm, I'd like help finding the right product or service.")
+const chatUrl = buildWhatsAppLink("Hi Trovara, I'd like help finding the right product or service.")
 
-const serviceLinks = [
-  { label: 'Farm OS', to: '/farm-os' },
-  { label: 'Farm Advisory', to: '/farm-advisory' },
+const primaryLinks = [
+  { label: 'Shop', href: SHOP_ACCOUNT_URL },
+  { label: 'Wholesale', to: '/wholesale/' },
+  { label: 'Services', to: '/services/' },
+  { label: 'Journals', to: '/journal/' },
+  { label: 'Chat', href: chatUrl, ariaLabel: 'Chat on WhatsApp' },
 ]
 
-/** Secondary destinations — kept off the primary rail so the bar stays short. */
 const moreLinks = [
-  { label: 'Journal', to: '/journal' },
-  { label: 'Moments', to: '/moments' },
-  { label: 'Careers', to: '/careers' },
-  { label: 'FAQ', to: '/faq' },
-  { label: 'Food survey', to: '/survey' },
-]
-
-const desktopNavItems = [
-  { label: 'Products', to: '/products' },
-  { label: 'Wholesale', to: '/wholesale' },
-  { label: 'The Farm', to: '/farm' },
-  { label: 'Services', children: serviceLinks },
-  { label: 'Our Story', to: '/about' },
-  { label: 'More', children: moreLinks },
-  { label: 'Account', href: SHOP_ACCOUNT_URL },
-]
-
-const mobileNavLinks = [
-  { label: 'Products', to: '/products' },
-  { label: 'Wholesale', to: '/wholesale' },
-  { label: 'Account', href: SHOP_ACCOUNT_URL },
-  { label: 'The Farm', to: '/farm' },
-  ...serviceLinks,
-  { label: 'Our Story', to: '/about' },
-  ...moreLinks,
+  { label: 'Products', to: '/products/' },
+  { label: 'The Farm', to: '/farm/' },
+  { label: 'Our Story', to: '/about/' },
+  { label: 'Moments', to: '/moments/' },
+  { label: 'Careers', to: '/careers/' },
+  { label: 'FAQ', to: '/faq/' },
+  { label: 'Food survey', to: '/survey/' },
+  { label: 'Contact', to: '/contact/' },
 ]
 
 const isHome = computed(() => route.name === 'home')
@@ -65,6 +51,26 @@ function handleScroll() {
 
 function closeMobileMenu() {
   mobileMenuOpen.value = false
+}
+
+function closeMoreMenu() {
+  if (moreMenu.value) moreMenu.value.open = false
+}
+
+function onMoreFocusOut(event: FocusEvent) {
+  if (!(event.relatedTarget instanceof Node) || !moreMenu.value?.contains(event.relatedTarget)) {
+    closeMoreMenu()
+  }
+}
+
+function onMoreEscape() {
+  closeMoreMenu()
+  moreMenu.value?.querySelector('summary')?.focus()
+}
+
+function onMobileExternalClick() {
+  closeMobileMenu()
+  void nextTick(() => menuButton.value?.focus())
 }
 
 function onKeydown(event: KeyboardEvent) {
@@ -98,31 +104,21 @@ function onResize() {
 }
 
 function childPath(to: string) {
-  return to.split('#')[0] || '/'
+  return to.split('#')[0].replace(/\/+$/, '') || '/'
 }
 
-function childLinkActive(to: string) {
-  const path = childPath(to)
-  if (route.path !== path) return false
-  if (!to.includes('#')) return true
-  return route.hash === to.slice(to.indexOf('#'))
-}
-
-function dropdownActive(item: { label: string; children?: { to: string }[] }) {
-  if (item.label === 'Services') return route.path === '/services' || route.path === '/farm-os' || route.path === '/farm-advisory'
-  return item.children?.some((link) => route.path === childPath(link.to)) ?? false
-}
-
-function navPath(item: { to?: string; href?: string }): string {
-  return item.to ?? '/'
+function navLinkActive(to: string) {
+  const current = childPath(route.path)
+  const target = childPath(to)
+  if (target === '/services' && ['/farm-os', '/farm-advisory'].includes(current)) return true
+  return current === target || current.startsWith(`${target}/`)
 }
 
 /** Same-route clicks (e.g. Home while already on /) skip the router - still jump up. */
 function onNavClick(to: string) {
-  mobileMenuOpen.value = false
-  const current = route.path
-  const target = childPath(to)
-  if (current === target && !to.includes('#')) {
+  closeMobileMenu()
+  closeMoreMenu()
+  if (childPath(route.path) === childPath(to) && !to.includes('#')) {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
     document.documentElement.scrollTop = 0
     document.body.scrollTop = 0
@@ -131,7 +127,10 @@ function onNavClick(to: string) {
 
 watch(
   () => route.fullPath,
-  () => closeMobileMenu(),
+  () => {
+    closeMobileMenu()
+    closeMoreMenu()
+  },
 )
 
 watch(mobileMenuOpen, (open) => {
@@ -173,85 +172,68 @@ onUnmounted(() => {
           <TrovaraLogo :tone="logoTone" compact />
         </RouterLink>
 
-        <!-- Desktop Nav -->
+        <!-- Desktop navigation -->
         <div class="hidden xl:flex items-center gap-0.5">
-          <template v-for="item in desktopNavItems" :key="item.label">
-            <div v-if="'children' in item" class="group relative">
-              <button
-                type="button"
-                aria-haspopup="true"
-                :class="[
-                  'inline-flex items-center gap-1 px-3 py-2 rounded-full text-sm font-semibold transition-all duration-200',
-                  overHero
-                    ? 'text-white/90 hover:text-white hover:bg-white/10'
-                    : 'text-trovara-dark hover:text-white! hover:bg-trovara-green!',
-                  dropdownActive(item)
-                    ? overHero
-                      ? 'text-white! bg-white/20!'
-                      : 'text-white! bg-trovara-green!'
-                    : '',
-                ]"
-              >
-                {{ item.label }}
-                <svg class="h-3.5 w-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6" />
-                </svg>
-              </button>
-              <div class="invisible absolute left-1/2 top-full z-20 w-60 -translate-x-1/2 pt-2 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                <div class="rounded-2xl border border-gray-100 bg-white p-2 shadow-xl dark:border-white/10">
-                  <RouterLink
-                    v-for="link in item.children"
-                    :key="link.to"
-                    :to="link.to"
-                    class="block rounded-xl px-4 py-3 text-sm font-semibold text-trovara-dark transition-colors hover:bg-trovara-green! hover:text-white!"
-                    :class="childLinkActive(link.to) ? 'bg-trovara-green/10! text-trovara-green!' : ''"
-                    @click="onNavClick(link.to)"
-                  >
-                    {{ link.label }}
-                  </RouterLink>
-                </div>
-              </div>
-            </div>
+          <template v-for="link in primaryLinks" :key="link.label">
             <a
-              v-else-if="'href' in item && item.href"
-              :href="item.href"
-              :class="[
-                'px-3 py-2 rounded-full text-sm font-semibold transition-all duration-200',
-                overHero
+              v-if="link.href"
+              :href="link.href"
+              :aria-label="link.ariaLabel"
+              class="px-3 py-2 rounded-full text-sm font-semibold transition-colors"
+              :class="link.href === SHOP_ACCOUNT_URL
+                ? 'bg-trovara-gold text-[#101914] hover:bg-trovara-gold-300'
+                : overHero
                   ? 'text-white/90 hover:text-white hover:bg-white/10'
-                  : 'text-trovara-dark hover:text-white! hover:bg-trovara-green!',
-              ]"
+                  : 'text-trovara-dark hover:text-white! hover:bg-trovara-green!'"
             >
-              {{ item.label }}
+              {{ link.label }}
             </a>
             <RouterLink
-              v-else
-              :to="navPath(item)"
+              v-else-if="link.to"
+              :to="link.to"
+              class="px-3 py-2 rounded-full text-sm font-semibold transition-colors"
               :class="[
-                'px-3 py-2 rounded-full text-sm font-semibold transition-all duration-200',
                 overHero
                   ? 'text-white/90 hover:text-white hover:bg-white/10'
                   : 'text-trovara-dark hover:text-white! hover:bg-trovara-green!',
-                route.path === navPath(item)
-                  ? overHero
-                    ? 'text-white! bg-white/20!'
-                    : 'text-white! bg-trovara-green!'
-                  : '',
+                navLinkActive(link.to) && (overHero ? 'text-white! bg-white/20!' : 'text-white! bg-trovara-green!'),
               ]"
-              @click="onNavClick(navPath(item))"
+              @click="onNavClick(link.to)"
             >
-              {{ item.label }}
+              {{ link.label }}
             </RouterLink>
           </template>
+          <details ref="moreMenu" class="group relative" @focusout="onMoreFocusOut" @keydown.esc.stop.prevent="onMoreEscape">
+            <summary
+              class="inline-flex list-none cursor-pointer items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold transition-colors [&::-webkit-details-marker]:hidden"
+              :class="overHero ? 'text-white/90 hover:text-white hover:bg-white/10' : 'text-trovara-dark hover:text-white! hover:bg-trovara-green!'"
+            >
+              More
+              <svg class="h-3.5 w-3.5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6" />
+              </svg>
+            </summary>
+            <ul class="absolute right-0 top-full z-20 mt-2 w-52 rounded-2xl border border-gray-100 bg-white p-2 shadow-xl dark:border-white/10">
+              <li v-for="link in moreLinks" :key="link.to">
+                <RouterLink
+                  :to="link.to"
+                  class="block rounded-xl px-4 py-3 text-sm font-semibold text-trovara-dark transition-colors hover:bg-trovara-green! hover:text-white!"
+                  :class="navLinkActive(link.to) ? 'bg-trovara-green/10! text-trovara-green!' : ''"
+                  @click="onNavClick(link.to)"
+                >
+                  {{ link.label }}
+                </RouterLink>
+              </li>
+            </ul>
+          </details>
           <ThemeSwitcher class="ml-2" :on-dark-chrome="overHero" />
-          <RouterLink to="/contact" class="ml-2 btn-gold text-sm py-2.5 px-5 rounded-full" @click="onNavClick('/contact')">
-            Talk to us
-          </RouterLink>
         </div>
 
         <!-- Mobile controls -->
         <div class="xl:hidden flex items-center gap-1">
-          <ThemeSwitcher :on-dark-chrome="overHero" />
+          <a :href="SHOP_ACCOUNT_URL" class="inline-flex min-h-11 items-center rounded-full bg-trovara-gold px-4 text-sm font-bold text-[#101914] hover:bg-trovara-gold-300">
+            Shop
+          </a>
           <button
             ref="menuButton"
             class="grid min-h-11 min-w-11 place-items-center rounded-lg transition-colors"
@@ -289,37 +271,43 @@ onUnmounted(() => {
           aria-modal="true"
           aria-label="Mobile navigation"
         >
-          <div class="px-2 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] space-y-1">
-            <template v-for="link in mobileNavLinks" :key="link.label">
-            <a
-              v-if="'href' in link && link.href"
-              :href="link.href"
-              class="block px-4 py-3 rounded-xl text-trovara-dark font-medium hover:text-white! hover:bg-trovara-green! transition-colors"
-            >
-              {{ link.label }}
-            </a>
-            <RouterLink
-              v-else
-              :to="navPath(link)"
-              class="block px-4 py-3 rounded-xl text-trovara-dark font-medium hover:text-white! hover:bg-trovara-green! transition-colors"
-              :class="route.path === navPath(link).split('#')[0] && (!navPath(link).includes('#') || route.hash === navPath(link).slice(navPath(link).indexOf('#'))) ? 'text-white! bg-trovara-green!' : ''"
-              @click="onNavClick(navPath(link))"
-            >
-              {{ link.label }}
-            </RouterLink>
-            </template>
-            <div class="pt-2 pb-1">
-              <RouterLink to="/contact" class="btn-primary w-full text-sm" @click="onNavClick('/contact')">
-                Get in Touch
-              </RouterLink>
-              <a
-                :href="mobileWhatsAppLink"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="mt-2 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[#25D366] px-5 py-3 text-sm font-bold text-white"
-              >
-                Ask us on WhatsApp
-              </a>
+          <div class="px-2 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
+            <ul class="space-y-1">
+              <li v-for="link in primaryLinks" :key="link.label">
+                <a
+                  v-if="link.href"
+                  :href="link.href"
+                  :aria-label="link.ariaLabel"
+                  class="block rounded-xl px-4 py-3 font-semibold text-trovara-dark transition-colors hover:bg-trovara-green! hover:text-white!"
+                  @click="onMobileExternalClick"
+                >
+                  {{ link.label }}
+                </a>
+                <RouterLink
+                  v-else-if="link.to"
+                  :to="link.to"
+                  class="block rounded-xl px-4 py-3 font-semibold text-trovara-dark transition-colors hover:bg-trovara-green! hover:text-white!"
+                  :class="navLinkActive(link.to) ? 'bg-trovara-green! text-white!' : ''"
+                  @click="onNavClick(link.to)"
+                >
+                  {{ link.label }}
+                </RouterLink>
+              </li>
+            </ul>
+            <ul aria-label="More destinations" class="mt-2 space-y-1 border-t border-gray-100 pt-2 dark:border-white/10">
+              <li v-for="link in moreLinks" :key="link.to">
+                <RouterLink
+                  :to="link.to"
+                  class="block rounded-xl px-4 py-3 font-medium text-trovara-dark transition-colors hover:bg-trovara-green! hover:text-white!"
+                  :class="navLinkActive(link.to) ? 'bg-trovara-green! text-white!' : ''"
+                  @click="onNavClick(link.to)"
+                >
+                  {{ link.label }}
+                </RouterLink>
+              </li>
+            </ul>
+            <div class="mt-2 border-t border-gray-100 px-4 pt-3 dark:border-white/10">
+              <ThemeSwitcher />
             </div>
           </div>
         </div>
