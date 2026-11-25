@@ -1,4 +1,5 @@
-export const BASE_URL = 'https://www.trovara.farm'
+import { BASE_URL, canonicalUrl } from '../src/lib/canonical.ts'
+export { BASE_URL }
 
 export function xmlEscape(value) {
   return String(value)
@@ -10,10 +11,9 @@ export function xmlEscape(value) {
 }
 
 export function buildSitemapXml(paths) {
-  const uniquePaths = [...new Set(paths)]
-  const body = uniquePaths
-    .map((route) => {
-      const url = `${BASE_URL}${route === '/' ? '' : route}`
+  const uniqueUrls = [...new Set(paths.map(canonicalUrl))]
+  const body = uniqueUrls
+    .map((url) => {
       return `  <url>\n    <loc>${xmlEscape(url)}</loc>\n  </url>`
     })
     .join('\n')
@@ -33,7 +33,7 @@ function htmlEscape(value) {
 }
 
 export function injectPageMetadata(html, page) {
-  const canonical = `${BASE_URL}${page.path === '/' ? '' : page.path}`
+  const canonical = canonicalUrl(page.path)
   const title = htmlEscape(page.title)
   const description = htmlEscape(page.description)
   const robots = page.robots || 'index, follow'
