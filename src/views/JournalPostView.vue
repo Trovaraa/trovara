@@ -8,6 +8,7 @@ import StructuredData from '../components/StructuredData.vue'
 import JournalEngagement from '../components/journal/JournalEngagement.vue'
 import { applyPageMeta } from '../composables/usePageMeta'
 import { formatPublishedDate } from '../lib/date'
+import { canonicalUrl } from '../lib/canonical'
 
 const BASE_URL = 'https://www.trovara.farm'
 
@@ -41,7 +42,7 @@ const articleSchema = computed(() => {
       name: 'Trovara Farm',
       logo: { '@type': 'ImageObject', url: `${BASE_URL}/brand/trovara-monogram-tile-v1.svg` },
     },
-    mainEntityOfPage: `${BASE_URL}/journal/${p.slug}`,
+    mainEntityOfPage: canonicalUrl(`/journal/${p.slug}`),
   }
 })
 

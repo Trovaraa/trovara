@@ -59,16 +59,15 @@ const paths = [
               Plantain, coconut, palm oil, pasture-raised chicken, and eggs from one regenerative farm in Ogun State. Every harvest date shown here is a forecast until supply opens.
             </p>
             <div class="flex flex-wrap gap-3">
-              <RouterLink to="/products" class="btn-gold rounded-full px-7 py-4 text-base">See products &amp; forecasts</RouterLink>
-              <RouterLink to="/wholesale" class="inline-flex items-center rounded-full border border-white/25 px-7 py-4 text-base font-semibold text-white transition hover:bg-white/10">
+              <a :href="SHOP_ACCOUNT_URL" class="btn-gold rounded-full px-7 py-4 text-base">Visit Trovara Shop</a>
+              <RouterLink to="/wholesale/" class="inline-flex items-center rounded-full border border-white/25 px-7 py-4 text-base font-semibold text-white transition hover:bg-white/10">
                 Wholesale enquiries
               </RouterLink>
             </div>
             <p class="mt-6 text-sm text-white/55">
-              Already following a harvest?
-              <a :href="SHOP_ACCOUNT_URL" class="font-bold text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">Open your account</a>
+              <RouterLink to="/products/" class="font-bold text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">See products &amp; forecasts</RouterLink>
               <span class="text-white/35"> · </span>
-              <RouterLink to="/survey" class="font-bold text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">Take the 3-minute food survey</RouterLink>
+              <RouterLink to="/survey/" class="font-bold text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">Take the 3-minute food survey</RouterLink>
             </p>
           </div>
 

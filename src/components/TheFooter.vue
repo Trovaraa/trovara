@@ -19,7 +19,7 @@ function onHomeClick() {
 
 const links = {
   company: [
-    { label: 'Customer account', href: SHOP_ACCOUNT_URL },
+    { label: 'Shop',          href: SHOP_ACCOUNT_URL },
     { label: 'Our Story',     to: '/about#story' },
     { label: 'The Farm',      to: '/farm' },
     { label: 'Moments',       to: '/moments' },

@@ -2,6 +2,7 @@ import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import { BASE_URL, buildSitemapXml } from './seo-utils.mjs'
+import { canonicalUrl } from '../src/lib/canonical.ts'
 
 const POSTS_DIR = path.resolve(process.cwd(), 'src/content/posts')
 const GENERATED_POSTS_DIR = path.resolve(process.cwd(), 'src/content/generated-posts')
@@ -23,6 +24,8 @@ const STATIC_ROUTES = [
   '/products/palm-oil',
   '/farm',
   '/services',
+  '/farm-os',
+  '/farm-advisory',
   '/faq',
   '/journal',
   '/moments',
@@ -164,7 +167,7 @@ async function readPublishedPosts() {
 function buildFeedXml(posts) {
   const items = posts
     .map((post) => {
-      const link = `${BASE_URL}/journal/${post.slug}`
+      const link = canonicalUrl(`/journal/${post.slug}`)
       const pubDate = post.publishedAt
         ? new Date(
             post.publishedAt.includes('T') ? post.publishedAt : `${post.publishedAt}T00:00:00Z`,
@@ -228,6 +231,8 @@ const STATIC_PAGE_META = {
   '/products/palm-oil': ['Palm Oil - Trovara Farm', 'Explore traceable palm oil from Trovara Farm.'],
   '/farm': ['The Farm - Trovara Farm', 'Discover how Trovara Farm grows healthy food and restores land in Ogun State.'],
   '/services': ['Farm OS & Farm Advisory Services - Trovara Farm', 'Explore Trovara Farm OS and hands-on Farm Advisory Services.'],
+  '/farm-os': ['Trovara Farm OS - Farm Operations Software', 'Run tasks, field reports, inventory, traceability and sales in one role-aware farm operations system.'],
+  '/farm-advisory': ['Farm Advisory Services - Trovara Farm', 'Practical farm advisory for setup, crops, soil, irrigation, post-harvest work, team training and market readiness.'],
   '/faq': ['FAQ - Trovara Farm', 'Common questions about Trovara Farm products, delivery, partnerships, and operations.'],
   '/journal': ['Journal - Trovara Farm', 'Stories, field notes, and practical farming insights from Trovara Farm.'],
   '/moments': ['Moments - Trovara Farm', 'Photos and videos from the Trovara Farm community.'],

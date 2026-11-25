@@ -50,6 +50,16 @@
     "description": "Explore Trovara Farm OS and hands-on Farm Advisory Services."
   },
   {
+    "path": "/farm-os",
+    "title": "Trovara Farm OS - Farm Operations Software",
+    "description": "Run tasks, field reports, inventory, traceability and sales in one role-aware farm operations system."
+  },
+  {
+    "path": "/farm-advisory",
+    "title": "Farm Advisory Services - Trovara Farm",
+    "description": "Practical farm advisory for setup, crops, soil, irrigation, post-harvest work, team training and market readiness."
+  },
+  {
     "path": "/faq",
     "title": "FAQ - Trovara Farm",
     "description": "Common questions about Trovara Farm products, delivery, partnerships, and operations."
@@ -102,7 +112,7 @@
   {
     "path": "/journal/farm-to-table-more-than-a-trend",
     "title": "Farm to Table: More Than a Trend - Trovara Farm",
-    "description": "Farm to Table is more than a promise of fresher food. Drawing from a personal experience and the realities of Nigeria’s food system, we explore how shorter supply chains can improve traceability, reduce waste, create better value for farmers and consumers, and why this principle sits at the heart of how we are building Trovara."
+    "description": "Farm to Table is more than a promise of fresher food. Drawing from a personal experience and the realities of Nigeria\u2019s food system, we explore how shorter supply chains can improve traceability, reduce waste, create better value for farmers and consumers, and why this principle sits at the heart of how we are building Trovara."
   },
   {
     "path": "/journal/why-trovara-exists",
@@ -117,22 +127,22 @@
   {
     "path": "/careers/farm-analyst",
     "title": "Farm Analyst - Careers - Trovara Farm",
-    "description": "Support the records, inventory and quality systems behind Trovara’s growing farm operations. This NYSC placement offers hands-on exposure to agricultural production, inventory management, food processing, quality control, traceability and farm technology."
+    "description": "Support the records, inventory and quality systems behind Trovara\u2019s growing farm operations. This NYSC placement offers hands-on exposure to agricultural production, inventory management, food processing, quality control, traceability and farm technology."
   },
   {
     "path": "/careers/farm-operations-supervisor",
     "title": "Farm Operations Supervisor - Careers - Trovara Farm",
-    "description": "Lead day-to-day farm operations across crop, livestock and processing activities while helping build the systems, team and standards behind Trovara’s next-generation food business."
+    "description": "Lead day-to-day farm operations across crop, livestock and processing activities while helping build the systems, team and standards behind Trovara\u2019s next-generation food business."
   },
   {
     "path": "/careers/nysc-placement-poultry-operations-supervisor",
-    "title": "NYSC Placement – Poultry Operations Supervisor - Careers - Trovara Farm",
-    "description": "Join Project Feather, Trovara’s pasture-based poultry programme, and support daily poultry operations while gaining hands-on experience in a modern, data-driven commercial farm."
+    "title": "NYSC Placement \u2013 Poultry Operations Supervisor - Careers - Trovara Farm",
+    "description": "Join Project Feather, Trovara\u2019s pasture-based poultry programme, and support daily poultry operations while gaining hands-on experience in a modern, data-driven commercial farm."
   },
   {
     "path": "/careers/project-canopy-agricultural-agroforestry-consultant",
-    "title": "Project Canopy – Agricultural & Agroforestry Consultant - Careers - Trovara Farm",
-    "description": "Lead the technical design and establishment of Project Canopy – Phase 1, including agroforestry planning, nursery establishment, tree planting, staff training and an oil palm estate rehabilitation assessment."
+    "title": "Project Canopy \u2013 Agricultural & Agroforestry Consultant - Careers - Trovara Farm",
+    "description": "Lead the technical design and establishment of Project Canopy \u2013 Phase 1, including agroforestry planning, nursery establishment, tree planting, staff training and an oil palm estate rehabilitation assessment."
   },
   {
     "path": "/newsletter/confirm",
